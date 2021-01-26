@@ -1,4 +1,4 @@
-baseURL = "http://pad.zhat.io"
+baseURL = "https://danabo.github.io/blog/"
 title = "zhat pad"
 theme = "hugo-notepadium"
 copyright = "©2021 Daniel Abolafia."
@@ -23,8 +23,8 @@ unsafe = true  # enable raw HTML in Markdown
 [params]
 style = "auto"  # default: auto. light: light theme, dark: dark theme, auto: based on system.
 dateFormat = "January 2, 2006"  # if unset, default is "2006-01-02"
-logo = ""  # if you have a logo png
-slogan = "100% JavaScript-free"
+logo = ""  # TODO: add logo
+slogan = ""  # TODO: add slogan
 license = ""  # CC License
 fullRss = false # Puts entire HTML post into rss 'description' tag. If unset, default is false.
 
