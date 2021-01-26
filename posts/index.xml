@@ -1,13 +1,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on zhat pad</title>
-    <link>https://danabo.github.io/blog/categories/</link>
-    <description>Recent content in Categories on zhat pad</description>
+    <title>Posts on zhat pad</title>
+    <link>https://danabo.github.io/blog/posts/</link>
+    <description>Recent content in Posts on zhat pad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>©2021 Daniel Abolafia.</copyright>
+    <lastBuildDate>Sat, 23 Jan 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://danabo.github.io/blog/categories/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://danabo.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
