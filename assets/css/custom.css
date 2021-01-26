@@ -1,0 +1,13 @@
+#content {
+  display: block;
+  margin: 0 auto;
+  max-width: 90%;  /* Wide text body */
+}
+
+@media screen and (max-width: 720px) {
+  #content {
+    display: block;
+    margin: 0 auto;
+    max-width: 720px;   /* Remove margins on small screens */
+  }
+}

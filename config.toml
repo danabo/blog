@@ -58,3 +58,9 @@ url = "/about"
 [[params.nav.custom]]
 title = "Hugo"
 url = "https://gohugo.io/"
+
+# custom css
+
+[params.assets]
+css = ["css/custom.css"]  # *.css/scss/sass
+# see theme readme file for more info
