@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
-    <loc>http://pad.zhat.io/posts/lorem-ipsum/</loc><lastmod>2021-01-23T00:00:00+00:00</lastmod></url><url>
-    <loc>http://pad.zhat.io/posts/</loc><lastmod>2021-01-23T00:00:00+00:00</lastmod></url><url>
-    <loc>http://pad.zhat.io/</loc><lastmod>2021-01-23T00:00:00+00:00</lastmod></url><url>
-    <loc>http://pad.zhat.io/posts/my-first-post/</loc><lastmod>2021-01-14T19:16:03-06:00</lastmod></url><url>
-    <loc>http://pad.zhat.io/categories/</loc></url><url>
-    <loc>http://pad.zhat.io/tags/</loc></url></urlset>
+    <loc>https://danabo.github.io/blog/categories/</loc></url><url>
+    <loc>https://danabo.github.io/blog/tags/</loc></url><url>
+    <loc>https://danabo.github.io/blog/</loc></url></urlset>
