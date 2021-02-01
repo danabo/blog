@@ -1,5 +1,5 @@
 ---
-date: '2021-01-31T13:40:48-06:00'
+date: '2021-02-01T13:25:07-06:00'
 title: Blogging Experiment
 ---
 
@@ -27,7 +27,7 @@ This new blog is an experiment in something more lightweight and streamlined. It
 
 I intend this blog to be very incremental. Everything is in flux (even it's name, visual style and domain). I want to avoid having to spend a month writing drafts of a long post on a big topic. Instead, I will write a little bit every so often. Think of them as teasers. If people want to hear more, I'll write more. This allows me to get things out of my head and feel good about it. Perhaps I can create more flow in my studying if I feel accomplished more often. 
 
-In that vain, I leave the details of my blogging system and digital journal to future posts.
+In that vein, I leave the details of my blogging system and digital journal to future posts.
 
 
 
