@@ -1,14 +1,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Dan&#39;s Notepad</title>
-    <link>https://danabo.github.io/blog/tags/</link>
-    <description>Recent content in Tags on Dan&#39;s Notepad</description>
+    <title>blogging on Dan&#39;s Notepad</title>
+    <link>https://danabo.github.io/blog/tags/blogging/</link>
+    <description>Recent content in blogging on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>©2021 Daniel Abolafia.</copyright>
     <lastBuildDate>Sat, 06 Feb 2021 16:40:11 -0600</lastBuildDate>
     
-        <atom:link href="https://danabo.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://danabo.github.io/blog/tags/blogging/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>

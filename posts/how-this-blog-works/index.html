@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>How This Blog Works&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.d9777581423727d24f9c88d209c345c595abf9be7364e24441e940d6e6df93be35f92d02816f92949ec52251f6e191ab.css" integrity="sha384-2Xd1gUI3J9JPnIjSCcNFxZWr&#43;b5zZOJEQelA1ubfk741&#43;S0CgW&#43;SlJ7FIlH24ZGr"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="How This Blog Works" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">How This Blog Works</h1><p class="article date">February 6, 2021</p></section><article class="article markdown-body"><p>This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.</p>
+<h1 id="second-brain">Second brain</h1>
+<p>I use the <a href="https://obsidian.md/"target="_blank">Obsidian</a> editor to organize my second brain. It looks like this:</p>
+<p>
+
+  <figure>
+    
+    <img src="https://danabo.github.io/blog/Pasted%20image%2020210206135929.png" alt="">
+    <figcaption>Writing some blog posts in Obsidian.</figcaption>
+  </figure>
+</p>
+<p>Every note is a markdown file, with support for extra features like <a href="https://www.mathjax.org/"target="_blank">MathJax</a> (latex math mode), and some of the features in <a href="https://roamresearch.com/"target="_blank">Roam</a>, namely <a href="https://publish.obsidian.md/help/How&#43;to/Format&#43;your&#43;notes"target="_blank">wiki-style internal links</a>. So <code>[[Blogging experiment]]</code> becomes 
+
+
+
+  <a href="https://danabo.github.io/blog/posts/blogging-experiment/">Blogging experiment</a>
+
+
+
+. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:</p>
+<p>
+
+  <figure>
+    
+    <img src="https://danabo.github.io/blog/Pasted%20image%2020210206140636.png" alt="">
+    <figcaption>Previous screenshot I pasted into this very markdown file.</figcaption>
+  </figure>
+</p>
+<p>There is also a nifty graph view of all my notes:</p>
+<p>
+
+  <figure>
+    
+    <img src="https://danabo.github.io/blog/Pasted%20image%2020210206140906.png" alt="">
+    <figcaption>Looks like a constellation! Each node is a markdown file. Each edge is due to one file linking to another with `[[...]]`. I&#39;m not yet sure how helpful this is, but it&#39;s nice to have a way to look at everything at once, in lieu of a traditional hierarchical structure.</figcaption>
+  </figure>
+</p>
+<h1 id="publishing-flow">Publishing flow</h1>
+<p>Markdown files can optionally have a frontmatter, which is a yaml header at the top of the page. For example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nn">---</span><span class="w">
+</span><span class="w"></span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l">Hello World</span><span class="w">
+</span><span class="w"></span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l">John Doe</span><span class="w">
+</span><span class="w"></span><span class="nn">---</span><span class="w">
+</span></code></pre></div><p>In any note in my second brain (Obsidian), I can set <code>blog: true</code> and that note will be published on my blog.</p>
+<p>Every so often, I run <a href="https://github.com/danabo/blog/blob/master/publish.sh"target="_blank">publish.sh</a> from the blog repo, which in turn runs <a href="https://github.com/danabo/blog/blob/master/blog.py"target="_blank">blog.py</a>.</p>
+<p><a href="https://github.com/danabo/blog/blob/master/blog.py"target="_blank">blog.py</a> is where the magic happens. It&rsquo;s a Python script that uses <a href="https://github.com/google/python-fire"target="_blank">fire</a> to give it a <a href="https://en.wikipedia.org/wiki/Command-line_interface"target="_blank">CLI</a>. It will go through all the markdown files in my second brain directory and look for the ones with frontmatter containing <code>blog: true</code>. For those files, it will do a few transformations, like converting internal links, <code>[[...]]</code> and Obsidian&rsquo;s image command <code>![[...]]</code> to regular markdown. It also scrubs markdown comments, <code>&lt;!-- ... --&gt;</code>, and anything inside a <code>&lt;!-- hide --&gt;...&lt;!-- endhide --&gt;</code> pair so that I can have private sections inside published notes.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">transform_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+    <span class="c1"># Remove local-only blocks</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(&lt;!--\s*hide\s*--&gt;.*&lt;!--\s*endhide\s*--&gt;)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+
+    <span class="c1"># Remove everything after unclosed `&lt;!-- hide --&gt;`</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(&lt;!--\s*hide\s*--&gt;.*)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+
+    <span class="c1"># Remove comments</span>
+    <span class="c1"># https://stackoverflow.com/a/28208465</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;(&lt;!--.*?--&gt;)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+
+    <span class="c1"># Transform internal links (wiki-style links).</span>
+    <span class="c1"># https://gohugo.io/content-management/cross-references/#use-ref-and-relref</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;([^!])\[\[(.*?)\]\]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;\1\{\{\&lt; locallink &#34;\2&#34; \&gt;\}\}&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+</code></pre></div><p>[<em>Edit: I&rsquo;ve since updated <a href="https://github.com/danabo/blog/blob/master/blog.py"target="_blank">blog.py</a> to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!</em>]</p>
+<p>For internal links, I call the <a href="https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html"target="_blank">locallink</a> Hugo <a href="https://gohugo.io/content-management/shortcodes/"target="_blank">shortcode</a> I made, i.e. <code>{{ locallink &quot;...&quot; }}</code>, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a <em>red</em> anchor indicating the post does not exist. That way, if I&rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a <a href="https://en.wikipedia.org/wiki/Wikipedia:Red_link"target="_blank">missing wiki page</a>. Perhaps if readers become curious about notes I didn&rsquo;t publish, I might become motivated to publish them.</p>
+<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">{{ $name := (.Get 0) }}
+{{ $postFile := (print &#34;content/posts/&#34; $name &#34;.md&#34;) }}
+{{ if (fileExists $postFile) }}
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="err">\=&#34;{{</span> <span class="na">ref</span> <span class="err">.</span> <span class="err">$</span><span class="na">name</span> <span class="err">}}&#34;\</span><span class="p">&gt;</span>{{ $name }}<span class="err">&lt;</span>/a\&gt;
+{{ else }}
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="err">\=&#34;&#34;</span> <span class="na">class</span><span class="err">\=&#34;</span><span class="na">broken</span><span class="err">&#34;\</span><span class="p">&gt;</span>{{ $name }}<span class="err">&lt;</span>/a\&gt;
+{{ end }}
+</code></pre></div><p><a href="https://github.com/danabo/blog/blob/master/publish.sh"target="_blank">publish.sh</a> will first run blog.py, and then run <code>git commit -v</code> which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.</p>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/personal/>personal</a><a class="tag" href=https://danabo.github.io/blog/tags/blogging/>blogging</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/blogging-experiment/"><span class="iconfont icon-article"></span>Blogging Experiment</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script
+            type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script></body>
+
+</html>
