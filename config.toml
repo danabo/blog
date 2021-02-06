@@ -1,6 +1,6 @@
 baseURL = "https://danabo.github.io/blog/"
 canonifyURLs = true
-title = "zhat pad"
+title = "Dan's Notepad"
 theme = "hugo-notepadium"
 copyright = "©2021 Daniel Abolafia."
 
@@ -26,8 +26,8 @@ unsafe = true  # enable raw HTML in Markdown
 style = "auto"  # default: auto. light: light theme, dark: dark theme, auto: based on system.
 dateFormat = "January 2, 2006"  # if unset, default is "2006-01-02"
 logo = ""  # TODO: add logo
-slogan = ""  # TODO: add slogan
-license = ""  # CC License
+slogan = "A window into my second brain"  # TODO: add slogan
+license = ""  # TODO: CC License
 fullRss = false # Puts entire HTML post into rss 'description' tag. If unset, default is false.
 
 [params.comments]
@@ -48,18 +48,18 @@ addThisId = ""
 inlineToolId = ""
 
 [params.nav]
-showCategories = true       # /categories/
+showCategories = false       # /categories/
 showTags = true             # /tags/
 
 # custom navigation items
 
 [[params.nav.custom]]
-title = "About"
-url = "/about"
+# title = "About"
+# url = "/about"
 
 [[params.nav.custom]]
-title = "Hugo"
-url = "https://gohugo.io/"
+title = "Zhat"
+url = "https://zhat.io/"
 
 # custom css
 

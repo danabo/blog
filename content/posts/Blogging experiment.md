@@ -1,5 +1,7 @@
 ---
-date: '2021-02-01T13:25:07-06:00'
+date: '2021-02-06T10:48:02-06:00'
+tags:
+- personal
 title: Blogging Experiment
 ---
 
