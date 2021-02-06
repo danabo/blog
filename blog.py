@@ -46,6 +46,139 @@ def human_time(seconds_since_epoch):
   return datetime.datetime.fromtimestamp(seconds_since_epoch).astimezone().replace(microsecond=0).isoformat()
 
 
+class Translator(object):
+
+  def __init__(self, s):
+    self.s = s
+    self.i = 0
+    self.outputs = []
+    self.section()
+
+  def next(self, n=1):
+    self.i += n
+    return self.s[self.i-1]
+
+  def peek(self, a=1, b=0):
+    if a > b:
+      return self.s[self.i:self.i+a]
+    return self.s[self.i+a:self.i+b]
+
+  def has_next(self):
+    return self.i < len(self.s)
+
+  def section(self):
+    # Starts new output section, erasing the previous section if it was not emitted.
+    self.section_start = self.i
+
+  def emit(self):
+    # Emit the current section and start a new section.
+    self.outputs.append(self.s[self.section_start:self.i])
+    self.section()
+
+  def replace(self, repl):
+    # Output `repl`` in place of the current section, and start a new section.
+    self.outputs.append(repl)
+    self.section()
+
+  def __str__(self):
+    return ''.join(self.outputs)
+
+
+class SimpleParser(object):
+  RE_LOCAL_LINK = re.compile(r'\[\[(.*?)\]\]', flags=re.DOTALL)
+  RE_LOCAL_IMAGE = re.compile(r'!\[\[(.*?)\]\]\n?(\((.*?)\))?', flags=re.DOTALL | re.MULTILINE)
+  RE_HIDE_ENDHIDE = re.compile(r'(<!--\s*hide\s*-->.*<!--\s*endhide\s*-->)', flags=re.DOTALL | re.MULTILINE)
+  RE_HIDE = re.compile(r'(<!--\s*hide\s*-->.*)', flags=re.DOTALL | re.MULTILINE)
+  RE_COMMENT = re.compile(r'(<!--.*?-->)', flags=re.DOTALL | re.MULTILINE)
+
+  def __init__(self):
+    self.images = []
+    self.pages = []
+
+  def translate(self, s):
+    it = Translator(s)
+
+    # Code blocks take precedence over comments, which take precedence over local links and images.
+
+    while it.has_next():
+      if it.peek(3) == '```':
+        self.code_block(it)
+      elif it.peek(1) == '`':
+        self.inline_code(it)
+      elif it.peek(4) == '<!--':
+        it.emit()  # Start new section.
+        self.comment(it)
+      elif it.peek(3) == '![[':
+        it.emit()
+        self.local_image(it)
+      elif it.peek(2) == '[[':
+        it.emit()
+        self.local_link(it)
+      else:
+        it.next()
+
+    it.emit()  # Emit remaining chars.
+    return str(it)
+
+  def inline_code(self, it):
+    it.next()  # skip `
+    while it.has_next() and it.peek(1) != '`':
+      it.next()
+    it.next()
+
+  def code_block(self, it):
+    it.next(3)  # skip ```
+    while it.has_next() and it.peek(3) != '```':
+      it.next()
+    it.next(3)
+
+  def comment(self, it):
+    # Note, use match rather than search, because it requires that the match be at pos.
+    m = self.RE_HIDE_ENDHIDE.match(it.s, it.i)
+    if m:
+      it.next(len(m.group(0)))
+      it.section()
+      return
+
+    m = self.RE_HIDE.match(it.s, it.i)
+    if m:
+      it.next(len(m.group(0)))
+      it.section()
+      return
+
+    m = self.RE_COMMENT.match(it.s, it.i)
+    if m:
+      it.next(len(m.group(0)))
+      it.section()
+      return
+
+    it.next()  # Nothing found. Move forward.
+
+  def local_image(self, it):
+    m =self.RE_LOCAL_IMAGE.match(it.s, it.i)
+    if m:
+      it.next(len(m.group(0)))
+      url = f'</{m.group(1)}>'
+      if m.group(3):
+        it.replace(f'![]({url} "{m.group(3)}")')
+      else:
+        it.replace(f'![]({url})')
+      self.images.append(m.group(1))
+      return
+
+    it.next()  # Nothing found. Move forward.
+
+  def local_link(self, it):
+    m = self.RE_LOCAL_LINK.match(it.s, it.i)
+    if m:
+      it.next(len(m.group(0)))
+      it.replace('{{< locallink "'+m.group(1)+'" >}}')
+      self.pages.append(m.group(1))
+      return
+
+    it.next()  # Nothing found. Move forward.
+
+
 class Context(object):
 
   def __init__(self, file_name, modify_time, nofail=True):
@@ -94,35 +227,11 @@ class Context(object):
     return name
 
   def transform_body(self, body):
-    # Remove local-only blocks
-    body = re.sub(r'(<!--\s*hide\s*-->.*<!--\s*endhide\s*-->)', '', body, flags=re.DOTALL | re.MULTILINE)
+    # import pdb; pdb.set_trace()
+    p = SimpleParser()
+    body = p.translate(body)
 
-    # Remove everything after unclosed `<!-- hide -->`
-    body = re.sub(r'(<!--\s*hide\s*-->.*)', '', body, flags=re.DOTALL | re.MULTILINE)
-
-    # Remove comments
-    # https://stackoverflow.com/a/28208465
-    body = re.sub('(<!--.*?-->)', '', body, flags=re.DOTALL | re.MULTILINE)
-
-    # Transform internal links (wiki-style links).
-    # https://gohugo.io/content-management/cross-references/#use-ref-and-relref
-    body = re.sub(r'([^!])\[\[(.*?)\]\]', r'\1{{< locallink "\2" >}}', body, flags=re.DOTALL)
-
-    image_files = self.get_images(body)
-
-    # Transform embedded images '![[...]]' to markdown images
-    # ![[image.png]] ==> ![](</image.png>)
-    # ![[image.png]]\n(caption) ==> ![](</image.png> "caption")
-    # TODO: ![[image.png|size]] ==> ![](</image.png> =size)
-    def repl_fun(match):
-      url = f'</{match.group(1)}>'
-      if match.group(3):
-        return f'![]({url} "{match.group(3)}")'
-      else:
-        return f'![]({url})'
-    body = re.sub(r'!\[\[(.*?)\]\]\n?(\((.*?)\))?', repl_fun, body, flags=re.DOTALL | re.MULTILINE)
-
-    return body, image_files
+    return body, p.images
 
   def q_publish(self, frontmatter):
     # Returns bool indicating whether to copy over to blog.
