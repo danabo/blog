@@ -1,11 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on zhat pad</title>
+    <title>Tags on Dan&#39;s Notepad</title>
     <link>https://danabo.github.io/blog/tags/</link>
-    <description>Recent content in Tags on zhat pad</description>
+    <description>Recent content in Tags on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>©2021 Daniel Abolafia.</copyright>
+    <lastBuildDate>Sat, 06 Feb 2021 10:48:02 -0600</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +14,7 @@
     <item>
       <title>Blogging Experiment</title>
       <link>https://danabo.github.io/blog/posts/blogging-experiment/</link>
-      <pubDate>Mon, 01 Feb 2021 13:25:07 -0600</pubDate>
+      <pubDate>Sat, 06 Feb 2021 10:48:02 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/blogging-experiment/</guid>
       <description>&lt;p&gt;What is this blog?&lt;/p&gt;
