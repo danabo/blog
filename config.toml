@@ -19,6 +19,7 @@ codeFences = true
 noClasses = false
 
 [markup.goldmark.renderer]
+hardWraps = true  # Markdown newlines are rendered
 unsafe = true  # enable raw HTML in Markdown
 
 [params]
