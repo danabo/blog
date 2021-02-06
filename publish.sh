@@ -1,11 +1,15 @@
 #!/bin/sh
 # https://gohugo.io/hosting-and-deployment/hosting-on-github/#put-it-into-a-script-1
 
+# Set BLOG_SOURCE environment variable.
+
 # https://stackoverflow.com/a/21128172
 f_flag='false'
-while getopts 'f' flag; do
+clean='false'
+while getopts 'fc' flag; do
   case "${flag}" in
     f) f_flag='true' ;; # force
+    c) clean='true'  ;; # clean
   esac
 done
 
@@ -20,6 +24,16 @@ then
     fi
 fi
 
+# Running blog.py
+./blog.py --source=$BLOG_SOURCE --clean=$clean
+echo "\nFiles processed"
+
+# Confirm changes
+git add -A
+git commit -v || { echo 'Exiting' ; exit 1; } # Ask user to confirm diff before committing
+git push  # Push to master branch
+
+# Push to gh-pages branch
 echo "Deleting old publication"
 rm -rf public
 mkdir public
@@ -36,9 +50,9 @@ echo "Generating site"
 hugo
 
 echo "Updating gh-pages branch"
-cd public && git add --all && git commit -m "Publishing to gh-pages"
-
-
-
-echo "Pushing to github"
-git push --all
+cd public \
+    && git add --all \
+    && git commit -m "Publishing to gh-pages" \
+    && echo "Pushing to github" \
+    && git push --all \
+    && cd ..
