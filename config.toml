@@ -1,4 +1,5 @@
 baseURL = "https://danabo.github.io/blog/"
+canonifyURLs = true
 title = "zhat pad"
 theme = "hugo-notepadium"
 copyright = "©2021 Daniel Abolafia."

@@ -1,0 +1,24 @@
+<!--
+  
+  version of `ref` that outputs broken references as red links
+
+  `ref` docs: https://gohugo.io/functions/ref/
+  error handling: https://gohugo.io/functions/errorf
+  making my own shortcodes: https://gohugo.io/templates/shortcode-templates/
+
+-->
+{{ $name := (.Get 0) }}
+{{ $postFile := (print "content/posts/" $name ".md") }}
+{{ if (fileExists $postFile) }}
+  <a href="{{ ref . $name }}">{{ $name }}</a>
+{{ else }}
+  <a href="" class="broken">{{ $name }}</a>
+{{ end }}
+
+{{/*
+{{ try }}
+{{ ref . (.Get 0) }}
+{{ except }}
+"Bad link {{ .Get 0 }}"
+{{ end }}
+*/}}

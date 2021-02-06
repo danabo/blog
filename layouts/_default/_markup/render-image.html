@@ -1,0 +1,10 @@
+<!-- https://sebastiandedeyne.com/captioned-images-with-markdown-render-hooks-in-hugo/ -->
+{{ if .Title }}
+  <figure>
+    {{ $fullpath := path.Dir .Destination }}
+    <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}">
+    <figcaption>{{ .Title }}</figcaption>
+  </figure>
+{{ else }}
+  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}">
+{{ end }}
