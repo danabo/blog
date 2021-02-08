@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Active Inference Tutorial (Actions)&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.d9777581423727d24f9c88d209c345c595abf9be7364e24441e940d6e6df93be35f92d02816f92949ec52251f6e191ab.css" integrity="sha384-2Xd1gUI3J9JPnIjSCcNFxZWr&#43;b5zZOJEQelA1ubfk741&#43;S0CgW&#43;SlJ7FIlH24ZGr"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Active Inference Tutorial (Actions)" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Active Inference Tutorial (Actions)</h1><p class="article date">February 7, 2021</p></section><article class="article markdown-body"><p>$$<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\kl}[2]{D_{KL}\left(#1\ | \ #2\right)}<br>
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }<br>
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\atup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\set}[1]{\left{#1\right}}<br>
+\newcommand{\t}{\theta}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\r}{\rho}<br>
+$$</p>
+<p>Previous attempts:</p>
+<ul>
+<li>In 
+
+
+
+  <a href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/">Free Energy Principle 1st Pass</a>
+
+
+
+, I used a <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a> to try to understand the free energy formalism. I figured out the &ldquo;timeless&rdquo; and actionless case, but I became confused when actions and time were added.</li>
+<li>In 
+
+
+
+  <a href="" class="broken">Free energy principle and Solomonoff induction</a>
+
+
+
+, I tried to translate between the formalism presented in <a href="https://danijar.com/apd/">https://danijar.com/apd/</a> (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a>. I also tried to make the connection to Solomonoff induction.</li>
+<li>In 
+
+
+
+  <a href="" class="broken">Deep Varational Universal Induction</a>
+
+
+
+, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.</li>
+</ul>
+<p>Using the same tutorial as before, <a href="https://psyarxiv.com/b4jm6/"target="_blank">A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data</a>, I will go through the free energy formalism again and try to work out time and actions.</p>
+<h1 id="review">Review</h1>
+<p>To recap what I figured out in 
+
+
+
+  <a href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/">Free Energy Principle 1st Pass</a>
+
+
+
+:</p>
+<p>Suppose $o\in\mc{O}$ is the observation space and $s\in\mc{S}$ is the hypothesis/state space (to use the notation of the <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a>). For now, let&rsquo;s assume that $\mc{S}$ is the hidden state space of the environment in some timestep. $p(o,s)$ is the agent&rsquo;s model of the environment, relating observations to hidden states, and the prior probability of the environment being in any particular hidden state. Let&rsquo;s also ignore questions about the meaning of these probabilities (objective or subjective) and where they come from. If it&rsquo;s easier to think about, assume these probabilities are subjective.</p>
+<p>If $o$ is observed (one timestep only), then we want to calculate the posterior probability $p(s\mid o)$ of each $s\in\mc{S}$. If this is intractable to do, we can instead find an approximation $q_o(s)$:</p>
+<p>$$<br>
+q_o := \argmin{q \in \mc{Q}} \kl{q(s)}{p(s\mid o)}<br>
+$$</p>
+<p>where $\mc{Q}$ is some space of distributions that you choose $q_o$ from. Presumably $\mc{Q}$ is restricted somehow, otherwise the solution is $q=p$ in which case you are doing exact Bayesian inference.</p>
+<p>$$<br>
+\begin{aligned}<br>
+\kl{q(s)}{p(s\mid o)} &amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s\mid o)}\right] \<br>
+&amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s)}\right] + \E_{s\sim q}\left[\lg \frac{1}{p(o \mid s)}\right] + \E_{s\sim q}[p(o)]\<br>
+&amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}\left[\lg p(o \mid s)\right] - \lg\frac{1}{p(o)} \<br>
+&amp;= \mc{F}[q] - \lg\frac{1}{p(o)},,<br>
+\end{aligned}<br>
+$$</p>
+<p>where</p>
+<p>$$<br>
+\begin{aligned}<br>
+\mc{F}[q] &amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}[\lg p(o \mid s)]\<br>
+&amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s,o)}\right]<br>
+\end{aligned}<br>
+$$</p>
+<p>is called <strong>variational free energy</strong>. $\kl{q(s)}{p(s)}$ is called <strong>accuracy</strong> and $\E_{s\sim q}[\lg p(o \mid s)]$ is called **complexity**. $\lg\frac{1}{p(o)}$ is called **surprise** (self-information of the observation $o$).</p>
+<p>Minimizing $\mc{F}[q]$ w.r.t. $q$ minimizes $\kl{q(s)}{p(s\mid o)}$. The surprise $\lg\frac{1}{p(o)}$ is constant w.r.t. this minimization. (Remember this is all assuming $o$ is given and fixed.)</p>
+<h1 id="new-stuff">New stuff</h1>
+<p>In the <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a>, we have free energy defined just as in my notes, except that everything now depends on policy $\pi$:<br>
+
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210207121048.png" alt="">
+
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210207121055.png" alt="">
+<br>
+The policy $\pi$ is a probability distribution over actions (, e.g. $\pi(a_t \mid o_{1:t}, a_{1:t-1})$. More on that later.</p>
+<h2 id="interaction-loop">Interaction loop</h2>
+<p>It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In 
+
+
+
+  <a href="" class="broken">Deep Varational Universal Induction</a>
+
+
+
+ I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.</p>
+<p>Let&rsquo;s unpack the agent-environment interaction loop. Given policy $\pi$,</p>
+<p>$$<br>
+p(o_{1:\infty},s_{1:\infty}\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t,s_t\mid a_t,s_{t-1})\pi(a_t\mid o_{1:t-1},a_{1:t-1})<br>
+$$</p>
+<p>where $p(o_t,s_t\mid a_t,s_{t-1})$ is the probability of next observation and hidden state given input action $a_t$ and previous state, and $\pi(a_t\mid o_{1:t-1},a_{1:t-1})$ is the probability of the agent taking action $a_t$ given its entire history $o_{1:t-1},a_{1:t-1}$ (alternative we can give the agent internal state and condition on that).</p>
+<p>On the other hand, if $s$ ($h$) is a time-less hypothesis: then we have</p>
+<p>$$<br>
+p(o_{1:\infty},h\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t\mid a_{1:t},o_{1:t-1},h)p(h)\pi(a_t\mid o_{1:t-1},a_{1:t-1})<br>
+$$</p>
+<p>where $p(h)$ is the prior on hypothesis $h$.</p>
+<p>Below, I will leave it ambiguous whether $s$ is a sequence of states or a time-less hypothesis. The math should be the same either way.</p>
+<h2 id="active-inference">Active inference</h2>
+<p>How are actions chosen? This is the big question I could not penetrate in my previous attempts. From the tutorial:</p>
+<blockquote>
+<p>When inferring optimal actions, however, one cannot simply consider current observations. This is because actions are chosen to bring about preferred future observations. This means that, to infer optimal actions, a model must predict sequences of future states and observations for each possible policy, and then calculate the expected free energy (𝐸𝐹𝐸) of those different sequences of future states and observations.</p>
+</blockquote>
+<p>This is talking about taking an expectation over future states and observations. Let&rsquo;s assume $p(o_{1:\infty}, s_{1:\infty} \mid \pi)$ is the true environment dynamics. We are introduced to a new term $q(o_{1:\infty}\mid\pi)$ which are the agent&rsquo;s observation preferences over time given a particular policy.</p>
+<p>The text is saying we want to choose policy $\pi$ to maximize $G(\pi)$. What&rsquo;s troubling is that there is another term, $p(\pi)$, a prior over policies. If we are choosing policies freely, what does this prior represent?</p>
+<p>The text says that the preferred policy also minimizes free energy:</p>
+<blockquote>
+<p>Since ‘preferred’ here formally translates to ‘expected by the model’, then the policy expected to produce preferred observations will be the one that maximizes the accuracy of the model (and hence minimizes 𝐸𝐹𝐸).</p>
+</blockquote>
+<h2 id="exact-inference">Exact inference</h2>
+<p>To simplify things, let&rsquo;s suppose the agent can do perfect Bayesian inference, so that $q_o(s\mid\pi) = p(s \mid o,\pi)$. Let&rsquo;s see what happens if we plug in $p(s\mid o,\pi)$ for $q_o(s\mid \pi)$ in our free energy definition:</p>
+<p>$$<br>
+\mc{F} = \E_{s \sim p(s\mid o,\pi)}\left[\lg \frac{p(s\mid o,\pi)}{p(s,o\mid\pi)}\right] = \E_{s \sim p(s\mid o,\pi)}\left[\lg \frac{1}{p(o\mid \pi)}\right] = \lg \frac{1}{p(o\mid \pi)}<br>
+$$</p>
+<p>which is just the surprise (i.e. self-information due to observing $o$). Minimizing free energy means choosing $\pi$ to maximize the data likelihood:</p>
+<p>$$<br>
+\pi^* := \argmax{\pi} p(o\mid\pi)<br>
+$$</p>
+<p>Remember that $\mc{F}$ depends on a fixed $o$, which is what has already been observed. If $o$ is not observed, then we are talking about future $o$, and we need to take an expectation w.r.t. $o$, e.g.</p>
+<p>$$<br>
+\pi^* := \argmin{\pi} \E_{o\sim p(o\mid\pi)}\lg\frac{1}{p(o\mid\pi)} = \argmin{\pi}\mb{H}[p(o\mid\pi)]<br>
+$$</p>
+<p>This is saying, choose a policy s.t. the future is as predictable as possible, i.e. minimizes entropy over observations, i.e. minimizes future expected surprise.</p>
+<p>Now let&rsquo;s introduce the agent&rsquo;s preferences, encoded as a distribution on observations. The tutorial (and other texts) use $q(o)$, but I&rsquo;m using $\r(o)$, because this is a very different thing from the approximate posterior $q_o$. Specifically $\r(o)$ is given and held fixed, while $q_o(s)$ depends on the particular observation $o$, as well as choice of optimization space $\mc{Q}$. In short, $q_o(s)$ is an output, while $\rho(o)$ is given.</p>
+<p>Let&rsquo;s replace $p(o\mid\pi)$ with $\rho(o)$ (this should not depend on $\pi$). So instead of taking an expectation w.r.t. the model probabilities for $o$, we are taking an average weighted by preference for $o$:</p>
+<p>$$<br>
+\pi^* := \argmin{\pi} \E_{o\sim \r(o)}\lg\frac{1}{p(o\mid\pi)} = H(\r(o), p(o\mid\pi)) = \kl{\r(o)}{p(o\mid\pi)} + \mb{H}[\r(o)]<br>
+$$</p>
+<p>which is the <a href="https://en.wikipedia.org/wiki/Cross_entropy"target="_blank">cross-entropy</a> of $q(o)$ and $p(o\mid\pi)$ (average number of bits if you encode a stream $o_{1:\infty}$ under $p$ while actually sampling from $p$). Since $\r(o)$ is fixed, then we are minimizing $\kl{\r(o)}{p(o\mid\pi)}$. That is to say, choose policy (thereby choosing actions) that make the environment (as the agent believes it to be) dynamics $p(o\mid\pi)$ conform to preferences $\r(o)$.</p>
+<h3 id="reward-equivalence">Reward equivalence</h3>
+<p>According to  <a href="https://danijar.com/apd/,">https://danijar.com/apd/,</a></p>
+<p>$$<br>
+\r(o_{1:n}) \propto \exp(r(o_{1:n}))<br>
+$$</p>
+<p>where $r(o_{1:n})$ is the total reward received for observations $o_{1:n}$. Written another way, $\r(o_{1:n}) = \exp(r(o_{1:n}))/\mc{Z}$ for some normalization constant $\mc{Z}$, so then $r(o_{1:n}) = \ln\r(o_{1:n}) + \mc{C}$ for some constant offset $\mc{C}$.</p>
+<p>If we are just trying to maximize expected total reward $r(o_{1:n})$ w.r.t. the environment model, we get</p>
+<p>$$<br>
+\begin{aligned}<br>
+\pi^* &amp;:= \argmax{\pi} \E_{o \sim p(o \mid \pi)} [r(o_{1:n})] \<br>
+&amp;= \argmax{\pi} \E_{o_{1:n},a_{1:n} \sim p(o_{1:n},a_{1:n} \mid \pi)} [\ln\r(o_{1:n})],.<br>
+\end{aligned}<br>
+$$</p>
+<p>So far, I am not seeing anything conceptually new here. Storing agent preferences in a probability distribution $\r(o)$ is not really any different from storing preferences in a reward $r(o)$, and the two are easily converted into each other.</p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>Now let&rsquo;s suppose that $o$ has not yet been observed as before, but use approximate (future) posterior $q_{o,\pi}(s)$ and compute expected future free energy under preference $\rho(o)$.</p>
+<p>We get</p>
+<p>$$<br>
+\begin{aligned}<br>
+G[\pi]&amp;=\E_\rho[\mc{F}[o,\pi]] \<br>
+&amp;= \E_{o\sim\rho}\E_{s \sim q_{o,\pi}}\left[\lg\frac{q_{o,\pi}(s)}{p(s,o\mid\pi)}\right] \<br>
+&amp;= \E_{o\sim\rho}\kl{q_{o,\pi}(s)}{p(s\mid\pi)} - \E_{o\sim\rho}\E_{s\sim q_{o,\pi}}\left[\lg p(o \mid s,\pi)\right]<br>
+\end{aligned}<br>
+$$</p>
+<p>where $q_{o,\pi}$ is the optimal approximate posterior for the given observation $o$ and policy $\pi$ used to obtain $o$. From the perspective of $q_{o,\pi}$, $o$ is already observed using policy $\pi$ which determines the probability of that observation.</p>
+<p>$$<br>
+q_{o,\pi} := \argmin{q} \mc{F}[o,\pi] = \argmin{q}\E_{s \sim q}\left[\lg\frac{q(s)}{p(s,o\mid\pi)}\right]<br>
+$$</p>
+<p>I believe the tutorial paper has a typo, where $p(o,s,\pi)$ should be $p(o,s,\mid\pi)$.</p>
+<p>We are choosing $\pi$ to minimize $G[\pi]$, which is just the expected free energy under $\rho(o)$ (preference for future observations).</p>
+<p>Do the optimizations on $\pi$ and $q$ interact? It seems like they don&rsquo;t. $\pi$ is an outer optimization that depends on running the optimization on $q$ internally. There is not a single $q$, but many of them which the optimization on $\pi$ iterates through. So then what is the significance of connecting free energy minimization ($q$) to active inference ($\pi$)? If the policy optimization part were reformulated in terms of RL, we really just have a fancy kind of approximate Bayesian model combined with RL. The action learning and model updating are totally independent.</p>
+<h1 id="the-meaning-of-p">The meaning of $p$</h1>
+<p>$p(o_{1:\infty},s\mid\pi)$ is a Bayesian model (e.g. Solomonoff prior), $q_{o,\pi}$ is the optimal approximate prior (optimizing over some restricted space $\mc{Q}$) that minimizes the free energy for a particular observation $o_{1:\infty}$ and policy $\pi$.<br>
+$\rho(o_{1:\infty})$ is a distribution encoding the agent&rsquo;s preference on observations.<br>
+Choose $\pi$ to minimize free energy averaged across all future observations $o_{1:\infty}$ under preference distribution $\rho(o_{1:\infty})$.</p>
+<hr>
+<p>If $p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is a dynamics model of the environment, how would the agent know it? Or alternatively, how are different hypotheses for environment dynamics handled in this framework?</p>
+<p>The two cases are:</p>
+<ol>
+<li>$p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is the literal true dynamics of the environment.</li>
+<li>$p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is the agent&rsquo;s dynamics model of the environment.</li>
+</ol>
+<p>The first case is unreasonable, because we cannot assume any agent knows the truth. The second case does not allow the agent to update its ontology, i.e. change the state space $\mc{S}$ and it&rsquo;s beliefs about how observations interact with, $p(o\mid s)$ and $p(s\mid o)$.</p>
+<p>We could suppose there is a latent $h$ for the environment hypothesis which is being marginlized, e.g. $p(o_{1:n},s_{1:n},h)$, but then $p(o_{1:n}\mid s_{1:n}) = \E_{h\sim p(h)}p(o_{1:n}\mid s_{1:n},h)$, which we can generally expect to be intractable but is required for free energy calculation. The free energy approximation was supposed to be tractable. Now do we have to approximate the approximation?</p>
+<p>I think the time-less hypothesis formulation is better, i.e. $p(o_{1:\infty}, h)$, because it allows the hypothesis to invent its own states (because states are no longer explicitly defined), and put emphasis on not just the present, but possible states in the past and future, i.e. the agent may be more interested in inferring past or future states. Furthermore, states may not be well defined things. I have a model of the world filled with all sorts of objects, each having independent states until they interact. I cannot comprehend thinking of everything I know as one gigantic state.</p>
+<p>Something I&rsquo;ve heard hinted at elsewhere is that the agent, as a physical system, expresses some Bayesian prior $p$ and preferences $\r$ in an objective sense. What is the nature of this mapping between physical makeup and active-inference description? Is this entirely based on the agent&rsquo;s behavior, or if we looked inside an agent, we could determine its model and preferences? I expect that if we look at behavior alone, then $p$ and $\r$ are underspecified.</p>
+<p>So then what about the agent&rsquo;s physical makeup gives it a model $p$ and preferences $\r$? The optimization process to find $q_{o,\pi}$ must be physically carried out, and so presumably this could be observed. In optimizing for $q_{o,\pi}$, the agent would actually be engaged in two processes that implicitly specify $p$. Splitting free energy into accuracy and complexity:</p>
+<ol>
+<li>Explaining observations: $\E_{h\sim q}\left[\lg p(o_{1:n} \mid h,a_{1:n})\right]$<br>
+The agent thinks of hypotheses $h$ (sampling them from $q$) to explain observations $o_{1:n}$ given actions $a_{1:n}$.</li>
+<li>Regularization: $\kl{q(h)}{p(h)}$<br>
+The agent updates its hypothesis generator $q$, implicitly conforming to $p$ which represents the agent&rsquo;s grand total representation capacity.</li>
+</ol>
+<p>Under this perspective, the agent&rsquo;s ability to modify its own hypothesis generator $q(h)$ is somehow described by $p(h)$, which is fixed throughout the agent&rsquo;s lifetime (unless the agent can self-modify). For a particular hypothesis $h$, the data probability $p(o_{1:n}\mid h)$ is the likelihood of the data under $h$. So $p$ is simultaneously encoding the agent&rsquo;s theoretical capacity to generate hypotheses (which it never fully reaches because of limitations on $q(h)$) and the meaning of every hypothesis it can come up with. It is unclear to me whether $p(h, o_{1:n})$ can be uniquely determined given an agent&rsquo;s physical makeup.</p>
+<p>I&rsquo;m also unconvinced about the way behavior is handled in this framework. Why think in terms of policies $\pi$ rather than actions $a_{1:n}$? Is the space of policies fixed through the agent&rsquo;s lifetime? If $\pi$ is supposed to represent some kind of high level strategy, then how does the agent learn different kinds of strategies (updating its ontology). This is the same problem that Bayesian inference faces, that $q$ ostensibly fixes. But now we need to fix the same problem again for $\pi$.</p>
+<p>Question: $G[\pi]$ appears to be intractable to compute or optimize directly. Why do we not have a variational approximation to this as well?</p>
+<p>Why not just do RL? What is gained by &ldquo;active inference&rdquo;, which seems to me to be secretly RL on top of variational Bayes.</p>
+</article>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/"><span class="iconfont icon-article"></span>Free Energy Principle 1St Pass</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script
+            type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script></body>
+
+</html>

@@ -5,7 +5,7 @@
 <meta name="twitter:title" content="How This Blog Works" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">How This Blog Works</h1><p class="article date">February 6, 2021</p></section><article class="article markdown-body"><p>This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.</p>
+    <h1 class="article title">How This Blog Works</h1><p class="article date">February 7, 2021</p></section><article class="article markdown-body"><p>This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.</p>
 <h1 id="second-brain">Second brain</h1>
 <p>I use the <a href="https://obsidian.md/"target="_blank">Obsidian</a> editor to organize my second brain. It looks like this:</p>
 <p>
@@ -43,6 +43,7 @@
   </figure>
 </p>
 <h1 id="publishing-flow">Publishing flow</h1>
+<p>My blog is written in <a href="https://gohugo.io/"target="_blank">Hugo</a> (for now), which is a static site generator that takes markdown files as input. Ideally, I could just run hugo directly on my Obsidian directory, but (1) I don&rsquo;t want to publish everything and (2) Obsidian defines its own extended markdown syntax, as I explained above. My workaround is to have a script copy and transform my Obsidian notes marked for publication. Here&rsquo;s how I do it&hellip;</p>
 <p>Markdown files can optionally have a frontmatter, which is a yaml header at the top of the page. For example:</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nn">---</span><span class="w">
 </span><span class="w"></span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l">Hello World</span><span class="w">
@@ -51,6 +52,7 @@
 </span></code></pre></div><p>In any note in my second brain (Obsidian), I can set <code>blog: true</code> and that note will be published on my blog.</p>
 <p>Every so often, I run <a href="https://github.com/danabo/blog/blob/master/publish.sh"target="_blank">publish.sh</a> from the blog repo, which in turn runs <a href="https://github.com/danabo/blog/blob/master/blog.py"target="_blank">blog.py</a>.</p>
 <p><a href="https://github.com/danabo/blog/blob/master/blog.py"target="_blank">blog.py</a> is where the magic happens. It&rsquo;s a Python script that uses <a href="https://github.com/google/python-fire"target="_blank">fire</a> to give it a <a href="https://en.wikipedia.org/wiki/Command-line_interface"target="_blank">CLI</a>. It will go through all the markdown files in my second brain directory and look for the ones with frontmatter containing <code>blog: true</code>. For those files, it will do a few transformations, like converting internal links, <code>[[...]]</code> and Obsidian&rsquo;s image command <code>![[...]]</code> to regular markdown. It also scrubs markdown comments, <code>&lt;!-- ... --&gt;</code>, and anything inside a <code>&lt;!-- hide --&gt;...&lt;!-- endhide --&gt;</code> pair so that I can have private sections inside published notes.</p>
+<p>Code to transform Obsidian markdown to <a href="https://gohugo.io/"target="_blank">Hugo</a> markdown:</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">transform_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
     <span class="c1"># Remove local-only blocks</span>
     <span class="n">body</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(&lt;!--\s*hide\s*--&gt;.*&lt;!--\s*endhide\s*--&gt;)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
@@ -66,7 +68,16 @@
     <span class="c1"># https://gohugo.io/content-management/cross-references/#use-ref-and-relref</span>
     <span class="n">body</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;([^!])\[\[(.*?)\]\]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;\1\{\{\&lt; locallink &#34;\2&#34; \&gt;\}\}&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
 </code></pre></div><p>[<em>Edit: I&rsquo;ve since updated <a href="https://github.com/danabo/blog/blob/master/blog.py"target="_blank">blog.py</a> to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!</em>]</p>
-<p>For internal links, I call the <a href="https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html"target="_blank">locallink</a> Hugo <a href="https://gohugo.io/content-management/shortcodes/"target="_blank">shortcode</a> I made, i.e. <code>{{ locallink &quot;...&quot; }}</code>, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a <em>red</em> anchor indicating the post does not exist. That way, if I&rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a <a href="https://en.wikipedia.org/wiki/Wikipedia:Red_link"target="_blank">missing wiki page</a>. Perhaps if readers become curious about notes I didn&rsquo;t publish, I might become motivated to publish them.</p>
+<p>For internal links, I call the <a href="https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html"target="_blank">locallink</a> Hugo <a href="https://gohugo.io/content-management/shortcodes/"target="_blank">shortcode</a> I made, i.e. <code>{{ locallink &quot;...&quot; }}</code>, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a <em>red</em> anchor indicating the post does not exist, 
+
+
+
+  <a href="" class="broken">like this</a>
+
+
+
+. That way, if I&rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a <a href="https://en.wikipedia.org/wiki/Wikipedia:Red_link"target="_blank">missing wiki page</a>. Perhaps if readers become curious about notes I didn&rsquo;t publish, I might become motivated to publish them.</p>
+<p>locallink <a href="https://gohugo.io/"target="_blank">Hugo</a> shortcode:</p>
 <div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">{{ $name := (.Get 0) }}
 {{ $postFile := (print &#34;content/posts/&#34; $name &#34;.md&#34;) }}
 {{ if (fileExists $postFile) }}
@@ -77,7 +88,7 @@
 </code></pre></div><p><a href="https://github.com/danabo/blog/blob/master/publish.sh"target="_blank">publish.sh</a> will first run blog.py, and then run <code>git commit -v</code> which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.</p>
 </article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/personal/>personal</a><a class="tag" href=https://danabo.github.io/blog/tags/blogging/>blogging</a></section>
 </div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/blogging-experiment/"><span class="iconfont icon-article"></span>Blogging Experiment</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/"><span class="iconfont icon-article"></span>Free Energy Principle 1St Pass</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/blogging-experiment/"><span class="iconfont icon-article"></span>Blogging Experiment</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
