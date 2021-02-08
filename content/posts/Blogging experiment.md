@@ -3,7 +3,7 @@ date: '2021-02-07T21:01:47-06:00'
 tags:
 - personal
 - blogging
-title: Blogging Experiment
+title: Blogging experiment
 ---
 
 What is this blog?

@@ -3,7 +3,7 @@ date: '2021-02-07T21:01:53-06:00'
 tags:
 - personal
 - blogging
-title: How This Blog Works
+title: How this blog works
 ---
 
 This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.
