@@ -41,6 +41,9 @@ LOG_FILE = 'blog.yaml'
 # Note that hugo can opt out of compiling draft posts, but the posts will still exist in the git repo.
 PUBLISH_DRAFTS = False
 
+# The Hugo static site generator has some quirks that need to be worked around.
+HUGO_HACKS = True
+
 
 def human_time(seconds_since_epoch):
   return datetime.datetime.fromtimestamp(seconds_since_epoch).astimezone().replace(microsecond=0).isoformat()
@@ -108,6 +111,12 @@ class SimpleParser(object):
       elif it.peek(4) == '<!--':
         it.emit()  # Start new section.
         self.comment(it)
+      elif HUGO_HACKS and (it.peek(2) == '$$' and it.peek(-1) != '\\'):
+        it.emit()
+        self.math_block(it)
+      elif HUGO_HACKS and (it.peek(1) == '$' and it.peek(-1) != '\\'):
+        it.emit()
+        self.inline_math(it)
       elif it.peek(3) == '![[':
         it.emit()
         self.local_image(it)
@@ -131,6 +140,20 @@ class SimpleParser(object):
     while it.has_next() and it.peek(3) != '```':
       it.next()
     it.next(3)
+
+  def math_block(self, it):
+    it.next(2)  # skip $$
+    while not (it.peek(2) == '$$' and it.peek(-1) != '\\'):
+      it.next(1)
+    it.next(2)
+    it.replace(it.s[it.section_start:it.i].replace('\\', '\\\\'))
+
+  def inline_math(self, it):
+    it.next(1)  # skip $
+    while not (it.peek(1) == '$' and it.peek(-1) != '\\'):
+      it.next(1)
+    it.next(1)
+    it.replace(it.s[it.section_start:it.i].replace('\\', '\\\\'))
 
   def comment(self, it):
     # Note, use match rather than search, because it requires that the match be at pos.
@@ -214,7 +237,8 @@ class Context(object):
     dest = copy.deepcopy(src_frontmatter)
     del dest['blog']
     if not dest.get('title'):
-      dest['title'] = os.path.splitext(self.name)[0].replace('-', ' ').title()
+      # dest['title'] = os.path.splitext(self.name)[0].replace('-', ' ').title()
+      dest['title'] = os.path.splitext(self.name)[0]
     dest['date'] = human_time(self.modify_time)
     return dest
 
