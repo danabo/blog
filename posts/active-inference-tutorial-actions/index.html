@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Active Inference Tutorial (Actions)&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.d9777581423727d24f9c88d209c345c595abf9be7364e24441e940d6e6df93be35f92d02816f92949ec52251f6e191ab.css" integrity="sha384-2Xd1gUI3J9JPnIjSCcNFxZWr&#43;b5zZOJEQelA1ubfk741&#43;S0CgW&#43;SlJ7FIlH24ZGr"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Active Inference Tutorial (Actions)" /><body><section id="header">
+<meta name="supported-color-schemes" content="light dark"><title>Active inference tutorial (actions)&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.d9777581423727d24f9c88d209c345c595abf9be7364e24441e940d6e6df93be35f92d02816f92949ec52251f6e191ab.css" integrity="sha384-2Xd1gUI3J9JPnIjSCcNFxZWr&#43;b5zZOJEQelA1ubfk741&#43;S0CgW&#43;SlJ7FIlH24ZGr"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Active inference tutorial (actions)" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Active Inference Tutorial (Actions)</h1><p class="article date">February 7, 2021</p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Active inference tutorial (actions)</h1><p class="article date">February 7, 2021</p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\mb}{\mathbb}<br>
 \newcommand{\mc}{\mathcal}<br>
 \newcommand{\E}{\mb{E}}<br>
 \newcommand{\B}{\mb{B}}<br>
-\newcommand{\kl}[2]{D_{KL}\left(#1\ | \ #2\right)}<br>
+\newcommand{\kl}[2]{D_{KL}\left(#1\ \| \ #2\right)}<br>
 \newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }<br>
 \newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }<br>
 \newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
 \newcommand{\atup}[1]{\left\langle#1\right\rangle}<br>
-\newcommand{\set}[1]{\left{#1\right}}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
 \newcommand{\t}{\theta}<br>
 \newcommand{\T}{\Theta}<br>
 \newcommand{\p}{\phi}<br>
@@ -70,16 +70,16 @@ $$</p>
 <p>where $\mc{Q}$ is some space of distributions that you choose $q_o$ from. Presumably $\mc{Q}$ is restricted somehow, otherwise the solution is $q=p$ in which case you are doing exact Bayesian inference.</p>
 <p>$$<br>
 \begin{aligned}<br>
-\kl{q(s)}{p(s\mid o)} &amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s\mid o)}\right] \<br>
-&amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s)}\right] + \E_{s\sim q}\left[\lg \frac{1}{p(o \mid s)}\right] + \E_{s\sim q}[p(o)]\<br>
-&amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}\left[\lg p(o \mid s)\right] - \lg\frac{1}{p(o)} \<br>
-&amp;= \mc{F}[q] - \lg\frac{1}{p(o)},,<br>
+\kl{q(s)}{p(s\mid o)} &amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s\mid o)}\right] \\<br>
+&amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s)}\right] + \E_{s\sim q}\left[\lg \frac{1}{p(o \mid s)}\right] + \E_{s\sim q}[p(o)]\\<br>
+&amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}\left[\lg p(o \mid s)\right] - \lg\frac{1}{p(o)} \\<br>
+&amp;= \mc{F}[q] - \lg\frac{1}{p(o)}\,,<br>
 \end{aligned}<br>
 $$</p>
 <p>where</p>
 <p>$$<br>
 \begin{aligned}<br>
-\mc{F}[q] &amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}[\lg p(o \mid s)]\<br>
+\mc{F}[q] &amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}[\lg p(o \mid s)]\\<br>
 &amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s,o)}\right]<br>
 \end{aligned}<br>
 $$</p>
@@ -156,8 +156,8 @@ $$</p>
 <p>If we are just trying to maximize expected total reward $r(o_{1:n})$ w.r.t. the environment model, we get</p>
 <p>$$<br>
 \begin{aligned}<br>
-\pi^* &amp;:= \argmax{\pi} \E_{o \sim p(o \mid \pi)} [r(o_{1:n})] \<br>
-&amp;= \argmax{\pi} \E_{o_{1:n},a_{1:n} \sim p(o_{1:n},a_{1:n} \mid \pi)} [\ln\r(o_{1:n})],.<br>
+\pi^* &amp;:= \argmax{\pi} \E_{o \sim p(o \mid \pi)} [r(o_{1:n})] \\<br>
+&amp;= \argmax{\pi} \E_{o_{1:n},a_{1:n} \sim p(o_{1:n},a_{1:n} \mid \pi)} [\ln\r(o_{1:n})]\,.<br>
 \end{aligned}<br>
 $$</p>
 <p>So far, I am not seeing anything conceptually new here. Storing agent preferences in a probability distribution $\r(o)$ is not really any different from storing preferences in a reward $r(o)$, and the two are easily converted into each other.</p>
@@ -166,8 +166,8 @@ $$</p>
 <p>We get</p>
 <p>$$<br>
 \begin{aligned}<br>
-G[\pi]&amp;=\E_\rho[\mc{F}[o,\pi]] \<br>
-&amp;= \E_{o\sim\rho}\E_{s \sim q_{o,\pi}}\left[\lg\frac{q_{o,\pi}(s)}{p(s,o\mid\pi)}\right] \<br>
+G[\pi]&amp;=\E_\rho[\mc{F}[o,\pi]] \\<br>
+&amp;= \E_{o\sim\rho}\E_{s \sim q_{o,\pi}}\left[\lg\frac{q_{o,\pi}(s)}{p(s,o\mid\pi)}\right] \\<br>
 &amp;= \E_{o\sim\rho}\kl{q_{o,\pi}(s)}{p(s\mid\pi)} - \E_{o\sim\rho}\E_{s\sim q_{o,\pi}}\left[\lg p(o \mid s,\pi)\right]<br>
 \end{aligned}<br>
 $$</p>
@@ -204,9 +204,9 @@ The agent updates its hypothesis generator $q$, implicitly conforming to $p$ whi
 <p>I&rsquo;m also unconvinced about the way behavior is handled in this framework. Why think in terms of policies $\pi$ rather than actions $a_{1:n}$? Is the space of policies fixed through the agent&rsquo;s lifetime? If $\pi$ is supposed to represent some kind of high level strategy, then how does the agent learn different kinds of strategies (updating its ontology). This is the same problem that Bayesian inference faces, that $q$ ostensibly fixes. But now we need to fix the same problem again for $\pi$.</p>
 <p>Question: $G[\pi]$ appears to be intractable to compute or optimize directly. Why do we not have a variational approximation to this as well?</p>
 <p>Why not just do RL? What is gained by &ldquo;active inference&rdquo;, which seems to me to be secretly RL on top of variational Bayes.</p>
-</article>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/free-energy/>free energy</a></section>
 </div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/"><span class="iconfont icon-article"></span>Free Energy Principle 1St Pass</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/"><span class="iconfont icon-article"></span>Free Energy Principle 1st Pass</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/how-this-blog-works/"><span class="iconfont icon-article"></span>How this blog works</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 

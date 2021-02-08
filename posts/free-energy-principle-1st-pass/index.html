@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Free Energy Principle 1St Pass&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.d9777581423727d24f9c88d209c345c595abf9be7364e24441e940d6e6df93be35f92d02816f92949ec52251f6e191ab.css" integrity="sha384-2Xd1gUI3J9JPnIjSCcNFxZWr&#43;b5zZOJEQelA1ubfk741&#43;S0CgW&#43;SlJ7FIlH24ZGr"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Free Energy Principle 1St Pass" /><body><section id="header">
+<meta name="supported-color-schemes" content="light dark"><title>Free Energy Principle 1st Pass&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.d9777581423727d24f9c88d209c345c595abf9be7364e24441e940d6e6df93be35f92d02816f92949ec52251f6e191ab.css" integrity="sha384-2Xd1gUI3J9JPnIjSCcNFxZWr&#43;b5zZOJEQelA1ubfk741&#43;S0CgW&#43;SlJ7FIlH24ZGr"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Free Energy Principle 1st Pass" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Free Energy Principle 1St Pass</h1><p class="article date">February 7, 2021</p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Free Energy Principle 1st Pass</h1><p class="article date">February 7, 2021</p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\mb}{\mathbb}<br>
 \newcommand{\mc}{\mathcal}<br>
 \newcommand{\E}{\mb{E}}<br>
 \newcommand{\B}{\mb{B}}<br>
-\newcommand{\kl}[2]{D_{KL}\left(#1\ | \ #2\right)}<br>
+\newcommand{\kl}[2]{D_{KL}\left(#1\ \| \ #2\right)}<br>
 \newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }<br>
 \newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
 \newcommand{\atup}[1]{\left\langle#1\right\rangle}<br>
-\newcommand{\set}[1]{\left{#1\right}}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
 \newcommand{\t}{\theta}<br>
 \newcommand{\T}{\Theta}<br>
 \newcommand{\p}{\phi}<br>
@@ -48,13 +48,13 @@ $$</p>
 <h2 id="bayesian-basics">Bayesian basics</h2>
 <p>Suppose $\mc{H}$ is a set of possible hidden states, and $\mc{X}$ is a set of possible observations. Each $h\in\mc{H}$ <strong>explains</strong> data $x\in\mc{X}$ through the <strong>conditional data distribution</strong> $p_{X \mid H}(x \mid h)$, or also notated $p_{X \mid H=h}(x)$. A **Bayesian mixture** is the mixture distribution</p>
 <p>$$<br>
-p_{X,H}(x,h) = p_H(h)\cdot p_{X \mid H}(x \mid h),,<br>
+p_{X,H}(x,h) = p_H(h)\cdot p_{X \mid H}(x \mid h)\,,<br>
 $$</p>
 <p>where $p_H(h)$ is called the <strong>prior</strong>. We can then compute the <strong>posterior</strong> $p_{H \mid X}(h\mid x)$. The marginal distribution $p_X$ is called the **subjective data distribution**, since it is partly determined by the choice of prior (if we assume the prior is subjective, i.e. quantifies personal belief). $p_X$ is an agent&rsquo;s best prediction for what they will observe given what they believe (the prior).</p>
 <h2 id="the-philosophy-of-bayesian-information">The philosophy of Bayesian information</h2>
 <p>There are different ways to interpret quantity of information information. In the Bayesian setting, I like to think about the amount by which a possibility space was narrowed down. A probability $p_X(x)$ on $x\in\mc{X}$ represents the fraction of possibilities that remain after observing $x$. If we suppose there is a finite possibility space $\Omega$, and the function $X : \Omega \to \mc{X}$ is a random variable that tells us &ldquo;which $x$&rdquo; a given $\omega\in\Omega$ encodes, then the probability of $x$ is</p>
 <p>$$<br>
-p_X(x) = \frac{\abs{\set{\omega\in\Omega : X(\omega) = x}}}{\abs{\Omega}},,<br>
+p_X(x) = \frac{\abs{\set{\omega\in\Omega : X(\omega) = x}}}{\abs{\Omega}}\,,<br>
 $$</p>
 <p>which is the number of $\omega$s that encode $x$ over the total number of possibilities. This setup is supposing that $x$ is a <strong>partial observation</strong>, meaning that even after observing $x$, we still don&rsquo;t know which $\omega$ was drawn.</p>
 <p>In bits, we have $-\lg p_X(x)$, which is the number of halvings of the possibility space $\Omega$ due to observing $x$. Bits and probabilities can be viewed as different units for the same quantity. $-\lg p_X(x)$ is called the <strong>self-information</strong> of $x$, and in the Bayesian setting, the <strong>surprise</strong> due to observing $x$, implying that a higher number of bits makes $x$ more surprising, which makes sense because $x$ caused you to rule out much more of your possibility space.</p>
@@ -66,12 +66,12 @@ $$</p>
 <p>Let $\mc{X}$ be data space, $\mc{H}$ be hypothesis space, and $X,H$ be data and hypothesis random variables.</p>
 <p>$$<br>
 \begin{aligned}<br>
-I[X,H] &amp;= \E_X[\kl{p_{H\mid X}}{p_H}] \<br>
-&amp; = \E_{x\sim X}[H(p_{H\mid X=x}, p_H) - H(p_{H\mid X=x})] \<br>
-&amp; = \E_{x\sim X}[\E_{h \sim p_{H\mid X=x}}[-\lg p_H(h)] - \E_{h \sim p_{H\mid X=x}}[-\lg p_{H\mid X}(h \mid x)]] \<br>
-&amp; = \E_{x,h \sim p_{X,H}}\left[\lg \left( \frac{p_{H\mid X}(h\mid x)}{p_H(h)}\right)\right] \<br>
-&amp; = \sum_{x,h \in \mc{X} \times \mc{H}}p_{X,H}(x,h)\lg \left( \frac{p_{H\mid X}(h\mid x)}{p_H(h)}\right) \<br>
-&amp; = \sum_{x,h \in \mc{X} \times \mc{H}}p_{X,H}(x,h)\lg \left( \frac{p_{X,H}(x,h)}{p_X(x)p_H(h)}\right),.<br>
+I[X,H] &amp;= \E_X[\kl{p_{H\mid X}}{p_H}] \\<br>
+&amp; = \E_{x\sim X}[H(p_{H\mid X=x}, p_H) - H(p_{H\mid X=x})] \\<br>
+&amp; = \E_{x\sim X}[\E_{h \sim p_{H\mid X=x}}[-\lg p_H(h)] - \E_{h \sim p_{H\mid X=x}}[-\lg p_{H\mid X}(h \mid x)]] \\<br>
+&amp; = \E_{x,h \sim p_{X,H}}\left[\lg \left( \frac{p_{H\mid X}(h\mid x)}{p_H(h)}\right)\right] \\<br>
+&amp; = \sum_{x,h \in \mc{X} \times \mc{H}}p_{X,H}(x,h)\lg \left( \frac{p_{H\mid X}(h\mid x)}{p_H(h)}\right) \\<br>
+&amp; = \sum_{x,h \in \mc{X} \times \mc{H}}p_{X,H}(x,h)\lg \left( \frac{p_{X,H}(x,h)}{p_X(x)p_H(h)}\right)\,.<br>
 \end{aligned}<br>
 $$</p>
 <p>$I[X,H]$ is called <strong>Bayesian surprise</strong>, which is the expected (over data) KL divergence from your prior to posterior (after observing data), which is itself the expected difference in uncertainty (measured in bits, the number of halvings of the full possibility space).</p>
@@ -96,7 +96,7 @@ $$</p>
 </ul>
 <p>Suppose $x\in\mc{X}$ is observed and the posterior $p_{H \mid X=x}$ is intractable to compute. We can instead approximate it by minimizing</p>
 <p>$$<br>
-q^*<em>x = \argmin{q \in \mc{Q}} \kl{q}{p</em>{H \mid X=x}}<br>
+q_x^* = \argmin{q \in \mc{Q}} \kl{q}{p_{H \mid X=x}}<br>
 $$</p>
 <p>where $\mc{Q}$ is some set of probability mass functions $q : \mc{H} \to [0, 1]$, chosen for convenience.</p>
 <p>Assuming we cannot perform this minimization directly, we can make use of the identity</p>
@@ -106,8 +106,8 @@ $$</p>
 <p>where</p>
 <p>$$<br>
 \begin{aligned}<br>
-\mc{F}[q] &amp;= \kl{q}{p_{H,X=x}} \<br>
-&amp;= \E_{h \sim q} \lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right) \<br>
+\mc{F}[q] &amp;= \kl{q}{p_{H,X=x}} \\<br>
+&amp;= \E_{h \sim q} \lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right) \\<br>
 &amp;= \sum_{h\in\mc{H}} q(h) \lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right)<br>
 \end{aligned}<br>
 $$</p>
@@ -115,9 +115,9 @@ $$</p>
 <p>Free energy also equals</p>
 <p>$$<br>
 \begin{aligned}<br>
-\mc{F}[q] &amp;= H(q, p_{H, X=x}) - H(q) \<br>
-&amp;= \E_{h \sim q}\left[\lg\left(\frac{1}{p_{H, X}(h,x)}\right) - \lg\left(\frac{1}{q(h)}\right) \right] \<br>
-&amp;= \sum_{h \in \mc{H}} q(h) \lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right),,<br>
+\mc{F}[q] &amp;= H(q, p_{H, X=x}) - H(q) \\<br>
+&amp;= \E_{h \sim q}\left[\lg\left(\frac{1}{p_{H, X}(h,x)}\right) - \lg\left(\frac{1}{q(h)}\right) \right] \\<br>
+&amp;= \sum_{h \in \mc{H}} q(h) \lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right)\,,<br>
 \end{aligned}<br>
 $$</p>
 <p>where $H(q)$ is the entropy of $q$, and $H(q, p_{H, X=x})$ is the **total energy**, which is equal to the cross-product of $p_{H, X=x}$ under $q$.</p>
@@ -125,9 +125,9 @@ $$</p>
 <p>We also have free energy as <strong>complexity</strong> minus <strong>accuracy</strong>,</p>
 <p>$$<br>
 \begin{aligned}<br>
-\mc{F}[q] &amp;= \kl{q}{p_H} - \E_{h\sim q}\left[\lg p_{X \mid H}(x \mid h)\right] \<br>
-&amp;= \E_{h \sim q}\left[\lg\left(\frac{q(h)}{p_H(h)}\right)-\lg p_{X \mid H}(x \mid h)\right] \<br>
-&amp;= \E_{h \sim q}\left[\lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right)\right],.<br>
+\mc{F}[q] &amp;= \kl{q}{p_H} - \E_{h\sim q}\left[\lg p_{X \mid H}(x \mid h)\right] \\<br>
+&amp;= \E_{h \sim q}\left[\lg\left(\frac{q(h)}{p_H(h)}\right)-\lg p_{X \mid H}(x \mid h)\right] \\<br>
+&amp;= \E_{h \sim q}\left[\lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right)\right]\,.<br>
 \end{aligned}<br>
 $$</p>
 <p>This form of free energy can be used in practice. Given any particular $q$ (e.g. as a neural network), the complexity $\kl{q}{p_H}$ and the accuracy $\E_{h\sim q}\left[\lg p_{X \mid H}(x \mid h)\right]$ can be approximated using Monte-Carlo sampling from $q$. This is assuming we have access to a prior $p_H$ over hidden states and predictive (or generative) distribution $p_{X\mid H}$. If $p_{H\mid X}$ is intractable, then a suitable $q^*$ that approximately and sufficiently minimizes $\mc{F}[q]$ becomes our approximation of that posterior.</p>
@@ -137,11 +137,11 @@ $$</p>
 <p>We now suppose the agent observes an endless stream of data over time. The full possible set of observations are all infinite sequences $\mc{X}^\infty$ where $\mc{X}$ is the set of possible observations at each point in time, e.g. a frame of sensory data such as a video or audio frame. Let $X_{a:b}$ be the random variable denoting a slice of the data stream from time $a$ to time $b$  (inclusive). $X_{1:n}$ is the first $n$ timesteps of data, and $X_{n+1:\infty}$ is everything that is observed after time $n$. I will also use the shorthands $X_{&lt;n} = X_{1:n-1}$ and $X_{&gt;n} = X_{n+1:\infty}$.</p>
 <p>Now suppose the agent has a <strong>hypothesis space</strong> $\mc{M}$, which is a set of probability distributions $\mu\in\mc{M}$. We call each $\mu$ a hypothesis. Let $\pi$ be a probability distribution over $\mc{M}$ (the prior). Then we have a mixture distribution</p>
 <p>$$<br>
-p(X_{1:n}) = \sum_{\mu\in\mc{M}} \pi(\mu)\cdot\mu(X_{1:n}),.<br>
+p(X_{1:n}) = \sum_{\mu\in\mc{M}} \pi(\mu)\cdot\mu(X_{1:n})\,.<br>
 $$</p>
 <p>If we define the joint distribution</p>
 <p>$$<br>
-p(X_{1:n},\mu) = \pi(\mu)\cdot\mu(X_{1:n}),,<br>
+p(X_{1:n},\mu) = \pi(\mu)\cdot\mu(X_{1:n})\,,<br>
 $$</p>
 <p>then we have the usual Bayesian quantities:</p>
 <ul>
@@ -155,11 +155,11 @@ w_\mu(x_{1:n}) = \pi(\mu)\frac{\mu(x_{1:n})}{p(x_{1:n})}<br>
 $$</p>
 <p>where the hypothesis posterior is</p>
 <p>$$<br>
-p(\mu \mid x_{1:n}) = w_\mu(x_{1:n}),.<br>
+p(\mu \mid x_{1:n}) = w_\mu(x_{1:n})\,.<br>
 $$</p>
 <p>We also have a new quantity, the <strong>data posterior</strong></p>
 <p>$$<br>
-p(X_{&gt;n} \mid X_{1:n}=x_{1:n}) = \sum_{\mu\in\mc{M}} w_\mu(x_{1:n})\mu(X_{&gt;n} \mid X_{1:n}=x_{1:n}),,<br>
+p(X_{&gt;n} \mid X_{1:n}=x_{1:n}) = \sum_{\mu\in\mc{M}} w_\mu(x_{1:n})\mu(X_{&gt;n} \mid X_{1:n}=x_{1:n})\,,<br>
 $$</p>
 <p>which has the same form as the prior mixture, except that we reweighted by switching from $\pi(\mu)$ to $w_\mu(x_{1:n})$, and we conditionalized the hypotheses, i.e. switched from $\mu(X_{1:\infty})$ to $\mu(X_{&gt;n} \mid X_{1:n}=x_{1:n})$.</p>
 <p>We can incorporate actions into this framework by specifying that all hypotheses in $\mu\in\mc{M}$ must be distributions over a combined observation and action stream. This stream would be a sequence $(x_1, a_1, x_2, a_2, \ldots)$ of alternating observation $x_t \in \mc{X}$ and action $a_t \in \mc{A}$ at every time step. Note that a hypothesis predicts the next observation $\mu(x_t \mid x_{&lt;t}, a_{&lt;t})$, but we don&rsquo;t ask a hypothesis to predict a next action, i.e. $a_t$ given $x_{&lt;t}, a_{&lt;t}$, since that is the agent&rsquo;s decision to make.</p>
@@ -223,7 +223,7 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 </ol>
 </article>
 </div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/active-inference-tutorial-actions/"><span class="iconfont icon-article"></span>Active Inference Tutorial (Actions)</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/how-this-blog-works/"><span class="iconfont icon-article"></span>How This Blog Works</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/active-inference-tutorial-actions/"><span class="iconfont icon-article"></span>Active inference tutorial (actions)</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
