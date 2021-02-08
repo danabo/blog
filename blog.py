@@ -160,10 +160,11 @@ class SimpleParser(object):
       it.next(len(m.group(0)))
       url = f'</{m.group(1)}>'
       if m.group(3):
+        # Image caption in group(3)
         it.replace(f'![]({url} "{m.group(3)}")')
       else:
         it.replace(f'![]({url})')
-      self.images.append(m.group(1))
+      self.images.append(m.group(1))  # Extract local file name.
       return
 
     it.next()  # Nothing found. Move forward.
@@ -173,7 +174,7 @@ class SimpleParser(object):
     if m:
       it.next(len(m.group(0)))
       it.replace('{{< locallink "'+m.group(1)+'" >}}')
-      self.pages.append(m.group(1))
+      self.pages.append(m.group(1))  # Extract local file name.
       return
 
     it.next()  # Nothing found. Move forward.
