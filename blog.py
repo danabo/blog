@@ -146,14 +146,18 @@ class SimpleParser(object):
     while not (it.peek(2) == '$$' and it.peek(-1) != '\\'):
       it.next(1)
     it.next(2)
-    it.replace(it.s[it.section_start:it.i].replace('\\', '\\\\'))
+    it.replace(self._math_replace(it.s[it.section_start:it.i]))
 
   def inline_math(self, it):
     it.next(1)  # skip $
     while not (it.peek(1) == '$' and it.peek(-1) != '\\'):
       it.next(1)
     it.next(1)
-    it.replace(it.s[it.section_start:it.i].replace('\\', '\\\\'))
+    it.replace(self._math_replace(it.s[it.section_start:it.i]))
+
+  def _math_replace(self, s):
+    # https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
+    return s.replace('\\', '\\\\').replace('*', r'\*').replace('_', r'\_').replace('`', r'\`')
 
   def comment(self, it):
     # Note, use match rather than search, because it requires that the match be at pos.
@@ -196,8 +200,13 @@ class SimpleParser(object):
     m = self.RE_LOCAL_LINK.match(it.s, it.i)
     if m:
       it.next(len(m.group(0)))
-      it.replace('{{< locallink "'+m.group(1)+'" >}}')
-      self.pages.append(m.group(1))  # Extract local file name.
+      target = m.group(1)
+      if target.startswith('#'):
+        # This is a link to a position within this post. Don't treat it like a link to another post.
+        it.replace('['+target+']('+target.lower().replace(' ', '-')+')')
+      else:
+        it.replace('{{< locallink "'+target+'" >}}')
+        self.pages.append(target)  # Extract local file name.
       return
 
     it.next()  # Nothing found. Move forward.
