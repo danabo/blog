@@ -1,5 +1,5 @@
 ---
-date: '2021-02-18T16:51:34-06:00'
+date: '2021-02-18T16:58:25-06:00'
 draft: false
 tags:
 - free energy
@@ -49,7 +49,7 @@ Typical usages of $q\_\\t$ in machine learning:
     - $\\tilde{\\t} = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z \\mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.
     - $\\t^\* = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z)} - \\E\_{z\\sim f\_\\t(z)}\\left[\\lg p(D \\mid z)\\right]$ is the approximation. This is what we find through optimization.
 
-The variational Bayes "usage mode" is clearly different from the others. MLE and MAP are fitting $f\_\\t$ to the data, i.e. finding a single $t^\*\\in\\T$ that maximizes the probability of the data under $q\_\\t$. Bayesian inference is finding a distribution $p(\\t \\mid D)$ on $\\T$ which represents the model's beliefs about various parameters $\\t\\in\\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f\_\\t$ to data, since we are not choosing any particular parameter in $\\T$. Variational Bayes uses $q\_{\\t^\*}$ as an approximation of $p(\\t \\mid D)$, where $\\t^\*\\in\\T$ is the optimal parameter of distribution $q\_\\t(z)$ and $z\\in\\mc{Z}$ is a hypothesis.
+The variational Bayes "usage mode" is clearly different from the others. MLE and MAP are fitting $f\_\\t$ to the data, i.e. finding a single $\\t^\*\\in\\T$ that maximizes the probability of the data under $q\_\\t$. Bayesian inference is finding a distribution $p(\\t \\mid D)$ on $\\T$ which represents the model's beliefs about various parameters $\\t\\in\\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f\_\\t$ to data, since we are not choosing any particular parameter in $\\T$. Variational Bayes uses $q\_{\\t^\*}$ as an approximation of $p(\\t \\mid D)$, where $\\t^\*\\in\\T$ is the optimal parameter of distribution $q\_\\t(z)$ and $z\\in\\mc{Z}$ is a hypothesis.
 
 In the first three modes, $\\T$ are hypotheses and we are either selecting one or finding a distribution over them. In the variational Bayes mode, $\\T$ are not hypotheses. Instead we introduce $\\mc{Z}$ as the hypothesis space and $\\T$ is the parameter space for the approximate posterior $q\_\\t(z)$ on $\\mc{Z}$, i.e. $q\_\\t(z)$ approximates $p(z\\mid D)$. We don't have $\\mc{Z}$ in the first three modes, and we are interested in $p(\\t \\mid D)$ rather than $p(z \\mid D)$. Also in the first three modes, $q\_\\t(D)$ is a distribution on what is observed, datasets $D$, rather than over latent $\\mc{Z}$.
 
