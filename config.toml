@@ -4,6 +4,9 @@ title = "Dan's Notepad"
 theme = "hugo-notepadium"
 copyright = "©2021 Daniel Abolafia."
 
+[author]
+name = "Daniel Abolafia"
+
 languageCode = "en-us"
 
 enableRobotsTXT = true
