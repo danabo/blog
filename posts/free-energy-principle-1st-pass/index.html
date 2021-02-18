@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Free Energy Principle 1st Pass&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.d9777581423727d24f9c88d209c345c595abf9be7364e24441e940d6e6df93be35f92d02816f92949ec52251f6e191ab.css" integrity="sha384-2Xd1gUI3J9JPnIjSCcNFxZWr&#43;b5zZOJEQelA1ubfk741&#43;S0CgW&#43;SlJ7FIlH24ZGr"><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><title>Free Energy Principle 1st Pass&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.402a135398ac20effd874582441adfb484001fb367ab4dabaaa1c8fdbff0b65e4396f6a8bf95739eeecbd62f725be605.css" integrity="sha384-QCoTU5isIO/9h0WCRBrftIQAH7Nnq02rqqHI/b/wtl5Dlvaov5Vznu7L1i9yW&#43;YF"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Free Energy Principle 1st Pass" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Free Energy Principle 1st Pass</h1><p class="article date">February 7, 2021</p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Free Energy Principle 1st Pass</h1><p class="article date">February 10, 2021</p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\mb}{\mathbb}<br>
 \newcommand{\mc}{\mathcal}<br>
 \newcommand{\E}{\mb{E}}<br>
@@ -28,14 +28,12 @@ $$</p>
   <a href="" class="broken">The free-energy principle a unified brain theory</a>
 
 
-
 </li>
 <li>
 
 
 
   <a href="" class="broken">Friston&#39;s Free Energy (Active Inference)</a>
-
 
 
 </li>
@@ -46,11 +44,11 @@ $$</p>
 <p>These are my informal notes. Probability notation can be cumbersome and overly verbose. As is customary in machine learning and many of the sciences, I&rsquo;m not going to bother using probability notation correctly. That is to say, I&rsquo;m going to mangle and confuse probability measures, random variables, and probability mass/density functions. Hopefully readers can figure out the intended meaning of my notation from context, and I try to clarify when needed.</p>
 <p>In general, figuring out good notational conventions for probability in many fields (I&rsquo;m looking at you machine learning, but the neuroscience free energy literature also has this problem) seems to be an unsolved problem, and one that I&rsquo;d like to work on at some point! However that is not my concern here. I&rsquo;m just taking the easiest route to expressing my knowledge. If you want to know what &ldquo;proper&rdquo; probability notation looks like, check out <a href="http://zhat.io/articles/primer-probability-theory"target="_blank">my post on probability theory</a>.</p>
 <h2 id="bayesian-basics">Bayesian basics</h2>
-<p>Suppose $\mc{H}$ is a set of possible hidden states, and $\mc{X}$ is a set of possible observations. Each $h\in\mc{H}$ <strong>explains</strong> data $x\in\mc{X}$ through the <strong>conditional data distribution</strong> $p_{X \mid H}(x \mid h)$, or also notated $p_{X \mid H=h}(x)$. A **Bayesian mixture** is the mixture distribution</p>
+<p>Suppose $\mc{H}$ is a set of possible hidden states, and $\mc{X}$ is a set of possible observations. Each $h\in\mc{H}$ <strong>explains</strong> data $x\in\mc{X}$ through the <strong>conditional data distribution</strong> $p_{X \mid H}(x \mid h)$, or also notated $p_{X \mid H=h}(x)$. A <strong>Bayesian mixture</strong> is the mixture distribution</p>
 <p>$$<br>
 p_{X,H}(x,h) = p_H(h)\cdot p_{X \mid H}(x \mid h)\,,<br>
 $$</p>
-<p>where $p_H(h)$ is called the <strong>prior</strong>. We can then compute the <strong>posterior</strong> $p_{H \mid X}(h\mid x)$. The marginal distribution $p_X$ is called the **subjective data distribution**, since it is partly determined by the choice of prior (if we assume the prior is subjective, i.e. quantifies personal belief). $p_X$ is an agent&rsquo;s best prediction for what they will observe given what they believe (the prior).</p>
+<p>where $p_H(h)$ is called the <strong>prior</strong>. We can then compute the <strong>posterior</strong> $p_{H \mid X}(h\mid x)$. The marginal distribution $p_X$ is called the <strong>subjective data distribution</strong>, since it is partly determined by the choice of prior (if we assume the prior is subjective, i.e. quantifies personal belief). $p_X$ is an agent&rsquo;s best prediction for what they will observe given what they believe (the prior).</p>
 <h2 id="the-philosophy-of-bayesian-information">The philosophy of Bayesian information</h2>
 <p>There are different ways to interpret quantity of information information. In the Bayesian setting, I like to think about the amount by which a possibility space was narrowed down. A probability $p_X(x)$ on $x\in\mc{X}$ represents the fraction of possibilities that remain after observing $x$. If we suppose there is a finite possibility space $\Omega$, and the function $X : \Omega \to \mc{X}$ is a random variable that tells us &ldquo;which $x$&rdquo; a given $\omega\in\Omega$ encodes, then the probability of $x$ is</p>
 <p>$$<br>
@@ -76,7 +74,7 @@ I[X,H] &amp;= \E_X[\kl{p_{H\mid X}}{p_H}] \\<br>
 $$</p>
 <p>$I[X,H]$ is called <strong>Bayesian surprise</strong>, which is the expected (over data) KL divergence from your prior to posterior (after observing data), which is itself the expected difference in uncertainty (measured in bits, the number of halvings of the full possibility space).</p>
 <p>Pointwise Bayesian information gain (information gained about hypothesis $h$ from data $x$) is $\lg (1/p_H(h)) - \lg (1/p_{H \mid X}(h \mid x)) = \lg (1/p_X(x)) - \lg (1/p_{X \mid H}(x\mid h))$, which is the change in amount of hypothesis weight (posterior mass) that shifted onto $h$.</p>
-<p>$\lg (1/p_{X \mid H}(x \mid h))$ is the **surprise** (also **self-information**) of observing $x$ under $h$. The higher this quantity, the more the possibility space of $h$ was narrowed down by $x$.</p>
+<p>$\lg (1/p_{X \mid H}(x \mid h))$ is the <strong>surprise</strong> (also <strong>self-information</strong>) of observing $x$ under $h$. The higher this quantity, the more the possibility space of $h$ was narrowed down by $x$.</p>
 <h2 id="variational-bayes">Variational Bayes</h2>
 <p>Variational approximation to calculating the Bayesian posterior:<br>
 
@@ -84,7 +82,6 @@ $$</p>
 
 
   <a href="" class="broken">The free-energy principle a unified brain theory#Free Energy</a>
-
 
 
 </p>
@@ -120,7 +117,7 @@ $$</p>
 &amp;= \sum_{h \in \mc{H}} q(h) \lg\left(\frac{q(h)}{p_{H,X}(h,x)}\right)\,,<br>
 \end{aligned}<br>
 $$</p>
-<p>where $H(q)$ is the entropy of $q$, and $H(q, p_{H, X=x})$ is the **total energy**, which is equal to the cross-product of $p_{H, X=x}$ under $q$.</p>
+<p>where $H(q)$ is the entropy of $q$, and $H(q, p_{H, X=x})$ is the <strong>total energy</strong>, which is equal to the cross-product of $p_{H, X=x}$ under $q$.</p>
 <p>Note that $p_{H, X=x}(h) = p_{H,X}(h,x)$ is not the same as the conditional distribution $p_{H \mid X=x}(h) = p_{H,X}(h,x) / p_X(x)$, and is not a valid probability distribution because its unnormalized.</p>
 <p>We also have free energy as <strong>complexity</strong> minus <strong>accuracy</strong>,</p>
 <p>$$<br>
@@ -168,7 +165,6 @@ $$</p>
 
 
   <a href="" class="broken">Free energy principle and Solomonoff induction</a>
-
 
 
 
@@ -221,9 +217,9 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 <li>Is the agent assumed to have a dynamics model of the environment where all that&rsquo;s unknown to the agent is the environment state? that seems unrealistic. if the agent doesn&rsquo;t know the &ldquo;true&rdquo; dynamics model, by what mechanism would the agent improve its dynamics model? The Bayesian posterior approximation is for estimating the effect of its actions on environment state, but this doesn&rsquo;t address how the agent learns about the relationship between action and state.</li>
 <li>How are time and actions incorporated? I understand the time-less variational free energy formulation that I explained above. What I don&rsquo;t understand is what this looks like when applied to an agent-environment interaction loop over time.</li>
 </ol>
-</article>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/free-energy/>free energy</a></section>
 </div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/active-inference-tutorial-actions/"><span class="iconfont icon-article"></span>Active inference tutorial (actions)</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/blogging-experiment/"><span class="iconfont icon-article"></span>Blogging experiment</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/how-this-blog-works/"><span class="iconfont icon-article"></span>How this blog works</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
