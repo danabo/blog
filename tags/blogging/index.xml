@@ -13,7 +13,7 @@
     <item>
       <title>Varational Solomonoff Induction</title>
       <link>https://danabo.github.io/blog/posts/varational-solomonoff-induction/</link>
-      <pubDate>Thu, 18 Feb 2021 16:51:34 -0600</pubDate>
+      <pubDate>Thu, 18 Feb 2021 16:58:25 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/varational-solomonoff-induction/</guid>
       <description>&lt;p&gt;$$&lt;br&gt;
@@ -67,7 +67,7 @@ $$&lt;/p&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The variational Bayes &amp;ldquo;usage mode&amp;rdquo; is clearly different from the others. MLE and MAP are fitting $f_\t$ to the data, i.e. finding a single $t^*\in\T$ that maximizes the probability of the data under $q_\t$. Bayesian inference is finding a distribution $p(\t \mid D)$ on $\T$ which represents the model&amp;rsquo;s beliefs about various parameters $\t\in\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f_\t$ to data, since we are not choosing any particular parameter in $\T$. Variational Bayes uses $q_{\t^*}$ as an approximation of $p(\t \mid D)$, where $\t^*\in\T$ is the optimal parameter of distribution $q_\t(z)$ and $z\in\mc{Z}$ is a hypothesis.&lt;/p&gt;
+&lt;p&gt;The variational Bayes &amp;ldquo;usage mode&amp;rdquo; is clearly different from the others. MLE and MAP are fitting $f_\t$ to the data, i.e. finding a single $\t^*\in\T$ that maximizes the probability of the data under $q_\t$. Bayesian inference is finding a distribution $p(\t \mid D)$ on $\T$ which represents the model&amp;rsquo;s beliefs about various parameters $\t\in\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f_\t$ to data, since we are not choosing any particular parameter in $\T$. Variational Bayes uses $q_{\t^*}$ as an approximation of $p(\t \mid D)$, where $\t^*\in\T$ is the optimal parameter of distribution $q_\t(z)$ and $z\in\mc{Z}$ is a hypothesis.&lt;/p&gt;
 &lt;p&gt;In the first three modes, $\T$ are hypotheses and we are either selecting one or finding a distribution over them. In the variational Bayes mode, $\T$ are not hypotheses. Instead we introduce $\mc{Z}$ as the hypothesis space and $\T$ is the parameter space for the approximate posterior $q_\t(z)$ on $\mc{Z}$, i.e. $q_\t(z)$ approximates $p(z\mid D)$. We don&amp;rsquo;t have $\mc{Z}$ in the first three modes, and we are interested in $p(\t \mid D)$ rather than $p(z \mid D)$. Also in the first three modes, $q_\t(D)$ is a distribution on what is observed, datasets $D$, rather than over latent $\mc{Z}$.&lt;/p&gt;
 &lt;h1 id=&#34;solomonoff-induction&#34;&gt;Solomonoff induction&lt;/h1&gt;
 &lt;p&gt;I learned about this topic from &lt;a href=&#34;https://www.springer.com/gp/book/9781489984456&#34;target=&#34;_blank&#34;&gt;An Introduction to Kolmogorov Complexity and Its Applications&lt;/a&gt; and &lt;a href=&#34;http://www.hutter1.net/ai/uaibook.htm&#34;target=&#34;_blank&#34;&gt;Universal Artificial Intelligence&lt;/a&gt;. I recommend both books as references.&lt;/p&gt;
