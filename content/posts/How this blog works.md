@@ -1,5 +1,5 @@
 ---
-date: '2021-02-10T14:39:00-06:00'
+date: '2021-02-20T09:04:26-06:00'
 tags:
 - personal
 - blogging
@@ -73,3 +73,7 @@ locallink [Hugo](https://gohugo.io/) shortcode:
 ```
 
 [publish.sh](https://github.com/danabo/blog/blob/master/publish.sh) will first run blog.py, and then run `git commit -v` which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.
+
+# Reader experience
+Currently the reader sees a typical blog layout: a "blog roll" of recent posts with previews and tags. I don't intend my notes to have any particular time ordering. Notes are objects in flux. I might edit anything. Since I'm using time of last edit as the post date, anything I touch will float back to the top. I might decide to change that.
+

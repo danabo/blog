@@ -1,5 +1,5 @@
 ---
-date: '2021-02-18T08:53:38-06:00'
+date: '2021-02-20T07:23:41-06:00'
 tags:
 - free energy
 title: Active inference tutorial (actions)

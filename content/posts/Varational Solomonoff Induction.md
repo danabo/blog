@@ -1,5 +1,5 @@
 ---
-date: '2021-02-18T16:58:25-06:00'
+date: '2021-02-20T10:16:45-06:00'
 draft: false
 tags:
 - free energy
@@ -27,12 +27,14 @@ $$
 
 
 
-The [free energy principle](https://en.wikipedia.org/wiki/Free_energy_principle) is a [variational Bayesian method](https://en.wikipedia.org/wiki/Variational_Bayesian_methods) for approximating posteriors. I want to know, what would it look like to apply free energy minimization to [Solomonoff induction](https://en.wikipedia.org/wiki/Solomonoff%27s_theory_of_inductive_inference), i.e. universal inference?
+The [free energy principle](https://en.wikipedia.org/wiki/Free_energy_principle) is a [variational Bayesian method](https://en.wikipedia.org/wiki/Variational_Bayesian_methods) for approximating posteriors. Can free energy minimization combined with program synthesis methods from machine learning tractably approximate [Solomonoff induction](https://en.wikipedia.org/wiki/Solomonoff%27s_theory_of_inductive_inference) (i.e. universal inference)? In these notes, I explore what the combination of these ideas looks like.
 
 # Machine learning
-In parametric machine learning, we have a function $f\_\\t$ parametrized by $\\t\\in\\T$. Let $q\_\\t(D)$ be a probability distribution on datasets $D$ defined in terms of $f\_\\t$. For supervised learning, $q\_\\t(D) = \\prod\_{(x,y)\\in D} Pr(y; f\_\\t(x))$ is the product of probabilities of each target $y$ given distribution parameters $f\_\\t(x)$, e.g. $f\_\\t(x)$ returns the mean and variance of a Gaussian over $y$. For unsupervised learning, $f\_\\t(x)$ might return a real number which serves as the log-probability of each $x \\in D$. In general $f\_\\t$ can be any kind of parametric ML model, but these days it is likely to be a neural network.
+I want to make an important clarification about "Bayesian machine learning". First, I'll briefly define some "modes" of machine learning.
 
-Typical usages of $q\_\\t$ in machine learning:
+ In parametric machine learning, we have a function $f\_\\t$ parametrized by $\\t\\in\\T$. Let $q\_\\t(D)$ be a probability distribution on datasets $D$ defined in terms of $f\_\\t$. For supervised learning, $q\_\\t(D) = \\prod\_{(x,y)\\in D} Pr(y; f\_\\t(x))$ is the product of probabilities of each target $y$ given distribution parameters $f\_\\t(x)$, e.g. $f\_\\t(x)$ returns the mean and variance of a Gaussian over $y$. For unsupervised learning, $f\_\\t(x)$ might return a real number which serves as the log-probability of each $x \\in D$. In general $f\_\\t$ can be any kind of parametric ML model, but these days it is likely to be a neural network.
+
+Typical usage "modes" of $q\_\\t$ in machine learning:
 - **MLE** ([maximum likelihood](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)): Training produces hypothesis with highest data likelihood.
     - $\\t\\in\\T$ is a hypothesis.
     - $\\t^\* = \\argmax{\\t}\\log q\_\\t(D)$ for dataset $D$.
@@ -53,8 +55,18 @@ The variational Bayes "usage mode" is clearly different from the others. MLE and
 
 In the first three modes, $\\T$ are hypotheses and we are either selecting one or finding a distribution over them. In the variational Bayes mode, $\\T$ are not hypotheses. Instead we introduce $\\mc{Z}$ as the hypothesis space and $\\T$ is the parameter space for the approximate posterior $q\_\\t(z)$ on $\\mc{Z}$, i.e. $q\_\\t(z)$ approximates $p(z\\mid D)$. We don't have $\\mc{Z}$ in the first three modes, and we are interested in $p(\\t \\mid D)$ rather than $p(z \\mid D)$. Also in the first three modes, $q\_\\t(D)$ is a distribution on what is observed, datasets $D$, rather than over latent $\\mc{Z}$.
 
+## What is Bayesian machine learning?
+
+Conventionally, a Bayesian model has a prior probability distribution over it's parameters, and inference involves finding posterior distributions. This corresponds to the Bayesian inference mode above. Out of the four modes, MLE is definitively non-Bayesian. MAP might be called semi-Bayesian, simply because there is a prior on parameters $p(\\t)$, but only the argmax of the posterior is being found, rather than a full posterior. The variational Bayes mode is where things get wonky. There are two models: $q\_\\t(z)$ and $p(z, D)$. The first is parametrized and is optimized greedily with something like gradient descent, as in the MLE or MAP cases. The second is Bayesian. 
+
+Is variational Bayes a Bayesian ML method? In one sense yes, in another sense no. It's efficacy depends on $q\_\\t(z)$ being a good approximation of the posterior $p(z \\mid D)$, and whether $q\_\\t(z)$ is a good approximation depends on the efficacy of the chosen machine learning method (e.g. neural networks trained with gradient descent). I'd expect $q\_\\t(z)$ to be a non-Bayesian model (If it were Bayesian, how then do you tractably approximate it? That is the very thing we are trying to do with $p(z, D)$.) So then the efficacy of variational Bayes comes down to the properties of non-Bayesian machine learning. If at the end of the day, point-estimates of parameters are always doing the heavy lifting (i.e. generalizing well), why be Bayesian in the first place?
+
 # Solomonoff induction
 I learned about this topic from [An Introduction to Kolmogorov Complexity and Its Applications](https://www.springer.com/gp/book/9781489984456) and [Universal Artificial Intelligence](http://www.hutter1.net/ai/uaibook.htm). I recommend both books as references.
+
+There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: [#Version 1](#version-1), [#Version 2](#version-2), [#Version 3](#version-3). Only an understanding of [#Version 2](#version-2) is needed for the subsequent sections.
+
+## Notation
 
 Let $\\B = \\{0,1\\}$ be the binary alphabet, $\\B^n$ be the set of all length-$n$ binary strings, and $\\B^\\infty$ be the set of all infinite binary strings.
 
@@ -248,15 +260,15 @@ $$
 
 This now has the form of a one-timestep reinforcement learning objective, where $R(h) = \\lg p(h,x\_{1:t})$ is the reward for "action" $h$, and $\\mb{H}\_{h \\sim q\_\\t}[q\_\\t(h)]$ is the entropy of $q\_\\t(h)$. Here $q\_\\t(h)$ is called the **policy**, i.e. the distribution actions are sampled from. Maximizing this objective jointly maximizes expected reward under the policy and entropy of the policy. An entropy term is typically added to RL objectives as a regularizer to encourage exploration (higher entropy policy means more random actions), but in this case the entropy term comes included.
 
-We can use standard [policy gradient methods](https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html) (e.g. [IMPALA](https://deepmind.com/research/publications/impala-scalable-distributed-deep-rl-importance-weighted-actor-learner-architectures)) to maximize the above RL objective (equivalent to minimizing free energy), so long as the reward $R(h) = \\lg p(h,x\_{1:t})$ is fast to compute.
+We can use standard [policy gradient methods](https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html) (e.g. [IMPALA](https://deepmind.com/research/publications/impala-scalable-distributed-deep-rl-importance-weighted-actor-learner-architectures)) to maximize the above RL objective (equivalent to minimizing free energy), so long as $q\_\\t(h)$ is fast to sample from, and the reward $R(h) = \\lg p(h,x\_{1:t})$ is fast to compute. We can control both.
 
 # Tractability
 Tractability depends on our choice of $\\mc{H}$ and prior $p(h)$. What operations do we want to be tractable? Typically we want:
-1. To calculate approximate hypothesis posteriors.
-2. To calculate predictive data distributions (data posterior).
+1. To approximate hypothesis posteriors: $q\_{\\t^\*}(h) \\approx p(h \\mid x\_{1:t})$.
+2. To approximate predictive data distributions (data posterior): $p(x\_{>t} \\mid x\_{1:t})$.
 
 ## Hypothesis posterior
-The approximation $q\_\\t(h)$ allows us to do this. The tractability of finding a good $q\_\\t(h)$ using policy gradient methods will require the reward $R(h) = \\lg p(h,x\_{1:t})$ is fast to calculate.
+The approximation $q\_{\\t^\*}(h)$ allows us to do this. The tractability of finding a good parameter $\\t^\*$ for $q$ using policy gradient methods will require that the reward $R(h) = \\lg p(h,x\_{1:t})$ is fast to calculate.
 
 We can write the reward as the sum of two terms:
 
@@ -301,7 +313,18 @@ For approximating the data distribution, we need fast sampling from hypothesis p
 
 For approximating the data posterior, we need fast approximate posteriors $q\_{\\t^\*}(h)$, and we need hypothesis data-conditionalization $p(y\\mid x, h)$ to be fast.
 
+## Generalization
+
+Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.
+
+Can neural networks approximate the true posterior $p(h \\mid x)$? This is a generalization problem. The optimized generative model on programs, $q\_{\\t^\*}(h)$, will have been trained on finitely many programs. Whether $q\_{\\t^\*}(h') \\approx p(h' \\mid x)$ for some program $h'$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q\_\\t$.
+
+The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \\lg p(h,x\_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x\_{1:t} \\mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the [#Prior](#prior) section), the prior is then not even computable. Same for $p(x\_{1:t} \\mid h)$. Without actually running $h$ on $x\_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$'s code but without running $h$ is in general impossible. The function $p(h \\mid x\_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.
+
+As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn't start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.
+
 # Choices
+To summarize the requirements we found above:
 Is there a choice of $\\mc{H}$ and $p(x,h)$ s.t.
 - Prior $p(h)$ is fast to calculate and sample from.
 - Approximate hypothesis posterior $q\_{\\t^\*}(h)$ is fast to sample from.
@@ -340,11 +363,6 @@ This is straightforward in Solomonoff induction [#Version 1](#version-1) where e
 
 However, if we are using the programs I previously suggested that output data probabilities, then these programs may be fast on some inputs and slow on others. I don't have a solution, but a reasonable suggestion is to do some kind of heuristic analysis of the programs on some sample inputs and assign a slowness penalty in the prior.
 
-## Approximate posterior
-
-Choosing appropriate $q\_\\t(h)$, a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens. Thus $q\_\\t$ is also most likely auto-regressive.
-
-Can neural networks approximate the true posterior $p(h \\mid x)$? This is a generalization problem. The optimized generative model on programs, $q\_{\\t^\*}(h)$, will have been trained on finitely many programs. Whether $q\_{\\t^\*}(h') \\approx p(h' \\mid x)$ for some program $h'$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q\_\\t$.
 
 # Lifelong learning
 Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it's future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).
