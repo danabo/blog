@@ -5,7 +5,7 @@
     <description>Recent content in Tags on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Thu, 18 Feb 2021 16:58:25 -0600</lastBuildDate>
+    <lastBuildDate>Sat, 20 Feb 2021 10:16:45 -0600</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +13,7 @@
     <item>
       <title>Varational Solomonoff Induction</title>
       <link>https://danabo.github.io/blog/posts/varational-solomonoff-induction/</link>
-      <pubDate>Thu, 18 Feb 2021 16:58:25 -0600</pubDate>
+      <pubDate>Sat, 20 Feb 2021 10:16:45 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/varational-solomonoff-induction/</guid>
       <description>&lt;p&gt;$$&lt;br&gt;
@@ -34,10 +34,11 @@
 \newcommand{\O}{\Omega}&lt;br&gt;
 \newcommand{\sm}{\mathrm{softmax}}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;The &lt;a href=&#34;https://en.wikipedia.org/wiki/Free_energy_principle&#34;target=&#34;_blank&#34;&gt;free energy principle&lt;/a&gt; is a &lt;a href=&#34;https://en.wikipedia.org/wiki/Variational_Bayesian_methods&#34;target=&#34;_blank&#34;&gt;variational Bayesian method&lt;/a&gt; for approximating posteriors. I want to know, what would it look like to apply free energy minimization to &lt;a href=&#34;https://en.wikipedia.org/wiki/Solomonoff%27s_theory_of_inductive_inference&#34;target=&#34;_blank&#34;&gt;Solomonoff induction&lt;/a&gt;, i.e. universal inference?&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://en.wikipedia.org/wiki/Free_energy_principle&#34;target=&#34;_blank&#34;&gt;free energy principle&lt;/a&gt; is a &lt;a href=&#34;https://en.wikipedia.org/wiki/Variational_Bayesian_methods&#34;target=&#34;_blank&#34;&gt;variational Bayesian method&lt;/a&gt; for approximating posteriors. Can free energy minimization combined with program synthesis methods from machine learning tractably approximate &lt;a href=&#34;https://en.wikipedia.org/wiki/Solomonoff%27s_theory_of_inductive_inference&#34;target=&#34;_blank&#34;&gt;Solomonoff induction&lt;/a&gt; (i.e. universal inference)? In these notes, I explore what the combination of these ideas looks like.&lt;/p&gt;
 &lt;h1 id=&#34;machine-learning&#34;&gt;Machine learning&lt;/h1&gt;
+&lt;p&gt;I want to make an important clarification about &amp;ldquo;Bayesian machine learning&amp;rdquo;. First, I&amp;rsquo;ll briefly define some &amp;ldquo;modes&amp;rdquo; of machine learning.&lt;/p&gt;
 &lt;p&gt;In parametric machine learning, we have a function $f_\t$ parametrized by $\t\in\T$. Let $q_\t(D)$ be a probability distribution on datasets $D$ defined in terms of $f_\t$. For supervised learning, $q_\t(D) = \prod_{(x,y)\in D} Pr(y; f_\t(x))$ is the product of probabilities of each target $y$ given distribution parameters $f_\t(x)$, e.g. $f_\t(x)$ returns the mean and variance of a Gaussian over $y$. For unsupervised learning, $f_\t(x)$ might return a real number which serves as the log-probability of each $x \in D$. In general $f_\t$ can be any kind of parametric ML model, but these days it is likely to be a neural network.&lt;/p&gt;
-&lt;p&gt;Typical usages of $q_\t$ in machine learning:&lt;/p&gt;
+&lt;p&gt;Typical usage &amp;ldquo;modes&amp;rdquo; of $q_\t$ in machine learning:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;MLE&lt;/strong&gt; (&lt;a href=&#34;https://en.wikipedia.org/wiki/Maximum_likelihood_estimation&#34;target=&#34;_blank&#34;&gt;maximum likelihood&lt;/a&gt;): Training produces hypothesis with highest data likelihood.
 &lt;ul&gt;
@@ -69,8 +70,13 @@ $$&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;The variational Bayes &amp;ldquo;usage mode&amp;rdquo; is clearly different from the others. MLE and MAP are fitting $f_\t$ to the data, i.e. finding a single $\t^*\in\T$ that maximizes the probability of the data under $q_\t$. Bayesian inference is finding a distribution $p(\t \mid D)$ on $\T$ which represents the model&amp;rsquo;s beliefs about various parameters $\t\in\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f_\t$ to data, since we are not choosing any particular parameter in $\T$. Variational Bayes uses $q_{\t^*}$ as an approximation of $p(\t \mid D)$, where $\t^*\in\T$ is the optimal parameter of distribution $q_\t(z)$ and $z\in\mc{Z}$ is a hypothesis.&lt;/p&gt;
 &lt;p&gt;In the first three modes, $\T$ are hypotheses and we are either selecting one or finding a distribution over them. In the variational Bayes mode, $\T$ are not hypotheses. Instead we introduce $\mc{Z}$ as the hypothesis space and $\T$ is the parameter space for the approximate posterior $q_\t(z)$ on $\mc{Z}$, i.e. $q_\t(z)$ approximates $p(z\mid D)$. We don&amp;rsquo;t have $\mc{Z}$ in the first three modes, and we are interested in $p(\t \mid D)$ rather than $p(z \mid D)$. Also in the first three modes, $q_\t(D)$ is a distribution on what is observed, datasets $D$, rather than over latent $\mc{Z}$.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-bayesian-machine-learning&#34;&gt;What is Bayesian machine learning?&lt;/h2&gt;
+&lt;p&gt;Conventionally, a Bayesian model has a prior probability distribution over it&amp;rsquo;s parameters, and inference involves finding posterior distributions. This corresponds to the Bayesian inference mode above. Out of the four modes, MLE is definitively non-Bayesian. MAP might be called semi-Bayesian, simply because there is a prior on parameters $p(\t)$, but only the argmax of the posterior is being found, rather than a full posterior. The variational Bayes mode is where things get wonky. There are two models: $q_\t(z)$ and $p(z, D)$. The first is parametrized and is optimized greedily with something like gradient descent, as in the MLE or MAP cases. The second is Bayesian.&lt;/p&gt;
+&lt;p&gt;Is variational Bayes a Bayesian ML method? In one sense yes, in another sense no. It&amp;rsquo;s efficacy depends on $q_\t(z)$ being a good approximation of the posterior $p(z \mid D)$, and whether $q_\t(z)$ is a good approximation depends on the efficacy of the chosen machine learning method (e.g. neural networks trained with gradient descent). I&amp;rsquo;d expect $q_\t(z)$ to be a non-Bayesian model (If it were Bayesian, how then do you tractably approximate it? That is the very thing we are trying to do with $p(z, D)$.) So then the efficacy of variational Bayes comes down to the properties of non-Bayesian machine learning. If at the end of the day, point-estimates of parameters are always doing the heavy lifting (i.e. generalizing well), why be Bayesian in the first place?&lt;/p&gt;
 &lt;h1 id=&#34;solomonoff-induction&#34;&gt;Solomonoff induction&lt;/h1&gt;
 &lt;p&gt;I learned about this topic from &lt;a href=&#34;https://www.springer.com/gp/book/9781489984456&#34;target=&#34;_blank&#34;&gt;An Introduction to Kolmogorov Complexity and Its Applications&lt;/a&gt; and &lt;a href=&#34;http://www.hutter1.net/ai/uaibook.htm&#34;target=&#34;_blank&#34;&gt;Universal Artificial Intelligence&lt;/a&gt;. I recommend both books as references.&lt;/p&gt;
+&lt;p&gt;There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt;, &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt;, &lt;a href=&#34;#version-3&#34;&gt;#Version 3&lt;/a&gt;. Only an understanding of &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt; is needed for the subsequent sections.&lt;/p&gt;
+&lt;h2 id=&#34;notation&#34;&gt;Notation&lt;/h2&gt;
 &lt;p&gt;Let $\B = \{0,1\}$ be the binary alphabet, $\B^n$ be the set of all length-$n$ binary strings, and $\B^\infty$ be the set of all infinite binary strings.&lt;/p&gt;
 &lt;p&gt;Let $\B^* = \B^0 \times \B^1 \times \B^2 \times \B^3 \times\ldots$ be the set of all finite binary strings of any length.&lt;br&gt;
 $\epsilon$ is the empty string, i.e. $\B^0 = \{\epsilon\}$.&lt;/p&gt;
@@ -211,15 +217,15 @@ $$&lt;/p&gt;
 \end{aligned}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;This now has the form of a one-timestep reinforcement learning objective, where $R(h) = \lg p(h,x_{1:t})$ is the reward for &amp;ldquo;action&amp;rdquo; $h$, and $\mb{H}_{h \sim q_\t}[q_\t(h)]$ is the entropy of $q_\t(h)$. Here $q_\t(h)$ is called the &lt;strong&gt;policy&lt;/strong&gt;, i.e. the distribution actions are sampled from. Maximizing this objective jointly maximizes expected reward under the policy and entropy of the policy. An entropy term is typically added to RL objectives as a regularizer to encourage exploration (higher entropy policy means more random actions), but in this case the entropy term comes included.&lt;/p&gt;
-&lt;p&gt;We can use standard &lt;a href=&#34;https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html&#34;target=&#34;_blank&#34;&gt;policy gradient methods&lt;/a&gt; (e.g. &lt;a href=&#34;https://deepmind.com/research/publications/impala-scalable-distributed-deep-rl-importance-weighted-actor-learner-architectures&#34;target=&#34;_blank&#34;&gt;IMPALA&lt;/a&gt;) to maximize the above RL objective (equivalent to minimizing free energy), so long as the reward $R(h) = \lg p(h,x_{1:t})$ is fast to compute.&lt;/p&gt;
+&lt;p&gt;We can use standard &lt;a href=&#34;https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html&#34;target=&#34;_blank&#34;&gt;policy gradient methods&lt;/a&gt; (e.g. &lt;a href=&#34;https://deepmind.com/research/publications/impala-scalable-distributed-deep-rl-importance-weighted-actor-learner-architectures&#34;target=&#34;_blank&#34;&gt;IMPALA&lt;/a&gt;) to maximize the above RL objective (equivalent to minimizing free energy), so long as $q_\t(h)$ is fast to sample from, and the reward $R(h) = \lg p(h,x_{1:t})$ is fast to compute. We can control both.&lt;/p&gt;
 &lt;h1 id=&#34;tractability&#34;&gt;Tractability&lt;/h1&gt;
 &lt;p&gt;Tractability depends on our choice of $\mc{H}$ and prior $p(h)$. What operations do we want to be tractable? Typically we want:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;To calculate approximate hypothesis posteriors.&lt;/li&gt;
-&lt;li&gt;To calculate predictive data distributions (data posterior).&lt;/li&gt;
+&lt;li&gt;To approximate hypothesis posteriors: $q_{\t^*}(h) \approx p(h \mid x_{1:t})$.&lt;/li&gt;
+&lt;li&gt;To approximate predictive data distributions (data posterior): $p(x_{&amp;gt;t} \mid x_{1:t})$.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;hypothesis-posterior&#34;&gt;Hypothesis posterior&lt;/h2&gt;
-&lt;p&gt;The approximation $q_\t(h)$ allows us to do this. The tractability of finding a good $q_\t(h)$ using policy gradient methods will require the reward $R(h) = \lg p(h,x_{1:t})$ is fast to calculate.&lt;/p&gt;
+&lt;p&gt;The approximation $q_{\t^*}(h)$ allows us to do this. The tractability of finding a good parameter $\t^*$ for $q$ using policy gradient methods will require that the reward $R(h) = \lg p(h,x_{1:t})$ is fast to calculate.&lt;/p&gt;
 &lt;p&gt;We can write the reward as the sum of two terms:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \lg p(h,x_{1:t}) = \lg p(h) + \lg p(x_{1:t} \mid h)\,.&lt;br&gt;
@@ -247,8 +253,14 @@ $$&lt;/p&gt;
 &lt;p&gt;$p(y\mid x, h)$ is the conditional data distribution under hypothesis $h$. If $h$ is a probability measure, then $p(x \mid h) = h(x)$ and $p(y\mid x, h) = h(y\mid x)$.&lt;/p&gt;
 &lt;p&gt;For approximating the data distribution, we need fast sampling from hypothesis priors $p(h)$ and fast data-under-hypothesis probabilities $p(x \mid h)$.&lt;/p&gt;
 &lt;p&gt;For approximating the data posterior, we need fast approximate posteriors $q_{\t^*}(h)$, and we need hypothesis data-conditionalization $p(y\mid x, h)$ to be fast.&lt;/p&gt;
+&lt;h2 id=&#34;generalization&#34;&gt;Generalization&lt;/h2&gt;
+&lt;p&gt;Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.&lt;/p&gt;
+&lt;p&gt;Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h&#39;) \approx p(h&#39; \mid x)$ for some program $h&#39;$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.&lt;/p&gt;
+&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the &lt;a href=&#34;#prior&#34;&gt;#Prior&lt;/a&gt; section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
+&lt;p&gt;As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn&amp;rsquo;t start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.&lt;/p&gt;
 &lt;h1 id=&#34;choices&#34;&gt;Choices&lt;/h1&gt;
-&lt;p&gt;Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.&lt;/p&gt;
+&lt;p&gt;To summarize the requirements we found above:&lt;br&gt;
+Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Prior $p(h)$ is fast to calculate and sample from.&lt;/li&gt;
 &lt;li&gt;Approximate hypothesis posterior $q_{\t^*}(h)$ is fast to sample from.&lt;/li&gt;
@@ -270,9 +282,6 @@ $$&lt;/p&gt;
 &lt;p&gt;One difficulty in working with programs is long-running execution. This can make computing data probabilities take a long time. One remedy is to down-weight long-running programs in the prior. &lt;a href=&#34;http://www.scholarpedia.org/article/Universal_search&#34;target=&#34;_blank&#34;&gt;Levin search&lt;/a&gt; is an alternative to Solomonoff induction where the prior is weighted solely by runtime. We can mix both kinds of priors.&lt;/p&gt;
 &lt;p&gt;This is straightforward in Solomonoff induction &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt; where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &amp;gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &amp;lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)&lt;/p&gt;
 &lt;p&gt;However, if we are using the programs I previously suggested that output data probabilities, then these programs may be fast on some inputs and slow on others. I don&amp;rsquo;t have a solution, but a reasonable suggestion is to do some kind of heuristic analysis of the programs on some sample inputs and assign a slowness penalty in the prior.&lt;/p&gt;
-&lt;h2 id=&#34;approximate-posterior&#34;&gt;Approximate posterior&lt;/h2&gt;
-&lt;p&gt;Choosing appropriate $q_\t(h)$, a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens. Thus $q_\t$ is also most likely auto-regressive.&lt;/p&gt;
-&lt;p&gt;Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h&#39;) \approx p(h&#39; \mid x)$ for some program $h&#39;$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.&lt;/p&gt;
 &lt;h1 id=&#34;lifelong-learning&#34;&gt;Lifelong learning&lt;/h1&gt;
 &lt;p&gt;Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it&amp;rsquo;s future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).&lt;/p&gt;
 &lt;p&gt;In the variational setup outlined above, we converted the problem of Bayesian inference into a reinforcement learning problem. At time $t$, data $x_{1:t}$ is observed, and a policy $q_{\t^*}$ on programs is trained using policy gradient methods. However, every $t$ requires its own $q_{\t_t^*}$, thus we would need to perform RL training at every timestep. One way to speed this up is to reuse policies from previous timesteps. That is to say, at time $t+1$ perform $\argmax{\t\in\T}\set{ \E_{h \sim q_\t}\left[R(h)\right] + \mb{H}_{h \sim q_\t}[q_\t(h)]}$ using Monte Carlo gradient descent starting from the previous parameter $\t_t^*$. This can be considered fine-tuning. However, this may fail to work if the posterior changes drastically between timesteps.&lt;/p&gt;
@@ -280,9 +289,99 @@ $$&lt;/p&gt;
     </item>
     
     <item>
+      <title>How this blog works</title>
+      <link>https://danabo.github.io/blog/posts/how-this-blog-works/</link>
+      <pubDate>Sat, 20 Feb 2021 09:04:26 -0600</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/how-this-blog-works/</guid>
+      <description>&lt;p&gt;This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.&lt;/p&gt;
+&lt;h1 id=&#34;second-brain&#34;&gt;Second brain&lt;/h1&gt;
+&lt;p&gt;I use the &lt;a href=&#34;https://obsidian.md/&#34;target=&#34;_blank&#34;&gt;Obsidian&lt;/a&gt; editor to organize my second brain. It looks like this:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206135929.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Writing some blog posts in Obsidian.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Every note is a markdown file, with support for extra features like &lt;a href=&#34;https://www.mathjax.org/&#34;target=&#34;_blank&#34;&gt;MathJax&lt;/a&gt; (latex math mode), and some of the features in &lt;a href=&#34;https://roamresearch.com/&#34;target=&#34;_blank&#34;&gt;Roam&lt;/a&gt;, namely &lt;a href=&#34;https://publish.obsidian.md/help/How&amp;#43;to/Format&amp;#43;your&amp;#43;notes&#34;target=&#34;_blank&#34;&gt;wiki-style internal links&lt;/a&gt;. So &lt;code&gt;[[Blogging experiment]]&lt;/code&gt; becomes 
+
+
+
+  &lt;a href=&#34;https://danabo.github.io/blog/posts/blogging-experiment/&#34;&gt;Blogging experiment&lt;/a&gt;
+
+
+. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140636.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Previous screenshot I pasted into this very markdown file.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;There is also a nifty graph view of all my notes:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140906.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Looks like a constellation! Each node is a markdown file. Each edge is due to one file linking to another with `[[...]]`. I&amp;#39;m not yet sure how helpful this is, but it&amp;#39;s nice to have a way to look at everything at once, in lieu of a traditional hierarchical structure.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;h1 id=&#34;publishing-flow&#34;&gt;Publishing flow&lt;/h1&gt;
+&lt;p&gt;My blog is written in &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; (for now), which is a static site generator that takes markdown files as input. Ideally, I could just run hugo directly on my Obsidian directory, but (1) I don&amp;rsquo;t want to publish everything and (2) Obsidian defines its own extended markdown syntax, as I explained above. My workaround is to have a script copy and transform my Obsidian notes marked for publication. Here&amp;rsquo;s how I do it&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Markdown files can optionally have a frontmatter, which is a yaml header at the top of the page. For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Hello World&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;John Doe&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In any note in my second brain (Obsidian), I can set &lt;code&gt;blog: true&lt;/code&gt; and that note will be published on my blog.&lt;/p&gt;
+&lt;p&gt;Every so often, I run &lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; from the blog repo, which in turn runs &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; is where the magic happens. It&amp;rsquo;s a Python script that uses &lt;a href=&#34;https://github.com/google/python-fire&#34;target=&#34;_blank&#34;&gt;fire&lt;/a&gt; to give it a &lt;a href=&#34;https://en.wikipedia.org/wiki/Command-line_interface&#34;target=&#34;_blank&#34;&gt;CLI&lt;/a&gt;. It will go through all the markdown files in my second brain directory and look for the ones with frontmatter containing &lt;code&gt;blog: true&lt;/code&gt;. For those files, it will do a few transformations, like converting internal links, &lt;code&gt;[[...]]&lt;/code&gt; and Obsidian&amp;rsquo;s image command &lt;code&gt;![[...]]&lt;/code&gt; to regular markdown. It also scrubs markdown comments, &lt;code&gt;&amp;lt;!-- ... --&amp;gt;&lt;/code&gt;, and anything inside a &lt;code&gt;&amp;lt;!-- hide --&amp;gt;...&amp;lt;!-- endhide --&amp;gt;&lt;/code&gt; pair so that I can have private sections inside published notes.&lt;/p&gt;
+&lt;p&gt;Code to transform Obsidian markdown to &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; markdown:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;transform_body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Remove local-only blocks&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*&amp;lt;!--\s*endhide\s*--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Remove everything after unclosed `&amp;lt;!-- hide --&amp;gt;`&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Remove comments&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# https://stackoverflow.com/a/28208465&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--.*?--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Transform internal links (wiki-style links).&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# https://gohugo.io/content-management/cross-references/#use-ref-and-relref&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;([^!])\[\[(.*?)\]\]&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;\1\{\{\&amp;lt; locallink &amp;#34;\2&amp;#34; \&amp;gt;\}\}&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[&lt;em&gt;Edit: I&amp;rsquo;ve since updated &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!&lt;/em&gt;]&lt;/p&gt;
+&lt;p&gt;For internal links, I call the &lt;a href=&#34;https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html&#34;target=&#34;_blank&#34;&gt;locallink&lt;/a&gt; Hugo &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;target=&#34;_blank&#34;&gt;shortcode&lt;/a&gt; I made, i.e. &lt;code&gt;{{ locallink &amp;quot;...&amp;quot; }}&lt;/code&gt;, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a &lt;em&gt;red&lt;/em&gt; anchor indicating the post does not exist, 
+
+
+
+  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;like this&lt;/a&gt;
+
+
+. That way, if I&amp;rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Red_link&#34;target=&#34;_blank&#34;&gt;missing wiki page&lt;/a&gt;. Perhaps if readers become curious about notes I didn&amp;rsquo;t publish, I might become motivated to publish them.&lt;/p&gt;
+&lt;p&gt;locallink &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; shortcode:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;{{ $name := (.Get 0) }}
+{{ $postFile := (print &amp;#34;content/posts/&amp;#34; $name &amp;#34;.md&amp;#34;) }}
+{{ if (fileExists $postFile) }}
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;{{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;ref&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}}&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
+{{ else }}
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;broken&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
+{{ end }}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; will first run blog.py, and then run &lt;code&gt;git commit -v&lt;/code&gt; which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.&lt;/p&gt;
+&lt;h1 id=&#34;reader-experience&#34;&gt;Reader experience&lt;/h1&gt;
+&lt;p&gt;Currently the reader sees a typical blog layout: a &amp;ldquo;blog roll&amp;rdquo; of recent posts with previews and tags. I don&amp;rsquo;t intend my notes to have any particular time ordering. Notes are objects in flux. I might edit anything. Since I&amp;rsquo;m using time of last edit as the post date, anything I touch will float back to the top. I might decide to change that.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Active inference tutorial (actions)</title>
       <link>https://danabo.github.io/blog/posts/active-inference-tutorial-actions/</link>
-      <pubDate>Thu, 18 Feb 2021 08:53:38 -0600</pubDate>
+      <pubDate>Sat, 20 Feb 2021 07:23:41 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/active-inference-tutorial-actions/</guid>
       <description>&lt;p&gt;$$&lt;br&gt;
@@ -483,7 +582,7 @@ The agent updates its hypothesis generator $q$, implicitly conforming to $p$ whi
     <item>
       <title>Blogging experiment</title>
       <link>https://danabo.github.io/blog/posts/blogging-experiment/</link>
-      <pubDate>Wed, 10 Feb 2021 14:39:00 -0600</pubDate>
+      <pubDate>Sat, 20 Feb 2021 07:23:41 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/blogging-experiment/</guid>
       <description>&lt;p&gt;What is this blog?&lt;/p&gt;
@@ -505,7 +604,7 @@ The agent updates its hypothesis generator $q$, implicitly conforming to $p$ whi
     <item>
       <title>Free Energy Principle 1st Pass</title>
       <link>https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/</link>
-      <pubDate>Wed, 10 Feb 2021 14:39:00 -0600</pubDate>
+      <pubDate>Sat, 20 Feb 2021 07:23:41 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/</guid>
       <description>&lt;p&gt;$$&lt;br&gt;
@@ -720,94 +819,6 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 &lt;li&gt;Is the agent assumed to have a dynamics model of the environment where all that&amp;rsquo;s unknown to the agent is the environment state? that seems unrealistic. if the agent doesn&amp;rsquo;t know the &amp;ldquo;true&amp;rdquo; dynamics model, by what mechanism would the agent improve its dynamics model? The Bayesian posterior approximation is for estimating the effect of its actions on environment state, but this doesn&amp;rsquo;t address how the agent learns about the relationship between action and state.&lt;/li&gt;
 &lt;li&gt;How are time and actions incorporated? I understand the time-less variational free energy formulation that I explained above. What I don&amp;rsquo;t understand is what this looks like when applied to an agent-environment interaction loop over time.&lt;/li&gt;
 &lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How this blog works</title>
-      <link>https://danabo.github.io/blog/posts/how-this-blog-works/</link>
-      <pubDate>Wed, 10 Feb 2021 14:39:00 -0600</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/how-this-blog-works/</guid>
-      <description>&lt;p&gt;This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.&lt;/p&gt;
-&lt;h1 id=&#34;second-brain&#34;&gt;Second brain&lt;/h1&gt;
-&lt;p&gt;I use the &lt;a href=&#34;https://obsidian.md/&#34;target=&#34;_blank&#34;&gt;Obsidian&lt;/a&gt; editor to organize my second brain. It looks like this:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206135929.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Writing some blog posts in Obsidian.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;Every note is a markdown file, with support for extra features like &lt;a href=&#34;https://www.mathjax.org/&#34;target=&#34;_blank&#34;&gt;MathJax&lt;/a&gt; (latex math mode), and some of the features in &lt;a href=&#34;https://roamresearch.com/&#34;target=&#34;_blank&#34;&gt;Roam&lt;/a&gt;, namely &lt;a href=&#34;https://publish.obsidian.md/help/How&amp;#43;to/Format&amp;#43;your&amp;#43;notes&#34;target=&#34;_blank&#34;&gt;wiki-style internal links&lt;/a&gt;. So &lt;code&gt;[[Blogging experiment]]&lt;/code&gt; becomes 
-
-
-
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/blogging-experiment/&#34;&gt;Blogging experiment&lt;/a&gt;
-
-
-. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140636.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Previous screenshot I pasted into this very markdown file.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;There is also a nifty graph view of all my notes:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140906.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Looks like a constellation! Each node is a markdown file. Each edge is due to one file linking to another with `[[...]]`. I&amp;#39;m not yet sure how helpful this is, but it&amp;#39;s nice to have a way to look at everything at once, in lieu of a traditional hierarchical structure.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;h1 id=&#34;publishing-flow&#34;&gt;Publishing flow&lt;/h1&gt;
-&lt;p&gt;My blog is written in &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; (for now), which is a static site generator that takes markdown files as input. Ideally, I could just run hugo directly on my Obsidian directory, but (1) I don&amp;rsquo;t want to publish everything and (2) Obsidian defines its own extended markdown syntax, as I explained above. My workaround is to have a script copy and transform my Obsidian notes marked for publication. Here&amp;rsquo;s how I do it&amp;hellip;&lt;/p&gt;
-&lt;p&gt;Markdown files can optionally have a frontmatter, which is a yaml header at the top of the page. For example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Hello World&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;John Doe&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In any note in my second brain (Obsidian), I can set &lt;code&gt;blog: true&lt;/code&gt; and that note will be published on my blog.&lt;/p&gt;
-&lt;p&gt;Every so often, I run &lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; from the blog repo, which in turn runs &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; is where the magic happens. It&amp;rsquo;s a Python script that uses &lt;a href=&#34;https://github.com/google/python-fire&#34;target=&#34;_blank&#34;&gt;fire&lt;/a&gt; to give it a &lt;a href=&#34;https://en.wikipedia.org/wiki/Command-line_interface&#34;target=&#34;_blank&#34;&gt;CLI&lt;/a&gt;. It will go through all the markdown files in my second brain directory and look for the ones with frontmatter containing &lt;code&gt;blog: true&lt;/code&gt;. For those files, it will do a few transformations, like converting internal links, &lt;code&gt;[[...]]&lt;/code&gt; and Obsidian&amp;rsquo;s image command &lt;code&gt;![[...]]&lt;/code&gt; to regular markdown. It also scrubs markdown comments, &lt;code&gt;&amp;lt;!-- ... --&amp;gt;&lt;/code&gt;, and anything inside a &lt;code&gt;&amp;lt;!-- hide --&amp;gt;...&amp;lt;!-- endhide --&amp;gt;&lt;/code&gt; pair so that I can have private sections inside published notes.&lt;/p&gt;
-&lt;p&gt;Code to transform Obsidian markdown to &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; markdown:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;transform_body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# Remove local-only blocks&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*&amp;lt;!--\s*endhide\s*--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Remove everything after unclosed `&amp;lt;!-- hide --&amp;gt;`&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Remove comments&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# https://stackoverflow.com/a/28208465&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--.*?--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Transform internal links (wiki-style links).&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# https://gohugo.io/content-management/cross-references/#use-ref-and-relref&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;([^!])\[\[(.*?)\]\]&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;\1\{\{\&amp;lt; locallink &amp;#34;\2&amp;#34; \&amp;gt;\}\}&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[&lt;em&gt;Edit: I&amp;rsquo;ve since updated &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!&lt;/em&gt;]&lt;/p&gt;
-&lt;p&gt;For internal links, I call the &lt;a href=&#34;https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html&#34;target=&#34;_blank&#34;&gt;locallink&lt;/a&gt; Hugo &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;target=&#34;_blank&#34;&gt;shortcode&lt;/a&gt; I made, i.e. &lt;code&gt;{{ locallink &amp;quot;...&amp;quot; }}&lt;/code&gt;, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a &lt;em&gt;red&lt;/em&gt; anchor indicating the post does not exist, 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;like this&lt;/a&gt;
-
-
-. That way, if I&amp;rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Red_link&#34;target=&#34;_blank&#34;&gt;missing wiki page&lt;/a&gt;. Perhaps if readers become curious about notes I didn&amp;rsquo;t publish, I might become motivated to publish them.&lt;/p&gt;
-&lt;p&gt;locallink &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; shortcode:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;{{ $name := (.Get 0) }}
-{{ $postFile := (print &amp;#34;content/posts/&amp;#34; $name &amp;#34;.md&amp;#34;) }}
-{{ if (fileExists $postFile) }}
-&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;{{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;ref&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}}&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
-{{ else }}
-&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;broken&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; will first run blog.py, and then run &lt;code&gt;git commit -v&lt;/code&gt; which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.&lt;/p&gt;
 </description>
     </item>
     

@@ -5,7 +5,7 @@
 <meta name="twitter:title" content="Dan&#39;s Notepad" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/varational-solomonoff-induction/">
-            <p class="note title">Varational Solomonoff Induction</p><p class="note date">February 18, 2021</p><p class="note content">$$
+            <p class="note title">Varational Solomonoff Induction</p><p class="note date">February 20, 2021</p><p class="note content">$$
 \newcommand{\mb}{\mathbb}
 \newcommand{\mc}{\mathcal}
 \newcommand{\E}{\mb{E}}
@@ -23,9 +23,11 @@
 \newcommand{\O}{\Omega}
 \newcommand{\sm}{\mathrm{softmax}}
 $$
-The free energy principle is a variational Bayesian method for approximating posteriors. I want to know, what would it look like to apply free energy minimization to Solomonoff induction, i.e. universal inference?
-Machine learning In parametric machine learning, we have a function $f_\t$ parametrized by $\t\in\T$. Let $q_\t(D)$ be a probability distribution on datasets $D$ defined in terms of $f_\t$.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/free-energy/">free energy</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/active-inference-tutorial-actions/">
-            <p class="note title">Active inference tutorial (actions)</p><p class="note date">February 18, 2021</p><p class="note content">$$
+The free energy principle is a variational Bayesian method for approximating posteriors. Can free energy minimization combined with program synthesis methods from machine learning tractably approximate Solomonoff induction (i.e. universal inference)? In these notes, I explore what the combination of these ideas looks like.
+Machine learning I want to make an important clarification about &ldquo;Bayesian machine learning&rdquo;.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/free-energy/">free energy</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/how-this-blog-works/">
+            <p class="note title">How this blog works</p><p class="note date">February 20, 2021</p><p class="note content">This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.
+Second brain I use the Obsidian editor to organize my second brain. It looks like this:<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/personal/">personal</a><a class="tag" href="https://danabo.github.io/blog/tags/blogging/">blogging</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/active-inference-tutorial-actions/">
+            <p class="note title">Active inference tutorial (actions)</p><p class="note date">February 20, 2021</p><p class="note content">$$
 \newcommand{\mb}{\mathbb}
 \newcommand{\mc}{\mathcal}
 \newcommand{\E}{\mb{E}}
@@ -43,9 +45,9 @@ Machine learning In parametric machine learning, we have a function $f_\t$ param
 $$
 Previous attempts:
  In Free Energy Principle 1st Pass , I used a tutorial to try to understand the free energy formalism. I figured out the &ldquo;timeless&rdquo; and actionless case, but I became confused when actions and time were added. In Free energy principle and Solomonoff induction , I tried to translate between the formalism presented in https://danijar.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/free-energy/">free energy</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/blogging-experiment/">
-            <p class="note title">Blogging experiment</p><p class="note date">February 10, 2021</p><p class="note content">What is this blog?
+            <p class="note title">Blogging experiment</p><p class="note date">February 20, 2021</p><p class="note content">What is this blog?
 It&rsquo;s a collection of notes pulled directly from my digital journal. My digital journal is a bunch of markdown files that I edit in obsidian. You could call it my &ldquo;second brain&rdquo;. I write everything here. It&rsquo;s a journal in the traditional sense, in that I write about what&rsquo;s going on in my life and what&rsquo;s on my mind in order to collect my thoughts. I also write down logical stuff like TODO-lists, lists of links I want to keep, things I might want to look into.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/personal/">personal</a><a class="tag" href="https://danabo.github.io/blog/tags/blogging/">blogging</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/">
-            <p class="note title">Free Energy Principle 1st Pass</p><p class="note date">February 10, 2021</p><p class="note content">$$
+            <p class="note title">Free Energy Principle 1st Pass</p><p class="note date">February 20, 2021</p><p class="note content">$$
 \newcommand{\mb}{\mathbb}
 \newcommand{\mc}{\mathcal}
 \newcommand{\E}{\mb{E}}
@@ -60,9 +62,7 @@ It&rsquo;s a collection of notes pulled directly from my digital journal. My dig
 \newcommand{\p}{\phi}
 $$
 Related notes:
-  The free-energy principle a unified brain theory   Friston&#39;s Free Energy (Active Inference)  Hackmd version of this note: https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO  My current understanding Note on probability notation These are my informal notes. Probability notation can be cumbersome and overly verbose. As is customary in machine learning and many of the sciences, I&rsquo;m not going to bother using probability notation correctly.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/free-energy/">free energy</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/how-this-blog-works/">
-            <p class="note title">How this blog works</p><p class="note date">February 10, 2021</p><p class="note content">This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.
-Second brain I use the Obsidian editor to organize my second brain. It looks like this:<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/personal/">personal</a><a class="tag" href="https://danabo.github.io/blog/tags/blogging/">blogging</a></p></li></ul></section><section id="footer"><div class="footer-wrap">
+  The free-energy principle a unified brain theory   Friston&#39;s Free Energy (Active Inference)  Hackmd version of this note: https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO  My current understanding Note on probability notation These are my informal notes. Probability notation can be cumbersome and overly verbose. As is customary in machine learning and many of the sciences, I&rsquo;m not going to bother using probability notation correctly.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/free-energy/">free energy</a></p></li></ul></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
