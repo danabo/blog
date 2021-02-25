@@ -90,7 +90,7 @@ class Translator(object):
 class SimpleParser(object):
   RE_LOCAL_LINK = re.compile(r'\[\[(.*?)\]\]', flags=re.DOTALL)
   RE_LOCAL_IMAGE = re.compile(r'!\[\[(.*?)(\|(.*?))?\]\]\n?(\((.*?)\))?', flags=re.DOTALL | re.MULTILINE)
-  RE_HIDE_ENDHIDE = re.compile(r'(<!--\s*hide\s*-->.*<!--\s*endhide\s*-->)', flags=re.DOTALL | re.MULTILINE)
+  RE_HIDE_ENDHIDE = re.compile(r'(<!--\s*hide\s*-->.*?<!--\s*endhide\s*-->)', flags=re.DOTALL | re.MULTILINE)
   RE_HIDE = re.compile(r'(<!--\s*hide\s*-->.*)', flags=re.DOTALL | re.MULTILINE)
   RE_COMMENT = re.compile(r'(<!--.*?-->)', flags=re.DOTALL | re.MULTILINE)
 
