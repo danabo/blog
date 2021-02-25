@@ -20,7 +20,11 @@ p {
   background-image: none;
 }
 
-
 a.broken {
   color: red;
 }
+
+.image-container {
+  text-align: left;
+}
+

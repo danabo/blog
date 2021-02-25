@@ -1,5 +1,5 @@
 ---
-date: '2021-02-20T10:16:45-06:00'
+date: '2021-02-21T12:22:08-06:00'
 draft: false
 tags:
 - free energy

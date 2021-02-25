@@ -89,7 +89,7 @@ class Translator(object):
 
 class SimpleParser(object):
   RE_LOCAL_LINK = re.compile(r'\[\[(.*?)\]\]', flags=re.DOTALL)
-  RE_LOCAL_IMAGE = re.compile(r'!\[\[(.*?)\]\]\n?(\((.*?)\))?', flags=re.DOTALL | re.MULTILINE)
+  RE_LOCAL_IMAGE = re.compile(r'!\[\[(.*?)(\|(.*?))?\]\]\n?(\((.*?)\))?', flags=re.DOTALL | re.MULTILINE)
   RE_HIDE_ENDHIDE = re.compile(r'(<!--\s*hide\s*-->.*<!--\s*endhide\s*-->)', flags=re.DOTALL | re.MULTILINE)
   RE_HIDE = re.compile(r'(<!--\s*hide\s*-->.*)', flags=re.DOTALL | re.MULTILINE)
   RE_COMMENT = re.compile(r'(<!--.*?-->)', flags=re.DOTALL | re.MULTILINE)
@@ -187,8 +187,15 @@ class SimpleParser(object):
       it.next(len(m.group(0)))
       url = f'</{m.group(1)}>'
       if m.group(3):
-        # Image caption in group(3)
-        it.replace(f'![]({url} "{m.group(3)}")')
+        # Image size
+        # it.replace(f'![]({url} ={m.group(3)})')
+
+        # Hugo hack
+        caption = m.group(5) or ''
+        it.replace(f'{{{{< figure src="../../{m.group(1)}" width="{m.group(3)}" caption="{caption}" >}}}}')
+      elif m.group(5):
+        # Image caption
+        it.replace(f'![]({url} "{m.group(5)}")')
       else:
         it.replace(f'![]({url})')
       self.images.append(m.group(1))  # Extract local file name.

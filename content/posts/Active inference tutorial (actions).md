@@ -1,5 +1,5 @@
 ---
-date: '2021-02-20T07:23:41-06:00'
+date: '2021-02-24T05:34:36-06:00'
 tags:
 - free energy
 title: Active inference tutorial (actions)
@@ -190,6 +190,8 @@ I believe the tutorial paper has a typo, where $p(o,s,\\pi)$ should be $p(o,s,\\
 We are choosing $\\pi$ to minimize $G[\\pi]$, which is just the expected free energy under $\\rho(o)$ (preference for future observations).
 
 Do the optimizations on $\\pi$ and $q$ interact? It seems like they don't. $\\pi$ is an outer optimization that depends on running the optimization on $q$ internally. There is not a single $q$, but many of them which the optimization on $\\pi$ iterates through. So then what is the significance of connecting free energy minimization ($q$) to active inference ($\\pi$)? If the policy optimization part were reformulated in terms of RL, we really just have a fancy kind of approximate Bayesian model combined with RL. The action learning and model updating are totally independent.
+
+See https://arxiv.org/abs/1911.10601 for a discussion about the equivalence between variational approaches to RL and active inference.
 
 # The meaning of $p$
 
