@@ -12,7 +12,7 @@
     <item>
       <title>Classical vs Bayesian Reasoning</title>
       <link>https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/</link>
-      <pubDate>Wed, 24 Feb 2021 19:29:51 -0600</pubDate>
+      <pubDate>Wed, 24 Feb 2021 20:43:20 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/</guid>
       <description>&lt;p&gt;$$&lt;br&gt;
@@ -45,7 +45,7 @@
 \newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
 \newcommand{\Iff}{\Leftrightarrow}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;My goal is to identify the core conceptual difference between someone who accepts &amp;ldquo;Bayesian reasoning&amp;rdquo; as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept &amp;ldquo;classical reasoning&amp;rdquo;. By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotillian logic, through propositional logic like that of Freige, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.&lt;/p&gt;
+&lt;p&gt;My goal is to identify the core conceptual difference between someone who accepts &amp;ldquo;Bayesian reasoning&amp;rdquo; as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept &amp;ldquo;classical reasoning&amp;rdquo;. By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotelian logic, through propositional logic like that of Frege, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.&lt;/p&gt;
 &lt;p&gt;My thesis is that the difference between Bayesian and classical reasoners comes down to how they deal with non-determined objects (e.g. if you cannot determine the truth value of something from your givens). The classical reasoner will shrug their shoulders and say &amp;ldquo;the answer cannot be determined, collect more givens or modify your definitions&amp;rdquo;. The Bayesian reasoner will regard at the proportion of self-consistent instantiations of unknowns that make the target proposition true as useful information regarding whether it is really true. That is to say, the Bayesian reasoner continues on without uniquely determined truth values, and the classical reasoner does not.&lt;/p&gt;
 &lt;p&gt;This difference extends into the realms of machine learning and epistemology. Classical epistemology is interested in truth (i.e. uniquely determined quantities), whereas Bayesian epistemology is interested in degrees of certainty. In machine learning, the givens and unknowns in question are not boolean valued, but have arbitrary data types (e.g. vectors of reals). The classical learner is interested in what can be uniquely determined from data, and the Bayesian learner is interested in proportions of possibilities.&lt;/p&gt;
 &lt;p&gt;This philosophical difference leads to a practical methodological difference. A classical reasoner/learner will define universes such that unknowns can be uniquely determined. Otherwise, the definitions are not useful. A Bayesian reasoner/learner will define universes such that calculating posterior probabilities are tractable. Otherwise, the definitions are not useful.&lt;/p&gt;
