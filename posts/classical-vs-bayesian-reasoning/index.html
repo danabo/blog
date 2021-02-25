@@ -115,6 +115,132 @@ $$</p>
 <p>$$f(\o^*) = (\x_1, \x_2, \ldots, \x_n, \x_{n+1}, \x_{n+2}, \dots)$$</p>
 <p>which provides $\x_{n+1}, \x_{n+2}, \dots$ outside of the partial observation $D$. Note that $\o$ typically contains a choice of noise $\e\in\E$, which injects randomness into the generated examples (generative models are normally thought of as probability distributions, and generating examples is a process of sampling from $p_{\t^*}(\x_i)$ for chosen parameter $\t^*$).</p>
 <p>Because $D$ does not uniquely determine an input $\o$ to $f$ (i.e. $\inv{f}(D)$ is not singleton), but a particular $\o^* \in \inv{f}(D)$ is chosen anyway, this results in some difficulties. Some $\o$ will produce generated examples $\x_{n+1}, \x_{n+2}, \dots$ which &ldquo;look like the examples in $D$&rdquo; where other choices of $\o$ (still compatible with $D$) will not. We say that $f(\o)$ generalizes if it outputs the unobserved partial observation that humans consider to be correct or appropriate (e.g. looks like the data in $D$). This is all very subjective, and it is very difficult to provide appropriate constraints (like the ones I mentioned above) so that for all possible $D$, the resulting $\o_D^*$ generalizes (i.e. many humans agree that $\x_{n+1}, \x_{n+2}, \dots$ &ldquo;look like&rdquo; $D$).</p>
+<h3 id="supervised-learning">Supervised learning</h3>
+<p>The observation space is</p>
+<p>$$<br>
+\X = \Xi_1\m\P_1\m\Xi_2\m\P_2\m\ldots\m\Xi_i\m\P_i\m\ldots<br>
+$$</p>
+<p>$\x_i \in \Xi_i$ is called an <em>input</em>, and $\y_i\in\P_i$ is the associated <em>target</em> (or <em>label</em>) for $\x_i$. (usually the inputs and targets are notated with $x$ and $y$ - but I am using Greek)</p>
+<p>We are given a partial observation $D$, called the dataset:</p>
+<p>$$<br>
+D = (\x_1, \y_1, \x_2, \y_2, \x_3, \y_3, \ldots, \x_n, \y_n)<br>
+$$</p>
+<p>Given model $f : \O \to \X$ and dataset $D$ (regarding $D$ as a subset of $\X$), then $\inv{f}(D)$ is the set of all states in $\O$ compatible with $D$.</p>
+<p>If we are subsequently given a &ldquo;test input&rdquo; $\x_{n+1} \in \Xi_{n+1}$, we want to predict $\y_{n+1} \in \P_{n+1}$. We can do so if $\inv{f}(D`\x_{n+1})$ uniquely determines $\y_{n+1}$, i.e. $D`\x_{n+1}`\y_{n+1} = f(\inv{f}(D`\x_{n+1}))$ (i.e. $\inv{f}(D`\x_{n+1}) = \inv{f}(D`\x_{n+1}`\y_{n+1})$)</p>
+<h3 id="boolean-logic">Boolean logic</h3>
+<p>The ML model is $f : \O\to\X$ where $\O = \B^{64}$ is the set of all length-64 boolean vectors, corresponding to the values of all the boolean variables $P_{x,y},W_{x,y},B_{x,y},S_{x,y}$ for all 16 grid cells. Any state $\o\in\O$ is a math model in the sense we used above. The observations are what is given, what we wish to know, and potentially everything we can know in principle. We were given the follow propositions (meaning they are observed as true):</p>
+<p>$$<br>
+\begin{aligned}<br>
+R_1 &amp;= \neg P_{1,1} \\<br>
+R_2 &amp;= (B_{1,1} \Iff (P_{1,2}\or P_{2,1})) \\<br>
+R_3 &amp;= (B_{2,1} \Iff (P_{1,1}\or P_{2,2}\or P_{3,1})) \\<br>
+R_4 &amp;= \neg B_{1,1} \\<br>
+R_5 &amp;= B_{2,1}<br>
+\end{aligned}<br>
+$$</p>
+<p>We want to know many things: the location of the gold, the wumpus, and all the pits. Under more immediate consideration is whether there are pits in any of the cells [2,1], [2,2], [3,1]. So let&rsquo;s say the propositions of immediate interest are</p>
+<p>$$<br>
+\begin{aligned}<br>
+Q_1 &amp;= P_{2,1} \\<br>
+Q_2 &amp;= P_{2,2} \\<br>
+Q_3 &amp;= P_{3,1} \\<br>
+\end{aligned}<br>
+$$</p>
+<p>Then the observation set is $\X = \B^8$, and a full observation is the boolean tuple $x = (R_1, R_2, R_3, R_4, R_5, Q_1, Q_2, Q_3)$. (Note that one ML-model&rsquo;s full observation is another ML-model&rsquo;s partial observation. If later on we care about propositions about other cells on the board, we can just augment $\X$ with additional dimensions, thereby updating $f$ to $f'$) We are given the partial observation $x_{1:5} = (\1, \ldots, \1)$, i.e. $R_1=\1,\ \dots,\ R_5=\1$. Can we uniquely determine the remaining parts of $x$?</p>
+<p>The set of math models (subset of $\O$) consistent with $x_{1:5}$ being true is:<br>
+$$<br>
+\inv{f}(x_{1:5}) = \inv{f}(\set{(\1, \dots, \1)}\m \B^3)\,.<br>
+$$</p>
+<p>Above we proved that $P_{2,1} = \1$, and so $x_6 = Q_1 = \1$ must be the case for all states in $\inv{f}(x_{1:5})$. However, $x_{7:8} = (Q_2, Q_3) = (P_{2,2}, P_{3,1})$ is not uniquely determined in $\inv{f}(x_{1:5})$.</p>
+<p>Note that</p>
+<p>$$<br>
+\begin{aligned}<br>
+R_2 &amp;= (B_{1,1} \Iff (P_{1,2}\or P_{2,1})) \\<br>
+R_3 &amp;= (B_{2,1} \Iff (P_{1,1}\or P_{2,2}\or P_{3,1}))<br>
+\end{aligned}<br>
+$$</p>
+<p>are the rules of the game, i.e. that a breeze must be adjacent to a pit. In the ML framework, including the rules as partial observations means that the ML model $f$ considers possible worlds where the rules of the game are different - in fact $f$ allows for all possible games played on a 4x4 grid with pits, breezes, etc. It is equivalent to bake the rules of the game into $f$ as a domain restriction on $\O$, i.e. define $f'$ whose domain is all states which obey our rules $R_2, R_3$.</p>
+<p>In the math framework, a theorem is a proposition that is true in all math models. In the ML framework, a theorem is a boolean dimension of $\X$ (output to $f$) which is true for all states (inputs to $f$). For a given boolean output dimension of $f$, that dimension becomes a theorem of $f'$, the domain restriction of $f$ to all inputs where the output dimension is true (if there are no such inputs then this boolean dimension corresponds a paradox, a proposition that is not true in any math model).</p>
+<p>The general case is $f : \B^a \to \B^b$ where $a,b$ may be finite or infinite cardinalities. Given a partial observation $x_{1:n}$, we can ask whether any dimensions of $x_{&gt;n}$ are also uniquely determined. A proof of $x_i = \1$ is a way of showing that $x_i$ is uniquely determined from $x_{1:n}$ without brute force enumeration of all states (inputs to $f$). If we care about part $\o_{1:m}$ of the input to $f$ as well, then in the ML framework, that equates to passing $\o_{1:m}$ through $f$ to $x_{j_1, \dots, j_m}$ as the identity function, and then trying to uniquely determine that partial observation.</p>
+<h2 id="the-bayesian-perspective">The Bayesian perspective</h2>
+<p>Continuing with our ML model $f : \O \to \X$ for wumpus world, what should the agent do next? Using non-Bayesian logic, we could not uniquely determine if cells [3,1] or [2,2] contain pits or not. It then seems most reasonable to travel to cell [1,2] to gather more information. Let&rsquo;s suppose we do that, and find [1,2] also contains a breeze (I&rsquo;m disregarding what is depicted in figure 7.2 and making up my own scenario). Then any of cells [1,3], [2,2], and [3,1] may contain pits. There is nowhere else to go without traveling over one of these dangerous cells. What do we do?</p>
+<p>A Bayesian would suggest counting up and comparing the number of states for which each possible observation is true. Suppose we know there are exactly 3 pits on the board. We&rsquo;ve ruled out [1,1], [1,2], [2,1], and so there are 13 remaining cells that contain the 3 pits.</p>
+<p>State of knowledge:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210223212901.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210223212901.png" width="200"/></a></span>
+</span><br>
+Possible pit configurations of [3,1], [2,2] and [3,1] (1 = pit, 0 = no pit):<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210223213359.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210223213359.png" width="300"/></a></span>
+</span><br>
+There are 10 remaining cells not depicted. Any pits not in [3,1], [2,2] and [3,1] will be in the remaining 10. Let&rsquo;s count up the total number of states corresponding to each configuration:</p>
+<table>
+<thead>
+<tr>
+<th>[1,3]</th>
+<th>[2,2]</th>
+<th>[3,1]</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>${10 \choose 2} = 45$</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>${10 \choose 1} = 10$</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>${10 \choose 1} = 10$</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>${10 \choose 1} = 10$</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>${10 \choose 0} = 1$</td>
+</tr>
+</tbody>
+</table>
+<p>The total count is 76 states. As fractions (called probabilities), we have</p>
+<p>$$<br>
+\begin{aligned}<br>
+p(0,1,0) &amp;= 45/76 \\<br>
+p(1,0,1) &amp;= 10/76 \\<br>
+p(1,1,0) &amp;= 10/76 \\<br>
+p(0,1,1) &amp;= 10/76 \\<br>
+p(1,1,1) &amp;= 1/76<br>
+\end{aligned}<br>
+$$</p>
+<p>The fraction of states where the middle cell [2,2] has a pit is $66/76$. The fraction of states where [3,1] has a pit is $21/76$, and likewise for [1,3]. We say that [2,2] is more likely to have a pit than [1,3] or [3,1]. If the agent is forced to choose one of the three cells to move to, [2,2] is the most dangerous option (highest probability of falling into a pit) and [3,1],[3,1] are equally less-dangerous.</p>
+<p>The difference between the classical and Bayesian paradigms is now clear. A classical agent does not distinguish between these three options, since none of these cells can be proved to be pit-free (this property is not uniquely determined from the givens). The Bayesian agent doesn&rsquo;t need unique determination to have knowledge about the pit-ness of these cells, and concludes that [2,2] is more likely to have a pit than [3,1] or [1,3].</p>
+<h2 id="probability-notation">Probability notation</h2>
+<p>$\newcommand{\obs}{\mathrm{Data}}$I&rsquo;m now going to regard logical propositions as functions of state $\o$. For example, $R_1(\o)$ returns true if $\o$ is a math-model of proposition $R_1$, and false otherwise.</p>
+<p>Let $\obs = R_1\and\dots\and R_5$. Then $\obs(\o)$ is true iff $\o$ is a math-model of our givens $R_1$ through $R_5$. If I write $P_{x,y}$, take that now to be a function of $\o$ as well.</p>
+<p>Let $p$ be the uniform probability measure on $\O$. Using random variable notation (see <a href="http://zhat.io/articles/primer-probability-theory#random-variables"target="_blank">zhat</a> for probability theory and <a href="https://www.lesswrong.com/posts/W8YscokXMiDnLKJ96/bayesian-inference-on-1st-order-logic"target="_blank">LW</a> for conditional probability notation) the fraction of states where the middle cell [2,2] has a pit is $p(P_{2,2}=\1\mid\obs=\1) = 66/76$. The fraction of states where [3,1] and [1,3] have a pit respectively is $p(P_{1,3} = \1\mid\obs=\1) = p(P_{3,1} = \1\mid\obs=\1) = 21/76$.</p>
+<p>In general for finite state sets $\O$, any ML-model $f : \O\to\X$ can be regarded as a random variable (or a tuple of random variables), i.e. a function from states to observables. I always assume a uniform probability measure, which corresponds to naive counting like in the example above. Let $f_{a:b}$ denote the slice of the tuple-valued random variable $f$ from index $a$ to $b$. Generally we want to determine the probability of some (unobserved) partial observation $x_{n:m}$ given the (observed) partial observation $x^*_{1:n}$:</p>
+<p>$$<br>
+\begin{aligned}<br>
+&amp; p(f_{n:m} = x_{n:m} \mid f_{1:n} = x^*_{1:n}) \\<br>
+&amp;\quad= p\set{\o\in\O \mid f(\o) \in x^*_{1:n}`x_{n:m}} / p\set{\o\in\O \mid f(\o) \in x^*_{1:n}} \\<br>
+&amp;\quad= p(\inv{f}(x^*_{1:n}`x_{n:m})) / p(\inv{f}(x^*_{1:n})) \\<br>
+&amp;\quad= \abs{\inv{f}(x^*_{1:n}`x_{n:m})} / \abs{\inv{f}(x^*_{1:n})}<br>
+\end{aligned}<br>
+$$</p>
 <h2 id="discussion">Discussion</h2>
 <p>In general, the classically rational agent only regards uniquely determined partial observables (output dimensions on it&rsquo;s ML-model $f$) as knowledge, and does not act on undetermined partial observables. In contrast, the Bayesian rational agent takes the relative proportion of possible states that produce each outcome as knowledge.</p>
 <p>How does the Bayesian agent pull this off? Do these &ldquo;Bayesian&rdquo; probabilities really constitute knowledge? We can turn the question around and ask if uniquely determined observables really constitute knowledge. It is rare for something to be uniquely determined in practice. I suspect that many of the difficulties encountered in applications of statistical inference and machine learning are because of this. A classical reasoner needs to make simplifications and assumptions in service of being able to then uniquely determine something of interest. It seems to me that most of informal rational thought comes down to some version of choosing an ML-model s.t. something of interest can be uniquely determined. Described in this way, classical reasoning sounds biased. On the flip side, in practice Bayesian ML-models requires special simplifications and assumptions to be computationally tractable, so a similar sort of ML-model-choosing bias occurs.</p>
