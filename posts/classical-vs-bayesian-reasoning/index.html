@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Classical vs Bayesian Reasoning&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.69e7672d6b54fced9ad5ddaa4ab099cfd4994eb00827cbea9d4ad7870bb1441c402edbe22ef17ae4a59cfe7767d78d6e.css" integrity="sha384-aednLWtU/O2a1d2qSrCZz9SZTrAIJ8vqnUrXhwuxRBxALtviLvF65KWc/ndn141u"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Classical vs Bayesian Reasoning" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Classical vs Bayesian Reasoning</h1><p class="article date">February 24, 2021</p></section><article class="article markdown-body"><p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\t}{\theta}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\m}{\times}<br>
+\newcommand{\E}{\mc{E}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\Iff}{\Leftrightarrow}<br>
+$$</p>
+<p>My goal is to identify the core conceptual difference between someone who accepts &ldquo;Bayesian reasoning&rdquo; as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept &ldquo;classical reasoning&rdquo;. By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotillian logic, through propositional logic like that of Freige, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.</p>
+<p>My thesis is that the difference between Bayesian and classical reasoners comes down to how they deal with non-determined objects (e.g. if you cannot determine the truth value of something from your givens). The classical reasoner will shrug their shoulders and say &ldquo;the answer cannot be determined, collect more givens or modify your definitions&rdquo;. The Bayesian reasoner will regard at the proportion of self-consistent instantiations of unknowns that make the target proposition true as useful information regarding whether it is really true. That is to say, the Bayesian reasoner continues on without uniquely determined truth values, and the classical reasoner does not.</p>
+<p>This difference extends into the realms of machine learning and epistemology. Classical epistemology is interested in truth (i.e. uniquely determined quantities), whereas Bayesian epistemology is interested in degrees of certainty. In machine learning, the givens and unknowns in question are not boolean valued, but have arbitrary data types (e.g. vectors of reals). The classical learner is interested in what can be uniquely determined from data, and the Bayesian learner is interested in proportions of possibilities.</p>
+<p>This philosophical difference leads to a practical methodological difference. A classical reasoner/learner will define universes such that unknowns can be uniquely determined. Otherwise, the definitions are not useful. A Bayesian reasoner/learner will define universes such that calculating posterior probabilities are tractable. Otherwise, the definitions are not useful.</p>
+<p>A note on the definition of <strong>model</strong>. In mathematics, a model is an instantiation of an unspecified object which satisfies given axioms. In machine learning, a model refers to a family of instantiations of free parameters, i.e. a model is the set of definitions which invoke free variables that are to be determined.</p>
+<h1 id="propositional-logic">Propositional logic</h1>
+<h2 id="the-math-perspective">The math perspective</h2>
+<p>I will be using the example in Russell and Norvig&rsquo;s <a href="http://aima.cs.berkeley.edu/"target="_blank">Artificial Intelligence: A Modern Approach</a> (3rd edition), chapter 7.</p>
+<p>We are introduced to &ldquo;wumpus world&rdquo;, a <a href="http://gridworld.info"target="_blank">grid world</a> containing an enemy called the wumpus, death pits, and gold.</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210223110223.png" alt="">
+<br>
+The relevant rules are:</p>
+<ul>
+<li>the agent starts in the bottom left corner</li>
+<li>the agent can only see what is contained in the cell it currently occupies</li>
+<li>the agent will detect a &ldquo;breeze&rdquo; if it&rsquo;s cell is adjacent to a pit</li>
+<li>if the agent moves into a pit, it dies</li>
+<li>the goal is to get to the gold</li>
+</ul>
+<p>Suppose the agent moves right:</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210223110534.png" alt="">
+<br>
+No breeze is detected in the starting cell [1,1], so the agent knows there is no pit up or to the right. In cell [2,1], there is a breeze, so the agent knows there is a pit above or to the right (or both).</p>
+<p>Each case can be defined by the following propositions:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210223110745.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210223110745.png" width="300"/></a></span>
+</span><br>
+We define the following boolean variables:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210223110852.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210223110852.png" 
+         alt="$P_{x,y}$ is instantiated as a different variable for each coordinate, i.e. $P_{1,1}, P_{1,2}, P_{2,1},\ldots$ are all different variables." width="500"/></a></span><span class="caption">
+            <p>$P_{x,y}$ is instantiated as a different variable for each coordinate, i.e. $P_{1,1}, P_{1,2}, P_{2,1},\ldots$ are all different variables.</p>
+        </span>
+</span></p>
+<p>A <strong>model</strong> (in the math sense) is an instantiation of these variables (in contrast to the machine learning sense where a model is the entire definition of the game and all the variables). There are 4 variables for each coordinate, and 16*4 = 64 variables in total. Thus a model can be viewed as a length 64 boolean vector. Suppose $m$ is such a vector. Then if $\a_1$ is true for $m$, we say that $m$ is a model of $\a_1$.</p>
+<p>Let $M(\a)$ be the set of all models (i.e. length 64 boolean vectors) satisfying some arbitrary sentence $\a$. Let $\beta$ be another sentence. We say that $\a$ <strong>entails</strong> $\beta$, notated $\a \models \beta$, iff $M(\a) \subseteq M(\beta)$.</p>
+<p>Diagrammatically, we can depict the sets $M(\a_1)$ and $M(\a_2)$ (referring to the sentences above), as well as our knowledge base (KB) (i.e. what is given):<br>
+
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210223113244.png" alt="">
+<br>
+In our wumpus world, the &ldquo;sentences&rdquo; above can be formally states as propositions, along with the rules for the game:<br>
+
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210223111036.png" alt="">
+<br>
+We can prove simple things like &ldquo;there is no pit in [1,2]&rdquo; using the rules of logical inference. The following propositions are true in all models where $R_1,\ldots,R_5$ are true:<br>
+
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210223112618.png" alt="">
+<br>
+Each $R_i$ is entailed by the proceeding $R_j$ for $j &lt; i$. A sequence of such propositions resulting in a desired proposition is a proof. From $R_{10}$, we can conclude $\neg P_{1,2}$. This sequence of propositions is a proof of $\a_1$ = &ldquo;there is no pit in [1,2]&rdquo;.</p>
+<p>We can also verify the statement $\a_1$ is true with brute force instead of logical inference: by enumerating all models ($2^{64}$ of them), selecting the models which satisfy $R_1,\ldots,R_5$ (i.e. $M(R_1\and\ldots\and R_5)$), and then checking if $\neg P_{1,2}$ is true in all of them.</p>
+<p>Notice that we cannot prove $P_{2,2}$ or its negation $\neg P_{2,2}$ given $R_1,\ldots,R_5$. That is because some models of $R_1\and\ldots\and R_5$ are consistent with $P_{2,2}$ while others are consistent with $\neg P_{2,2}$. That is to say, the truth value of variable $P_{2,2}$ is not uniquely determined by the givens $R_1,\ldots,R_5$. Speaking informally, we do not have enough information to know whether there is a pit at [2,2]. Therefore a rational agent would not make decisions based on $P_{2,2}$ being true or false. This is a core tenet of classical logic, whereas we shall see later, a Bayesian reasoner might be able to do more with the same information.</p>
+<h2 id="the-machine-learning-perspective">The machine learning perspective</h2>
+<p>In machine learning, a <strong>model</strong> is a function $f : \O \to \X$, where $\O$ is called the state set, and $\X$ is called the observation set. This is different from the math notion of a model we saw above.</p>
+<p>Typically $\O$ and $\X$ are each the Cartesian products of other primitive types (which are sets, e.g. the reals, the integers, the booleans, etc.). Thus elements of $\O$ and $\X$ are typically tuples. Each element of the tuple is called a dimension. Generally, $\O$ and $\X$ are high-dimensional (elements of $\O$ and $\X$ are very long tuples, possibly infinite).</p>
+<p>An element $\o \in \O$ is called a state, and is considered to be a possible state of the world, where the world is the model. Often, $\O = \T\m\E$, where $\T$ is called the parameter set, and $\E$ is the noise set (both sets are themselves multi-dimensional). In the typical ML formulation, $\t\in\T$ is explicitly represented but $\e\in\E$ is not, because $\t$ is what is being &ldquo;solved for&rdquo; while $\e$ represents random inputs. In my formulation, I combine both into a single state $\o = (\t,\e)$. If $\o$ is some tuple, then a subtuple of $\o$ is called a substate, so $\t$ and $\e$ are substates of $\o = (\t, \e)$.</p>
+<p>An element $x \in \X$ is called an observation. Usually we are only given a partial observation. If $\X = T_1 \m T_2 \m T_3 \m \dots$ for primitive types $T_1, T_2, T_3, \ldots$, then a full observation is $x = (t_1, t_2, t_3, \ldots) \in \X$. A partial observation is a subset of elements in the tuple $x$. We denote partial observations with subscripts: $x_{1,5,10}$ is the tuple $(t_1, t_5, t_{10})$. We can also take slices: $x_{a:b} = (t_a, t_{a+1}, \ldots, t_{b-1}, t_b)$ is the slice from index $a$ to $b$. The shorthand $x_{&gt;a}$ is the tuple of all indices larger than $a$, and $x_{&lt;a}$ is the tuple of all indices less than $a$. It is sometimes convenient to think of a partial observation $x_I$ (for index tuple $I$) as a subset of $\X$, i.e. the set of all $x\in\X$ satisfying the partial observation. For example, $x_{1,5,10} = \set{(t_1, t_2, \ldots)\in\X \mid t_1 = x_1 \and t_5 = x_5 \and t_{10} = x_{10}}$. Let $x_{a:b}`x_{x:d} = x_{a:b,c:d}$ denote tuple concatenation.</p>
+<p>The goal of machine learning is to determine an unobserved partial observation  from an observed partial observation. If the unobserved part is going to be observed in the future, we call this prediction (if it happened in the past, we call this retrodiction). If the unobserved part is atemporal, or never observed, we call this inference. An unobservable partial observation is called latent.</p>
+<h3 id="unsupervised-learning">Unsupervised learning</h3>
+<p>The observation space is</p>
+<p>$$<br>
+\X = \Xi_1\m\Xi_2\m\dots\m\Xi_i\m\dots<br>
+$$</p>
+<p>$\x_i \in \Xi_i$ is called an <em>example</em> (I am using &ldquo;xi&rdquo;, $\x$, instead of $x$ since $x$ already denotes a full observation).</p>
+<p>We are given a partial observation $D$, called the dataset:</p>
+<p>$$<br>
+D = (\x_1, \x_2,\x_3, \ldots, \x_n)<br>
+$$</p>
+<p>Given model $f : \O \to \X$ and dataset $D$ (regarding $D$ as a subset of $\X$), then $\inv{f}(D)$ is the set of all states in $\O$ compatible with $D$.</p>
+<p>Typically in machine learning, the dataset $D$ does not uniquely determine a state $\o\in\O$. To further narrow down the possibilities, additional constraints are added. Typically, $\O = \T\m\E$, where the $\T$ component of the state tuple is narrowed down further by maximizing the data probability $p_\t(D)$ w.r.t. $\t\in\T$, and $\e \sim p_\t(D)$ is randomly chosen from the distribution. Additionally, the maximization of $p_\t(D)$ may be &ldquo;regularized&rdquo; by jointly minimizing some real-valued function $L(\t)$. Even then, $\t\in\T$ may not be uniquely determined (as is the case in deep learning), and so $\t$ will be arbitrarily chosen from the remaining possibilities.</p>
+<p>In the case of unsupervised learning, $f$ is called a generative model, and we use it to generate unobserved examples. Assume we&rsquo;ve narrowed down the possibility space $\O$ to one state $\o^*$. We simply looking at</p>
+<p>$$f(\o^*) = (\x_1, \x_2, \ldots, \x_n, \x_{n+1}, \x_{n+2}, \dots)$$</p>
+<p>which provides $\x_{n+1}, \x_{n+2}, \dots$ outside of the partial observation $D$. Note that $\o$ typically contains a choice of noise $\e\in\E$, which injects randomness into the generated examples (generative models are normally thought of as probability distributions, and generating examples is a process of sampling from $p_{\t^*}(\x_i)$ for chosen parameter $\t^*$).</p>
+<p>Because $D$ does not uniquely determine an input $\o$ to $f$ (i.e. $\inv{f}(D)$ is not singleton), but a particular $\o^* \in \inv{f}(D)$ is chosen anyway, this results in some difficulties. Some $\o$ will produce generated examples $\x_{n+1}, \x_{n+2}, \dots$ which &ldquo;look like the examples in $D$&rdquo; where other choices of $\o$ (still compatible with $D$) will not. We say that $f(\o)$ generalizes if it outputs the unobserved partial observation that humans consider to be correct or appropriate (e.g. looks like the data in $D$). This is all very subjective, and it is very difficult to provide appropriate constraints (like the ones I mentioned above) so that for all possible $D$, the resulting $\o_D^*$ generalizes (i.e. many humans agree that $\x_{n+1}, \x_{n+2}, \dots$ &ldquo;look like&rdquo; $D$).</p>
+<h2 id="discussion">Discussion</h2>
+<p>In general, the classically rational agent only regards uniquely determined partial observables (output dimensions on it&rsquo;s ML-model $f$) as knowledge, and does not act on undetermined partial observables. In contrast, the Bayesian rational agent takes the relative proportion of possible states that produce each outcome as knowledge.</p>
+<p>How does the Bayesian agent pull this off? Do these &ldquo;Bayesian&rdquo; probabilities really constitute knowledge? We can turn the question around and ask if uniquely determined observables really constitute knowledge. It is rare for something to be uniquely determined in practice. I suspect that many of the difficulties encountered in applications of statistical inference and machine learning are because of this. A classical reasoner needs to make simplifications and assumptions in service of being able to then uniquely determine something of interest. It seems to me that most of informal rational thought comes down to some version of choosing an ML-model s.t. something of interest can be uniquely determined. Described in this way, classical reasoning sounds biased. On the flip side, in practice Bayesian ML-models requires special simplifications and assumptions to be computationally tractable, so a similar sort of ML-model-choosing bias occurs.</p>
+<p>Note that the size of $\O$ and the ML-model $f$ determine how many states produce each partial observation. Ostensibly these things are arbitrarily chosen by the agent. The classical reasoner objects that state-counts (probabilities) don&rsquo;t constitute actual knowledge about the world, but are an artifact of the choice of ML-model $f$, and so it is inappropriate to treat these quantities as knowledge. The Bayesian reasoner counters that a classical ML-model (e.g. boolean logic) is also arbitrarily chosen. Unique determination is a property of $f$, not reality, and depends on the arbitrary simplifications and assumptions made by the agent. Thus, the Bayesian reasoner concludes, my approach is no less rational than yours.</p>
+<p>The classical reasoner would counter that the parts of the ML-model output which are observed can be arbitrarily inspected for &ldquo;goodness of fit&rdquo; to reality. Unique determination is much less fragile (i.e. stable w.r.t. modeling inaccuracies) than state-counts. Unique determination is robust against worst-case modeling errors (though in practice this is clearly not true).</p>
+<h1 id="the-bayesian-axiom">The Bayesian Axiom</h1>
+<p>This epistemological debate is still raging. The efficacy of classical reasoning has been argued about for the last two and a half millennia. Bayesian reasoning is a more modern invention that, depending on how you count it, has been going on for 100 to 300 years (early 20th century Bayesians to Thomas Bayes). The frontier of contemporary inquery is the complex: from brains to human societies to high-dimensional physical systems, the neat and orderly unique-determination of classical reasoning is hard to come by. For this reason, Bayesian reasoning is gaining traction and is posturing to topple classical reasoning as the common-sense epistemological default.</p>
+<p>Given the unsettled nature of these questions, it is my opinion that the &ldquo;state-counts as knowledge&rdquo; premise be taken as the &ldquo;Bayesian axiom&rdquo;. This neatly delineates classical and Bayesian epistemology down to one difference: Bayesian epistemology is classical epistemology plus an additional axiom. Some may accept this axiom and other&rsquo;s may reject it, leading to different kinds of reasoning and knowledge. I don&rsquo;t know if we will ever be able to determine that this axiom should or should not be used. In that case, like <a href="https://en.wikipedia.org/wiki/Parallel_postulate"target="_blank">Euclid&rsquo;s fifth axiom</a>, &ldquo;flat&rdquo; and &ldquo;curved&rdquo; rationality shall forever remain parallel self-consistent options.</p>
+</article>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/active-inference-tutorial-actions/"><span class="iconfont icon-article"></span>Active inference tutorial (actions)</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script
+            type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script></body>
+
+</html>

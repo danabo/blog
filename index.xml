@@ -5,15 +5,434 @@
     <description>Recent content on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Sat, 20 Feb 2021 10:16:45 -0600</lastBuildDate>
+    <lastBuildDate>Wed, 24 Feb 2021 19:15:59 -0600</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Classical vs Bayesian Reasoning</title>
+      <link>https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/</link>
+      <pubDate>Wed, 24 Feb 2021 19:15:59 -0600</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\0}{\mathrm{false}}&lt;br&gt;
+\newcommand{\1}{\mathrm{true}}&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\and}{\wedge}&lt;br&gt;
+\newcommand{\or}{\vee}&lt;br&gt;
+\newcommand{\a}{\alpha}&lt;br&gt;
+\newcommand{\t}{\theta}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\x}{\xi}&lt;br&gt;
+\newcommand{\fa}{\forall}&lt;br&gt;
+\newcommand{\ex}{\exists}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\Y}{\mc{Y}}&lt;br&gt;
+\newcommand{\Z}{\mc{Z}}&lt;br&gt;
+\newcommand{\P}{\Psi}&lt;br&gt;
+\newcommand{\y}{\psi}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\m}{\times}&lt;br&gt;
+\newcommand{\E}{\mc{E}}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
+\newcommand{\Iff}{\Leftrightarrow}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;My goal is to identify the core conceptual difference between someone who accepts &amp;ldquo;Bayesian reasoning&amp;rdquo; as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept &amp;ldquo;classical reasoning&amp;rdquo;. By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotillian logic, through propositional logic like that of Freige, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.&lt;/p&gt;
+&lt;p&gt;My thesis is that the difference between Bayesian and classical reasoners comes down to how they deal with non-determined objects (e.g. if you cannot determine the truth value of something from your givens). The classical reasoner will shrug their shoulders and say &amp;ldquo;the answer cannot be determined, collect more givens or modify your definitions&amp;rdquo;. The Bayesian reasoner will regard at the proportion of self-consistent instantiations of unknowns that make the target proposition true as useful information regarding whether it is really true. That is to say, the Bayesian reasoner continues on without uniquely determined truth values, and the classical reasoner does not.&lt;/p&gt;
+&lt;p&gt;This difference extends into the realms of machine learning and epistemology. Classical epistemology is interested in truth (i.e. uniquely determined quantities), whereas Bayesian epistemology is interested in degrees of certainty. In machine learning, the givens and unknowns in question are not boolean valued, but have arbitrary data types (e.g. vectors of reals). The classical learner is interested in what can be uniquely determined from data, and the Bayesian learner is interested in proportions of possibilities.&lt;/p&gt;
+&lt;p&gt;This philosophical difference leads to a practical methodological difference. A classical reasoner/learner will define universes such that unknowns can be uniquely determined. Otherwise, the definitions are not useful. A Bayesian reasoner/learner will define universes such that calculating posterior probabilities are tractable. Otherwise, the definitions are not useful.&lt;/p&gt;
+&lt;p&gt;A note on the definition of &lt;strong&gt;model&lt;/strong&gt;. In mathematics, a model is an instantiation of an unspecified object which satisfies given axioms. In machine learning, a model refers to a family of instantiations of free parameters, i.e. a model is the set of definitions which invoke free variables that are to be determined.&lt;/p&gt;
+&lt;h1 id=&#34;propositional-logic&#34;&gt;Propositional logic&lt;/h1&gt;
+&lt;h2 id=&#34;the-math-perspective&#34;&gt;The math perspective&lt;/h2&gt;
+&lt;p&gt;I will be using the example in Russell and Norvig&amp;rsquo;s &lt;a href=&#34;http://aima.cs.berkeley.edu/&#34;target=&#34;_blank&#34;&gt;Artificial Intelligence: A Modern Approach&lt;/a&gt; (3rd edition), chapter 7.&lt;/p&gt;
+&lt;p&gt;We are introduced to &amp;ldquo;wumpus world&amp;rdquo;, a &lt;a href=&#34;http://gridworld.info&#34;target=&#34;_blank&#34;&gt;grid world&lt;/a&gt; containing an enemy called the wumpus, death pits, and gold.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223110223.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+The relevant rules are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the agent starts in the bottom left corner&lt;/li&gt;
+&lt;li&gt;the agent can only see what is contained in the cell it currently occupies&lt;/li&gt;
+&lt;li&gt;the agent will detect a &amp;ldquo;breeze&amp;rdquo; if it&amp;rsquo;s cell is adjacent to a pit&lt;/li&gt;
+&lt;li&gt;if the agent moves into a pit, it dies&lt;/li&gt;
+&lt;li&gt;the goal is to get to the gold&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Suppose the agent moves right:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223110534.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+No breeze is detected in the starting cell [1,1], so the agent knows there is no pit up or to the right. In cell [2,1], there is a breeze, so the agent knows there is a pit above or to the right (or both).&lt;/p&gt;
+&lt;p&gt;Each case can be defined by the following propositions:&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210223110745.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210223110745.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+We define the following boolean variables:&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210223110852.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210223110852.png&#34; 
+         alt=&#34;$P_{x,y}$ is instantiated as a different variable for each coordinate, i.e. $P_{1,1}, P_{1,2}, P_{2,1},\ldots$ are all different variables.&#34; width=&#34;500&#34;/&gt;&lt;/a&gt;&lt;/span&gt;&lt;span class=&#34;caption&#34;&gt;
+            &lt;p&gt;$P_{x,y}$ is instantiated as a different variable for each coordinate, i.e. $P_{1,1}, P_{1,2}, P_{2,1},\ldots$ are all different variables.&lt;/p&gt;
+        &lt;/span&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;A &lt;strong&gt;model&lt;/strong&gt; (in the math sense) is an instantiation of these variables (in contrast to the machine learning sense where a model is the entire definition of the game and all the variables). There are 4 variables for each coordinate, and 16*4 = 64 variables in total. Thus a model can be viewed as a length 64 boolean vector. Suppose $m$ is such a vector. Then if $\a_1$ is true for $m$, we say that $m$ is a model of $\a_1$.&lt;/p&gt;
+&lt;p&gt;Let $M(\a)$ be the set of all models (i.e. length 64 boolean vectors) satisfying some arbitrary sentence $\a$. Let $\beta$ be another sentence. We say that $\a$ &lt;strong&gt;entails&lt;/strong&gt; $\beta$, notated $\a \models \beta$, iff $M(\a) \subseteq M(\beta)$.&lt;/p&gt;
+&lt;p&gt;Diagrammatically, we can depict the sets $M(\a_1)$ and $M(\a_2)$ (referring to the sentences above), as well as our knowledge base (KB) (i.e. what is given):&lt;br&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223113244.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+In our wumpus world, the &amp;ldquo;sentences&amp;rdquo; above can be formally states as propositions, along with the rules for the game:&lt;br&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223111036.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+We can prove simple things like &amp;ldquo;there is no pit in [1,2]&amp;rdquo; using the rules of logical inference. The following propositions are true in all models where $R_1,\ldots,R_5$ are true:&lt;br&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223112618.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+Each $R_i$ is entailed by the proceeding $R_j$ for $j &amp;lt; i$. A sequence of such propositions resulting in a desired proposition is a proof. From $R_{10}$, we can conclude $\neg P_{1,2}$. This sequence of propositions is a proof of $\a_1$ = &amp;ldquo;there is no pit in [1,2]&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;We can also verify the statement $\a_1$ is true with brute force instead of logical inference: by enumerating all models ($2^{64}$ of them), selecting the models which satisfy $R_1,\ldots,R_5$ (i.e. $M(R_1\and\ldots\and R_5)$), and then checking if $\neg P_{1,2}$ is true in all of them.&lt;/p&gt;
+&lt;p&gt;Notice that we cannot prove $P_{2,2}$ or its negation $\neg P_{2,2}$ given $R_1,\ldots,R_5$. That is because some models of $R_1\and\ldots\and R_5$ are consistent with $P_{2,2}$ while others are consistent with $\neg P_{2,2}$. That is to say, the truth value of variable $P_{2,2}$ is not uniquely determined by the givens $R_1,\ldots,R_5$. Speaking informally, we do not have enough information to know whether there is a pit at [2,2]. Therefore a rational agent would not make decisions based on $P_{2,2}$ being true or false. This is a core tenet of classical logic, whereas we shall see later, a Bayesian reasoner might be able to do more with the same information.&lt;/p&gt;
+&lt;h2 id=&#34;the-machine-learning-perspective&#34;&gt;The machine learning perspective&lt;/h2&gt;
+&lt;p&gt;In machine learning, a &lt;strong&gt;model&lt;/strong&gt; is a function $f : \O \to \X$, where $\O$ is called the state set, and $\X$ is called the observation set. This is different from the math notion of a model we saw above.&lt;/p&gt;
+&lt;p&gt;Typically $\O$ and $\X$ are each the Cartesian products of other primitive types (which are sets, e.g. the reals, the integers, the booleans, etc.). Thus elements of $\O$ and $\X$ are typically tuples. Each element of the tuple is called a dimension. Generally, $\O$ and $\X$ are high-dimensional (elements of $\O$ and $\X$ are very long tuples, possibly infinite).&lt;/p&gt;
+&lt;p&gt;An element $\o \in \O$ is called a state, and is considered to be a possible state of the world, where the world is the model. Often, $\O = \T\m\E$, where $\T$ is called the parameter set, and $\E$ is the noise set (both sets are themselves multi-dimensional). In the typical ML formulation, $\t\in\T$ is explicitly represented but $\e\in\E$ is not, because $\t$ is what is being &amp;ldquo;solved for&amp;rdquo; while $\e$ represents random inputs. In my formulation, I combine both into a single state $\o = (\t,\e)$. If $\o$ is some tuple, then a subtuple of $\o$ is called a substate, so $\t$ and $\e$ are substates of $\o = (\t, \e)$.&lt;/p&gt;
+&lt;p&gt;An element $x \in \X$ is called an observation. Usually we are only given a partial observation. If $\X = T_1 \m T_2 \m T_3 \m \dots$ for primitive types $T_1, T_2, T_3, \ldots$, then a full observation is $x = (t_1, t_2, t_3, \ldots) \in \X$. A partial observation is a subset of elements in the tuple $x$. We denote partial observations with subscripts: $x_{1,5,10}$ is the tuple $(t_1, t_5, t_{10})$. We can also take slices: $x_{a:b} = (t_a, t_{a+1}, \ldots, t_{b-1}, t_b)$ is the slice from index $a$ to $b$. The shorthand $x_{&amp;gt;a}$ is the tuple of all indices larger than $a$, and $x_{&amp;lt;a}$ is the tuple of all indices less than $a$. It is sometimes convenient to think of a partial observation $x_I$ (for index tuple $I$) as a subset of $\X$, i.e. the set of all $x\in\X$ satisfying the partial observation. For example, $x_{1,5,10} = \set{(t_1, t_2, \ldots)\in\X \mid t_1 = x_1 \and t_5 = x_5 \and t_{10} = x_{10}}$. Let $x_{a:b}`x_{x:d} = x_{a:b,c:d}$ denote tuple concatenation.&lt;/p&gt;
+&lt;p&gt;The goal of machine learning is to determine an unobserved partial observation  from an observed partial observation. If the unobserved part is going to be observed in the future, we call this prediction (if it happened in the past, we call this retrodiction). If the unobserved part is atemporal, or never observed, we call this inference. An unobservable partial observation is called latent.&lt;/p&gt;
+&lt;h3 id=&#34;unsupervised-learning&#34;&gt;Unsupervised learning&lt;/h3&gt;
+&lt;p&gt;The observation space is&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\X = \Xi_1\m\Xi_2\m\dots\m\Xi_i\m\dots&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;$\x_i \in \Xi_i$ is called an &lt;em&gt;example&lt;/em&gt; (I am using &amp;ldquo;xi&amp;rdquo;, $\x$, instead of $x$ since $x$ already denotes a full observation).&lt;/p&gt;
+&lt;p&gt;We are given a partial observation $D$, called the dataset:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+D = (\x_1, \x_2,\x_3, \ldots, \x_n)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Given model $f : \O \to \X$ and dataset $D$ (regarding $D$ as a subset of $\X$), then $\inv{f}(D)$ is the set of all states in $\O$ compatible with $D$.&lt;/p&gt;
+&lt;p&gt;Typically in machine learning, the dataset $D$ does not uniquely determine a state $\o\in\O$. To further narrow down the possibilities, additional constraints are added. Typically, $\O = \T\m\E$, where the $\T$ component of the state tuple is narrowed down further by maximizing the data probability $p_\t(D)$ w.r.t. $\t\in\T$, and $\e \sim p_\t(D)$ is randomly chosen from the distribution. Additionally, the maximization of $p_\t(D)$ may be &amp;ldquo;regularized&amp;rdquo; by jointly minimizing some real-valued function $L(\t)$. Even then, $\t\in\T$ may not be uniquely determined (as is the case in deep learning), and so $\t$ will be arbitrarily chosen from the remaining possibilities.&lt;/p&gt;
+&lt;p&gt;In the case of unsupervised learning, $f$ is called a generative model, and we use it to generate unobserved examples. Assume we&amp;rsquo;ve narrowed down the possibility space $\O$ to one state $\o^*$. We simply looking at&lt;/p&gt;
+&lt;p&gt;$$f(\o^*) = (\x_1, \x_2, \ldots, \x_n, \x_{n+1}, \x_{n+2}, \dots)$$&lt;/p&gt;
+&lt;p&gt;which provides $\x_{n+1}, \x_{n+2}, \dots$ outside of the partial observation $D$. Note that $\o$ typically contains a choice of noise $\e\in\E$, which injects randomness into the generated examples (generative models are normally thought of as probability distributions, and generating examples is a process of sampling from $p_{\t^*}(\x_i)$ for chosen parameter $\t^*$).&lt;/p&gt;
+&lt;p&gt;Because $D$ does not uniquely determine an input $\o$ to $f$ (i.e. $\inv{f}(D)$ is not singleton), but a particular $\o^* \in \inv{f}(D)$ is chosen anyway, this results in some difficulties. Some $\o$ will produce generated examples $\x_{n+1}, \x_{n+2}, \dots$ which &amp;ldquo;look like the examples in $D$&amp;rdquo; where other choices of $\o$ (still compatible with $D$) will not. We say that $f(\o)$ generalizes if it outputs the unobserved partial observation that humans consider to be correct or appropriate (e.g. looks like the data in $D$). This is all very subjective, and it is very difficult to provide appropriate constraints (like the ones I mentioned above) so that for all possible $D$, the resulting $\o_D^*$ generalizes (i.e. many humans agree that $\x_{n+1}, \x_{n+2}, \dots$ &amp;ldquo;look like&amp;rdquo; $D$).&lt;/p&gt;
+&lt;h2 id=&#34;discussion&#34;&gt;Discussion&lt;/h2&gt;
+&lt;p&gt;In general, the classically rational agent only regards uniquely determined partial observables (output dimensions on it&amp;rsquo;s ML-model $f$) as knowledge, and does not act on undetermined partial observables. In contrast, the Bayesian rational agent takes the relative proportion of possible states that produce each outcome as knowledge.&lt;/p&gt;
+&lt;p&gt;How does the Bayesian agent pull this off? Do these &amp;ldquo;Bayesian&amp;rdquo; probabilities really constitute knowledge? We can turn the question around and ask if uniquely determined observables really constitute knowledge. It is rare for something to be uniquely determined in practice. I suspect that many of the difficulties encountered in applications of statistical inference and machine learning are because of this. A classical reasoner needs to make simplifications and assumptions in service of being able to then uniquely determine something of interest. It seems to me that most of informal rational thought comes down to some version of choosing an ML-model s.t. something of interest can be uniquely determined. Described in this way, classical reasoning sounds biased. On the flip side, in practice Bayesian ML-models requires special simplifications and assumptions to be computationally tractable, so a similar sort of ML-model-choosing bias occurs.&lt;/p&gt;
+&lt;p&gt;Note that the size of $\O$ and the ML-model $f$ determine how many states produce each partial observation. Ostensibly these things are arbitrarily chosen by the agent. The classical reasoner objects that state-counts (probabilities) don&amp;rsquo;t constitute actual knowledge about the world, but are an artifact of the choice of ML-model $f$, and so it is inappropriate to treat these quantities as knowledge. The Bayesian reasoner counters that a classical ML-model (e.g. boolean logic) is also arbitrarily chosen. Unique determination is a property of $f$, not reality, and depends on the arbitrary simplifications and assumptions made by the agent. Thus, the Bayesian reasoner concludes, my approach is no less rational than yours.&lt;/p&gt;
+&lt;p&gt;The classical reasoner would counter that the parts of the ML-model output which are observed can be arbitrarily inspected for &amp;ldquo;goodness of fit&amp;rdquo; to reality. Unique determination is much less fragile (i.e. stable w.r.t. modeling inaccuracies) than state-counts. Unique determination is robust against worst-case modeling errors (though in practice this is clearly not true).&lt;/p&gt;
+&lt;h1 id=&#34;the-bayesian-axiom&#34;&gt;The Bayesian Axiom&lt;/h1&gt;
+&lt;p&gt;This epistemological debate is still raging. The efficacy of classical reasoning has been argued about for the last two and a half millennia. Bayesian reasoning is a more modern invention that, depending on how you count it, has been going on for 100 to 300 years (early 20th century Bayesians to Thomas Bayes). The frontier of contemporary inquery is the complex: from brains to human societies to high-dimensional physical systems, the neat and orderly unique-determination of classical reasoning is hard to come by. For this reason, Bayesian reasoning is gaining traction and is posturing to topple classical reasoning as the common-sense epistemological default.&lt;/p&gt;
+&lt;p&gt;Given the unsettled nature of these questions, it is my opinion that the &amp;ldquo;state-counts as knowledge&amp;rdquo; premise be taken as the &amp;ldquo;Bayesian axiom&amp;rdquo;. This neatly delineates classical and Bayesian epistemology down to one difference: Bayesian epistemology is classical epistemology plus an additional axiom. Some may accept this axiom and other&amp;rsquo;s may reject it, leading to different kinds of reasoning and knowledge. I don&amp;rsquo;t know if we will ever be able to determine that this axiom should or should not be used. In that case, like &lt;a href=&#34;https://en.wikipedia.org/wiki/Parallel_postulate&#34;target=&#34;_blank&#34;&gt;Euclid&amp;rsquo;s fifth axiom&lt;/a&gt;, &amp;ldquo;flat&amp;rdquo; and &amp;ldquo;curved&amp;rdquo; rationality shall forever remain parallel self-consistent options.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Active inference tutorial (actions)</title>
+      <link>https://danabo.github.io/blog/posts/active-inference-tutorial-actions/</link>
+      <pubDate>Wed, 24 Feb 2021 05:34:36 -0600</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/active-inference-tutorial-actions/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\E}{\mb{E}}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\kl}[2]{D_{KL}\left(#1\ \| \ #2\right)}&lt;br&gt;
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }&lt;br&gt;
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\atup}[1]{\left\langle#1\right\rangle}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\t}{\theta}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\r}{\rho}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Previous attempts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In 
+
+
+
+  &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
+
+
+, I used a &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt; to try to understand the free energy formalism. I figured out the &amp;ldquo;timeless&amp;rdquo; and actionless case, but I became confused when actions and time were added.&lt;/li&gt;
+&lt;li&gt;In 
+
+
+
+  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
+
+
+, I tried to translate between the formalism presented in &lt;a href=&#34;https://danijar.com/apd/&#34;&gt;https://danijar.com/apd/&lt;/a&gt; (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;. I also tried to make the connection to Solomonoff induction.&lt;/li&gt;
+&lt;li&gt;In 
+
+
+
+  &lt;a href=&#34;https://danabo.github.io/blog/posts/varational-solomonoff-induction/&#34;&gt;Varational Solomonoff Induction&lt;/a&gt;
+
+
+, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using the same tutorial as before, &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data&lt;/a&gt;, I will go through the free energy formalism again and try to work out time and actions.&lt;/p&gt;
+&lt;h1 id=&#34;review&#34;&gt;Review&lt;/h1&gt;
+&lt;p&gt;To recap what I figured out in 
+
+
+
+  &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
+
+
+:&lt;/p&gt;
+&lt;p&gt;Suppose $o\in\mc{O}$ is the observation space and $s\in\mc{S}$ is the hypothesis/state space (to use the notation of the &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;). For now, let&amp;rsquo;s assume that $\mc{S}$ is the hidden state space of the environment in some timestep. $p(o,s)$ is the agent&amp;rsquo;s model of the environment, relating observations to hidden states, and the prior probability of the environment being in any particular hidden state. Let&amp;rsquo;s also ignore questions about the meaning of these probabilities (objective or subjective) and where they come from. If it&amp;rsquo;s easier to think about, assume these probabilities are subjective.&lt;/p&gt;
+&lt;p&gt;If $o$ is observed (one timestep only), then we want to calculate the posterior probability $p(s\mid o)$ of each $s\in\mc{S}$. If this is intractable to do, we can instead find an approximation $q_o(s)$:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+q_o := \argmin{q \in \mc{Q}} \kl{q(s)}{p(s\mid o)}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $\mc{Q}$ is some space of distributions that you choose $q_o$ from. Presumably $\mc{Q}$ is restricted somehow, otherwise the solution is $q=p$ in which case you are doing exact Bayesian inference.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\kl{q(s)}{p(s\mid o)} &amp;amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s\mid o)}\right] \\&lt;br&gt;
+&amp;amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s)}\right] + \E_{s\sim q}\left[\lg \frac{1}{p(o \mid s)}\right] + \E_{s\sim q}[p(o)]\\&lt;br&gt;
+&amp;amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}\left[\lg p(o \mid s)\right] - \lg\frac{1}{p(o)} \\&lt;br&gt;
+&amp;amp;= \mc{F}[q] - \lg\frac{1}{p(o)}\,,&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\mc{F}[q] &amp;amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}[\lg p(o \mid s)]\\&lt;br&gt;
+&amp;amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s,o)}\right]&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;is called &lt;strong&gt;variational free energy&lt;/strong&gt;. $\kl{q(s)}{p(s)}$ is called &lt;strong&gt;accuracy&lt;/strong&gt; and $\E_{s\sim q}[\lg p(o \mid s)]$ is called &lt;strong&gt;complexity&lt;/strong&gt;. $\lg\frac{1}{p(o)}$ is called &lt;strong&gt;surprise&lt;/strong&gt; (self-information of the observation $o$).&lt;/p&gt;
+&lt;p&gt;Minimizing $\mc{F}[q]$ w.r.t. $q$ minimizes $\kl{q(s)}{p(s\mid o)}$. The surprise $\lg\frac{1}{p(o)}$ is constant w.r.t. this minimization. (Remember this is all assuming $o$ is given and fixed.)&lt;/p&gt;
+&lt;h1 id=&#34;new-stuff&#34;&gt;New stuff&lt;/h1&gt;
+&lt;p&gt;In the &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;, we have free energy defined just as in my notes, except that everything now depends on policy $\pi$:&lt;br&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210207121048.png&#34; alt=&#34;&#34;&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210207121055.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+The policy $\pi$ is a probability distribution over actions (, e.g. $\pi(a_t \mid o_{1:t}, a_{1:t-1})$. More on that later.&lt;/p&gt;
+&lt;h2 id=&#34;interaction-loop&#34;&gt;Interaction loop&lt;/h2&gt;
+&lt;p&gt;It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In 
+
+
+
+  &lt;a href=&#34;https://danabo.github.io/blog/posts/varational-solomonoff-induction/&#34;&gt;Varational Solomonoff Induction&lt;/a&gt;
+
+
+ I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&amp;rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s unpack the agent-environment interaction loop. Given policy $\pi$,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(o_{1:\infty},s_{1:\infty}\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t,s_t\mid a_t,s_{t-1})\pi(a_t\mid o_{1:t-1},a_{1:t-1})&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $p(o_t,s_t\mid a_t,s_{t-1})$ is the probability of next observation and hidden state given input action $a_t$ and previous state, and $\pi(a_t\mid o_{1:t-1},a_{1:t-1})$ is the probability of the agent taking action $a_t$ given its entire history $o_{1:t-1},a_{1:t-1}$ (alternative we can give the agent internal state and condition on that).&lt;/p&gt;
+&lt;p&gt;On the other hand, if $s$ (or $h$) is a time-less hypothesis: then we have&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(o_{1:\infty},h\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t\mid a_{1:t},o_{1:t-1},h)p(h)\pi(a_t\mid o_{1:t-1},a_{1:t-1})&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $p(h)$ is the prior on hypothesis $h$.&lt;/p&gt;
+&lt;p&gt;Below, I will leave it ambiguous whether $s$ is a sequence of states or a time-less hypothesis. The math should be the same either way.&lt;/p&gt;
+&lt;h2 id=&#34;active-inference&#34;&gt;Active inference&lt;/h2&gt;
+&lt;p&gt;How are actions chosen? This is the big question I could not penetrate in my previous attempts. From the tutorial:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When inferring optimal actions, however, one cannot simply consider current observations. This is because actions are chosen to bring about preferred future observations. This means that, to infer optimal actions, a model must predict sequences of future states and observations for each possible policy, and then calculate the expected free energy (𝐸𝐹𝐸) of those different sequences of future states and observations.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This is talking about taking an expectation over future states and observations. Let&amp;rsquo;s assume $p(o_{1:\infty}, s_{1:\infty} \mid \pi)$ is the true environment dynamics. We are introduced to a new term $q(o_{1:\infty}\mid\pi)$ which are the agent&amp;rsquo;s observation preferences over time given a particular policy.&lt;/p&gt;
+&lt;p&gt;The text is saying we want to choose policy $\pi$ to maximize $G(\pi)$. What&amp;rsquo;s troubling is that there is another term, $p(\pi)$, a prior over policies. If we are choosing policies freely, what does this prior represent?&lt;/p&gt;
+&lt;p&gt;The text says that the preferred policy also minimizes free energy:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Since ‘preferred’ here formally translates to ‘expected by the model’, then the policy expected to produce preferred observations will be the one that maximizes the accuracy of the model (and hence minimizes 𝐸𝐹𝐸).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;exact-inference&#34;&gt;Exact inference&lt;/h2&gt;
+&lt;p&gt;To simplify things, let&amp;rsquo;s suppose the agent can do perfect Bayesian inference, so that $q_o(s\mid\pi) = p(s \mid o,\pi)$. Let&amp;rsquo;s see what happens if we plug in $p(s\mid o,\pi)$ for $q_o(s\mid \pi)$ in our free energy definition:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mc{F} = \E_{s \sim p(s\mid o,\pi)}\left[\lg \frac{p(s\mid o,\pi)}{p(s,o\mid\pi)}\right] = \E_{s \sim p(s\mid o,\pi)}\left[\lg \frac{1}{p(o\mid \pi)}\right] = \lg \frac{1}{p(o\mid \pi)}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which is just the surprise (i.e. self-information due to observing $o$). Minimizing free energy means choosing $\pi$ to maximize the data likelihood:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\pi^* := \argmax{\pi} p(o\mid\pi)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Remember that $\mc{F}$ depends on a fixed $o$, which is what has already been observed. If $o$ is not observed, then we are talking about future $o$, and we need to take an expectation w.r.t. $o$, e.g.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\pi^* := \argmin{\pi} \E_{o\sim p(o\mid\pi)}\lg\frac{1}{p(o\mid\pi)} = \argmin{\pi}\mb{H}[p(o\mid\pi)]&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This is saying, choose a policy s.t. the future is as predictable as possible, i.e. minimizes entropy over observations, i.e. minimizes future expected surprise.&lt;/p&gt;
+&lt;p&gt;Now let&amp;rsquo;s introduce the agent&amp;rsquo;s preferences, encoded as a distribution on observations. The tutorial (and other texts) use $q(o)$, but I&amp;rsquo;m using $\r(o)$, because this is a very different thing from the approximate posterior $q_o$. Specifically $\r(o)$ is given and held fixed, while $q_o(s)$ depends on the particular observation $o$, as well as choice of optimization space $\mc{Q}$. In short, $q_o(s)$ is an output, while $\rho(o)$ is given.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s replace $p(o\mid\pi)$ with $\rho(o)$ (this should not depend on $\pi$). So instead of taking an expectation w.r.t. the model probabilities for $o$, we are taking an average weighted by preference for $o$:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\pi^* &amp;amp;:= \argmin{\pi} \E_{o\sim \r(o)}\lg\frac{1}{p(o\mid\pi)} \\&amp;amp;= \argmin{\pi} H(\r(o), p(o\mid\pi)) \\&amp;amp;= \argmin{\pi} \left\{\kl{\r(o)}{p(o\mid\pi)} + \mb{H}[\r(o)]\right\}&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which is the &lt;a href=&#34;https://en.wikipedia.org/wiki/Cross_entropy&#34;target=&#34;_blank&#34;&gt;cross-entropy&lt;/a&gt; of $q(o)$ and $p(o\mid\pi)$ (average number of bits if you encode a stream $o_{1:\infty}$ under $p$ while actually sampling from $p$). Since $\r(o)$ is fixed, then we are minimizing $\kl{\r(o)}{p(o\mid\pi)}$. That is to say, choose policy (thereby choosing actions) that make the environment (as the agent believes it to be) dynamics $p(o\mid\pi)$ conform to preferences $\r(o)$.&lt;/p&gt;
+&lt;h3 id=&#34;reward-equivalence&#34;&gt;Reward equivalence&lt;/h3&gt;
+&lt;p&gt;According to  &lt;a href=&#34;https://danijar.com/apd/,&#34;&gt;https://danijar.com/apd/,&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\r(o_{1:n}) \propto \exp(r(o_{1:n}))&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $r(o_{1:n})$ is the total reward received for observations $o_{1:n}$. Written another way, $\r(o_{1:n}) = \exp(r(o_{1:n}))/\mc{Z}$ for some normalization constant $\mc{Z}$, so then $r(o_{1:n}) = \ln\r(o_{1:n}) + \mc{C}$ for some constant offset $\mc{C}$.&lt;/p&gt;
+&lt;p&gt;If we are just trying to maximize expected total reward $r(o_{1:n})$ w.r.t. the environment model, we get&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\pi^* &amp;amp;:= \argmax{\pi} \E_{o \sim p(o \mid \pi)} [r(o_{1:n})] \\&lt;br&gt;
+&amp;amp;= \argmax{\pi} \E_{o_{1:n},a_{1:n} \sim p(o_{1:n},a_{1:n} \mid \pi)} [\ln\r(o_{1:n})]\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;So far, I am not seeing anything conceptually new here. Storing agent preferences in a probability distribution $\r(o)$ is not really any different from storing preferences in a reward $r(o)$, and the two are easily converted into each other.&lt;/p&gt;
+&lt;h2 id=&#34;putting-it-all-together&#34;&gt;Putting it all together&lt;/h2&gt;
+&lt;p&gt;Now let&amp;rsquo;s suppose that $o$ has not yet been observed as before, but use approximate (future) posterior $q_{o,\pi}(s)$ and compute expected future free energy under preference $\rho(o)$.&lt;/p&gt;
+&lt;p&gt;We get&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+G[\pi]&amp;amp;=\E_\rho[\mc{F}[o,\pi]] \\&lt;br&gt;
+&amp;amp;= \E_{o\sim\rho}\E_{s \sim q_{o,\pi}}\left[\lg\frac{q_{o,\pi}(s)}{p(s,o\mid\pi)}\right] \\&lt;br&gt;
+&amp;amp;= \E_{o\sim\rho}\kl{q_{o,\pi}(s)}{p(s\mid\pi)} - \E_{o\sim\rho}\E_{s\sim q_{o,\pi}}\left[\lg p(o \mid s,\pi)\right]&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $q_{o,\pi}$ is the optimal approximate posterior for the given observation $o$ and policy $\pi$ used to obtain $o$. From the perspective of $q_{o,\pi}$, $o$ is already observed using policy $\pi$ which determines the probability of that observation.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+q_{o,\pi} := \argmin{q} \mc{F}[o,\pi] = \argmin{q}\E_{s \sim q}\left[\lg\frac{q(s)}{p(s,o\mid\pi)}\right]&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;I believe the tutorial paper has a typo, where $p(o,s,\pi)$ should be $p(o,s,\mid\pi)$.&lt;/p&gt;
+&lt;p&gt;We are choosing $\pi$ to minimize $G[\pi]$, which is just the expected free energy under $\rho(o)$ (preference for future observations).&lt;/p&gt;
+&lt;p&gt;Do the optimizations on $\pi$ and $q$ interact? It seems like they don&amp;rsquo;t. $\pi$ is an outer optimization that depends on running the optimization on $q$ internally. There is not a single $q$, but many of them which the optimization on $\pi$ iterates through. So then what is the significance of connecting free energy minimization ($q$) to active inference ($\pi$)? If the policy optimization part were reformulated in terms of RL, we really just have a fancy kind of approximate Bayesian model combined with RL. The action learning and model updating are totally independent.&lt;/p&gt;
+&lt;p&gt;See &lt;a href=&#34;https://arxiv.org/abs/1911.10601&#34;&gt;https://arxiv.org/abs/1911.10601&lt;/a&gt; for a discussion about the equivalence between variational approaches to RL and active inference.&lt;/p&gt;
+&lt;h1 id=&#34;the-meaning-of-p&#34;&gt;The meaning of $p$&lt;/h1&gt;
+&lt;p&gt;If $p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is a dynamics model of the environment, how would the agent know it? Or alternatively, how are different hypotheses for environment dynamics handled in this framework?&lt;/p&gt;
+&lt;p&gt;The two cases are:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is the literal true dynamics of the environment.&lt;/li&gt;
+&lt;li&gt;$p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is the agent&amp;rsquo;s dynamics model of the environment.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The first case is unreasonable, because we cannot assume any agent knows the truth. The second case does not allow the agent to update its ontology, i.e. change the state space $\mc{S}$ and it&amp;rsquo;s beliefs about how observations interact with, $p(o\mid s)$ and $p(s\mid o)$.&lt;/p&gt;
+&lt;p&gt;We could suppose there is a latent $h$ for the environment hypothesis which is being marginlized, e.g. $p(o_{1:n},s_{1:n},h)$, but then $p(o_{1:n}\mid s_{1:n}) = \E_{h\sim p(h)}p(o_{1:n}\mid s_{1:n},h)$, which we can generally expect to be intractable but is required for free energy calculation. The free energy approximation was supposed to be tractable. Now do we have to approximate the approximation?&lt;/p&gt;
+&lt;p&gt;I think the time-less hypothesis formulation is better, i.e. $p(o_{1:\infty}, h)$, because it allows the hypothesis to invent its own states (because states are no longer explicitly defined), and put emphasis on not just the present, but possible states in the past and future, i.e. the agent may be more interested in inferring past or future states. Furthermore, states may not be well defined things. I have a model of the world filled with all sorts of objects, each having independent states until they interact. I cannot comprehend thinking of everything I know as one gigantic state.&lt;/p&gt;
+&lt;p&gt;Something I&amp;rsquo;ve heard hinted at elsewhere is that the agent, as a physical system, expresses some Bayesian prior $p$ and preferences $\r$ in an objective sense. What is the nature of this mapping between physical makeup and active-inference description? Is this entirely based on the agent&amp;rsquo;s behavior, or if we looked inside an agent, we could determine its model and preferences? I expect that if we look at behavior alone, then $p$ and $\r$ are underspecified.&lt;/p&gt;
+&lt;p&gt;So then what about the agent&amp;rsquo;s physical makeup gives it a model $p$ and preferences $\r$? The optimization process to find $q_{o,\pi}$ must be physically carried out, and so presumably this could be observed. In optimizing for $q_{o,\pi}$, the agent would actually be engaged in two processes that implicitly specify $p$. Splitting free energy into accuracy and complexity:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Explaining observations: $\E_{h\sim q}\left[\lg p(o_{1:n} \mid h,a_{1:n})\right]$&lt;br&gt;
+The agent thinks of hypotheses $h$ (sampling them from $q$) to explain observations $o_{1:n}$ given actions $a_{1:n}$.&lt;/li&gt;
+&lt;li&gt;Regularization: $\kl{q(h)}{p(h)}$&lt;br&gt;
+The agent updates its hypothesis generator $q$, implicitly conforming to $p$ which represents the agent&amp;rsquo;s grand total representation capacity.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Under this perspective, the agent&amp;rsquo;s ability to modify its own hypothesis generator $q(h)$ is somehow described by $p(h)$, which is fixed throughout the agent&amp;rsquo;s lifetime (unless the agent can self-modify). For a particular hypothesis $h$, the data probability $p(o_{1:n}\mid h)$ is the likelihood of the data under $h$. So $p$ is simultaneously encoding the agent&amp;rsquo;s theoretical capacity to generate hypotheses (which it never fully reaches because of limitations on $q(h)$) and the meaning of every hypothesis it can come up with. It is unclear to me whether $p(h, o_{1:n})$ can be uniquely determined given an agent&amp;rsquo;s physical makeup.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m also unconvinced about the way behavior is handled in this framework. Why think in terms of policies $\pi$ rather than actions $a_{1:n}$? Is the space of policies fixed through the agent&amp;rsquo;s lifetime? If $\pi$ is supposed to represent some kind of high level strategy, then how does the agent learn different kinds of strategies (updating its ontology). This is the same problem that Bayesian inference faces, that $q$ ostensibly fixes. But now we need to fix the same problem again for $\pi$.&lt;/p&gt;
+&lt;p&gt;Question: $G[\pi]$ appears to be intractable to compute or optimize directly. Why do we not have a variational approximation to this as well?&lt;/p&gt;
+&lt;p&gt;Why not just do RL? What is gained by &amp;ldquo;active inference&amp;rdquo;, which seems to me to be secretly RL on top of variational Bayes.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How this blog works</title>
+      <link>https://danabo.github.io/blog/posts/how-this-blog-works/</link>
+      <pubDate>Sun, 21 Feb 2021 12:22:08 -0600</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/how-this-blog-works/</guid>
+      <description>&lt;p&gt;This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.&lt;/p&gt;
+&lt;h1 id=&#34;second-brain&#34;&gt;Second brain&lt;/h1&gt;
+&lt;p&gt;I use the &lt;a href=&#34;https://obsidian.md/&#34;target=&#34;_blank&#34;&gt;Obsidian&lt;/a&gt; editor to organize my second brain. It looks like this:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206135929.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Writing some blog posts in Obsidian.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Every note is a markdown file, with support for extra features like &lt;a href=&#34;https://www.mathjax.org/&#34;target=&#34;_blank&#34;&gt;MathJax&lt;/a&gt; (latex math mode), and some of the features in &lt;a href=&#34;https://roamresearch.com/&#34;target=&#34;_blank&#34;&gt;Roam&lt;/a&gt;, namely &lt;a href=&#34;https://publish.obsidian.md/help/How&amp;#43;to/Format&amp;#43;your&amp;#43;notes&#34;target=&#34;_blank&#34;&gt;wiki-style internal links&lt;/a&gt;. So &lt;code&gt;[[Blogging experiment]]&lt;/code&gt; becomes 
+
+
+
+  &lt;a href=&#34;https://danabo.github.io/blog/posts/blogging-experiment/&#34;&gt;Blogging experiment&lt;/a&gt;
+
+
+. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140636.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Previous screenshot I pasted into this very markdown file.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;There is also a nifty graph view of all my notes:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140906.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Looks like a constellation! Each node is a markdown file. Each edge is due to one file linking to another with `[[...]]`. I&amp;#39;m not yet sure how helpful this is, but it&amp;#39;s nice to have a way to look at everything at once, in lieu of a traditional hierarchical structure.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;h1 id=&#34;publishing-flow&#34;&gt;Publishing flow&lt;/h1&gt;
+&lt;p&gt;My blog is written in &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; (for now), which is a static site generator that takes markdown files as input. Ideally, I could just run hugo directly on my Obsidian directory, but (1) I don&amp;rsquo;t want to publish everything and (2) Obsidian defines its own extended markdown syntax, as I explained above. My workaround is to have a script copy and transform my Obsidian notes marked for publication. Here&amp;rsquo;s how I do it&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Markdown files can optionally have a frontmatter, which is a yaml header at the top of the page. For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Hello World&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;John Doe&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In any note in my second brain (Obsidian), I can set &lt;code&gt;blog: true&lt;/code&gt; and that note will be published on my blog.&lt;/p&gt;
+&lt;p&gt;Every so often, I run &lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; from the blog repo, which in turn runs &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; is where the magic happens. It&amp;rsquo;s a Python script that uses &lt;a href=&#34;https://github.com/google/python-fire&#34;target=&#34;_blank&#34;&gt;fire&lt;/a&gt; to give it a &lt;a href=&#34;https://en.wikipedia.org/wiki/Command-line_interface&#34;target=&#34;_blank&#34;&gt;CLI&lt;/a&gt;. It will go through all the markdown files in my second brain directory and look for the ones with frontmatter containing &lt;code&gt;blog: true&lt;/code&gt;. For those files, it will do a few transformations, like converting internal links, &lt;code&gt;[[...]]&lt;/code&gt; and Obsidian&amp;rsquo;s image command &lt;code&gt;![[...]]&lt;/code&gt; to regular markdown. It also scrubs markdown comments, &lt;code&gt;&amp;lt;!-- ... --&amp;gt;&lt;/code&gt;, and anything inside a &lt;code&gt;&amp;lt;!-- hide --&amp;gt;...&amp;lt;!-- endhide --&amp;gt;&lt;/code&gt; pair so that I can have private sections inside published notes.&lt;/p&gt;
+&lt;p&gt;Code to transform Obsidian markdown to &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; markdown:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;transform_body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Remove local-only blocks&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*&amp;lt;!--\s*endhide\s*--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Remove everything after unclosed `&amp;lt;!-- hide --&amp;gt;`&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Remove comments&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# https://stackoverflow.com/a/28208465&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--.*?--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Transform internal links (wiki-style links).&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# https://gohugo.io/content-management/cross-references/#use-ref-and-relref&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;([^!])\[\[(.*?)\]\]&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;\1\{\{\&amp;lt; locallink &amp;#34;\2&amp;#34; \&amp;gt;\}\}&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[&lt;em&gt;Edit: I&amp;rsquo;ve since updated &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!&lt;/em&gt;]&lt;/p&gt;
+&lt;p&gt;For internal links, I call the &lt;a href=&#34;https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html&#34;target=&#34;_blank&#34;&gt;locallink&lt;/a&gt; Hugo &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;target=&#34;_blank&#34;&gt;shortcode&lt;/a&gt; I made, i.e. &lt;code&gt;{{ locallink &amp;quot;...&amp;quot; }}&lt;/code&gt;, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a &lt;em&gt;red&lt;/em&gt; anchor indicating the post does not exist, 
+
+
+
+  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;like this&lt;/a&gt;
+
+
+. That way, if I&amp;rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Red_link&#34;target=&#34;_blank&#34;&gt;missing wiki page&lt;/a&gt;. Perhaps if readers become curious about notes I didn&amp;rsquo;t publish, I might become motivated to publish them.&lt;/p&gt;
+&lt;p&gt;locallink &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; shortcode:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;{{ $name := (.Get 0) }}
+{{ $postFile := (print &amp;#34;content/posts/&amp;#34; $name &amp;#34;.md&amp;#34;) }}
+{{ if (fileExists $postFile) }}
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;{{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;ref&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}}&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
+{{ else }}
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;broken&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
+{{ end }}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; will first run blog.py, and then run &lt;code&gt;git commit -v&lt;/code&gt; which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.&lt;/p&gt;
+&lt;h1 id=&#34;reader-experience&#34;&gt;Reader experience&lt;/h1&gt;
+&lt;p&gt;Currently the reader sees a typical blog layout: a &amp;ldquo;blog roll&amp;rdquo; of recent posts with previews and tags. I don&amp;rsquo;t intend my notes to have any particular time ordering. Notes are objects in flux. I might edit anything. Since I&amp;rsquo;m using time of last edit as the post date, anything I touch will float back to the top. I might decide to change that.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Varational Solomonoff Induction</title>
       <link>https://danabo.github.io/blog/posts/varational-solomonoff-induction/</link>
-      <pubDate>Sat, 20 Feb 2021 10:16:45 -0600</pubDate>
+      <pubDate>Sun, 21 Feb 2021 12:22:08 -0600</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/varational-solomonoff-induction/</guid>
       <description>&lt;p&gt;$$&lt;br&gt;
@@ -285,297 +704,6 @@ $$&lt;/p&gt;
 &lt;h1 id=&#34;lifelong-learning&#34;&gt;Lifelong learning&lt;/h1&gt;
 &lt;p&gt;Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it&amp;rsquo;s future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).&lt;/p&gt;
 &lt;p&gt;In the variational setup outlined above, we converted the problem of Bayesian inference into a reinforcement learning problem. At time $t$, data $x_{1:t}$ is observed, and a policy $q_{\t^*}$ on programs is trained using policy gradient methods. However, every $t$ requires its own $q_{\t_t^*}$, thus we would need to perform RL training at every timestep. One way to speed this up is to reuse policies from previous timesteps. That is to say, at time $t+1$ perform $\argmax{\t\in\T}\set{ \E_{h \sim q_\t}\left[R(h)\right] + \mb{H}_{h \sim q_\t}[q_\t(h)]}$ using Monte Carlo gradient descent starting from the previous parameter $\t_t^*$. This can be considered fine-tuning. However, this may fail to work if the posterior changes drastically between timesteps.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How this blog works</title>
-      <link>https://danabo.github.io/blog/posts/how-this-blog-works/</link>
-      <pubDate>Sat, 20 Feb 2021 09:04:26 -0600</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/how-this-blog-works/</guid>
-      <description>&lt;p&gt;This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.&lt;/p&gt;
-&lt;h1 id=&#34;second-brain&#34;&gt;Second brain&lt;/h1&gt;
-&lt;p&gt;I use the &lt;a href=&#34;https://obsidian.md/&#34;target=&#34;_blank&#34;&gt;Obsidian&lt;/a&gt; editor to organize my second brain. It looks like this:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206135929.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Writing some blog posts in Obsidian.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;Every note is a markdown file, with support for extra features like &lt;a href=&#34;https://www.mathjax.org/&#34;target=&#34;_blank&#34;&gt;MathJax&lt;/a&gt; (latex math mode), and some of the features in &lt;a href=&#34;https://roamresearch.com/&#34;target=&#34;_blank&#34;&gt;Roam&lt;/a&gt;, namely &lt;a href=&#34;https://publish.obsidian.md/help/How&amp;#43;to/Format&amp;#43;your&amp;#43;notes&#34;target=&#34;_blank&#34;&gt;wiki-style internal links&lt;/a&gt;. So &lt;code&gt;[[Blogging experiment]]&lt;/code&gt; becomes 
-
-
-
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/blogging-experiment/&#34;&gt;Blogging experiment&lt;/a&gt;
-
-
-. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140636.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Previous screenshot I pasted into this very markdown file.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;There is also a nifty graph view of all my notes:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140906.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Looks like a constellation! Each node is a markdown file. Each edge is due to one file linking to another with `[[...]]`. I&amp;#39;m not yet sure how helpful this is, but it&amp;#39;s nice to have a way to look at everything at once, in lieu of a traditional hierarchical structure.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;h1 id=&#34;publishing-flow&#34;&gt;Publishing flow&lt;/h1&gt;
-&lt;p&gt;My blog is written in &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; (for now), which is a static site generator that takes markdown files as input. Ideally, I could just run hugo directly on my Obsidian directory, but (1) I don&amp;rsquo;t want to publish everything and (2) Obsidian defines its own extended markdown syntax, as I explained above. My workaround is to have a script copy and transform my Obsidian notes marked for publication. Here&amp;rsquo;s how I do it&amp;hellip;&lt;/p&gt;
-&lt;p&gt;Markdown files can optionally have a frontmatter, which is a yaml header at the top of the page. For example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Hello World&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;John Doe&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In any note in my second brain (Obsidian), I can set &lt;code&gt;blog: true&lt;/code&gt; and that note will be published on my blog.&lt;/p&gt;
-&lt;p&gt;Every so often, I run &lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; from the blog repo, which in turn runs &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; is where the magic happens. It&amp;rsquo;s a Python script that uses &lt;a href=&#34;https://github.com/google/python-fire&#34;target=&#34;_blank&#34;&gt;fire&lt;/a&gt; to give it a &lt;a href=&#34;https://en.wikipedia.org/wiki/Command-line_interface&#34;target=&#34;_blank&#34;&gt;CLI&lt;/a&gt;. It will go through all the markdown files in my second brain directory and look for the ones with frontmatter containing &lt;code&gt;blog: true&lt;/code&gt;. For those files, it will do a few transformations, like converting internal links, &lt;code&gt;[[...]]&lt;/code&gt; and Obsidian&amp;rsquo;s image command &lt;code&gt;![[...]]&lt;/code&gt; to regular markdown. It also scrubs markdown comments, &lt;code&gt;&amp;lt;!-- ... --&amp;gt;&lt;/code&gt;, and anything inside a &lt;code&gt;&amp;lt;!-- hide --&amp;gt;...&amp;lt;!-- endhide --&amp;gt;&lt;/code&gt; pair so that I can have private sections inside published notes.&lt;/p&gt;
-&lt;p&gt;Code to transform Obsidian markdown to &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; markdown:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;transform_body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# Remove local-only blocks&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*&amp;lt;!--\s*endhide\s*--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Remove everything after unclosed `&amp;lt;!-- hide --&amp;gt;`&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Remove comments&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# https://stackoverflow.com/a/28208465&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--.*?--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Transform internal links (wiki-style links).&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# https://gohugo.io/content-management/cross-references/#use-ref-and-relref&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;([^!])\[\[(.*?)\]\]&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;\1\{\{\&amp;lt; locallink &amp;#34;\2&amp;#34; \&amp;gt;\}\}&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[&lt;em&gt;Edit: I&amp;rsquo;ve since updated &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!&lt;/em&gt;]&lt;/p&gt;
-&lt;p&gt;For internal links, I call the &lt;a href=&#34;https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html&#34;target=&#34;_blank&#34;&gt;locallink&lt;/a&gt; Hugo &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;target=&#34;_blank&#34;&gt;shortcode&lt;/a&gt; I made, i.e. &lt;code&gt;{{ locallink &amp;quot;...&amp;quot; }}&lt;/code&gt;, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a &lt;em&gt;red&lt;/em&gt; anchor indicating the post does not exist, 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;like this&lt;/a&gt;
-
-
-. That way, if I&amp;rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Red_link&#34;target=&#34;_blank&#34;&gt;missing wiki page&lt;/a&gt;. Perhaps if readers become curious about notes I didn&amp;rsquo;t publish, I might become motivated to publish them.&lt;/p&gt;
-&lt;p&gt;locallink &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; shortcode:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;{{ $name := (.Get 0) }}
-{{ $postFile := (print &amp;#34;content/posts/&amp;#34; $name &amp;#34;.md&amp;#34;) }}
-{{ if (fileExists $postFile) }}
-&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;{{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;ref&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}}&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
-{{ else }}
-&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;broken&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; will first run blog.py, and then run &lt;code&gt;git commit -v&lt;/code&gt; which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.&lt;/p&gt;
-&lt;h1 id=&#34;reader-experience&#34;&gt;Reader experience&lt;/h1&gt;
-&lt;p&gt;Currently the reader sees a typical blog layout: a &amp;ldquo;blog roll&amp;rdquo; of recent posts with previews and tags. I don&amp;rsquo;t intend my notes to have any particular time ordering. Notes are objects in flux. I might edit anything. Since I&amp;rsquo;m using time of last edit as the post date, anything I touch will float back to the top. I might decide to change that.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Active inference tutorial (actions)</title>
-      <link>https://danabo.github.io/blog/posts/active-inference-tutorial-actions/</link>
-      <pubDate>Sat, 20 Feb 2021 07:23:41 -0600</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/active-inference-tutorial-actions/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
-\newcommand{\mb}{\mathbb}&lt;br&gt;
-\newcommand{\mc}{\mathcal}&lt;br&gt;
-\newcommand{\E}{\mb{E}}&lt;br&gt;
-\newcommand{\B}{\mb{B}}&lt;br&gt;
-\newcommand{\kl}[2]{D_{KL}\left(#1\ \| \ #2\right)}&lt;br&gt;
-\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }&lt;br&gt;
-\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }&lt;br&gt;
-\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
-\newcommand{\atup}[1]{\left\langle#1\right\rangle}&lt;br&gt;
-\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
-\newcommand{\t}{\theta}&lt;br&gt;
-\newcommand{\T}{\Theta}&lt;br&gt;
-\newcommand{\p}{\phi}&lt;br&gt;
-\newcommand{\r}{\rho}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Previous attempts:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;In 
-
-
-
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
-
-
-, I used a &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt; to try to understand the free energy formalism. I figured out the &amp;ldquo;timeless&amp;rdquo; and actionless case, but I became confused when actions and time were added.&lt;/li&gt;
-&lt;li&gt;In 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
-
-
-, I tried to translate between the formalism presented in &lt;a href=&#34;https://danijar.com/apd/&#34;&gt;https://danijar.com/apd/&lt;/a&gt; (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;. I also tried to make the connection to Solomonoff induction.&lt;/li&gt;
-&lt;li&gt;In 
-
-
-
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/varational-solomonoff-induction/&#34;&gt;Varational Solomonoff Induction&lt;/a&gt;
-
-
-, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Using the same tutorial as before, &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data&lt;/a&gt;, I will go through the free energy formalism again and try to work out time and actions.&lt;/p&gt;
-&lt;h1 id=&#34;review&#34;&gt;Review&lt;/h1&gt;
-&lt;p&gt;To recap what I figured out in 
-
-
-
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
-
-
-:&lt;/p&gt;
-&lt;p&gt;Suppose $o\in\mc{O}$ is the observation space and $s\in\mc{S}$ is the hypothesis/state space (to use the notation of the &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;). For now, let&amp;rsquo;s assume that $\mc{S}$ is the hidden state space of the environment in some timestep. $p(o,s)$ is the agent&amp;rsquo;s model of the environment, relating observations to hidden states, and the prior probability of the environment being in any particular hidden state. Let&amp;rsquo;s also ignore questions about the meaning of these probabilities (objective or subjective) and where they come from. If it&amp;rsquo;s easier to think about, assume these probabilities are subjective.&lt;/p&gt;
-&lt;p&gt;If $o$ is observed (one timestep only), then we want to calculate the posterior probability $p(s\mid o)$ of each $s\in\mc{S}$. If this is intractable to do, we can instead find an approximation $q_o(s)$:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-q_o := \argmin{q \in \mc{Q}} \kl{q(s)}{p(s\mid o)}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $\mc{Q}$ is some space of distributions that you choose $q_o$ from. Presumably $\mc{Q}$ is restricted somehow, otherwise the solution is $q=p$ in which case you are doing exact Bayesian inference.&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-\kl{q(s)}{p(s\mid o)} &amp;amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s\mid o)}\right] \\&lt;br&gt;
-&amp;amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s)}\right] + \E_{s\sim q}\left[\lg \frac{1}{p(o \mid s)}\right] + \E_{s\sim q}[p(o)]\\&lt;br&gt;
-&amp;amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}\left[\lg p(o \mid s)\right] - \lg\frac{1}{p(o)} \\&lt;br&gt;
-&amp;amp;= \mc{F}[q] - \lg\frac{1}{p(o)}\,,&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-\mc{F}[q] &amp;amp;= \kl{q(s)}{p(s)} - \E_{s\sim q}[\lg p(o \mid s)]\\&lt;br&gt;
-&amp;amp;= \E_{s\sim q}\left[\lg\frac{q(s)}{p(s,o)}\right]&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;is called &lt;strong&gt;variational free energy&lt;/strong&gt;. $\kl{q(s)}{p(s)}$ is called &lt;strong&gt;accuracy&lt;/strong&gt; and $\E_{s\sim q}[\lg p(o \mid s)]$ is called &lt;strong&gt;complexity&lt;/strong&gt;. $\lg\frac{1}{p(o)}$ is called &lt;strong&gt;surprise&lt;/strong&gt; (self-information of the observation $o$).&lt;/p&gt;
-&lt;p&gt;Minimizing $\mc{F}[q]$ w.r.t. $q$ minimizes $\kl{q(s)}{p(s\mid o)}$. The surprise $\lg\frac{1}{p(o)}$ is constant w.r.t. this minimization. (Remember this is all assuming $o$ is given and fixed.)&lt;/p&gt;
-&lt;h1 id=&#34;new-stuff&#34;&gt;New stuff&lt;/h1&gt;
-&lt;p&gt;In the &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;, we have free energy defined just as in my notes, except that everything now depends on policy $\pi$:&lt;br&gt;
-
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210207121048.png&#34; alt=&#34;&#34;&gt;
-
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210207121055.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-The policy $\pi$ is a probability distribution over actions (, e.g. $\pi(a_t \mid o_{1:t}, a_{1:t-1})$. More on that later.&lt;/p&gt;
-&lt;h2 id=&#34;interaction-loop&#34;&gt;Interaction loop&lt;/h2&gt;
-&lt;p&gt;It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In 
-
-
-
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/varational-solomonoff-induction/&#34;&gt;Varational Solomonoff Induction&lt;/a&gt;
-
-
- I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&amp;rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s unpack the agent-environment interaction loop. Given policy $\pi$,&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(o_{1:\infty},s_{1:\infty}\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t,s_t\mid a_t,s_{t-1})\pi(a_t\mid o_{1:t-1},a_{1:t-1})&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $p(o_t,s_t\mid a_t,s_{t-1})$ is the probability of next observation and hidden state given input action $a_t$ and previous state, and $\pi(a_t\mid o_{1:t-1},a_{1:t-1})$ is the probability of the agent taking action $a_t$ given its entire history $o_{1:t-1},a_{1:t-1}$ (alternative we can give the agent internal state and condition on that).&lt;/p&gt;
-&lt;p&gt;On the other hand, if $s$ (or $h$) is a time-less hypothesis: then we have&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(o_{1:\infty},h\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t\mid a_{1:t},o_{1:t-1},h)p(h)\pi(a_t\mid o_{1:t-1},a_{1:t-1})&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $p(h)$ is the prior on hypothesis $h$.&lt;/p&gt;
-&lt;p&gt;Below, I will leave it ambiguous whether $s$ is a sequence of states or a time-less hypothesis. The math should be the same either way.&lt;/p&gt;
-&lt;h2 id=&#34;active-inference&#34;&gt;Active inference&lt;/h2&gt;
-&lt;p&gt;How are actions chosen? This is the big question I could not penetrate in my previous attempts. From the tutorial:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;When inferring optimal actions, however, one cannot simply consider current observations. This is because actions are chosen to bring about preferred future observations. This means that, to infer optimal actions, a model must predict sequences of future states and observations for each possible policy, and then calculate the expected free energy (𝐸𝐹𝐸) of those different sequences of future states and observations.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;This is talking about taking an expectation over future states and observations. Let&amp;rsquo;s assume $p(o_{1:\infty}, s_{1:\infty} \mid \pi)$ is the true environment dynamics. We are introduced to a new term $q(o_{1:\infty}\mid\pi)$ which are the agent&amp;rsquo;s observation preferences over time given a particular policy.&lt;/p&gt;
-&lt;p&gt;The text is saying we want to choose policy $\pi$ to maximize $G(\pi)$. What&amp;rsquo;s troubling is that there is another term, $p(\pi)$, a prior over policies. If we are choosing policies freely, what does this prior represent?&lt;/p&gt;
-&lt;p&gt;The text says that the preferred policy also minimizes free energy:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Since ‘preferred’ here formally translates to ‘expected by the model’, then the policy expected to produce preferred observations will be the one that maximizes the accuracy of the model (and hence minimizes 𝐸𝐹𝐸).&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;exact-inference&#34;&gt;Exact inference&lt;/h2&gt;
-&lt;p&gt;To simplify things, let&amp;rsquo;s suppose the agent can do perfect Bayesian inference, so that $q_o(s\mid\pi) = p(s \mid o,\pi)$. Let&amp;rsquo;s see what happens if we plug in $p(s\mid o,\pi)$ for $q_o(s\mid \pi)$ in our free energy definition:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mc{F} = \E_{s \sim p(s\mid o,\pi)}\left[\lg \frac{p(s\mid o,\pi)}{p(s,o\mid\pi)}\right] = \E_{s \sim p(s\mid o,\pi)}\left[\lg \frac{1}{p(o\mid \pi)}\right] = \lg \frac{1}{p(o\mid \pi)}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;which is just the surprise (i.e. self-information due to observing $o$). Minimizing free energy means choosing $\pi$ to maximize the data likelihood:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\pi^* := \argmax{\pi} p(o\mid\pi)&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Remember that $\mc{F}$ depends on a fixed $o$, which is what has already been observed. If $o$ is not observed, then we are talking about future $o$, and we need to take an expectation w.r.t. $o$, e.g.&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\pi^* := \argmin{\pi} \E_{o\sim p(o\mid\pi)}\lg\frac{1}{p(o\mid\pi)} = \argmin{\pi}\mb{H}[p(o\mid\pi)]&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;This is saying, choose a policy s.t. the future is as predictable as possible, i.e. minimizes entropy over observations, i.e. minimizes future expected surprise.&lt;/p&gt;
-&lt;p&gt;Now let&amp;rsquo;s introduce the agent&amp;rsquo;s preferences, encoded as a distribution on observations. The tutorial (and other texts) use $q(o)$, but I&amp;rsquo;m using $\r(o)$, because this is a very different thing from the approximate posterior $q_o$. Specifically $\r(o)$ is given and held fixed, while $q_o(s)$ depends on the particular observation $o$, as well as choice of optimization space $\mc{Q}$. In short, $q_o(s)$ is an output, while $\rho(o)$ is given.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s replace $p(o\mid\pi)$ with $\rho(o)$ (this should not depend on $\pi$). So instead of taking an expectation w.r.t. the model probabilities for $o$, we are taking an average weighted by preference for $o$:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-\pi^* &amp;amp;:= \argmin{\pi} \E_{o\sim \r(o)}\lg\frac{1}{p(o\mid\pi)} \\&amp;amp;= \argmin{\pi} H(\r(o), p(o\mid\pi)) \\&amp;amp;= \argmin{\pi} \left\{\kl{\r(o)}{p(o\mid\pi)} + \mb{H}[\r(o)]\right\}&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;which is the &lt;a href=&#34;https://en.wikipedia.org/wiki/Cross_entropy&#34;target=&#34;_blank&#34;&gt;cross-entropy&lt;/a&gt; of $q(o)$ and $p(o\mid\pi)$ (average number of bits if you encode a stream $o_{1:\infty}$ under $p$ while actually sampling from $p$). Since $\r(o)$ is fixed, then we are minimizing $\kl{\r(o)}{p(o\mid\pi)}$. That is to say, choose policy (thereby choosing actions) that make the environment (as the agent believes it to be) dynamics $p(o\mid\pi)$ conform to preferences $\r(o)$.&lt;/p&gt;
-&lt;h3 id=&#34;reward-equivalence&#34;&gt;Reward equivalence&lt;/h3&gt;
-&lt;p&gt;According to  &lt;a href=&#34;https://danijar.com/apd/,&#34;&gt;https://danijar.com/apd/,&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\r(o_{1:n}) \propto \exp(r(o_{1:n}))&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $r(o_{1:n})$ is the total reward received for observations $o_{1:n}$. Written another way, $\r(o_{1:n}) = \exp(r(o_{1:n}))/\mc{Z}$ for some normalization constant $\mc{Z}$, so then $r(o_{1:n}) = \ln\r(o_{1:n}) + \mc{C}$ for some constant offset $\mc{C}$.&lt;/p&gt;
-&lt;p&gt;If we are just trying to maximize expected total reward $r(o_{1:n})$ w.r.t. the environment model, we get&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-\pi^* &amp;amp;:= \argmax{\pi} \E_{o \sim p(o \mid \pi)} [r(o_{1:n})] \\&lt;br&gt;
-&amp;amp;= \argmax{\pi} \E_{o_{1:n},a_{1:n} \sim p(o_{1:n},a_{1:n} \mid \pi)} [\ln\r(o_{1:n})]\,.&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;So far, I am not seeing anything conceptually new here. Storing agent preferences in a probability distribution $\r(o)$ is not really any different from storing preferences in a reward $r(o)$, and the two are easily converted into each other.&lt;/p&gt;
-&lt;h2 id=&#34;putting-it-all-together&#34;&gt;Putting it all together&lt;/h2&gt;
-&lt;p&gt;Now let&amp;rsquo;s suppose that $o$ has not yet been observed as before, but use approximate (future) posterior $q_{o,\pi}(s)$ and compute expected future free energy under preference $\rho(o)$.&lt;/p&gt;
-&lt;p&gt;We get&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-G[\pi]&amp;amp;=\E_\rho[\mc{F}[o,\pi]] \\&lt;br&gt;
-&amp;amp;= \E_{o\sim\rho}\E_{s \sim q_{o,\pi}}\left[\lg\frac{q_{o,\pi}(s)}{p(s,o\mid\pi)}\right] \\&lt;br&gt;
-&amp;amp;= \E_{o\sim\rho}\kl{q_{o,\pi}(s)}{p(s\mid\pi)} - \E_{o\sim\rho}\E_{s\sim q_{o,\pi}}\left[\lg p(o \mid s,\pi)\right]&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $q_{o,\pi}$ is the optimal approximate posterior for the given observation $o$ and policy $\pi$ used to obtain $o$. From the perspective of $q_{o,\pi}$, $o$ is already observed using policy $\pi$ which determines the probability of that observation.&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-q_{o,\pi} := \argmin{q} \mc{F}[o,\pi] = \argmin{q}\E_{s \sim q}\left[\lg\frac{q(s)}{p(s,o\mid\pi)}\right]&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;I believe the tutorial paper has a typo, where $p(o,s,\pi)$ should be $p(o,s,\mid\pi)$.&lt;/p&gt;
-&lt;p&gt;We are choosing $\pi$ to minimize $G[\pi]$, which is just the expected free energy under $\rho(o)$ (preference for future observations).&lt;/p&gt;
-&lt;p&gt;Do the optimizations on $\pi$ and $q$ interact? It seems like they don&amp;rsquo;t. $\pi$ is an outer optimization that depends on running the optimization on $q$ internally. There is not a single $q$, but many of them which the optimization on $\pi$ iterates through. So then what is the significance of connecting free energy minimization ($q$) to active inference ($\pi$)? If the policy optimization part were reformulated in terms of RL, we really just have a fancy kind of approximate Bayesian model combined with RL. The action learning and model updating are totally independent.&lt;/p&gt;
-&lt;h1 id=&#34;the-meaning-of-p&#34;&gt;The meaning of $p$&lt;/h1&gt;
-&lt;p&gt;If $p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is a dynamics model of the environment, how would the agent know it? Or alternatively, how are different hypotheses for environment dynamics handled in this framework?&lt;/p&gt;
-&lt;p&gt;The two cases are:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;$p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is the literal true dynamics of the environment.&lt;/li&gt;
-&lt;li&gt;$p(o_{1:\infty},s_{1:\infty}\mid\pi)$ is the agent&amp;rsquo;s dynamics model of the environment.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The first case is unreasonable, because we cannot assume any agent knows the truth. The second case does not allow the agent to update its ontology, i.e. change the state space $\mc{S}$ and it&amp;rsquo;s beliefs about how observations interact with, $p(o\mid s)$ and $p(s\mid o)$.&lt;/p&gt;
-&lt;p&gt;We could suppose there is a latent $h$ for the environment hypothesis which is being marginlized, e.g. $p(o_{1:n},s_{1:n},h)$, but then $p(o_{1:n}\mid s_{1:n}) = \E_{h\sim p(h)}p(o_{1:n}\mid s_{1:n},h)$, which we can generally expect to be intractable but is required for free energy calculation. The free energy approximation was supposed to be tractable. Now do we have to approximate the approximation?&lt;/p&gt;
-&lt;p&gt;I think the time-less hypothesis formulation is better, i.e. $p(o_{1:\infty}, h)$, because it allows the hypothesis to invent its own states (because states are no longer explicitly defined), and put emphasis on not just the present, but possible states in the past and future, i.e. the agent may be more interested in inferring past or future states. Furthermore, states may not be well defined things. I have a model of the world filled with all sorts of objects, each having independent states until they interact. I cannot comprehend thinking of everything I know as one gigantic state.&lt;/p&gt;
-&lt;p&gt;Something I&amp;rsquo;ve heard hinted at elsewhere is that the agent, as a physical system, expresses some Bayesian prior $p$ and preferences $\r$ in an objective sense. What is the nature of this mapping between physical makeup and active-inference description? Is this entirely based on the agent&amp;rsquo;s behavior, or if we looked inside an agent, we could determine its model and preferences? I expect that if we look at behavior alone, then $p$ and $\r$ are underspecified.&lt;/p&gt;
-&lt;p&gt;So then what about the agent&amp;rsquo;s physical makeup gives it a model $p$ and preferences $\r$? The optimization process to find $q_{o,\pi}$ must be physically carried out, and so presumably this could be observed. In optimizing for $q_{o,\pi}$, the agent would actually be engaged in two processes that implicitly specify $p$. Splitting free energy into accuracy and complexity:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Explaining observations: $\E_{h\sim q}\left[\lg p(o_{1:n} \mid h,a_{1:n})\right]$&lt;br&gt;
-The agent thinks of hypotheses $h$ (sampling them from $q$) to explain observations $o_{1:n}$ given actions $a_{1:n}$.&lt;/li&gt;
-&lt;li&gt;Regularization: $\kl{q(h)}{p(h)}$&lt;br&gt;
-The agent updates its hypothesis generator $q$, implicitly conforming to $p$ which represents the agent&amp;rsquo;s grand total representation capacity.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Under this perspective, the agent&amp;rsquo;s ability to modify its own hypothesis generator $q(h)$ is somehow described by $p(h)$, which is fixed throughout the agent&amp;rsquo;s lifetime (unless the agent can self-modify). For a particular hypothesis $h$, the data probability $p(o_{1:n}\mid h)$ is the likelihood of the data under $h$. So $p$ is simultaneously encoding the agent&amp;rsquo;s theoretical capacity to generate hypotheses (which it never fully reaches because of limitations on $q(h)$) and the meaning of every hypothesis it can come up with. It is unclear to me whether $p(h, o_{1:n})$ can be uniquely determined given an agent&amp;rsquo;s physical makeup.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;m also unconvinced about the way behavior is handled in this framework. Why think in terms of policies $\pi$ rather than actions $a_{1:n}$? Is the space of policies fixed through the agent&amp;rsquo;s lifetime? If $\pi$ is supposed to represent some kind of high level strategy, then how does the agent learn different kinds of strategies (updating its ontology). This is the same problem that Bayesian inference faces, that $q$ ostensibly fixes. But now we need to fix the same problem again for $\pi$.&lt;/p&gt;
-&lt;p&gt;Question: $G[\pi]$ appears to be intractable to compute or optimize directly. Why do we not have a variational approximation to this as well?&lt;/p&gt;
-&lt;p&gt;Why not just do RL? What is gained by &amp;ldquo;active inference&amp;rdquo;, which seems to me to be secretly RL on top of variational Bayes.&lt;/p&gt;
 </description>
     </item>
     
