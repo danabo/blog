@@ -1,5 +1,5 @@
 ---
-date: '2021-02-24T19:29:51-06:00'
+date: '2021-02-24T20:43:20-06:00'
 title: Classical vs Bayesian Reasoning
 ---
 
@@ -34,7 +34,7 @@ $$
 \\newcommand{\\Iff}{\\Leftrightarrow}
 $$
 
-My goal is to identify the core conceptual difference between someone who accepts "Bayesian reasoning" as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept "classical reasoning". By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotillian logic, through propositional logic like that of Freige, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.
+My goal is to identify the core conceptual difference between someone who accepts "Bayesian reasoning" as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept "classical reasoning". By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotelian logic, through propositional logic like that of Frege, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.
 
 My thesis is that the difference between Bayesian and classical reasoners comes down to how they deal with non-determined objects (e.g. if you cannot determine the truth value of something from your givens). The classical reasoner will shrug their shoulders and say "the answer cannot be determined, collect more givens or modify your definitions". The Bayesian reasoner will regard at the proportion of self-consistent instantiations of unknowns that make the target proposition true as useful information regarding whether it is really true. That is to say, the Bayesian reasoner continues on without uniquely determined truth values, and the classical reasoner does not.
 
