@@ -64,8 +64,9 @@ showTags = true             # /tags/
 title = "Zhat"
 url = "https://zhat.io/"
 
-# custom css
+# custom css and js
 
 [params.assets]
 css = ["css/custom.css"]  # *.css/scss/sass
+# js = ["js/nav.js"]
 # see theme readme file for more info
