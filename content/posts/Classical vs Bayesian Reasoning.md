@@ -1,5 +1,7 @@
 ---
-date: '2021-02-24T20:43:20-06:00'
+date: '2021-03-20T11:28:46-05:00'
+tags:
+- epistemology
 title: Classical vs Bayesian Reasoning
 ---
 
@@ -263,9 +265,13 @@ Note that the size of $\\O$ and the ML-model $f$ determine how many states produ
 
 The classical reasoner would counter that the parts of the ML-model output which are observed can be arbitrarily inspected for "goodness of fit" to reality. Unique determination is much less fragile (i.e. stable w.r.t. modeling inaccuracies) than state-counts. Unique determination is robust against worst-case modeling errors (though in practice this is clearly not true).
 
+Punchline: any representation of the world whose predictions are not uniquely determined by data on hand can be viewed as Bayesian, if we are willing to provide a measure for calculating sizes of sets of model states, and then to use size-of-possibilities as decision making criteria.
+
 # The Bayesian Axiom
 
 This epistemological debate is still raging. The efficacy of classical reasoning has been argued about for the last two and a half millennia. Bayesian reasoning is a more modern invention that, depending on how you count it, has been going on for 100 to 300 years (early 20th century Bayesians to Thomas Bayes). The frontier of contemporary inquery is the complex: from brains to human societies to high-dimensional physical systems, the neat and orderly unique-determination of classical reasoning is hard to come by. For this reason, Bayesian reasoning is gaining traction and is posturing to topple classical reasoning as the common-sense epistemological default.
 
 Given the unsettled nature of these questions, it is my opinion that the "state-counts as knowledge" premise be taken as the "Bayesian axiom". This neatly delineates classical and Bayesian epistemology down to one difference: Bayesian epistemology is classical epistemology plus an additional axiom. Some may accept this axiom and other's may reject it, leading to different kinds of reasoning and knowledge. I don't know if we will ever be able to determine that this axiom should or should not be used. In that case, like [Euclid's fifth axiom](https://en.wikipedia.org/wiki/Parallel_postulate), "flat" and "curved" rationality shall forever remain parallel self-consistent options.
+
+
 

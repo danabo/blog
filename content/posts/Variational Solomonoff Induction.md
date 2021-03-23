@@ -1,9 +1,9 @@
 ---
-date: '2021-02-21T12:22:08-06:00'
+date: '2021-03-18T16:55:56-05:00'
 draft: false
 tags:
 - free energy
-title: Varational Solomonoff Induction
+title: Variational Solomonoff Induction
 ---
 
 $$
@@ -64,7 +64,7 @@ Is variational Bayes a Bayesian ML method? In one sense yes, in another sense no
 # Solomonoff induction
 I learned about this topic from [An Introduction to Kolmogorov Complexity and Its Applications](https://www.springer.com/gp/book/9781489984456) and [Universal Artificial Intelligence](http://www.hutter1.net/ai/uaibook.htm). I recommend both books as references.
 
-There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: [#Version 1](#version-1), [#Version 2](#version-2), [#Version 3](#version-3). Only an understanding of [#Version 2](#version-2) is needed for the subsequent sections.
+There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: {{< locallink "Variational Solomonoff Induction#Version 1" >}}, {{< locallink "Variational Solomonoff Induction#Version 2" >}}, {{< locallink "Variational Solomonoff Induction#Version 3" >}}. Only an understanding of {{< locallink "Variational Solomonoff Induction#Version 2" >}} is needed for the subsequent sections.
 
 ## Notation
 
@@ -218,7 +218,7 @@ $$
 
 # Variational Solomonoff induction
 
-Suppose we observe finite sequence $x\_{1:t} \\in \\B^\*$ and we want to find the posterior $p(h \\mid x\_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q\_\\t(h)$ over hypotheses $h\\in\\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: [#Version 1](#version-1), [#Version 2](#version-2), [#Version 3](#version-3).
+Suppose we observe finite sequence $x\_{1:t} \\in \\B^\*$ and we want to find the posterior $p(h \\mid x\_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q\_\\t(h)$ over hypotheses $h\\in\\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: {{< locallink "Variational Solomonoff Induction#Version 1" >}}, {{< locallink "Variational Solomonoff Induction#Version 2" >}}, {{< locallink "Variational Solomonoff Induction#Version 3" >}}.
 
 In this case, let's find $\\t^\*\\in\\T$ that minimizes the KL-divergence $\\kl{q\_\\t(h)}{p(h\\mid x\_{1:t})}$ so that $q\_\\t(h)$ is as close as possible to $p(h\\mid x\_{1:t})$. Note that $q\_\\t(h)$ does not depend on $x\_{1:t}$ because we find $\\t^\*$ after $x\_{1:t}$ is already observed ($x\_{1:t}$ is like a constant w.r.t. this optimization), whereas the joint distribution $p(h, x)$ is defined up front before any data is observed.
 
@@ -319,7 +319,7 @@ Speed is necessary but not sufficient for tractability. The approximations we fi
 
 Can neural networks approximate the true posterior $p(h \\mid x)$? This is a generalization problem. The optimized generative model on programs, $q\_{\\t^\*}(h)$, will have been trained on finitely many programs. Whether $q\_{\\t^\*}(h') \\approx p(h' \\mid x)$ for some program $h'$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q\_\\t$.
 
-The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \\lg p(h,x\_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x\_{1:t} \\mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the [#Prior](#prior) section), the prior is then not even computable. Same for $p(x\_{1:t} \\mid h)$. Without actually running $h$ on $x\_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$'s code but without running $h$ is in general impossible. The function $p(h \\mid x\_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.
+The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \\lg p(h,x\_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x\_{1:t} \\mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the {{< locallink "Variational Solomonoff Induction#Prior" >}} section), the prior is then not even computable. Same for $p(x\_{1:t} \\mid h)$. Without actually running $h$ on $x\_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$'s code but without running $h$ is in general impossible. The function $p(h \\mid x\_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.
 
 As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn't start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.
 
@@ -337,7 +337,7 @@ Is there a choice of $\\mc{H}$ and $p(x,h)$ s.t.
 ## Program space
 Hypotheses can be deterministic or stochastic. Deterministic hypotheses would be represented by deterministic programs. Stochastic hypotheses can either be represented by stochastic programs (output is non-deterministic) or by deterministic programs that output probabilities. I think we should choose the latter.
 
-If our hypotheses are deterministic, then we get Solomonoff induction [#Version 1](#version-1). Conditionalization is easy because $p(y \\mid x, h) = p(y\`x \\mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \\lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).
+If our hypotheses are deterministic, then we get Solomonoff induction {{< locallink "Variational Solomonoff Induction#Version 1" >}}. Conditionalization is easy because $p(y \\mid x, h) = p(y\`x \\mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \\lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).
 
 We should use stochastic hypotheses. If we use non-deterministic programs, conditionalization is hard. Thus we should use programs that output their probabilities.
 
@@ -359,7 +359,7 @@ $$
 
 One difficulty in working with programs is long-running execution. This can make computing data probabilities take a long time. One remedy is to down-weight long-running programs in the prior. [Levin search](http://www.scholarpedia.org/article/Universal_search) is an alternative to Solomonoff induction where the prior is weighted solely by runtime. We can mix both kinds of priors.
 
-This is straightforward in Solomonoff induction [#Version 1](#version-1) where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\\ell(h)} / f(\\tau(h))$ where $\\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\\ell(h)-\\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\\ve > 0$, you can enumerate all programs $h\\in\\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\\ell(h)-\\tau(h)} < \\ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)
+This is straightforward in Solomonoff induction {{< locallink "Variational Solomonoff Induction#Version 1" >}} where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\\ell(h)} / f(\\tau(h))$ where $\\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\\ell(h)-\\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\\ve > 0$, you can enumerate all programs $h\\in\\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\\ell(h)-\\tau(h)} < \\ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)
 
 However, if we are using the programs I previously suggested that output data probabilities, then these programs may be fast on some inputs and slow on others. I don't have a solution, but a reasonable suggestion is to do some kind of heuristic analysis of the programs on some sample inputs and assign a slowness penalty in the prior.
 

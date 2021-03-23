@@ -1,5 +1,5 @@
 ---
-date: '2021-02-24T05:34:36-06:00'
+date: '2021-03-18T16:55:56-05:00'
 tags:
 - free energy
 title: Active inference tutorial (actions)
@@ -25,7 +25,7 @@ $$
 Previous attempts:
 - In {{< locallink "Free Energy Principle 1st Pass" >}}, I used a [tutorial](https://psyarxiv.com/b4jm6/) to try to understand the free energy formalism. I figured out the "timeless" and actionless case, but I became confused when actions and time were added.
 - In {{< locallink "Free energy principle and Solomonoff induction" >}}, I tried to translate between the formalism presented in https://danijar.com/apd/ (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial [tutorial](https://psyarxiv.com/b4jm6/). I also tried to make the connection to Solomonoff induction.
-- In {{< locallink "Varational Solomonoff Induction" >}}, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.
+- In {{< locallink "Variational Solomonoff Induction" >}}, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.
 
 Using the same tutorial as before, [A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data](https://psyarxiv.com/b4jm6/), I will go through the free energy formalism again and try to work out time and actions.
 
@@ -75,7 +75,7 @@ The policy $\\pi$ is a probability distribution over actions (, e.g. $\\pi(a\_t 
 
 ## Interaction loop
 
-It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In {{< locallink "Varational Solomonoff Induction" >}} I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o\_{1:\\infty}$, that is an observation sequence over time. When I write $s\_{1:\\infty}$ that is a state sequence over time. I'll use $h$ later to denote a time-less hypothesis on observation sequences $o\_{1:\\infty}$.
+It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In {{< locallink "Variational Solomonoff Induction" >}} I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o\_{1:\\infty}$, that is an observation sequence over time. When I write $s\_{1:\\infty}$ that is a state sequence over time. I'll use $h$ later to denote a time-less hypothesis on observation sequences $o\_{1:\\infty}$.
 
 Let's unpack the agent-environment interaction loop. Given policy $\\pi$,
 

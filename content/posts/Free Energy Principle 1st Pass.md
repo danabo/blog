@@ -1,5 +1,5 @@
 ---
-date: '2021-02-20T07:23:41-06:00'
+date: '2021-03-18T16:55:56-05:00'
 tags:
 - free energy
 title: Free Energy Principle 1st Pass
