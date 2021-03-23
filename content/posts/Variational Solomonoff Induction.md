@@ -1,6 +1,7 @@
 ---
-date: '2021-03-18T16:55:56-05:00'
+date: 2021-02-18
 draft: false
+lastmod: '2021-03-18T16:55:56-05:00'
 tags:
 - free energy
 title: Variational Solomonoff Induction

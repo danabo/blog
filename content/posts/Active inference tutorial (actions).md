@@ -1,5 +1,6 @@
 ---
-date: '2021-03-18T16:55:56-05:00'
+date: 2021-02-07
+lastmod: '2021-03-18T16:55:56-05:00'
 tags:
 - free energy
 title: Active inference tutorial (actions)
