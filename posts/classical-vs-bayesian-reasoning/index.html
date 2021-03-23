@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Classical vs Bayesian Reasoning&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.69e7672d6b54fced9ad5ddaa4ab099cfd4994eb00827cbea9d4ad7870bb1441c402edbe22ef17ae4a59cfe7767d78d6e.css" integrity="sha384-aednLWtU/O2a1d2qSrCZz9SZTrAIJ8vqnUrXhwuxRBxALtviLvF65KWc/ndn141u"><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><title>Classical vs Bayesian Reasoning&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.663c1b913e8f8da65500ac57052b0c8dffe91fbf55bc616423803d94b150f74f29bf3c72fca9922bcbb8cd97c17e8532.css" integrity="sha384-ZjwbkT6PjaZVAKxXBSsMjf/pH79VvGFkI4A9lLFQ908pvzxy/KmSK8u4zZfBfoUy"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Classical vs Bayesian Reasoning" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Classical vs Bayesian Reasoning</h1><p class="article date">February 24, 2021</p></section><article class="article markdown-body"><p>$$<br>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Classical vs Bayesian Reasoning</h1><p class="article date">March 20, 2021</p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -246,11 +247,31 @@ $$</p>
 <p>How does the Bayesian agent pull this off? Do these &ldquo;Bayesian&rdquo; probabilities really constitute knowledge? We can turn the question around and ask if uniquely determined observables really constitute knowledge. It is rare for something to be uniquely determined in practice. I suspect that many of the difficulties encountered in applications of statistical inference and machine learning are because of this. A classical reasoner needs to make simplifications and assumptions in service of being able to then uniquely determine something of interest. It seems to me that most of informal rational thought comes down to some version of choosing an ML-model s.t. something of interest can be uniquely determined. Described in this way, classical reasoning sounds biased. On the flip side, in practice Bayesian ML-models requires special simplifications and assumptions to be computationally tractable, so a similar sort of ML-model-choosing bias occurs.</p>
 <p>Note that the size of $\O$ and the ML-model $f$ determine how many states produce each partial observation. Ostensibly these things are arbitrarily chosen by the agent. The classical reasoner objects that state-counts (probabilities) don&rsquo;t constitute actual knowledge about the world, but are an artifact of the choice of ML-model $f$, and so it is inappropriate to treat these quantities as knowledge. The Bayesian reasoner counters that a classical ML-model (e.g. boolean logic) is also arbitrarily chosen. Unique determination is a property of $f$, not reality, and depends on the arbitrary simplifications and assumptions made by the agent. Thus, the Bayesian reasoner concludes, my approach is no less rational than yours.</p>
 <p>The classical reasoner would counter that the parts of the ML-model output which are observed can be arbitrarily inspected for &ldquo;goodness of fit&rdquo; to reality. Unique determination is much less fragile (i.e. stable w.r.t. modeling inaccuracies) than state-counts. Unique determination is robust against worst-case modeling errors (though in practice this is clearly not true).</p>
+<p>Punchline: any representation of the world whose predictions are not uniquely determined by data on hand can be viewed as Bayesian, if we are willing to provide a measure for calculating sizes of sets of model states, and then to use size-of-possibilities as decision making criteria.</p>
 <h1 id="the-bayesian-axiom">The Bayesian Axiom</h1>
 <p>This epistemological debate is still raging. The efficacy of classical reasoning has been argued about for the last two and a half millennia. Bayesian reasoning is a more modern invention that, depending on how you count it, has been going on for 100 to 300 years (early 20th century Bayesians to Thomas Bayes). The frontier of contemporary inquery is the complex: from brains to human societies to high-dimensional physical systems, the neat and orderly unique-determination of classical reasoning is hard to come by. For this reason, Bayesian reasoning is gaining traction and is posturing to topple classical reasoning as the common-sense epistemological default.</p>
 <p>Given the unsettled nature of these questions, it is my opinion that the &ldquo;state-counts as knowledge&rdquo; premise be taken as the &ldquo;Bayesian axiom&rdquo;. This neatly delineates classical and Bayesian epistemology down to one difference: Bayesian epistemology is classical epistemology plus an additional axiom. Some may accept this axiom and other&rsquo;s may reject it, leading to different kinds of reasoning and knowledge. I don&rsquo;t know if we will ever be able to determine that this axiom should or should not be used. In that case, like <a href="https://en.wikipedia.org/wiki/Parallel_postulate"target="_blank">Euclid&rsquo;s fifth axiom</a>, &ldquo;flat&rdquo; and &ldquo;curved&rdquo; rationality shall forever remain parallel self-consistent options.</p>
-</article>
-</div>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/epistemology/>epistemology</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#propositional-logic">Propositional logic</a>
+      <ol>
+        <li><a href="#the-math-perspective">The math perspective</a></li>
+        <li><a href="#the-machine-learning-perspective">The machine learning perspective</a>
+          <ol>
+            <li><a href="#unsupervised-learning">Unsupervised learning</a></li>
+            <li><a href="#supervised-learning">Supervised learning</a></li>
+            <li><a href="#boolean-logic">Boolean logic</a></li>
+          </ol>
+        </li>
+        <li><a href="#the-bayesian-perspective">The Bayesian perspective</a></li>
+        <li><a href="#probability-notation">Probability notation</a></li>
+        <li><a href="#discussion">Discussion</a></li>
+      </ol>
+    </li>
+    <li><a href="#the-bayesian-axiom">The Bayesian Axiom</a></li>
+  </ol>
+</nav></div>
 <div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/active-inference-tutorial-actions/"><span class="iconfont icon-article"></span>Active inference tutorial (actions)</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 

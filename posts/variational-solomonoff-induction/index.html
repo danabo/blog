@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Varational Solomonoff Induction&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.69e7672d6b54fced9ad5ddaa4ab099cfd4994eb00827cbea9d4ad7870bb1441c402edbe22ef17ae4a59cfe7767d78d6e.css" integrity="sha384-aednLWtU/O2a1d2qSrCZz9SZTrAIJ8vqnUrXhwuxRBxALtviLvF65KWc/ndn141u"><meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Varational Solomonoff Induction" /><body><section id="header">
+<meta name="supported-color-schemes" content="light dark"><title>Variational Solomonoff Induction&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.663c1b913e8f8da65500ac57052b0c8dffe91fbf55bc616423803d94b150f74f29bf3c72fca9922bcbb8cd97c17e8532.css" integrity="sha384-ZjwbkT6PjaZVAKxXBSsMjf/pH79VvGFkI4A9lLFQ908pvzxy/KmSK8u4zZfBfoUy"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Variational Solomonoff Induction" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-container"><section class="article header">
-    <h1 class="article title">Varational Solomonoff Induction</h1><p class="article date">February 21, 2021</p></section><article class="article markdown-body"><p>$$<br>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Variational Solomonoff Induction</h1><p class="article date">March 18, 2021</p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\mb}{\mathbb}<br>
 \newcommand{\mc}{\mathcal}<br>
 \newcommand{\E}{\mb{E}}<br>
@@ -64,7 +65,35 @@ $$</p>
 <p>Is variational Bayes a Bayesian ML method? In one sense yes, in another sense no. It&rsquo;s efficacy depends on $q_\t(z)$ being a good approximation of the posterior $p(z \mid D)$, and whether $q_\t(z)$ is a good approximation depends on the efficacy of the chosen machine learning method (e.g. neural networks trained with gradient descent). I&rsquo;d expect $q_\t(z)$ to be a non-Bayesian model (If it were Bayesian, how then do you tractably approximate it? That is the very thing we are trying to do with $p(z, D)$.) So then the efficacy of variational Bayes comes down to the properties of non-Bayesian machine learning. If at the end of the day, point-estimates of parameters are always doing the heavy lifting (i.e. generalizing well), why be Bayesian in the first place?</p>
 <h1 id="solomonoff-induction">Solomonoff induction</h1>
 <p>I learned about this topic from <a href="https://www.springer.com/gp/book/9781489984456"target="_blank">An Introduction to Kolmogorov Complexity and Its Applications</a> and <a href="http://www.hutter1.net/ai/uaibook.htm"target="_blank">Universal Artificial Intelligence</a>. I recommend both books as references.</p>
-<p>There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: <a href="#version-1">#Version 1</a>, <a href="#version-2">#Version 2</a>, <a href="#version-3">#Version 3</a>. Only an understanding of <a href="#version-2">#Version 2</a> is needed for the subsequent sections.</p>
+<p>There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 1</a>
+
+
+, 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 2</a>
+
+
+, 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 3</a>
+
+
+. Only an understanding of 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 2</a>
+
+
+ is needed for the subsequent sections.</p>
 <h2 id="notation">Notation</h2>
 <p>Let $\B = \{0,1\}$ be the binary alphabet, $\B^n$ be the set of all length-$n$ binary strings, and $\B^\infty$ be the set of all infinite binary strings.</p>
 <p>Let $\B^* = \B^0 \times \B^1 \times \B^2 \times \B^3 \times\ldots$ be the set of all finite binary strings of any length.<br>
@@ -175,7 +204,28 @@ $$</p>
 p(x_{m:s}\mid x_{&lt;m}) = \frac{1}{p(x_{&lt;m})}\sum_{\zeta\in\Phi(x_{1:s})} 2^{-\ell(\zeta)}\,.<br>
 $$</p>
 <h1 id="variational-solomonoff-induction">Variational Solomonoff induction</h1>
-<p>Suppose we observe finite sequence $x_{1:t} \in \B^*$ and we want to find the posterior $p(h \mid x_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q_\t(h)$ over hypotheses $h\in\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: <a href="#version-1">#Version 1</a>, <a href="#version-2">#Version 2</a>, <a href="#version-3">#Version 3</a>.</p>
+<p>Suppose we observe finite sequence $x_{1:t} \in \B^*$ and we want to find the posterior $p(h \mid x_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q_\t(h)$ over hypotheses $h\in\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 1</a>
+
+
+, 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 2</a>
+
+
+, 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 3</a>
+
+
+.</p>
 <p>In this case, let&rsquo;s find $\t^*\in\T$ that minimizes the KL-divergence $\kl{q_\t(h)}{p(h\mid x_{1:t})}$ so that $q_\t(h)$ is as close as possible to $p(h\mid x_{1:t})$. Note that $q_\t(h)$ does not depend on $x_{1:t}$ because we find $\t^*$ after $x_{1:t}$ is already observed ($x_{1:t}$ is like a constant w.r.t. this optimization), whereas the joint distribution $p(h, x)$ is defined up front before any data is observed.</p>
 <p>However, if $p(h \mid x_{1:t})$ is intractable to calculate, then so is $\kl{q_\t(h)}{p(h\mid x_{1:t})}$. With a few tricks, we can find an alternative optimization target that is tractable. Rewriting the KL-divergence:</p>
 <p>$$<br>
@@ -245,7 +295,14 @@ $$</p>
 <h2 id="generalization">Generalization</h2>
 <p>Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.</p>
 <p>Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h') \approx p(h' \mid x)$ for some program $h'$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.</p>
-<p>The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the <a href="#prior">#Prior</a> section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.</p>
+<p>The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Prior</a>
+
+
+ section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.</p>
 <p>As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn&rsquo;t start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.</p>
 <h1 id="choices">Choices</h1>
 <p>To summarize the requirements we found above:<br>
@@ -258,7 +315,14 @@ Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.</p>
 </ul>
 <h2 id="program-space">Program space</h2>
 <p>Hypotheses can be deterministic or stochastic. Deterministic hypotheses would be represented by deterministic programs. Stochastic hypotheses can either be represented by stochastic programs (output is non-deterministic) or by deterministic programs that output probabilities. I think we should choose the latter.</p>
-<p>If our hypotheses are deterministic, then we get Solomonoff induction <a href="#version-1">#Version 1</a>. Conditionalization is easy because $p(y \mid x, h) = p(y`x \mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).</p>
+<p>If our hypotheses are deterministic, then we get Solomonoff induction 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 1</a>
+
+
+. Conditionalization is easy because $p(y \mid x, h) = p(y`x \mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).</p>
 <p>We should use stochastic hypotheses. If we use non-deterministic programs, conditionalization is hard. Thus we should use programs that output their probabilities.</p>
 <p>The choice of $\mc{H}$ is equivalent to choosing a programming language plus syntax rules so that only valid programs can be constructed. In this case, we want to restrict ourselves to programs that will obey the properties of probability measures $\mu$ on infinite sequences: $\mu(x) = \mu(x`0) + \mu(x`1)$ and  $\mu(x) \geq \mu(x`y)$.</p>
 <p>To ensure this, I propose that programs $h$ take the form of auto-regressive language models. That is to say these programs read in a sequence of input tokens and for each token output a vector of real numbers with the same length as the token space. Passing that vector through a softmax induces a probability distribution over the next input token. The programs maintain their own internal state. A language should be chosen such that all generated programs can be guaranteed to take this form.</p>
@@ -269,14 +333,52 @@ Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.</p>
 p(h) = 2^{-\ell(h)}<br>
 $$</p>
 <p>One difficulty in working with programs is long-running execution. This can make computing data probabilities take a long time. One remedy is to down-weight long-running programs in the prior. <a href="http://www.scholarpedia.org/article/Universal_search"target="_blank">Levin search</a> is an alternative to Solomonoff induction where the prior is weighted solely by runtime. We can mix both kinds of priors.</p>
-<p>This is straightforward in Solomonoff induction <a href="#version-1">#Version 1</a> where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)</p>
+<p>This is straightforward in Solomonoff induction 
+
+
+
+  <a href="" class="broken">Variational Solomonoff Induction#Version 1</a>
+
+
+ where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)</p>
 <p>However, if we are using the programs I previously suggested that output data probabilities, then these programs may be fast on some inputs and slow on others. I don&rsquo;t have a solution, but a reasonable suggestion is to do some kind of heuristic analysis of the programs on some sample inputs and assign a slowness penalty in the prior.</p>
 <h1 id="lifelong-learning">Lifelong learning</h1>
 <p>Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it&rsquo;s future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).</p>
 <p>In the variational setup outlined above, we converted the problem of Bayesian inference into a reinforcement learning problem. At time $t$, data $x_{1:t}$ is observed, and a policy $q_{\t^*}$ on programs is trained using policy gradient methods. However, every $t$ requires its own $q_{\t_t^*}$, thus we would need to perform RL training at every timestep. One way to speed this up is to reuse policies from previous timesteps. That is to say, at time $t+1$ perform $\argmax{\t\in\T}\set{ \E_{h \sim q_\t}\left[R(h)\right] + \mb{H}_{h \sim q_\t}[q_\t(h)]}$ using Monte Carlo gradient descent starting from the previous parameter $\t_t^*$. This can be considered fine-tuning. However, this may fail to work if the posterior changes drastically between timesteps.</p>
 </article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/free-energy/>free energy</a></section>
-</div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/how-this-blog-works/"><span class="iconfont icon-article"></span>How this blog works</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/blogging-experiment/"><span class="iconfont icon-article"></span>Blogging experiment</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#machine-learning">Machine learning</a>
+      <ol>
+        <li><a href="#what-is-bayesian-machine-learning">What is Bayesian machine learning?</a></li>
+      </ol>
+    </li>
+    <li><a href="#solomonoff-induction">Solomonoff induction</a>
+      <ol>
+        <li><a href="#notation">Notation</a></li>
+        <li><a href="#version-1">Version 1</a></li>
+        <li><a href="#version-2">Version 2</a></li>
+        <li><a href="#version-3">Version 3</a></li>
+      </ol>
+    </li>
+    <li><a href="#variational-solomonoff-induction">Variational Solomonoff induction</a></li>
+    <li><a href="#tractability">Tractability</a>
+      <ol>
+        <li><a href="#hypothesis-posterior">Hypothesis posterior</a></li>
+        <li><a href="#data-posterior">Data posterior</a></li>
+        <li><a href="#generalization">Generalization</a></li>
+      </ol>
+    </li>
+    <li><a href="#choices">Choices</a>
+      <ol>
+        <li><a href="#program-space">Program space</a></li>
+        <li><a href="#prior">Prior</a></li>
+      </ol>
+    </li>
+    <li><a href="#lifelong-learning">Lifelong learning</a></li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/how-this-blog-works/"><span class="iconfont icon-article"></span>How this blog works</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
