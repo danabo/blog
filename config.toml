@@ -3,6 +3,7 @@ canonifyURLs = true
 title = "Dan's Notepad"
 theme = "hugo-notepadium"
 copyright = "©2021 Daniel Abolafia."
+# enableGitInfo = true
 
 [author]
 name = "Daniel Abolafia"

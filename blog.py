@@ -255,7 +255,9 @@ class Context(object):
     if not dest.get('title'):
       # dest['title'] = os.path.splitext(self.name)[0].replace('-', ' ').title()
       dest['title'] = os.path.splitext(self.name)[0]
-    dest['date'] = human_time(self.modify_time)
+    dest['lastmod'] = human_time(self.modify_time)
+    if not dest.get('date'):
+      dest['date'] = dest['lastmod']
     return dest
 
   def get_images(self, body):
