@@ -17,6 +17,12 @@ enableRobotsTXT = true
 # Google Analytics
 #googleAnalytics = "UA-123-45"
 
+[markup]
+  [markup.tableOfContents]
+    endLevel = 6
+    ordered = true
+    startLevel = 1
+
 [markup.highlight]
 codeFences = true
 noClasses = false
