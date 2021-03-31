@@ -35,6 +35,8 @@ import time
 import shutil
 
 
+DEBUG = False
+
 LOG_FILE = 'blog.yaml'
 
 # Whether to copy over posts marked as `draft`
@@ -89,7 +91,8 @@ class Translator(object):
 
 class SimpleParser(object):
   RE_LOCAL_LINK = re.compile(r'\[\[(.*?)\]\]', flags=re.DOTALL)
-  RE_LOCAL_IMAGE = re.compile(r'!\[\[(.*?)(\|(.*?))?\]\]\n?(\((.*?)\))?', flags=re.DOTALL | re.MULTILINE)
+  # RE_LOCAL_IMAGE = re.compile(r'!\[\[(.*?)(\|(.*?))?\]\]\n?(\((.*?)\))?', flags=re.DOTALL | re.MULTILINE)
+  RE_LOCAL_IMAGE = re.compile(r'!\[\[(.*?)(\|(.*?))?\]\]\n?(\{\{(.*?)\}\}|\((.*?)\))?', flags=re.DOTALL | re.MULTILINE)
   RE_HIDE_ENDHIDE = re.compile(r'(<!--\s*hide\s*-->.*?<!--\s*endhide\s*-->)', flags=re.DOTALL | re.MULTILINE)
   RE_HIDE = re.compile(r'(<!--\s*hide\s*-->.*)', flags=re.DOTALL | re.MULTILINE)
   RE_COMMENT = re.compile(r'(<!--.*?-->)', flags=re.DOTALL | re.MULTILINE)
@@ -143,9 +146,13 @@ class SimpleParser(object):
 
   def math_block(self, it):
     it.next(2)  # skip $$
+    #print('DEBUG:',it.s[it.section_start:it.section_start+100])
     while not (it.peek(2) == '$$' and it.peek(-1) != '\\'):
       it.next(1)
     it.next(2)
+    if DEBUG:
+      print('\nMATH:\n')
+      print(it.s[it.section_start:it.i])
     it.replace(self._math_replace(it.s[it.section_start:it.i]))
 
   def inline_math(self, it):
@@ -153,6 +160,7 @@ class SimpleParser(object):
     while not (it.peek(1) == '$' and it.peek(-1) != '\\'):
       it.next(1)
     it.next(1)
+    if DEBUG: print('\nINLINE:',it.s[it.section_start:it.i])
     it.replace(self._math_replace(it.s[it.section_start:it.i]))
 
   def _math_replace(self, s):
@@ -164,26 +172,38 @@ class SimpleParser(object):
     m = self.RE_HIDE_ENDHIDE.match(it.s, it.i)
     if m:
       it.next(len(m.group(0)))
+      if DEBUG:
+        print('\nHIDE:\n')
+        print(it.s[it.section_start:it.i])
       it.section()
       return
 
     m = self.RE_HIDE.match(it.s, it.i)
     if m:
       it.next(len(m.group(0)))
+      if DEBUG:
+        print('\nHIDE~~:\n')
+        print(it.s[it.section_start:it.i])
       it.section()
       return
 
     m = self.RE_COMMENT.match(it.s, it.i)
     if m:
       it.next(len(m.group(0)))
+      if DEBUG:
+        print('\nCOMMENT:\n')
+        print(it.s[it.section_start:it.i])
       it.section()
       return
 
     it.next()  # Nothing found. Move forward.
 
   def local_image(self, it):
-    m =self.RE_LOCAL_IMAGE.match(it.s, it.i)
+    m = self.RE_LOCAL_IMAGE.match(it.s, it.i)
     if m:
+      if DEBUG:
+        print('\nIMAGE:\n')
+        print(m.groups())
       it.next(len(m.group(0)))
       url = f'</{m.group(1)}>'
       if m.group(3):
@@ -206,11 +226,19 @@ class SimpleParser(object):
   def local_link(self, it):
     m = self.RE_LOCAL_LINK.match(it.s, it.i)
     if m:
+      if DEBUG:
+        print('\nLINK:\n')
+        print(m.groups())
       it.next(len(m.group(0)))
       target = m.group(1)
       if target.startswith('#'):
         # This is a link to a position within this post. Don't treat it like a link to another post.
         it.replace('['+target+']('+target.lower().replace(' ', '-')+')')
+      elif target.find('#') > -1:
+        # This is a link to a position within another post.
+        post, section = target.split('#')
+        it.replace('['+target+']({{< relref "'+post+'#'+section.lower().replace(' ', '-')+'" >}})')
+        self.pages.append(post)  # Extract local file name.
       else:
         it.replace('{{< locallink "'+target+'" >}}')
         self.pages.append(target)  # Extract local file name.
