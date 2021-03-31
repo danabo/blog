@@ -5,10 +5,302 @@
     <description>Recent content on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Wed, 24 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Mar 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Deconstructing Bayesian Inference</title>
+      <link>https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/</link>
+      <pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\0}{\mathrm{false}}&lt;br&gt;
+\newcommand{\1}{\mathrm{true}}&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\and}{\wedge}&lt;br&gt;
+\newcommand{\or}{\vee}&lt;br&gt;
+\newcommand{\a}{\alpha}&lt;br&gt;
+\newcommand{\t}{\theta}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\x}{\xi}&lt;br&gt;
+\newcommand{\z}{\zeta}&lt;br&gt;
+\newcommand{\l}{\lambda}&lt;br&gt;
+\newcommand{\fa}{\forall}&lt;br&gt;
+\newcommand{\ex}{\exists}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\Y}{\mc{Y}}&lt;br&gt;
+\newcommand{\Z}{\mc{Z}}&lt;br&gt;
+\newcommand{\H}{\mc{H}}&lt;br&gt;
+\newcommand{\P}{\mc{P}}&lt;br&gt;
+\newcommand{\y}{\psi}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\m}{\times}&lt;br&gt;
+\newcommand{\E}{\mb{E}}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;edit&lt;/p&gt;
+&lt;h1 id=&#34;constructing-bayesian-inference&#34;&gt;Constructing Bayesian Inference&lt;/h1&gt;
+&lt;p&gt;Before deconstructing Bayesian inference, I will present the general definition. At any point, feel free to look at the &lt;a href=&#34;#use-cases&#34;&gt;#Use Cases&lt;/a&gt; section for examples of Bayesian inference to use as intuition pumps.&lt;/p&gt;
+&lt;p&gt;An &amp;ldquo;agent&amp;rdquo; here refers to a physical entity that tries to predict the future. An agent can be a robot or a biological organism. Either way, the agent receives a stream of sensory data over the course of its life. The agent&amp;rsquo;s goal is to predict the future of this stream, in some capacity. Predictions about high-level objects and states of the world are made indirectly by predicting their effect on the sensory stream. That is to say, all prediction can be rolled into predicting the sensory stream. Though the agent may also act to influence the future of its sensory stream, for simplicity, I will consider only prediction and not actions.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s work in discrete time.&lt;br&gt;
+Let $\X$ be the set of possible observations at each time-step.&lt;br&gt;
+The agent&amp;rsquo;s sensory stream is a sequence $(x_1, x_2, x_3, \dots) \in \X^\infty$. I&amp;rsquo;m assuming the sensory stream is infinite, i.e. the agent lives forever. This is not a reasonable assumption but it&amp;rsquo;s workable. The alternative (assuming the stream is finite) is more complicated because it requires the agent to predict the end time of its own stream (presumably when it will die).&lt;/p&gt;
+&lt;p&gt;Let $\o\in\X^\infty$.&lt;br&gt;
+$\o_i$ denotes the $i$-th binary value in $\o$.&lt;br&gt;
+$\o_{(i_1,i_2,\dots)}$ denotes the sub-sequence of $\o$ indexed by the sequence $(i_1,i_2,\dots)$.&lt;br&gt;
+$\o_{i:j} = \o_{(i,i+1,\dots,j-1,j)}$ denotes the slice of $\o$ starting from $i$ and ending at $j$ (inclusive).&lt;br&gt;
+$\o_{&amp;lt;i} = \o_{1:i-1}$ denotes the slice up to position $i-1$.&lt;br&gt;
+$\o_{\leq i} = \o_{1:i}$ includes $i$.&lt;br&gt;
+$\o_{&amp;gt;i} = \o_{i+1:\infty}$ denotes the unbounded slice starting at position $i+1$.&lt;/p&gt;
+&lt;p&gt;Let $\X^* = \X^0 \cup \X^1 \cup \X^2 \cup \X^3 \cup \dots$ be the union of all finite cartesian products of $\X$, i.e. the set of all finite sequences of any length.&lt;br&gt;
+Let $x,y\in\X^*$ be finite sequences.&lt;br&gt;
+Denote $\abs{x}$ as the length of $x$.&lt;br&gt;
+Denote $x`y = (x_1, \dots, x_\abs{x}, y_1, \dots, y_\abs{y})$ as the sequence concatenation of $x$ and $y$.&lt;br&gt;
+Denote $x \sqsubset y$ to mean that $x = y_{1:\abs{x}}$, i.e. $x$ is a prefix of $y$.&lt;/p&gt;
+&lt;h2 id=&#34;defining-a-hypothesis&#34;&gt;Defining A Hypothesis&lt;/h2&gt;
+&lt;p&gt;As the agent gains sensory data, the agent will try to explain that data with various hypotheses. What constitutes a hypothesis is perhaps an open problem in epistemology. I will give the standard idea of &amp;ldquo;hypothesis&amp;rdquo; within Bayesian epistemology.&lt;/p&gt;
+&lt;p&gt;A hypothesis is a &lt;strong&gt;probability measure&lt;/strong&gt;, $\mu$, over all possible sensory streams, $\X^\infty$. That means we can compute the $\mu$-probability of any set of infinite sequences, i.e. $\mu(A)$ for $A \subseteq \X^\infty$. Typically there is a set of hypotheses $\H$ under consideration, i.e. $\H$ is a set of different $\mu$.&lt;/p&gt;
+&lt;p&gt;For any $\o\in\X^\infty$, the prefix $\o_{1:n}$ is a partial sensory sequence. The marginal $\mu$-probability of $\o_{1:n}$ is $\mu(\Gamma_{\o_{1:n}})$ where $\Gamma_{\o_{1:n}} = \set{\z\in\X^\infty \mid \o_{1:n}\sqsubset\z}$ is the set of all infinite sequences starting with $\o_{1:n}$, called a &lt;strong&gt;cylinder set&lt;/strong&gt;. For notational simplicity, I will write  $\mu(x)$ to denote $\mu(\Gamma_{x})$ when $x$ is a finite sequence, so $\mu(\o_{1:n})$ denotes $\mu(\Gamma_{\o_{1:n}})$.&lt;/p&gt;
+&lt;p&gt;The quantity $\mu(\o_n \mid \o_{&amp;lt;n}) = \mu(\o_{1:n})/\mu(\o_{&amp;lt;n}) = \mu(\o_{1:n})/\mu(\o_{1:n-1})$ is the conditional $\mu$-probability of $\o_n$ given $\o_{&amp;lt;n}$ was already observed.&lt;/p&gt;
+&lt;p&gt;$\mu$ defined in this way will guarantee that the following holds:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mu(\o_{&amp;lt;n}) = \int_\X \mu(\o_{&amp;lt;n}`\chi)d\chi\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;(replace integral with sum for countable $\X$.)&lt;/p&gt;
+&lt;p&gt;Note that for most $\o\in\X^\infty$,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\lim_{n\to\infty} \mu(\o_{1:n}) = 0\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which is similar to how a probability distribution on the real unit interval may assign 0 probability to any particular real number. Here $\o_{1:n}$ acts like an interval, which has probability mass, and the full sequence $\o$ acts like a single point, which does not have probability mass.&lt;/p&gt;
+&lt;p&gt;A hypothesis $\mu$ ideally represents some primitive way the world might be. We might say a hypothesis probability $\mu(\o_{1:n})$ is &lt;em&gt;objective&lt;/em&gt; in some sense. Hypotheses that assign probabilities to outcomes are supposing the universe has inherent randomness that cannot be known before hand (we could also have deterministic hypotheses that assign probabilities of either 0 or 1).&lt;/p&gt;
+&lt;p&gt;Bayesian inference distinguishes between two kinds of uncertainty: that due to inherent randomness in the universe, and that due to lack of knowledge of the agent. This distinction between kinds of uncertainty may not be precise (and I&amp;rsquo;m not sure I agree that such a distinction should be made), but this is typically how hypothesis probabilities are conceptually distinguished from subjective data probabilities (which I&amp;rsquo;ll get to in a moment).&lt;/p&gt;
+&lt;p&gt;In this framing, the goal of Bayesian inference is to calculate one&amp;rsquo;s certainty (or uncertainty) that each hypothesis being considered explains the observed data. This kind of uncertainty is represented with probabilities just like irreducible uncertainty, but the former is in principle reducible to certainty. As the agent observes data, these probabilities change, and hence the agent&amp;rsquo;s uncertainty about each hypothesis changes over time (potentially approaching certainty).&lt;/p&gt;
+&lt;h2 id=&#34;defining-bayesian-inference&#34;&gt;Defining Bayesian Inference&lt;/h2&gt;
+&lt;p&gt;Let $\X^\infty$ be the set of all possible observations (infinite data sequences).&lt;br&gt;
+Let $\H$ be a set of hypotheses (probability measures on $\X^\infty$).&lt;/p&gt;
+&lt;p&gt;I will induce a joint probability distribution on $\H$ and $\X^\infty$.&lt;br&gt;
+Let $p(\mu)$ be the &lt;strong&gt;prior probability&lt;/strong&gt; of $\mu\in\H$.&lt;br&gt;
+Let $p(\o_{1:n} \mid \mu) = \mu(\o_{1:n})$ be the &lt;strong&gt;data probability&lt;/strong&gt; of $\o_{1:n}$ under hypothesis $\mu$. This is read as, &amp;ldquo;the probability of data $\o_{1:n}$ given hypothesis $\mu$.&amp;rdquo; Here, &amp;ldquo;giving the hypothesis&amp;rdquo; is equivalent to specifying what data distribution should be used to calculate the probability of $\o_{1:n}$.&lt;/p&gt;
+&lt;p&gt;$p(\mu,\o_{1:n}) = p(\mu)p(\o_{1:n} \mid \mu) = p(\mu)\mu(\o_{1:n})$ is the joint probability of $\mu$ and $\o_{1:n}$. From here, we can compute any other quantity of interest.&lt;/p&gt;
+&lt;p&gt;$$p(\o_{1:n}) = \int_\H p(\mu,\o_{1:n})d\mu = \int_\H p(\mu)\mu(\o_{1:n})d\mu$$&lt;/p&gt;
+&lt;p&gt;is called the &lt;strong&gt;subjective (Bayesian) data probability&lt;/strong&gt; of $\o_{1:n}$ (replace integrals with sums if $\H$ is discrete). $p(\o_{1:n})$ does not condition on a hypothesis, and is the sum/integral over every hypothesis probability $\mu(\o_{1:n})$ weighted by the prior $p(\mu)$. You can think of $p(\o_{1:n})$ as a weighted-average over hypothesis probabilities.&lt;/p&gt;
+&lt;p&gt;If a hypothesis probability $\mu(\o_{1:n})$ is &lt;em&gt;objective&lt;/em&gt; in some sense (a hypothesis represents the way the world actually might be), then a prior probability $p(\mu)$ represents the agent&amp;rsquo;s state of certainty/uncertainty about $\mu$ being true (how the world actually is). If the agent knew that $\mu$ was the case, then the agent would just use $\mu$ to predict the future sensory data, where $\mu$-probabilities are due to inherent randomness in the data. However, since the agent has uncertainty about which hypothesis is the case, $p(\o_{1:n})$ represents the agent&amp;rsquo;s total uncertainty about $\o_{1:n}$ occurring, which is a combination of inherent randomness in the data and the agent&amp;rsquo;s lack of knowledge about which hypothesis is true.&lt;/p&gt;
+&lt;p&gt;Another quantity of interest:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+p(\mu\mid\o_{1:n}) &amp;amp;= p(\mu,\o_{1:n})/p(\o_{1:n}) \\ \\&lt;br&gt;
+&amp;amp;= \frac{p(\mu)p(\o_{1:n}\mid\mu)}{p(\o_{1:n})}\\ \\&lt;br&gt;
+&amp;amp;= p(\mu)\frac{\mu(\o_{1:n})}{p(\o_{1:n})}&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;is called the &lt;strong&gt;hypothesis posterior probability&lt;/strong&gt; (or more commonly, just &amp;ldquo;&lt;strong&gt;posterior&lt;/strong&gt;&amp;quot;) of hypothesis $\mu$ given data $\o_{1:n}$. This quantity represents the agent&amp;rsquo;s certainty/uncertainty about hypothesis $\mu$ after observing $\o_{1:n}$. If we are viewing $p(\mu)$ as a weight, then the weight on $\mu$ updates to $p(\mu\mid\o_{1:n})$ when $\o_{1:n}$ is observed. In this sense, the agent updates its knowledge (confidence) about the hypotheses in $\H$ when data is observed. The last equation is a prescription for an update rule on these uncertainty weights on $\mu$, taking the form $w&#39; = \gamma w$, where $\gamma = \mu(\o_{1:n})/p(\o_{1:n})$ is a multiplicative adjustment on the prior weight $w$.&lt;/p&gt;
+&lt;p&gt;Observing additional data amounts to appending $\o_{n+1:m}$ to $\o_{1:n}$, and the weight on $\mu$ updates again to $p(\mu\mid\o_{1:m})$. This iterative process of observing more data and updating can go on forever, so long as the data space $\X^\infty$ consists of infinite sequences.&lt;/p&gt;
+&lt;p&gt;As a side note, you should recognize $p(\mu\mid\o_{1:n})=p(\o_{1:n}\mid\mu)p(\mu)/p(\o_{1:n})$ as the classic form of &lt;a href=&#34;https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem&#34;target=&#34;_blank&#34;&gt;Bayes rule&lt;/a&gt; (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \mid D) = p(D \mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is not very useful pedagogically.&lt;/p&gt;
+&lt;p&gt;In general, the agent wants to predict what sensory data will occur after $\o_{\leq n}$ has been observed. For that, we need the &lt;strong&gt;data posterior probability&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+p(\o_{&amp;gt;n} \mid \o_{\leq n}) &amp;amp;= \int_\H p(\mu, \o_{&amp;gt;n} \mid \o_{\leq n})d\mu \\&lt;br&gt;
+&amp;amp;= \int_\H p(\o_{&amp;gt;n} \mid \mu, \o_{\leq n})p(\mu\mid\o_{\leq n})d\mu \\&lt;br&gt;
+&amp;amp;= \int_\H p(\mu\mid\o_{\leq n})p(\o_{&amp;gt;n} \mid \o_{\leq n},\mu)d\mu \\&lt;br&gt;
+&amp;amp;= \int_\H p(\mu\mid\o_{\leq n})\mu(\o_{&amp;gt;n} \mid \o_{\leq n})d\mu \\&lt;br&gt;
+&amp;amp;= \int_\H p(\mu)\frac{\mu(\o_{\leq n})}{p(\o_{\leq n})}\mu(\o_{&amp;gt;n} \mid \o_{\leq n})d\mu\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Like the subjective data probability $p(\o_{\leq n})$, the data posterior probability $p(\o_{&amp;gt;n} \mid \o_{\leq n})$ is subjective, in the sense that it reflects the agent&amp;rsquo;s uncertainty about the outcome, as well as any irreducible randomness. These two quantities have the same form: $p(\o_{\leq n})$ averages over $p(\mu)\mu(\o_{\leq n})$, and $p(\o_{&amp;gt;n} \mid \o_{\leq n})$ averages over $p(\mu\mid\o_{\leq n})\mu(\o_{&amp;gt;n} \mid \o_{\leq n})$. Either way, $p(\o_{\leq n})$ and $p(\o_{&amp;gt;n} \mid \o_{\leq n})$ are both weighted averages over all hypothesis probabilities, i.e. the inherent randomness of each hypothesis is weighted by the agent&amp;rsquo;s uncertainty about that hypothesis. The only difference is that the posterior conditions everything on the observed $\o_{\leq n}$.&lt;/p&gt;
+&lt;h1 id=&#34;deconstructing-bayesian-inference&#34;&gt;Deconstructing Bayesian inference&lt;/h1&gt;
+&lt;p&gt;To review, we assumed the agent has a set of hypotheses $\H$, where each hypothesis $\mu\in\H$ is a probability measure on infinite data sequences $\X^\infty$. For partial observation $\o_{1:n}$, each hypothesis assigns probability $\mu(\o_{1:n})$. Putting a prior on $\H$ allows us to compute $p(\o_{1:n})$, which is the &amp;ldquo;average&amp;rdquo; $\mu$-probability of $\o_{1:n}$. The resulting distribution $p$ is called the subjective data distribution.&lt;/p&gt;
+&lt;h2 id=&#34;removing-hypotheses&#34;&gt;Removing hypotheses&lt;/h2&gt;
+&lt;p&gt;Question: What is the difference between a hypothesis $\mu$ and a subjective data distribution $p$? Do we need hypotheses at all?&lt;/p&gt;
+&lt;p&gt;They appear to have the same form: $\mu(\o_{1:n})$ vs $p(\o_{1:n})$. Above I gave a hand-wavy interpretational difference between the two. However, it is the case that hypotheses are not strictly necessary for predicting the continuation of a data sequence (equivalent to the singleton hypothesis space $\H = \set{p}$).&lt;/p&gt;
+&lt;p&gt;The subjective data distribution $p$ can be defined directly by specifying the distribution $p(x_n \mid x_{&amp;lt;n})$ on $x_n\in\X$ for all finite $x_{&amp;lt;n} \in \X^*$. That is because for all $x_{1:n}\in\X$, the probability factorizes: $p(x_{1:n}) = p(x_{n}\mid x_{&amp;lt;n})p(x_{n-1}\mid x_{&amp;lt;n-1})\dots p(x_2\mid x_{&amp;lt;2})p(x_1)$. This amounts to filling in values for each node in a tree. For example, if $\X=\set{0,1}$, then we have a binary tree:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210317161633.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Each node in the tree is assigned a conditional probability distribution, i.e. for each node at position $x_{&amp;lt;n}$ (where $x_{&amp;lt;n} = (x_1, x_2,\dots,x_{n-1})$ encodes a path from the root), the probability $p(\chi \mid \dots)$ is specified for each $\chi\in\X$.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Each node&amp;rsquo;s distribution, $p(\chi \mid \dots)$, can be chosen independently from every other node (there are no constraints on these conditional distributions). Therefore, since the entire tree uniquely determines $p(x_{&amp;lt;n})$ (by walking down the edges of the tree corresponding to the observed data sequence $x_{&amp;lt;n}$ and multiplying the conditional probabilities at each node in the path, i.e. $p(x_i \mid x_{&amp;lt;i})$ at node $x_{&amp;lt;i}$), a Bayesian agent is free to choose any arbitrary conditional predictions it wants.&lt;/p&gt;
+&lt;p&gt;Clearly, if we are only concerned with data predictions of the form $p(\o_{n:m}\mid \o_{&amp;lt;n})$, then we do not actually need hypotheses at all. Providing a tree specifying the subjective conditional data probabilities is enough to perform Bayesian inference.&lt;/p&gt;
+&lt;p&gt;This reveals something peculiar about Bayesian inference: &lt;strong&gt;A Bayesian agent chooses its predictions for all eventualities beforehand, and never deviates for all time. Furthermore these predictions can be totally arbitrary.&lt;/strong&gt; There does not appear to be any actual learning taking place, since the agent just follows a path down the tree as data comes in and provides predetermined prediction probabilities. In the Bayesian perspective, learning IS narrowing down a pre-defined possibility space with data. If decision making using Bayesian inference is rational, perhaps rationality amounts to consistency, i.e. never deviating from pre-chosen predictions.&lt;/p&gt;
+&lt;p&gt;One might argue that freely choosing a subjective data distribution without defining hypotheses is not Bayesian. My reply is that I&amp;rsquo;ve shifted what we are counting as hypothesis. In this perspective, a hypothesis is a single data sequence continuation. In this sense, all hypotheses are deterministic data sequences (though they may be algorithmically random), and the subjective data distribution is counting up the contributions of all these hypotheses to each finite length prediction. More on this in 
+
+
+
+  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Bayesian information theory&lt;/a&gt;
+
+
+.&lt;/p&gt;
+&lt;h2 id=&#34;removing-probabilities&#34;&gt;Removing probabilities&lt;/h2&gt;
+&lt;p&gt;We can go a step further and ask, do we need probabilities at all?&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s imagine that the agent has the same predetermined tree as above, except each node is assigned a single prediction instead of a probability distribution over $\X$. Let $x\in\X^*$ and denote $\hat{\x}_x\in\X$ as the prediction given the sequence $x$ is observed. Choosing $\hat{\x}_x$ for each $x$ uniquely defines a tree, where $x = (x_1, x_2, \dots)$ encodes a path from the root to a node, and $\hat{\x}_x$ is the value assigned to that node.&lt;/p&gt;
+&lt;p&gt;Consider an example. Suppose $\X = \set{0,1}$ and that we have the following prediction tree:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210329223311.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;This tree has infinite depth.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;In the figure, each node is assigned a prediction. Without any data, the agent predicts $0$. Given $0$ is observed, the agent predicts $1$. Given $01$ is observed, the agent predicts $0$. And so on.&lt;/p&gt;
+&lt;p&gt;Suppose we observe $010$, which falls in line with all of the agent&amp;rsquo;s predictions up to that point. The prediction given $010$ is $1$. Suppose we observe $0$ next (for a total observation of $0100$). Then the agent&amp;rsquo;s prediction of $1$ is wrong, but that is okay since the agent has sub-tree at $0100$ and can go on making predictions from there.&lt;/p&gt;
+&lt;p&gt;Is this setup technically Bayesian? We could convert this deterministic prediction tree to a subjective data distribution that assigns a probability 0 or 1 to all outcomes. So in this example, $p(x_1=0) = 1$ and $p(x_1=1)=0$, corresponding to a prediction of $0$ given nothing. $p(x_2=0\mid 0)=0$ and $p(x_2=1\mid 0)=1$, and $p(x_3=0\mid 01)=1$ and so on.&lt;/p&gt;
+&lt;p&gt;The problem is that $p$ defined in this way is degenerate. Suppose the agent wrongly predicts the continuation of $010$ to be $1$ when it is actually $0$. Then&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+p(0101) &amp;amp;= p(x_4=1\mid 010)p(x_3=0\mid 01)p(x_2=1\mid 0)p(x_1=0) \\ &amp;amp;= 1\cdot 1\cdot 1\cdot 1 = 1\,.&lt;br&gt;
+\end{aligned}$$&lt;/p&gt;
+&lt;p&gt;But $p(0100) = p(x_4=0 \mid 010)\dots = 0\cdot 1\cdot 1\cdot 1 = 0$. So from then on, the subjective probability of the data continuing $0100$ is 0, but the conditional probabilities may not be. If $p$ is defined as a measure on $\X^\infty$ instead of indirectly via the conditional probabilities specified in the tree, then $p$ cannot simultaneously have well-defined conditional probabilities and zero probability unconditionally (e.g. $p(x_5=0 \mid 0100) = 1$ while $p(01000) = 0$ and $p(0100) = 0$).&lt;/p&gt;
+&lt;p&gt;We might conclude that this kind of deterministic prediction tree does not formally conform to the definition of Bayesian inference I gave earlier. However, this tree is the limit of the probabilistic prediction tree above as each conditional probability $p(x_i \mid x_{&amp;lt;i})$ goes to 0 or 1. Just as the &lt;a href=&#34;https://en.wikipedia.org/wiki/Dirac_delta_function&#34;target=&#34;_blank&#34;&gt;Dirac delta distribution&lt;/a&gt; is not technically a function, but can be defined as the limit of Gaussian functions as their variance goes to 0, we might be able to do the same with deterministic prediction trees.&lt;/p&gt;
+&lt;p&gt;Note that an agent that makes the same prediction no matter what is observed (a rigid agent) is technically Bayesian, with a subjective data distribution that puts all probability mass on the prediction sequence $\o\in\X^\infty$:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(x_{1:n}) = \begin{cases}1 &amp;amp; x_{1:n} = \o_{1:n} \\ 0 &amp;amp; x_{1:n} \neq \o_{1:n}\end{cases}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Such an agent is not interesting, as it does not even behave as though it learns.&lt;/p&gt;
+&lt;p&gt;We shall see that an agent that does behave as though it learns (conditionally determines its predictions based on past history) need not provide Bayesian probabilities on its predictions for prediction uncertainty to naturally emerge.&lt;/p&gt;
+&lt;h1 id=&#34;reconstructing-bayesian-inference&#34;&gt;Reconstructing Bayesian Inference&lt;/h1&gt;
+&lt;h2 id=&#34;non-determinism&#34;&gt;Non-Determinism&lt;/h2&gt;
+&lt;p&gt;To add clarity to what I want to explain next, let&amp;rsquo;s represent the deterministic prediction tree above as a prediction function $f : \X^* \to \X$, so that $f(x) = \hat{\x}_x$ is the prediction given data sequence $x\in\X^*$. That is to say, $f(x)$ returns the value at node $x$ in the tree. We can think of $f$ as an assignment function of values to nodes.&lt;/p&gt;
+&lt;p&gt;Suppose we want to predict what will happen further out into the future. Specifically, suppose we observe $\o_{&amp;lt;n}\in\X^*$ and we want to predict the outcome $\o_m$ at time $m &amp;gt; n$. We don&amp;rsquo;t have access to the outcome $\o_n$ or anything after it. That is to say, the prediction tree gives the prediction $f(\o_{&amp;lt;n})$ for step $n$, but to predict step $m$ we need $\o_{&amp;lt;m} = \o_{&amp;lt;n}`\o_{n:m-1}$.&lt;/p&gt;
+&lt;p&gt;You might say that the solution is to fill in our missing data with predictions, i.e. choose $\hat{\o}_n=f(\o_{&amp;lt;n})$ as the outcome for step $n$, and $\hat{\o}_{n+1} = f(\o_{&amp;lt;n}`\hat{\o}_n)$ as the outcome for step $n+1$, etc., so that our prediction at step $m$ is $\hat{\o}_m=f(\o_{&amp;lt;n}`\hat{\o}_{n:m-1})$. However, I&amp;rsquo;d argue that this is not actually the agent&amp;rsquo;s prediction as defined by the prediction tree. If the agent instead observed $\o_{n:m-1} \neq \hat{\o}_{n:m-1}$, the agent might predict something different from $\hat{\o}_m$. We could define $\hat{\o}_m$ as the agent&amp;rsquo;s prediction of step $m$ given $\o_{&amp;lt;n}$. By doing so, we&amp;rsquo;d be assigning infinite sequences to each node $x$ in the prediction tree, rather than single outcomes, so that we may query the prediction of arbitrarily many timesteps given ONLY data $x$. We can represent this prediction tree by the function $g:\X^*\to\X^\infty$, which returns an infinite sequence in $\X^\infty$ instead of a single element of $\X$, such that $[g(x_{&amp;lt;n})]_{&amp;lt;n} = x_{&amp;lt;n}$ and $[g(x_{&amp;lt;n})]_n$ is the next-step prediction for $x_{&amp;lt;n}$. The sequence $[g(x_{&amp;lt;n})]_{\geq n}$  is the multi-step prediction for $x_{&amp;lt;n}$. Now it is clear that $[g(\o_{&amp;lt;m})]_m$ and $[g(\o_{&amp;lt;n})]_m$ are potentially different predictions, and we need to distinguish between them.&lt;/p&gt;
+&lt;p&gt;![](&amp;lt;/Pasted image 20210330173612.png&amp;gt; &amp;ldquo;The tree encoded by $g$, where each node is assigned an infinite sequence that begins with the location of the node in the tree. In this example, each sequence is the &amp;ldquo;argmax&amp;rdquo; prediction starting at that node, i.e. assuming every next-step prediction is correct.&amp;quot;)&lt;/p&gt;
+&lt;p&gt;In general, if we ask an agent for some prediction of any time-step, the agent can produce some sort of answer. However, if we wanted to know what answer the agent would produce if all requisite data was available (call this the agent&amp;rsquo;s best prediction), that may not be determinable with the data currently available. We are uncertain about what the agent&amp;rsquo;s best prediction will be (given all requisite data). A truthful agent would be just as uncertain as we are about its own future predictions.&lt;/p&gt;
+&lt;p&gt;Let $\mc{F}_m(\o_{&amp;lt;n}) = \set{f(\o_{&amp;lt;n}`\tilde{\o}_{n:m-1}) \mid \tilde{\o}_{n:m-1}\in\X^{m-n+1}}$ be the set of all predictions the agent could make about step $m$ given data $\o_{&amp;lt;n}$. If this set contains more than one element, then the agent&amp;rsquo;s prediction at $m$ is not uniquely determined by $\o_{&amp;lt;n}$, i.e. non-deterministic.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210329223333.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;This is the non-deterministic prediction encoded by $\mc{F}_2 : \X^* \to \X$, where the untransformed tree encoded by $f:\X^*\to\X$ is our prediction tree example from above. $\mc{F}_2$ is obtained by superimposing the two sub-trees of $f$ at depth 1, i.e. directly under the root node.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;This understanding of the word &amp;ldquo;non-deterministic&amp;rdquo; is standard in computer science, exemplified by the &lt;a href=&#34;https://en.wikipedia.org/wiki/Nondeterministic_Turing_machine&#34;target=&#34;_blank&#34;&gt;non-deterministic Turing machine&lt;/a&gt;, which defines a set of possible state transitions and tape operations given any state (of both the tape and automata), rather than single one determined uniquely by each state. In general, something is regarded as non-deterministic if it can take on more than one possible value, i.e. it is not determined.&lt;/p&gt;
+&lt;p&gt;I distinguish non-determinism from randomness, the latter of which can be defined as maximal incompressibility (called &lt;a href=&#34;http://www.scholarpedia.org/article/Algorithmic_randomness&#34;target=&#34;_blank&#34;&gt;algorithmic randomness&lt;/a&gt;). Often these two concepts are conflated. Probability distributions can represent both non-determinism (by quantifying relative amounts of possibilities) or degrees of randomness (via Martin-Lof randomness). The key insight is that probability need not represent both at the same time. If Bayesian probability is generally understood as quantifying prediction non-determinism, then we can view the &lt;a href=&#34;https://en.wikipedia.org/wiki/Probability_interpretations&#34;target=&#34;_blank&#34;&gt;Bayesian-frequentist distinction&lt;/a&gt; as stemming from this conceptual decoupling of non-determinism from randomness.&lt;/p&gt;
+&lt;p&gt;I make the same connection between Bayesian uncertainty and non-determinism in &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective&#34;&gt;Classical vs Bayesian Reasoning#The Bayesian perspective&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;the-general-case&#34;&gt;The General Case&lt;/h3&gt;
+&lt;p&gt;We can go a step further. Why are we assuming that a prediction of step $n$ can be made given $\o_{&amp;lt;n}$? Plenty of pertinent information may not be available in the data at all (or the agent does not know how to extract such information from the data, e.g. encrypted information). An honest agent would account for every input needed to make a certain prediction, even inputs that are not available in $\o_{&amp;lt;n}$.&lt;/p&gt;
+&lt;p&gt;In general, we are left with a non-deterministic next-step prediction tree represented by $f : \Z \times \X^* \to \X$ where $\Z$ is an auxiliary input space (input in addition to the observed data stream), which is usually some latent space (set of possible data or world-states not observed). Each node $x$ in the prediction tree is assigned the prediction set $f(\Z, x) = \set{f(z,x) \mid z\in\Z}$. If the prediction set for $x$ is singleton (contains one element), then that prediction is deterministic. $f$ represents a prediction tree where each node is assigned a set of next-step predictions instead of just one.&lt;/p&gt;
+&lt;h2 id=&#34;the-return-of-probability&#34;&gt;The Return Of Probability&lt;/h2&gt;
+&lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom&#34;&gt;Classical vs Bayesian Reasoning#The Bayesian Axiom&lt;/a&gt;, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&amp;rsquo;s prediction $f(\Z, \o_{&amp;lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is&lt;/p&gt;
+&lt;p&gt;$$p(\chi \mid x) = \mu\set{f(z,x) \mid z\in\Z \and f(z,x) = \chi}\,.$$&lt;/p&gt;
+&lt;p&gt;Though the agent&amp;rsquo;s prediction is not uniquely determined, we&amp;rsquo;ve quantified the relative number of possible auxiliary inputs to $f$ that give each prediction. These quantities can be used for decision making (e.g. most likely outcome or expected return).&lt;/p&gt;
+&lt;p&gt;We have recovered the probabilistic prediction tree paradigm from earlier without presupposing that predictions should be probabilistic. Though not defined to be probabilistic, an agent&amp;rsquo;s prediction function that requires inputs which are not on hand naturally results in non-determinism. Quantifying that non-determinism using relative sizes of possibility sets naturally results in probabilities.&lt;/p&gt;
+&lt;p&gt;With this perspective in mind, we could interpret any explicitly defined subjective data distribution to be implying the existence of a deterministic prediction function. Bayesian probabilities represent the number of inputs to this prediction function that produce the corresponding outputs. Given $p$, a canonical deterministic prediction function $f$ is the decoder for a compressed representation of the data, with a uniform distribution on the compression.&lt;/p&gt;
+&lt;p&gt;To be more specific, let $p$ be a probability measure on $\X^\infty$. Let $f : \Z^\infty \to \X^\infty$ be an &lt;a href=&#34;https://en.wikipedia.org/wiki/Arithmetic_coding&#34;target=&#34;_blank&#34;&gt;arithmetic decoder&lt;/a&gt; using $p$, i.e. $f$ takes as input an infinite compressed sequence $z_{1:\infty}\in\Z^\infty$ and outputs the decompressed sequence $x_{1:\infty}\in\X^\infty$. For finite inputs and outputs, use the cylinder set $f(\Gamma_{z_{1:n}})$. Putting a uniform probability measure on $\Z^\infty$ results in measure $p$ on $\X^\infty$. Now we can draw a connection between probability in three different contexts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Shannon Information&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;If $x_{1:\infty}$ is sampled randomly from $p$, then $z_{1:\infty}$ s.t. $f(z_{1:\infty}) = x_{1:\infty}$ achieves the optimal compression of $x_{1:\infty}$ according to Shannon. That is to say, $\abs{z_{1:n}} = n \approx -\lg p(f(\Gamma_{z_{1:n}}))$, and these quantities converge as $n\to\infty$.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Algorithmic Randomness&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;If input $z_{1:\infty}$ is algorithmically random, then output $f(z_{1:\infty})$ is $p$-random (or $p$-typical, see &lt;a href=&#34;https://en.wikipedia.org/wiki/Algorithmically_random_sequence&#34;target=&#34;_blank&#34;&gt;wiki&lt;/a&gt;). $z_{1:\infty}$ is a shortest algorithmic compression of $f(z_{1:\infty})$.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Non-determinism&lt;/em&gt;
+&lt;ul&gt;
+&lt;li&gt;Our prediction of $x_n$ given $x_{&amp;lt;n}$ depends on the compressed representation of $x_{1:n}$, an input $z_{1:k}$ to $f$ s.t. $f(\Gamma_{z_{1:k}}) = \Gamma_{x_{1:n}}$. Our non-deterministic prediction of $x_{n}$ given $x_{&amp;lt;n}$ is the set $f^{-1}(\Gamma_{x_{1:n}})$, which is all compressions compatible with $x_{1:n}$. This is quantified with the probability $p(x_n \mid x_{&amp;lt;n}) = \lambda(f^{-1}(\Gamma_{x_{1:n}})) / \lambda(f^{-1}(\Gamma_{x_{&amp;lt;n}}))$ where $\lambda$ is the uniform probability measure on $\Z^\infty$.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;use-cases&#34;&gt;Use Cases&lt;/h1&gt;
+&lt;p&gt;This section runs through a few canonical examples of Bayesian inference which can be used as intuition pumps while reading the previous sections.&lt;/p&gt;
+&lt;h2 id=&#34;inferring-bias-on-a-coin&#34;&gt;Inferring bias on a coin&lt;/h2&gt;
+&lt;p&gt;Let $\X = \set{0,1}$ be the outcome of a coin toss, and $\o \in \X^\infty$ be an infinite sequence of coin toss outcomes.&lt;/p&gt;
+&lt;p&gt;Let $\mc{B}_\t$ be the Bernoulli distribution on $\X$ with parameter $\t\in[0,1]$ which is the probability of $1$, so $\mc{B}_\t(1) = \t$ and $\mc{B}_\t(0) = 1-\t$.&lt;/p&gt;
+&lt;p&gt;The hypothesis $\mu_\t$ is the product of Bernoulli distributions:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mu_\t(x_{1:n}) = \prod_{i=1}^n\mc{B}_\t(x_i) = \t^{\sum_i x_i}(1-\t)^{n-\sum_i x_i}\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;The hypothesis set is $\H = \set{\mu_\t}_{\t\in[0,1]}$.&lt;/p&gt;
+&lt;p&gt;Subjective data probability:&lt;br&gt;
+$$&lt;br&gt;
+p(x_{1:n}) = \int_0^1 p(\t)\mu_\t(x_{1:n}) d\t = \int_0^1 p(\t)\t^{\sum_i x_i}(1-\t)^{n-\sum_i x_i} d\t&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Data posterior:&lt;br&gt;
+$$&lt;br&gt;
+p(x_n \mid x_{&amp;lt;n}) = \int_0^1 p(\t\mid x_{&amp;lt;n})\mu_\t(x_n \mid x_{&amp;lt;n})d\t = \int_0^1 p(\t\mid x_{&amp;lt;n})\mc{B}_\t(x_n)d\t&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Hypothesis posterior:&lt;br&gt;
+$$&lt;br&gt;
+p(\t\mid x_{1:n}) = p(\t)\frac{\mu_\t(x_{1:n})}{p(x_{1:n})}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(1 \mid x_{&amp;lt;n}) = \int_0^1 p(\t\mid x_{&amp;lt;n})\t d\t&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(0 \mid x_{&amp;lt;n}) = \int_0^1 p(\t\mid x_{&amp;lt;n})(1-\t) d\t&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Hypotheses are i.i.d. but subjective data distribution is not.&lt;/p&gt;
+&lt;h2 id=&#34;solomonoff-induction&#34;&gt;Solomonoff Induction&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s continue the coin tossing example, but in stead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.&lt;/p&gt;
+&lt;p&gt;Bernoulli hypotheses are blind to patterns in the ordering of bits in the data sequence because $\mu_\t(x_{1:n}) = \mu_\t(\mathrm{permute}(x_{1:n}))$ where $\mathrm{permute}(x_{1:n})$ is any permutation (re-ordering) of $x_{1:n}$. For example, we observe a very long sequence of alternating $0$s and $1$s, i.e. $0101010101\dots$, then the Bernoulli hypothesis where $\t=1/2$ will get large posterior weight. This is the hypothesis that the data is totally random (maximum entropy). Clearly, the data is highly patterned and predictable.&lt;/p&gt;
+&lt;p&gt;What hypotheses should we add to $\H$? Is it possible to have a hypothesis for every possible data pattern? Ray Solomonoff&amp;rsquo;s answer is yes, and this is achieved by the hypothesis set containing all semicomputable semimeasures on $\X^\infty$.&lt;/p&gt;
+&lt;p&gt;A probability measure $\mu$ on $\X^\infty$ is &lt;a href=&#34;https://en.wikipedia.org/wiki/Computable_function&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;computable&lt;/strong&gt;&lt;/a&gt; if there exists a program (Turing machine) which outputs the probability $\mu(x_{1:n})$ of any input, $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$), to the requested precision, $\e &amp;gt; 0$, in finite time and then halts. Alternatively, a probability measure is computable if there exists a program that outputs each possible outcome $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$) with probability $\mu(x_{1:n})$, given a stream of uniformly random input bits (i.i.d. Bernoulli(1/2) data).&lt;/p&gt;
+&lt;p&gt;A probability measure $\mu$ on $\X^\infty$ is &lt;a href=&#34;https://en.wikipedia.org/wiki/Semicomputable_function&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;semicomputable&lt;/strong&gt;&lt;/a&gt; if there exists a program (Turing machine) which outputs an infinite monotonic (increasing or decreasing) sequence of rational numbers $(\hat{q}_i)_{i\in\mb{N}}$ s.t. $\hat{q}_i$ converges to $\mu(x_{1:n})$ as $i\to\infty$, for any $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$). All computable measures are semicomputable. A semicomputable measure is not computable if the error $\e_i = \abs{\hat{q}_i - \mu(x_{1:n})}$ at position $i$ in the output sequence cannot be computably determined. If this error could be determined, this program can be converted into the one above that approximates $\mu(x_{1:n})$ to the desired error in finite time. In other words, a semicomputable measure can be approximated to arbitrary accuracy, but you may not be able to determine how close any given approximation is, whereas a computable measure can be arbitrarily approximated with known error.&lt;/p&gt;
+&lt;p&gt;A semimeasure $\mu$ on $\X^\infty$ is like the measure we defined earlier in &lt;a href=&#34;#defining-a-hypothesis&#34;&gt;#Defining A Hypothesis&lt;/a&gt; except for one difference: Rather than strict equality we have&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mu(x_{&amp;lt;n}) \geq \int_\X \mu(x_{&amp;lt;n}`\chi)d\chi\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;For $\X = \set{0,1}$, this property becomes&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Measure: $\mu(x_{&amp;lt;n}) = \mu(x_{&amp;lt;n}`0) + \mu(x_{&amp;lt;n}`1)$&lt;/li&gt;
+&lt;li&gt;Semimeasure: $\mu(x_{&amp;lt;n}) \geq \mu(x_{&amp;lt;n}`0) + \mu(x_{&amp;lt;n}`1)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that $0 \leq \mu(x_{&amp;lt;n}) \leq 1$ still holds. We just allow probabilities to sum to less than 1.&lt;/p&gt;
+&lt;p&gt;The set of all computable measures is conceptually nicer to think about than (and is a subset of) the set of all semicomputable semimeasures, but is not practically useful because it cannot be enumerated by a program, i.e. is &lt;a href=&#34;https://en.wikipedia.org/wiki/Recursively_enumerable_set&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;computably enumerable&lt;/strong&gt;&lt;/a&gt; (c.e.). To enumerate this set, you&amp;rsquo;d have to determine which programs halt after emitting their approximation of $\mu(x_{1:n})$.&lt;/p&gt;
+&lt;p&gt;The set of all semicomputable semimeasures can be enumerated by a program, by enumerating all programs in lexicographic order, running them all simultaneously (called &lt;a href=&#34;https://en.wikipedia.org/wiki/Dovetailing_%28computer_science%29&#34;target=&#34;_blank&#34;&gt;dovetailing&lt;/a&gt;, see also &lt;a href=&#34;https://en.wikipedia.org/wiki/Recursively_enumerable_set#Examples&#34;target=&#34;_blank&#34;&gt;c.e. set&lt;/a&gt;), and continually filtering out the programs whose output does not compute a valid semimeasure. The virtue of using semimeasures rather than measures is that we don&amp;rsquo;t need to wait for the programs being enumerated to halt. If one is found to violate the semimeasure property (probabilities sum to greater than 1) it is filtered out. Otherwise it remains and we don&amp;rsquo;t have to check that the probabilities it assigns to various outcomes sum to exactly 1 (which would require waiting for it to halt).&lt;/p&gt;
+&lt;p&gt;Let hypothesis set $\H$ be the set of all semicomputable semimeasures. Then the subjective data distribution is also a semicomputable semimeasure:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(x_{1:n}) = \sum_{\mu\in\H} p(\mu)\mu(x_{1:n})\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Solomonoff makes a prescription on what prior to use:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(\mu) = 2^{-K(\mu)}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $K(\mu)$ is the &lt;a href=&#34;http://www.scholarpedia.org/article/Algorithmic_complexity#Prefix_complexity&#34;target=&#34;_blank&#34;&gt;prefix-free Kolmogorov complexity&lt;/a&gt; of hypothesis $\mu\in\H$. This prior weights hypotheses inversely by complexity - a sort of Occam&amp;rsquo;s razor.&lt;/p&gt;
+&lt;h2 id=&#34;machine-learning&#34;&gt;Machine Learning&lt;/h2&gt;
+&lt;p&gt;We have a family of functions $\set{h_\t}_{\t\in\T}$ with signature $h_\t : \X \to \Phi$ (for example, $h_\t$ could be a &lt;a href=&#34;https://en.wikipedia.org/wiki/Artificial_neural_network&#34;target=&#34;_blank&#34;&gt;neural network&lt;/a&gt;), where $\Phi$ is the parameter space for a probability distribution $\P$ on the space $\Y$. That is to say, $\P(y \mid h_\t(x))$ is the probability of $y\in\Y$ given $x\in\X$ according to the model $h_\t(x)$. We call $\X$ the input space, and $\Y$ the target (output) space.&lt;/p&gt;
+&lt;p&gt;We observe a data sequence $x_1y_1x_2y_2x_3y_3\dots x_n$ ending in $x_n$. Let $D = x_1y_1x_2y_2x_3y_3\dots x_{n-1}y_{n-1}$ be the training data. $x_n$ is called the test input. The goal is to predict the next element in the sequence, $y_n$.&lt;/p&gt;
+&lt;p&gt;We can take a Bayesian approach by defining the following hypothesis space:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\H = \set{\mu_\t \mid \t\in\T}\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $\mu_\t$ is a probability measure on $\X\times\Y\times\X\times\Y\dots = (\X\times\Y)^\infty$ s.t. for all $\o\in(\X\times\Y)^\infty$ and for all $(x_i,y_i)\in\o$,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mu_\t(y_i \mid x_i) = \P(y_i \mid h_\t(x_i))\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;$\mu_\t$ is i.i.d. w.r.t. sequence position, i.e. $\mu_\t(y_i \mid x_i) = \mu_\t(y_i \mid x_1y_1\dots x_i)$. That is to say, all of our hypotheses assume the data is drawn i.i.d. (and so the data sequence $D$ becomes a data&lt;em&gt;set&lt;/em&gt;, in the sense that it is unordered). If we are doing supervised learning, then the marginal probabilities $\mu_\t(x_i)$ should all be uniform (the hypothesis is indifferent to which input $x\in\X$ comes next in the sequence). On the other hand, if we are doing unsupervised or semi-supervised learning, then $\mu_\t(x_i)$ should also depend on the model output $h_\t(x_i)$.&lt;/p&gt;
+&lt;p&gt;Finally, put a prior $p$ on the parameter space $\T$. Then the subjective probability of the test output $y_n$ given test input $x_n$ is the data posterior of $y_n$ given the data sequence $D`x_n = x_1y_1x_2y_2x_3y_3\dots x_n$:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+p(y_n \mid D`x_ny_n) &amp;amp;= \int_\T p(\t\mid D`x_n)\mu_\t(y_n \mid D`x_n)d\t \\&lt;br&gt;
+&amp;amp;= \int_\T p(\t\mid D`x_n)\mu_\t(y_n \mid x_n)d\t&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where the parameter posterior is&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+p(\t\mid D`x_n) &amp;amp;= p(\t)\frac{\mu_\t(D`x_n)}{p(D`x_n)}&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;In the supervised case $\mu_\t(x_1) = \mu_\t(x_2) = \dots = \mu_\t(x_n) = \gamma$, and so $\mu_\t(D`x_n) = \gamma\mu_\t(D)$.  Likewise, $p(D`x_n) = \int_\T p(\t)\mu_\t(D`x_n) d\t = \gamma\int_\T p(\t)\mu_\t(D) d\t$, and so the fraction $\mu_\t(D`x_n)/p(D`x_n)$ simplifies to $\mu_\t(D)/p(D)$. Then the parameter posterior reduces to the classic form: $p(\t\mid D`x_n) = p(\t\mid D) = p(\t)p(D\mid \t)/p(D)$. where $p(D\mid \t) = \mu_\t(D)$.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Classical vs Bayesian Reasoning</title>
@@ -329,35 +621,7 @@ $$&lt;/p&gt;
 &lt;p&gt;Is variational Bayes a Bayesian ML method? In one sense yes, in another sense no. It&amp;rsquo;s efficacy depends on $q_\t(z)$ being a good approximation of the posterior $p(z \mid D)$, and whether $q_\t(z)$ is a good approximation depends on the efficacy of the chosen machine learning method (e.g. neural networks trained with gradient descent). I&amp;rsquo;d expect $q_\t(z)$ to be a non-Bayesian model (If it were Bayesian, how then do you tractably approximate it? That is the very thing we are trying to do with $p(z, D)$.) So then the efficacy of variational Bayes comes down to the properties of non-Bayesian machine learning. If at the end of the day, point-estimates of parameters are always doing the heavy lifting (i.e. generalizing well), why be Bayesian in the first place?&lt;/p&gt;
 &lt;h1 id=&#34;solomonoff-induction&#34;&gt;Solomonoff induction&lt;/h1&gt;
 &lt;p&gt;I learned about this topic from &lt;a href=&#34;https://www.springer.com/gp/book/9781489984456&#34;target=&#34;_blank&#34;&gt;An Introduction to Kolmogorov Complexity and Its Applications&lt;/a&gt; and &lt;a href=&#34;http://www.hutter1.net/ai/uaibook.htm&#34;target=&#34;_blank&#34;&gt;Universal Artificial Intelligence&lt;/a&gt;. I recommend both books as references.&lt;/p&gt;
-&lt;p&gt;There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;
-
-
-, 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt;
-
-
-, 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 3&lt;/a&gt;
-
-
-. Only an understanding of 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt;
-
-
- is needed for the subsequent sections.&lt;/p&gt;
+&lt;p&gt;There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-2&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-3&#34;&gt;Variational Solomonoff Induction#Version 3&lt;/a&gt;. Only an understanding of &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-2&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt; is needed for the subsequent sections.&lt;/p&gt;
 &lt;h2 id=&#34;notation&#34;&gt;Notation&lt;/h2&gt;
 &lt;p&gt;Let $\B = \{0,1\}$ be the binary alphabet, $\B^n$ be the set of all length-$n$ binary strings, and $\B^\infty$ be the set of all infinite binary strings.&lt;/p&gt;
 &lt;p&gt;Let $\B^* = \B^0 \times \B^1 \times \B^2 \times \B^3 \times\ldots$ be the set of all finite binary strings of any length.&lt;br&gt;
@@ -468,28 +732,7 @@ $$&lt;/p&gt;
 p(x_{m:s}\mid x_{&amp;lt;m}) = \frac{1}{p(x_{&amp;lt;m})}\sum_{\zeta\in\Phi(x_{1:s})} 2^{-\ell(\zeta)}\,.&lt;br&gt;
 $$&lt;/p&gt;
 &lt;h1 id=&#34;variational-solomonoff-induction&#34;&gt;Variational Solomonoff induction&lt;/h1&gt;
-&lt;p&gt;Suppose we observe finite sequence $x_{1:t} \in \B^*$ and we want to find the posterior $p(h \mid x_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q_\t(h)$ over hypotheses $h\in\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;
-
-
-, 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt;
-
-
-, 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 3&lt;/a&gt;
-
-
-.&lt;/p&gt;
+&lt;p&gt;Suppose we observe finite sequence $x_{1:t} \in \B^*$ and we want to find the posterior $p(h \mid x_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q_\t(h)$ over hypotheses $h\in\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-2&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-3&#34;&gt;Variational Solomonoff Induction#Version 3&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In this case, let&amp;rsquo;s find $\t^*\in\T$ that minimizes the KL-divergence $\kl{q_\t(h)}{p(h\mid x_{1:t})}$ so that $q_\t(h)$ is as close as possible to $p(h\mid x_{1:t})$. Note that $q_\t(h)$ does not depend on $x_{1:t}$ because we find $\t^*$ after $x_{1:t}$ is already observed ($x_{1:t}$ is like a constant w.r.t. this optimization), whereas the joint distribution $p(h, x)$ is defined up front before any data is observed.&lt;/p&gt;
 &lt;p&gt;However, if $p(h \mid x_{1:t})$ is intractable to calculate, then so is $\kl{q_\t(h)}{p(h\mid x_{1:t})}$. With a few tricks, we can find an alternative optimization target that is tractable. Rewriting the KL-divergence:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -559,14 +802,7 @@ $$&lt;/p&gt;
 &lt;h2 id=&#34;generalization&#34;&gt;Generalization&lt;/h2&gt;
 &lt;p&gt;Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.&lt;/p&gt;
 &lt;p&gt;Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h&#39;) \approx p(h&#39; \mid x)$ for some program $h&#39;$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.&lt;/p&gt;
-&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Prior&lt;/a&gt;
-
-
- section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
+&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior&#34;&gt;Variational Solomonoff Induction#Prior&lt;/a&gt; section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
 &lt;p&gt;As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn&amp;rsquo;t start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.&lt;/p&gt;
 &lt;h1 id=&#34;choices&#34;&gt;Choices&lt;/h1&gt;
 &lt;p&gt;To summarize the requirements we found above:&lt;br&gt;
@@ -579,14 +815,7 @@ Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;program-space&#34;&gt;Program space&lt;/h2&gt;
 &lt;p&gt;Hypotheses can be deterministic or stochastic. Deterministic hypotheses would be represented by deterministic programs. Stochastic hypotheses can either be represented by stochastic programs (output is non-deterministic) or by deterministic programs that output probabilities. I think we should choose the latter.&lt;/p&gt;
-&lt;p&gt;If our hypotheses are deterministic, then we get Solomonoff induction 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;
-
-
-. Conditionalization is easy because $p(y \mid x, h) = p(y`x \mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).&lt;/p&gt;
+&lt;p&gt;If our hypotheses are deterministic, then we get Solomonoff induction &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;. Conditionalization is easy because $p(y \mid x, h) = p(y`x \mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).&lt;/p&gt;
 &lt;p&gt;We should use stochastic hypotheses. If we use non-deterministic programs, conditionalization is hard. Thus we should use programs that output their probabilities.&lt;/p&gt;
 &lt;p&gt;The choice of $\mc{H}$ is equivalent to choosing a programming language plus syntax rules so that only valid programs can be constructed. In this case, we want to restrict ourselves to programs that will obey the properties of probability measures $\mu$ on infinite sequences: $\mu(x) = \mu(x`0) + \mu(x`1)$ and  $\mu(x) \geq \mu(x`y)$.&lt;/p&gt;
 &lt;p&gt;To ensure this, I propose that programs $h$ take the form of auto-regressive language models. That is to say these programs read in a sequence of input tokens and for each token output a vector of real numbers with the same length as the token space. Passing that vector through a softmax induces a probability distribution over the next input token. The programs maintain their own internal state. A language should be chosen such that all generated programs can be guaranteed to take this form.&lt;/p&gt;
@@ -597,14 +826,7 @@ Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.&lt;/p&gt;
 p(h) = 2^{-\ell(h)}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;One difficulty in working with programs is long-running execution. This can make computing data probabilities take a long time. One remedy is to down-weight long-running programs in the prior. &lt;a href=&#34;http://www.scholarpedia.org/article/Universal_search&#34;target=&#34;_blank&#34;&gt;Levin search&lt;/a&gt; is an alternative to Solomonoff induction where the prior is weighted solely by runtime. We can mix both kinds of priors.&lt;/p&gt;
-&lt;p&gt;This is straightforward in Solomonoff induction 
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;
-
-
- where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &amp;gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &amp;lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)&lt;/p&gt;
+&lt;p&gt;This is straightforward in Solomonoff induction &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt; where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &amp;gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &amp;lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)&lt;/p&gt;
 &lt;p&gt;However, if we are using the programs I previously suggested that output data probabilities, then these programs may be fast on some inputs and slow on others. I don&amp;rsquo;t have a solution, but a reasonable suggestion is to do some kind of heuristic analysis of the programs on some sample inputs and assign a slowness penalty in the prior.&lt;/p&gt;
 &lt;h1 id=&#34;lifelong-learning&#34;&gt;Lifelong learning&lt;/h1&gt;
 &lt;p&gt;Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it&amp;rsquo;s future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).&lt;/p&gt;
@@ -892,14 +1114,7 @@ $$&lt;/p&gt;
 &lt;p&gt;$\lg (1/p_{X \mid H}(x \mid h))$ is the &lt;strong&gt;surprise&lt;/strong&gt; (also &lt;strong&gt;self-information&lt;/strong&gt;) of observing $x$ under $h$. The higher this quantity, the more the possibility space of $h$ was narrowed down by $x$.&lt;/p&gt;
 &lt;h2 id=&#34;variational-bayes&#34;&gt;Variational Bayes&lt;/h2&gt;
 &lt;p&gt;Variational approximation to calculating the Bayesian posterior:&lt;br&gt;
-
-
-
-
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory#Free Energy&lt;/a&gt;
-
-
-&lt;/p&gt;
+&lt;a href=&#34;&#34;&gt;The free-energy principle a unified brain theory#Free Energy&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;sources:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception&#34;&gt;https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception&lt;/a&gt;&lt;/li&gt;
