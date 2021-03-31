@@ -39,7 +39,6 @@
 \newcommand{\inv}[1]{{#1}^{-1}}<br>
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
 $$</p>
-<p>edit</p>
 <h1 id="constructing-bayesian-inference">Constructing Bayesian Inference</h1>
 <p>Before deconstructing Bayesian inference, I will present the general definition. At any point, feel free to look at the <a href="#use-cases">#Use Cases</a> section for examples of Bayesian inference to use as intuition pumps.</p>
 <p>An &ldquo;agent&rdquo; here refers to a physical entity that tries to predict the future. An agent can be a robot or a biological organism. Either way, the agent receives a stream of sensory data over the course of its life. The agent&rsquo;s goal is to predict the future of this stream, in some capacity. Predictions about high-level objects and states of the world are made indirectly by predicting their effect on the sensory stream. That is to say, all prediction can be rolled into predicting the sensory stream. Though the agent may also act to influence the future of its sensory stream, for simplicity, I will consider only prediction and not actions.</p>
@@ -129,7 +128,11 @@ $$</p>
 
 
 
-  <a href="" class="broken">Bayesian information theory</a>
+
+
+  
+    <a href="" class="broken">Bayesian information theory</a>
+  
 
 
 .</p>
@@ -179,12 +182,34 @@ $$</p>
 </p>
 <p>This understanding of the word &ldquo;non-deterministic&rdquo; is standard in computer science, exemplified by the <a href="https://en.wikipedia.org/wiki/Nondeterministic_Turing_machine"target="_blank">non-deterministic Turing machine</a>, which defines a set of possible state transitions and tape operations given any state (of both the tape and automata), rather than single one determined uniquely by each state. In general, something is regarded as non-deterministic if it can take on more than one possible value, i.e. it is not determined.</p>
 <p>I distinguish non-determinism from randomness, the latter of which can be defined as maximal incompressibility (called <a href="http://www.scholarpedia.org/article/Algorithmic_randomness"target="_blank">algorithmic randomness</a>). Often these two concepts are conflated. Probability distributions can represent both non-determinism (by quantifying relative amounts of possibilities) or degrees of randomness (via Martin-Lof randomness). The key insight is that probability need not represent both at the same time. If Bayesian probability is generally understood as quantifying prediction non-determinism, then we can view the <a href="https://en.wikipedia.org/wiki/Probability_interpretations"target="_blank">Bayesian-frequentist distinction</a> as stemming from this conceptual decoupling of non-determinism from randomness.</p>
-<p>I make the same connection between Bayesian uncertainty and non-determinism in <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective">Classical vs Bayesian Reasoning#The Bayesian perspective</a>.</p>
+<p>I make the same connection between Bayesian uncertainty and non-determinism in 
+
+
+
+
+
+  
+    <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective">Classical vs Bayesian Reasoning#the-bayesian-perspective</a>
+  
+
+
+.</p>
 <h3 id="the-general-case">The General Case</h3>
 <p>We can go a step further. Why are we assuming that a prediction of step $n$ can be made given $\o_{&lt;n}$? Plenty of pertinent information may not be available in the data at all (or the agent does not know how to extract such information from the data, e.g. encrypted information). An honest agent would account for every input needed to make a certain prediction, even inputs that are not available in $\o_{&lt;n}$.</p>
 <p>In general, we are left with a non-deterministic next-step prediction tree represented by $f : \Z \times \X^* \to \X$ where $\Z$ is an auxiliary input space (input in addition to the observed data stream), which is usually some latent space (set of possible data or world-states not observed). Each node $x$ in the prediction tree is assigned the prediction set $f(\Z, x) = \set{f(z,x) \mid z\in\Z}$. If the prediction set for $x$ is singleton (contains one element), then that prediction is deterministic. $f$ represents a prediction tree where each node is assigned a set of next-step predictions instead of just one.</p>
 <h2 id="the-return-of-probability">The Return Of Probability</h2>
-<p>In <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom">Classical vs Bayesian Reasoning#The Bayesian Axiom</a>, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&rsquo;s prediction $f(\Z, \o_{&lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is</p>
+<p>In 
+
+
+
+
+
+  
+    <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom">Classical vs Bayesian Reasoning#the-bayesian-axiom</a>
+  
+
+
+, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&rsquo;s prediction $f(\Z, \o_{&lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is</p>
 <p>$$p(\chi \mid x) = \mu\set{f(z,x) \mid z\in\Z \and f(z,x) = \chi}\,.$$</p>
 <p>Though the agent&rsquo;s prediction is not uniquely determined, we&rsquo;ve quantified the relative number of possible auxiliary inputs to $f$ that give each prediction. These quantities can be used for decision making (e.g. most likely outcome or expected return).</p>
 <p>We have recovered the probabilistic prediction tree paradigm from earlier without presupposing that predictions should be probabilistic. Though not defined to be probabilistic, an agent&rsquo;s prediction function that requires inputs which are not on hand naturally results in non-determinism. Quantifying that non-determinism using relative sizes of possibility sets naturally results in probabilities.</p>

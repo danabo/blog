@@ -48,7 +48,6 @@
 \newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
 \newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;edit&lt;/p&gt;
 &lt;h1 id=&#34;constructing-bayesian-inference&#34;&gt;Constructing Bayesian Inference&lt;/h1&gt;
 &lt;p&gt;Before deconstructing Bayesian inference, I will present the general definition. At any point, feel free to look at the &lt;a href=&#34;#use-cases&#34;&gt;#Use Cases&lt;/a&gt; section for examples of Bayesian inference to use as intuition pumps.&lt;/p&gt;
 &lt;p&gt;An &amp;ldquo;agent&amp;rdquo; here refers to a physical entity that tries to predict the future. An agent can be a robot or a biological organism. Either way, the agent receives a stream of sensory data over the course of its life. The agent&amp;rsquo;s goal is to predict the future of this stream, in some capacity. Predictions about high-level objects and states of the world are made indirectly by predicting their effect on the sensory stream. That is to say, all prediction can be rolled into predicting the sensory stream. Though the agent may also act to influence the future of its sensory stream, for simplicity, I will consider only prediction and not actions.&lt;/p&gt;
@@ -138,7 +137,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Bayesian information theory&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Bayesian information theory&lt;/a&gt;
+  
 
 
 .&lt;/p&gt;
@@ -188,12 +191,34 @@ $$&lt;/p&gt;
 &lt;/p&gt;
 &lt;p&gt;This understanding of the word &amp;ldquo;non-deterministic&amp;rdquo; is standard in computer science, exemplified by the &lt;a href=&#34;https://en.wikipedia.org/wiki/Nondeterministic_Turing_machine&#34;target=&#34;_blank&#34;&gt;non-deterministic Turing machine&lt;/a&gt;, which defines a set of possible state transitions and tape operations given any state (of both the tape and automata), rather than single one determined uniquely by each state. In general, something is regarded as non-deterministic if it can take on more than one possible value, i.e. it is not determined.&lt;/p&gt;
 &lt;p&gt;I distinguish non-determinism from randomness, the latter of which can be defined as maximal incompressibility (called &lt;a href=&#34;http://www.scholarpedia.org/article/Algorithmic_randomness&#34;target=&#34;_blank&#34;&gt;algorithmic randomness&lt;/a&gt;). Often these two concepts are conflated. Probability distributions can represent both non-determinism (by quantifying relative amounts of possibilities) or degrees of randomness (via Martin-Lof randomness). The key insight is that probability need not represent both at the same time. If Bayesian probability is generally understood as quantifying prediction non-determinism, then we can view the &lt;a href=&#34;https://en.wikipedia.org/wiki/Probability_interpretations&#34;target=&#34;_blank&#34;&gt;Bayesian-frequentist distinction&lt;/a&gt; as stemming from this conceptual decoupling of non-determinism from randomness.&lt;/p&gt;
-&lt;p&gt;I make the same connection between Bayesian uncertainty and non-determinism in &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective&#34;&gt;Classical vs Bayesian Reasoning#The Bayesian perspective&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I make the same connection between Bayesian uncertainty and non-determinism in 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-perspective&lt;/a&gt;
+  
+
+
+.&lt;/p&gt;
 &lt;h3 id=&#34;the-general-case&#34;&gt;The General Case&lt;/h3&gt;
 &lt;p&gt;We can go a step further. Why are we assuming that a prediction of step $n$ can be made given $\o_{&amp;lt;n}$? Plenty of pertinent information may not be available in the data at all (or the agent does not know how to extract such information from the data, e.g. encrypted information). An honest agent would account for every input needed to make a certain prediction, even inputs that are not available in $\o_{&amp;lt;n}$.&lt;/p&gt;
 &lt;p&gt;In general, we are left with a non-deterministic next-step prediction tree represented by $f : \Z \times \X^* \to \X$ where $\Z$ is an auxiliary input space (input in addition to the observed data stream), which is usually some latent space (set of possible data or world-states not observed). Each node $x$ in the prediction tree is assigned the prediction set $f(\Z, x) = \set{f(z,x) \mid z\in\Z}$. If the prediction set for $x$ is singleton (contains one element), then that prediction is deterministic. $f$ represents a prediction tree where each node is assigned a set of next-step predictions instead of just one.&lt;/p&gt;
 &lt;h2 id=&#34;the-return-of-probability&#34;&gt;The Return Of Probability&lt;/h2&gt;
-&lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom&#34;&gt;Classical vs Bayesian Reasoning#The Bayesian Axiom&lt;/a&gt;, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&amp;rsquo;s prediction $f(\Z, \o_{&amp;lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is&lt;/p&gt;
+&lt;p&gt;In 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-axiom&lt;/a&gt;
+  
+
+
+, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&amp;rsquo;s prediction $f(\Z, \o_{&amp;lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is&lt;/p&gt;
 &lt;p&gt;$$p(\chi \mid x) = \mu\set{f(z,x) \mid z\in\Z \and f(z,x) = \chi}\,.$$&lt;/p&gt;
 &lt;p&gt;Though the agent&amp;rsquo;s prediction is not uniquely determined, we&amp;rsquo;ve quantified the relative number of possible auxiliary inputs to $f$ that give each prediction. These quantities can be used for decision making (e.g. most likely outcome or expected return).&lt;/p&gt;
 &lt;p&gt;We have recovered the probabilistic prediction tree paradigm from earlier without presupposing that predictions should be probabilistic. Though not defined to be probabilistic, an agent&amp;rsquo;s prediction function that requires inputs which are not on hand naturally results in non-determinism. Quantifying that non-determinism using relative sizes of possibility sets naturally results in probabilities.&lt;/p&gt;
@@ -620,7 +645,7 @@ $$&lt;/p&gt;
 &lt;p&gt;Is variational Bayes a Bayesian ML method? In one sense yes, in another sense no. It&amp;rsquo;s efficacy depends on $q_\t(z)$ being a good approximation of the posterior $p(z \mid D)$, and whether $q_\t(z)$ is a good approximation depends on the efficacy of the chosen machine learning method (e.g. neural networks trained with gradient descent). I&amp;rsquo;d expect $q_\t(z)$ to be a non-Bayesian model (If it were Bayesian, how then do you tractably approximate it? That is the very thing we are trying to do with $p(z, D)$.) So then the efficacy of variational Bayes comes down to the properties of non-Bayesian machine learning. If at the end of the day, point-estimates of parameters are always doing the heavy lifting (i.e. generalizing well), why be Bayesian in the first place?&lt;/p&gt;
 &lt;h1 id=&#34;solomonoff-induction&#34;&gt;Solomonoff induction&lt;/h1&gt;
 &lt;p&gt;I learned about this topic from &lt;a href=&#34;https://www.springer.com/gp/book/9781489984456&#34;target=&#34;_blank&#34;&gt;An Introduction to Kolmogorov Complexity and Its Applications&lt;/a&gt; and &lt;a href=&#34;http://www.hutter1.net/ai/uaibook.htm&#34;target=&#34;_blank&#34;&gt;Universal Artificial Intelligence&lt;/a&gt;. I recommend both books as references.&lt;/p&gt;
-&lt;p&gt;There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-2&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-3&#34;&gt;Variational Solomonoff Induction#Version 3&lt;/a&gt;. Only an understanding of &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-2&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt; is needed for the subsequent sections.&lt;/p&gt;
+&lt;p&gt;There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt;, &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt;, &lt;a href=&#34;#version-3&#34;&gt;#Version 3&lt;/a&gt;. Only an understanding of &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt; is needed for the subsequent sections.&lt;/p&gt;
 &lt;h2 id=&#34;notation&#34;&gt;Notation&lt;/h2&gt;
 &lt;p&gt;Let $\B = \{0,1\}$ be the binary alphabet, $\B^n$ be the set of all length-$n$ binary strings, and $\B^\infty$ be the set of all infinite binary strings.&lt;/p&gt;
 &lt;p&gt;Let $\B^* = \B^0 \times \B^1 \times \B^2 \times \B^3 \times\ldots$ be the set of all finite binary strings of any length.&lt;br&gt;
@@ -731,7 +756,7 @@ $$&lt;/p&gt;
 p(x_{m:s}\mid x_{&amp;lt;m}) = \frac{1}{p(x_{&amp;lt;m})}\sum_{\zeta\in\Phi(x_{1:s})} 2^{-\ell(\zeta)}\,.&lt;br&gt;
 $$&lt;/p&gt;
 &lt;h1 id=&#34;variational-solomonoff-induction&#34;&gt;Variational Solomonoff induction&lt;/h1&gt;
-&lt;p&gt;Suppose we observe finite sequence $x_{1:t} \in \B^*$ and we want to find the posterior $p(h \mid x_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q_\t(h)$ over hypotheses $h\in\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-2&#34;&gt;Variational Solomonoff Induction#Version 2&lt;/a&gt;, &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-3&#34;&gt;Variational Solomonoff Induction#Version 3&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Suppose we observe finite sequence $x_{1:t} \in \B^*$ and we want to find the posterior $p(h \mid x_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q_\t(h)$ over hypotheses $h\in\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt;, &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt;, &lt;a href=&#34;#version-3&#34;&gt;#Version 3&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In this case, let&amp;rsquo;s find $\t^*\in\T$ that minimizes the KL-divergence $\kl{q_\t(h)}{p(h\mid x_{1:t})}$ so that $q_\t(h)$ is as close as possible to $p(h\mid x_{1:t})$. Note that $q_\t(h)$ does not depend on $x_{1:t}$ because we find $\t^*$ after $x_{1:t}$ is already observed ($x_{1:t}$ is like a constant w.r.t. this optimization), whereas the joint distribution $p(h, x)$ is defined up front before any data is observed.&lt;/p&gt;
 &lt;p&gt;However, if $p(h \mid x_{1:t})$ is intractable to calculate, then so is $\kl{q_\t(h)}{p(h\mid x_{1:t})}$. With a few tricks, we can find an alternative optimization target that is tractable. Rewriting the KL-divergence:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -801,7 +826,18 @@ $$&lt;/p&gt;
 &lt;h2 id=&#34;generalization&#34;&gt;Generalization&lt;/h2&gt;
 &lt;p&gt;Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.&lt;/p&gt;
 &lt;p&gt;Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h&#39;) \approx p(h&#39; \mid x)$ for some program $h&#39;$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.&lt;/p&gt;
-&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior&#34;&gt;Variational Solomonoff Induction#Prior&lt;/a&gt; section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
+&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior&#34;&gt;Variational Solomonoff Induction#prior&lt;/a&gt;
+  
+
+
+ section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
 &lt;p&gt;As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn&amp;rsquo;t start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.&lt;/p&gt;
 &lt;h1 id=&#34;choices&#34;&gt;Choices&lt;/h1&gt;
 &lt;p&gt;To summarize the requirements we found above:&lt;br&gt;
@@ -814,7 +850,7 @@ Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;program-space&#34;&gt;Program space&lt;/h2&gt;
 &lt;p&gt;Hypotheses can be deterministic or stochastic. Deterministic hypotheses would be represented by deterministic programs. Stochastic hypotheses can either be represented by stochastic programs (output is non-deterministic) or by deterministic programs that output probabilities. I think we should choose the latter.&lt;/p&gt;
-&lt;p&gt;If our hypotheses are deterministic, then we get Solomonoff induction &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt;. Conditionalization is easy because $p(y \mid x, h) = p(y`x \mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).&lt;/p&gt;
+&lt;p&gt;If our hypotheses are deterministic, then we get Solomonoff induction &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt;. Conditionalization is easy because $p(y \mid x, h) = p(y`x \mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).&lt;/p&gt;
 &lt;p&gt;We should use stochastic hypotheses. If we use non-deterministic programs, conditionalization is hard. Thus we should use programs that output their probabilities.&lt;/p&gt;
 &lt;p&gt;The choice of $\mc{H}$ is equivalent to choosing a programming language plus syntax rules so that only valid programs can be constructed. In this case, we want to restrict ourselves to programs that will obey the properties of probability measures $\mu$ on infinite sequences: $\mu(x) = \mu(x`0) + \mu(x`1)$ and  $\mu(x) \geq \mu(x`y)$.&lt;/p&gt;
 &lt;p&gt;To ensure this, I propose that programs $h$ take the form of auto-regressive language models. That is to say these programs read in a sequence of input tokens and for each token output a vector of real numbers with the same length as the token space. Passing that vector through a softmax induces a probability distribution over the next input token. The programs maintain their own internal state. A language should be chosen such that all generated programs can be guaranteed to take this form.&lt;/p&gt;
@@ -825,7 +861,7 @@ Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.&lt;/p&gt;
 p(h) = 2^{-\ell(h)}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;One difficulty in working with programs is long-running execution. This can make computing data probabilities take a long time. One remedy is to down-weight long-running programs in the prior. &lt;a href=&#34;http://www.scholarpedia.org/article/Universal_search&#34;target=&#34;_blank&#34;&gt;Levin search&lt;/a&gt; is an alternative to Solomonoff induction where the prior is weighted solely by runtime. We can mix both kinds of priors.&lt;/p&gt;
-&lt;p&gt;This is straightforward in Solomonoff induction &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#version-1&#34;&gt;Variational Solomonoff Induction#Version 1&lt;/a&gt; where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &amp;gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &amp;lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)&lt;/p&gt;
+&lt;p&gt;This is straightforward in Solomonoff induction &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt; where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &amp;gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &amp;lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)&lt;/p&gt;
 &lt;p&gt;However, if we are using the programs I previously suggested that output data probabilities, then these programs may be fast on some inputs and slow on others. I don&amp;rsquo;t have a solution, but a reasonable suggestion is to do some kind of heuristic analysis of the programs on some sample inputs and assign a slowness penalty in the prior.&lt;/p&gt;
 &lt;h1 id=&#34;lifelong-learning&#34;&gt;Lifelong learning&lt;/h1&gt;
 &lt;p&gt;Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it&amp;rsquo;s future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).&lt;/p&gt;
@@ -861,7 +897,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
+  
 
 
 , I used a &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt; to try to understand the free energy formalism. I figured out the &amp;ldquo;timeless&amp;rdquo; and actionless case, but I became confused when actions and time were added.&lt;/li&gt;
@@ -869,7 +909,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
+  
 
 
 , I tried to translate between the formalism presented in &lt;a href=&#34;https://danijar.com/apd/&#34;&gt;https://danijar.com/apd/&lt;/a&gt; (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;. I also tried to make the connection to Solomonoff induction.&lt;/li&gt;
@@ -877,7 +921,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt;
+  
 
 
 , I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.&lt;/li&gt;
@@ -888,7 +936,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
+  
 
 
 :&lt;/p&gt;
@@ -930,7 +982,11 @@ The policy $\pi$ is a probability distribution over actions (, e.g. $\pi(a_t \mi
 
 
 
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt;
+  
 
 
  I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&amp;rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.&lt;/p&gt;
@@ -1061,7 +1117,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory&lt;/a&gt;
+  
 
 
 &lt;/li&gt;
@@ -1069,7 +1129,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Friston&amp;#39;s Free Energy (Active Inference)&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Friston&amp;#39;s Free Energy (Active Inference)&lt;/a&gt;
+  
 
 
 &lt;/li&gt;
@@ -1113,7 +1177,18 @@ $$&lt;/p&gt;
 &lt;p&gt;$\lg (1/p_{X \mid H}(x \mid h))$ is the &lt;strong&gt;surprise&lt;/strong&gt; (also &lt;strong&gt;self-information&lt;/strong&gt;) of observing $x$ under $h$. The higher this quantity, the more the possibility space of $h$ was narrowed down by $x$.&lt;/p&gt;
 &lt;h2 id=&#34;variational-bayes&#34;&gt;Variational Bayes&lt;/h2&gt;
 &lt;p&gt;Variational approximation to calculating the Bayesian posterior:&lt;br&gt;
-&lt;a href=&#34;&#34;&gt;The free-energy principle a unified brain theory#Free Energy&lt;/a&gt;&lt;/p&gt;
+
+
+
+
+
+
+  
+    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory#free-energy&lt;/a&gt;
+  
+
+
+&lt;/p&gt;
 &lt;p&gt;sources:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception&#34;&gt;https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception&lt;/a&gt;&lt;/li&gt;
@@ -1193,7 +1268,11 @@ $$&lt;/p&gt;
 
 
 
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
+  
 
 
 
@@ -1270,7 +1349,11 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 
 
 
-  &lt;a href=&#34;https://danabo.github.io/blog/posts/blogging-experiment/&#34;&gt;Blogging experiment&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/blogging-experiment/&#34;&gt;Blogging experiment&lt;/a&gt;
+  
 
 
 . It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:&lt;/p&gt;
@@ -1321,7 +1404,11 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 
 
 
-  &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;like this&lt;/a&gt;
+
+
+  
+    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;like this&lt;/a&gt;
+  
 
 
 . That way, if I&amp;rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Red_link&#34;target=&#34;_blank&#34;&gt;missing wiki page&lt;/a&gt;. Perhaps if readers become curious about notes I didn&amp;rsquo;t publish, I might become motivated to publish them.&lt;/p&gt;
