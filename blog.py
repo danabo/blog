@@ -210,11 +210,12 @@ class SimpleParser(object):
         # it.replace(f'![]({url} ={m.group(3)})')
 
         # Hugo hack
-        caption = m.group(5) or ''
+        caption = m.group(5) or m.group(6) or ''
         it.replace(f'{{{{< figure src="../../{m.group(1)}" width="{m.group(3)}" caption="{caption}" >}}}}')
-      elif m.group(5):
+      elif m.group(5) or m.group(6):
         # Image caption
-        it.replace(f'![]({url} "{m.group(5)}")')
+        caption = m.group(5) or m.group(6)
+        it.replace(f'![]({url} "{caption}")')
       else:
         it.replace(f'![]({url})')
       self.images.append(m.group(1))  # Extract local file name.
