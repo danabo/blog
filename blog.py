@@ -236,8 +236,9 @@ class SimpleParser(object):
         it.replace('['+target+']('+target.lower().replace(' ', '-')+')')
       elif target.find('#') > -1:
         # This is a link to a position within another post.
-        post, section = target.split('#')
-        it.replace('['+target+']({{< relref "'+post+'#'+section.lower().replace(' ', '-')+'" >}})')
+        post, heading = target.split('#')
+        heading = heading.lower().replace(' ', '-')
+        it.replace('{{< locallink "'+post+'" "'+heading+'" >}}')
         self.pages.append(post)  # Extract local file name.
       else:
         it.replace('{{< locallink "'+target+'" >}}')

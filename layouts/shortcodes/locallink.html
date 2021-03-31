@@ -8,10 +8,20 @@
 
 -->
 {{ $name := (.Get 0) }}
+{{ $heading := (.Get 1) }}
 {{ $postFile := (print "content/posts/" $name ".md") }}
+{{ $fullTarget := (print $name "#" $heading) }}
 {{ if (fileExists $postFile) }}
-  <a href="{{ ref . $name }}">{{ $name }}</a>
+  {{ if eq $heading "" }}
+    <a href="{{ ref . $name }}">{{ $name }}</a>
+  {{ else }}
+    <a href="{{ ref . $fullTarget }}">{{ $fullTarget }}</a>
+  {{ end }}
 {{ else }}
-  <a href="" class="broken">{{ $name }}</a>
+  {{ if eq $heading "" }}
+    <a href="" class="broken">{{ $name }}</a>
+  {{ else }}
+    <a href="" class="broken">{{ $fullTarget }}</a>
+  {{ end }}
 {{ end }}
 
