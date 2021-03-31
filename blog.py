@@ -146,7 +146,6 @@ class SimpleParser(object):
 
   def math_block(self, it):
     it.next(2)  # skip $$
-    #print('DEBUG:',it.s[it.section_start:it.section_start+100])
     while not (it.peek(2) == '$$' and it.peek(-1) != '\\'):
       it.next(1)
     it.next(2)
