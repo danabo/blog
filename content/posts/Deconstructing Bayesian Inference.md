@@ -1,6 +1,6 @@
 ---
 date: 2021-03-31
-lastmod: '2021-03-31T18:30:45-05:00'
+lastmod: '2021-03-31T18:42:38-05:00'
 tags:
 - epistemology
 title: Deconstructing Bayesian Inference
@@ -39,8 +39,6 @@ $$
 \\newcommand{\\inv}[1]{{#1}^{-1}}
 \\newcommand{\\ceil}[1]{\\left\\lceil#1\\right\\rceil}
 $$
-
-edit
 
 
 # Constructing Bayesian Inference
@@ -228,7 +226,7 @@ This understanding of the word "non-deterministic" is standard in computer scien
 
 I distinguish non-determinism from randomness, the latter of which can be defined as maximal incompressibility (called [algorithmic randomness](http://www.scholarpedia.org/article/Algorithmic_randomness)). Often these two concepts are conflated. Probability distributions can represent both non-determinism (by quantifying relative amounts of possibilities) or degrees of randomness (via Martin-Lof randomness). The key insight is that probability need not represent both at the same time. If Bayesian probability is generally understood as quantifying prediction non-determinism, then we can view the [Bayesian-frequentist distinction](https://en.wikipedia.org/wiki/Probability_interpretations) as stemming from this conceptual decoupling of non-determinism from randomness.
 
-I make the same connection between Bayesian uncertainty and non-determinism in [Classical vs Bayesian Reasoning#The Bayesian perspective]({{< relref "Classical vs Bayesian Reasoning#the-bayesian-perspective" >}}).
+I make the same connection between Bayesian uncertainty and non-determinism in {{< locallink "Classical vs Bayesian Reasoning" "the-bayesian-perspective" >}}.
 
 ### The General Case
 
@@ -238,7 +236,7 @@ In general, we are left with a non-deterministic next-step prediction tree repre
 
 ## The Return Of Probability
 
-In [Classical vs Bayesian Reasoning#The Bayesian Axiom]({{< relref "Classical vs Bayesian Reasoning#the-bayesian-axiom" >}}), I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent's prediction $f(\\Z, \\o\_{<n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\\mu$ on $\\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\\Z$ that produces each prediction $\\chi\\in\\X$ is 
+In {{< locallink "Classical vs Bayesian Reasoning" "the-bayesian-axiom" >}}, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent's prediction $f(\\Z, \\o\_{<n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\\mu$ on $\\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\\Z$ that produces each prediction $\\chi\\in\\X$ is 
 
 $$p(\\chi \\mid x) = \\mu\\set{f(z,x) \\mid z\\in\\Z \\and f(z,x) = \\chi}\\,.$$
 
