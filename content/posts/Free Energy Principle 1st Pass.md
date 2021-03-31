@@ -83,7 +83,7 @@ $\\lg (1/p\_{X \\mid H}(x \\mid h))$ is the **surprise** (also **self-informatio
 
 ## Variational Bayes
 Variational approximation to calculating the Bayesian posterior:
-{{< locallink "The free-energy principle a unified brain theory#Free Energy" >}}
+[The free-energy principle a unified brain theory#Free Energy]({{< relref "The free-energy principle a unified brain theory#free-energy" >}})
 
 sources:
 - https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception
