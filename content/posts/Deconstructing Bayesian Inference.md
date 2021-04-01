@@ -1,6 +1,6 @@
 ---
 date: 2021-03-31
-lastmod: '2021-03-31T19:58:20-05:00'
+lastmod: '2021-03-31T20:10:56-05:00'
 tags:
 - epistemology
 title: Deconstructing Bayesian Inference
@@ -271,7 +271,7 @@ $$
 \\mu\_\\t(x\_{1:n}) = \\prod\_{i=1}^n\\mc{B}\_\\t(x\_i) = \\t^{\\sum\_i x\_i}(1-\\t)^{n-\\sum\_i x\_i}\\,.
 $$
 
-The hypothesis set is $\\H = \\set{\\mu\_\\t}\_{\\t\\in[0,1]}$.
+The hypothesis set is $\\H = \\set{\\mu\_\\t}\_{\\t\\in[0,1]}$. These hypotheses are i.i.d. w.r.t. sequence position, i.e. $\\mu\_\\t(x\_n \\mid x\_{<n}) = \\mu\_\\t(x\_n)$.
 
 Subjective data probability:
 $$
@@ -288,15 +288,9 @@ $$
 p(\\t\\mid x\_{1:n}) = p(\\t)\\frac{\\mu\_\\t(x\_{1:n})}{p(x\_{1:n})}
 $$
 
-$$
-p(1 \\mid x\_{<n}) = \\int\_0^1 p(\\t\\mid x\_{<n})\\t d\\t
-$$
 
-$$
-p(0 \\mid x\_{<n}) = \\int\_0^1 p(\\t\\mid x\_{<n})(1-\\t) d\\t
-$$
 
-Hypotheses are i.i.d. but subjective data distribution is not.
+Note that the hypotheses are i.i.d. w.r.t. data position but the subjective data distribution $p$ is not. That is to say, $\\mu\_\\t(x\_n \\mid x\_{<n}) = \\mu\_\\t(x\_n)$ but $p(x\_n \\mid x\_{<n}) \\neq p(x\_n)$.
 
 ## Solomonoff Induction
 Let's continue the coin tossing example, but in stead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.
