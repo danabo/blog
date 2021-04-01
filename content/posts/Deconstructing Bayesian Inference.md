@@ -1,6 +1,6 @@
 ---
 date: 2021-03-31
-lastmod: '2021-03-31T18:42:38-05:00'
+lastmod: '2021-03-31T19:58:20-05:00'
 tags:
 - epistemology
 title: Deconstructing Bayesian Inference
@@ -214,7 +214,7 @@ You might say that the solution is to fill in our missing data with predictions,
 
 
 
-![](</Pasted image 20210330173612.png> "The tree encoded by $g$, where each node is assigned an infinite sequence that begins with the location of the node in the tree. In this example, each sequence is the "argmax" prediction starting at that node, i.e. assuming every next-step prediction is correct.")
+![](</Pasted image 20210330173612.png> "The tree encoded by $g$, where each node is assigned an infinite sequence that begins with the location of the node in the tree. In this example, each sequence is the argmax prediction starting at that node, i.e. assuming every next-step prediction is correct.")
 
 In general, if we ask an agent for some prediction of any time-step, the agent can produce some sort of answer. However, if we wanted to know what answer the agent would produce if all requisite data was available (call this the agent's best prediction), that may not be determinable with the data currently available. We are uncertain about what the agent's best prediction will be (given all requisite data). A truthful agent would be just as uncertain as we are about its own future predictions.
 
