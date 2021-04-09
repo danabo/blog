@@ -1,6 +1,6 @@
 ---
 date: 2021-03-31
-lastmod: '2021-03-31T20:10:56-05:00'
+lastmod: '2021-04-01T10:24:13-05:00'
 tags:
 - epistemology
 title: Deconstructing Bayesian Inference
