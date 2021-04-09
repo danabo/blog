@@ -66,7 +66,7 @@ $$&lt;/p&gt;
   
 
 
-, I introduced Bayesian the idea of a subjective data distribution. If quantities of information are calculating using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.&lt;/p&gt;
+, I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.&lt;/p&gt;
 &lt;p&gt;My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism (rather than randomness) can be interpreted as measuring the reduction in size (&amp;ldquo;narrowing down&amp;rdquo;) of a possibility space.&lt;/p&gt;
 &lt;h1 id=&#34;information-and-finite-possibilities&#34;&gt;Information and finite possibilities&lt;/h1&gt;
 &lt;p&gt;Following 
