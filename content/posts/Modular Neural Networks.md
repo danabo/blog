@@ -1,6 +1,6 @@
 ---
 date: 2021-04-13
-lastmod: '2021-04-13T23:43:21-05:00'
+lastmod: '2021-04-14T11:14:45-05:00'
 tags:
 - machine learning
 title: Modular Neural Networks
