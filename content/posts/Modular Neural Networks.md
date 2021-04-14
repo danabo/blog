@@ -1,6 +1,6 @@
 ---
 date: 2021-04-13
-lastmod: '2021-04-13T23:39:03-05:00'
+lastmod: '2021-04-13T23:41:38-05:00'
 tags:
 - machine learning
 title: Modular Neural Networks
@@ -72,12 +72,12 @@ In the context of machine learning, a modular neural architecture is a type of n
 
 Pictorial examples of modular neural networks:
 
-![](</Pasted image 20210413141842.png> "[Kirsch et al.](https://arxiv.org/abs/1811.05249"))
+![](</Pasted image 20210413141842.png>){[Kirsch et al.](https://arxiv.org/abs/1811.05249)}
 
-![](</Pasted image 20210413141514.png> "[Chang et al.](https://arxiv.org/abs/1807.04640"))
+![](</Pasted image 20210413141514.png>){[Chang et al.](https://arxiv.org/abs/1807.04640)}
 
 
-![](</Pasted image 20210413141932.png> "[Abolafia et al.](https://arxiv.org/abs/2003.04227"))
+![](</Pasted image 20210413141932.png>){[Abolafia et al.](https://arxiv.org/abs/2003.04227)}
 
 # Why?
 Why have modular neural architectures? Is it beneficial for program synthesis? Is it beneficial for machine learning in general?
