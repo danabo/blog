@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2021-04-09T17:14:15-05:00'
+lastmod: '2021-04-12T11:55:57-05:00'
 tags:
 - epistemology
 - information
@@ -54,7 +54,7 @@ $\\newcommand{\\H}{\\Omega}$
 
 Shannon's information theory defines quantity of information (e.g. [self-information](https://en.wikipedia.org/wiki/Information_content#Definition) $-\\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his [1948 paper](http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf)). In {{< locallink "Deconstructing Bayesian Inference" >}}, I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.
 
-My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism (rather than randomness) can be interpreted as measuring the reduction in size ("narrowing down") of a possibility space.
+My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism can be interpreted as measuring the reduction in size ("narrowing down") of a possibility space.
 
 # Information and finite possibilities
 
@@ -245,9 +245,9 @@ $$
 \\end{aligned}
 $$
 
-$\\h\_1$ contains all sequences ending in 0s, and $\\h\_2$ contains all sequences ending in 1s.
+$\\h\_1$ contains only sequences ending in 0s, and $\\h\_2$ contains only sequences ending in 1s.
 
-In general, for a partition $\\mf{H}$ of $\\H$, call each $\\h\\in\\mf{H}$ a **compound hypothesis**, indicating that its composed of a set of **primitive hypotheses** (data continuations). As we shall see, compound hypotheses correspond closely to hypotheses as data distributions which we saw in {{< locallink "Deconstructing Bayesian Inference" >}}.
+In general, for a partition $\\mf{H}$ of $\\H$, call each $\\h\\in\\mf{H}$ a **compound hypothesis**, indicating that its a set of **primitive hypotheses** (data continuations). As we shall see, compound hypotheses correspond closely to the hypotheses-as-data-distributions formulation which we saw in {{< locallink "Deconstructing Bayesian Inference" >}}.
 
 For some partition $\\mf{H}$ of $\\H$, let $\\dom{\\mf{H}}{x} = \\set{\\dom{\\h}{x} \\mid \\h \\in \\mf{H}}$ be the partition of $\\dom{\\H}{x}$ consisting of the parts in $\\mf{H}$ which have each been conditionalized on $x$ (narrowed down to the sequences starting with $x$).
 

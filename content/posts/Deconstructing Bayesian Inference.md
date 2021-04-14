@@ -1,6 +1,6 @@
 ---
 date: 2021-03-31
-lastmod: '2021-04-01T10:24:13-05:00'
+lastmod: '2021-04-12T11:55:57-05:00'
 tags:
 - epistemology
 title: Deconstructing Bayesian Inference
@@ -126,7 +126,7 @@ is called the **hypothesis posterior probability** (or more commonly, just "**po
 
 Observing additional data amounts to appending $\\o\_{n+1:m}$ to $\\o\_{1:n}$, and the weight on $\\mu$ updates again to $p(\\mu\\mid\\o\_{1:m})$. This iterative process of observing more data and updating can go on forever, so long as the data space $\\X^\\infty$ consists of infinite sequences.
 
-As a side note, you should recognize $p(\\mu\\mid\\o\_{1:n})=p(\\o\_{1:n}\\mid\\mu)p(\\mu)/p(\\o\_{1:n})$ as the classic form of [Bayes rule](https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem) (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \\mid D) = p(D \\mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is not very useful pedagogically.
+As a side note, you should recognize $p(\\mu\\mid\\o\_{1:n})=p(\\o\_{1:n}\\mid\\mu)p(\\mu)/p(\\o\_{1:n})$ as the classic form of [Bayes rule](https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem) (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \\mid D) = p(D \\mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is pedagogically confusing for that reason.
 
 In general, the agent wants to predict what sensory data will occur after $\\o\_{\\leq n}$ has been observed. For that, we need the **data posterior probability**
 
@@ -293,7 +293,7 @@ $$
 Note that the hypotheses are i.i.d. w.r.t. data position but the subjective data distribution $p$ is not. That is to say, $\\mu\_\\t(x\_n \\mid x\_{<n}) = \\mu\_\\t(x\_n)$ but $p(x\_n \\mid x\_{<n}) \\neq p(x\_n)$.
 
 ## Solomonoff Induction
-Let's continue the coin tossing example, but in stead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.
+Let's continue the coin tossing example, but instead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.
 
 Bernoulli hypotheses are blind to patterns in the ordering of bits in the data sequence because $\\mu\_\\t(x\_{1:n}) = \\mu\_\\t(\\mathrm{permute}(x\_{1:n}))$ where $\\mathrm{permute}(x\_{1:n})$ is any permutation (re-ordering) of $x\_{1:n}$. For example, we observe a very long sequence of alternating $0$s and $1$s, i.e. $0101010101\\dots$, then the Bernoulli hypothesis where $\\t=1/2$ will get large posterior weight. This is the hypothesis that the data is totally random (maximum entropy). Clearly, the data is highly patterned and predictable.
 
@@ -372,4 +372,4 @@ p(\\t\\mid D\`x\_n) &= p(\\t)\\frac{\\mu\_\\t(D\`x\_n)}{p(D\`x\_n)}
 \\end{aligned}
 $$
 
-In the supervised case $\\mu\_\\t(x\_1) = \\mu\_\\t(x\_2) = \\dots = \\mu\_\\t(x\_n) = \\gamma$, and so $\\mu\_\\t(D\`x\_n) = \\gamma\\mu\_\\t(D)$.  Likewise, $p(D\`x\_n) = \\int\_\\T p(\\t)\\mu\_\\t(D\`x\_n) d\\t = \\gamma\\int\_\\T p(\\t)\\mu\_\\t(D) d\\t$, and so the fraction $\\mu\_\\t(D\`x\_n)/p(D\`x\_n)$ simplifies to $\\mu\_\\t(D)/p(D)$. Then the parameter posterior reduces to the classic form: $p(\\t\\mid D\`x\_n) = p(\\t\\mid D) = p(\\t)p(D\\mid \\t)/p(D)$. where $p(D\\mid \\t) = \\mu\_\\t(D)$.
+In the supervised case $\\mu\_\\t(x\_1) = \\mu\_\\t(x\_2) = \\dots = \\mu\_\\t(x\_n) = \\gamma$, and so $\\mu\_\\t(D\`x\_n) = \\gamma\\mu\_\\t(D)$.  Likewise, $p(D\`x\_n) = \\int\_\\T p(\\t)\\mu\_\\t(D\`x\_n) d\\t = \\gamma\\int\_\\T p(\\t)\\mu\_\\t(D) d\\t$, and so the fraction $\\mu\_\\t(D\`x\_n)/p(D\`x\_n)$ simplifies to $\\mu\_\\t(D)/p(D)$. Then the parameter posterior reduces to the [classic form](http://mlg.eng.cam.ac.uk/zoubin/bayesian.html): $p(\\t\\mid D\`x\_n) = p(\\t\\mid D) = p(\\t)p(D\\mid \\t)/p(D)$. where $p(D\\mid \\t) = \\mu\_\\t(D)$.
