@@ -5,10 +5,292 @@
     <description>Recent content in Tags on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Fri, 09 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 13 Apr 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Modular Neural Networks</title>
+      <link>https://danabo.github.io/blog/posts/modular-neural-networks/</link>
+      <pubDate>Tue, 13 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/modular-neural-networks/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\0}{\mathrm{false}}&lt;br&gt;
+\newcommand{\1}{\mathrm{true}}&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\mf}{\mathfrak}&lt;br&gt;
+\newcommand{\and}{\wedge}&lt;br&gt;
+\newcommand{\or}{\vee}&lt;br&gt;
+\newcommand{\a}{\alpha}&lt;br&gt;
+\newcommand{\s}{\sigma}&lt;br&gt;
+\newcommand{\t}{\theta}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\D}{\Delta}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\x}{\xi}&lt;br&gt;
+\newcommand{\z}{\zeta}&lt;br&gt;
+\newcommand{\fa}{\forall}&lt;br&gt;
+\newcommand{\ex}{\exists}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\Y}{\mc{Y}}&lt;br&gt;
+\newcommand{\Z}{\mc{Z}}&lt;br&gt;
+\newcommand{\P}{\Psi}&lt;br&gt;
+\newcommand{\y}{\psi}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\l}{\lambda}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\m}{\times}&lt;br&gt;
+\newcommand{\E}{\mb{E}}&lt;br&gt;
+\newcommand{\H}{\mb{H}}&lt;br&gt;
+\newcommand{\I}{\mb{I}}&lt;br&gt;
+\newcommand{\R}{\mb{R}}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
+\newcommand{\dom}[2]{#1_{\mid #2}}&lt;br&gt;
+\newcommand{\df}{\overset{\mathrm{def}}{=}}&lt;br&gt;
+\newcommand{\M}{\mc{M}}&lt;br&gt;
+\newcommand{\up}[1]{^{(#1)}}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;I wrote up these notes in preparation for my guest lecture in Tom Dean&amp;rsquo;s Stanford course, &lt;a href=&#34;https://web.stanford.edu/class/cs379c/&#34;target=&#34;_blank&#34;&gt;CS379C: Computational Models of the Neocortex&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Selected papers&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/2003.04227&#34;target=&#34;_blank&#34;&gt;Towards Modular Algorithm Induction&lt;/a&gt; (Abolafia et al.)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Modular Networks: Learning to Decompose Neural Computation&lt;/a&gt; (Kirsch et al.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;what&#34;&gt;What?&lt;/h1&gt;
+&lt;p&gt;What do the phrases &amp;ldquo;modular architectures&amp;rdquo; and &amp;ldquo;learning modular structures&amp;rdquo; mean?&lt;/p&gt;
+&lt;p&gt;In programming, a module is a reusable function. Modularity is a design principle, where code is composed of smaller functions which have well defined behavior in isolation, so that the system can be understood by looking at its parts (i.e. &lt;a href=&#34;https://en.wikipedia.org/wiki/Reductionism#In_science&#34;target=&#34;_blank&#34;&gt;reduction&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Modular code satisfies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Isolation&lt;/strong&gt;: The internal behavior of one module doesn&amp;rsquo;t affect other modules.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reusability&lt;/strong&gt;: The same module applied in different circumstances, potentially given different kinds of data that follow the same pattern (think &lt;a href=&#34;https://en.wikipedia.org/wiki/Generic_programming&#34;target=&#34;_blank&#34;&gt;generics&lt;/a&gt; and &lt;a href=&#34;https://en.wikipedia.org/wiki/Abstract_type&#34;target=&#34;_blank&#34;&gt;abstract types&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the context of machine learning, a modular neural architecture is a type of neural network composed of smaller neural modules. If data can be said to contain modular structure (e.g. see &lt;a href=&#34;https://arxiv.org/abs/1902.07181&#34;target=&#34;_blank&#34;&gt;Andreas 2019&lt;/a&gt;), then one goal of modular neural networks is to recover that latent structure.&lt;/p&gt;
+&lt;p&gt;Pictorial examples of modular neural networks:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141842.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;[Kirsch et al.](https://arxiv.org/abs/1811.05249&lt;/figcaption&gt;
+  &lt;/figure&gt;
+)&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141514.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;[Chang et al.](https://arxiv.org/abs/1807.04640&lt;/figcaption&gt;
+  &lt;/figure&gt;
+)&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141932.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;[Abolafia et al.](https://arxiv.org/abs/2003.04227&lt;/figcaption&gt;
+  &lt;/figure&gt;
+)&lt;/p&gt;
+&lt;h1 id=&#34;why&#34;&gt;Why?&lt;/h1&gt;
+&lt;p&gt;Why have modular neural architectures? Is it beneficial for program synthesis? Is it beneficial for machine learning in general?&lt;/p&gt;
+&lt;h2 id=&#34;data-invariances&#34;&gt;Data invariances&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1806.06765&#34;target=&#34;_blank&#34;&gt;Modularity Matters: Learning Invariant Relational Reasoning Tasks&lt;/a&gt;  (Jo et al.)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When a dataset has a large number of invariances, a machine learning model must learn to associate a large number of seemingly unrelated patterns with one another, which may exacerbate the interference problem &amp;hellip; One natural way to combat the interference problem is to allow for specialized sub-modules in our architecture. Once we modularize, we reduce the amount of interference that can occur between features in our model. These specialized modules can now learn highly discriminative yet invariant representations while not interfering with each other.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;strong-generalization&#34;&gt;Strong generalization&lt;/h2&gt;
+&lt;p&gt;Strong generalization means getting the right answer for an input/task that is very different from the training regime. Sometimes this is called zero-shot learning. Humans seem to be able to this. How does it work?&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1609.07088&#34;target=&#34;_blank&#34;&gt;Learning Modular Neural Network Policies for Multi-Task and Multi-Robot Transfer&lt;/a&gt; (Devin et al.)&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413144242.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;The robot and task networks are trained end-to-end on different robot-task combinations, with some held out. For example, during training this system does not encounter robot 2 combined with task 2, but does encounter robot 2 and task 2 separately in different situations. At test time, the system has to perform well when robot 2 is combined with task 2.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1611.01796&#34;target=&#34;_blank&#34;&gt;Modular Multitask Reinforcement Learning with Policy Sketches&lt;/a&gt; (Andreas 2016)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The modular structure of our approach, which associates every high-level action symbol with a discrete subpolicy,naturally induces a library of interpretable policy fragments that are easily recombined. This makes it possible to evaluate our approach under a variety of different data conditions: (1) learning the full collection of tasks jointly via reinforcement, (2) in a zero-shot setting where a policy sketch is available for a held-out task, and (3) in a adaptation setting, where sketches are hidden and the agent must learn to adapt a pretrained policy to reuse high-level actions in a new task.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;hellip; we have shown that it is possible to build agents that share behavior across tasks in order to achieve success in tasks with sparse and delayed rewards. This process induces an inventory of reusable and interpretable subpolicies which can be employed for zero-shot generalization when further sketches are available, and hierarchical reinforcement learning when they are not.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;parameter-sharing&#34;&gt;Parameter sharing&lt;/h2&gt;
+&lt;p&gt;Convolutional and recurrent layers can be viewed as modular, in that they &amp;ldquo;stamp&amp;rdquo; a small neural network (with the same parameters) repeatedly in some pattern - repeated over space for CNNs, and repeated over time for RNNs.&lt;/p&gt;
+&lt;h2 id=&#34;causal-learning&#34;&gt;Causal learning&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1909.10893&#34;target=&#34;_blank&#34;&gt;Recurrent Independent Mechanisms&lt;/a&gt; (Goyal et al.)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Physical processes in the world often have a modular structure which human cognition appears toexploit, with complexity emerging through combinations of simpler subsystems. Machine learningseeks to uncover and use regularities in the physical world. Although these regularities manifestthemselves as statistical dependencies, they are ultimately due to dynamic processes governed bycausal physical phenomena.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The notion of independent or autonomous mechanisms has been influential in the field of causal inference. A complex generative model, temporal or not, can be thought of as the composition of independent mechanisms or “causal” modules. In the causality community, this is often considered a prerequisite for being able to perform localized interventions upon variables determined by such models (Pearl, 2009). It has been argued that the individual modules tend to remain robust or invariant even as other modules change, e.g., in the case of distribution shift (Schölkopf et al., 2012; Peterset al., 2017). This independence is not between the random variables being processed but between the description or parametrization of the mechanisms: learning about one should not tell us anything about another, and adapting one should not require also adapting another. One may hypothesize that if a brain is able to solve multiple problems beyond a single i.i.d. (independent and identically distributed) task, they may exploit the existence of this kind of structure by learning independent mechanisms that can flexibly be reused, composed and re-purposed.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;An excerpt from Judea Pearl&amp;rsquo;s book &lt;a href=&#34;http://bayes.cs.ucla.edu/BOOK-2K/&#34;target=&#34;_blank&#34;&gt;Causality, 2nd ed.&lt;/a&gt;. Pearl refers to &amp;ldquo;mechanisms&amp;rdquo; as the nodes in a Bayesian network (e.g. depicted in figure 1.2), which are assumed to be modular: i.e. they are internally isolated, apart from causation traveling along their arrows, and they are reusable in the sense that the graph can be modified, which Pearl calls an intervention.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413224425.png&#34; alt=&#34;&#34;&gt;
+&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The example reveals a stronger sense in which causal relationships are more stable than the corresponding probabilistic relationships, a sense that goes beyond their basic ontological–epistemological difference. The relationship, “Turning the sprinkler on would not affect the rain,” will remain invariant to changes in the mechanism that regulates how seasons affect sprinklers. In fact, it remains invariant to changes in all mechanisms shown in this causal graph. We thus see that causal relationships exhibit greater robustness to ontological changes as well; they are sensitive to a smaller set of mechanisms. More specifically, and in marked contrast to probabilistic relationships, causal relationships remain invariant to changes in the mechanism that governs the causal variables ($X_3$ in our example).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Regardless of what use is eventually made  of our “understanding” of things, we surely would prefer an understanding in terms of durable relationships, transportable across situations, over those based on transitory relationships. The sense of “comprehensibility” that accompanies an adequate explanation is a natural by-product of the transportability of (and hence of our familiarity with) the causal relationships used in the explanation. It is for reasons of stability that we regard the falling barometer as predicting but not explaining the rain; those predictions are not transportable to situations where the pressure surrounding the barometer is controlled by artificial means. True understanding enables predictions in such novel situations, where some mechanisms change and others are added. It thus seems reasonable to suggest that, in the final analysis, the explanatory account of causation is merely a variant of the manipulative account, albeit one where interventions are dormant. Accordingly, we may as well view our unsatiated quest for understanding “how data is generated” or “how things work” as a quest for acquiring the ability to make predictions under a wider range of circumstances, including circumstances in which things are taken apart, reconfigured, or undergo spontaneous change.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;program-induction-and-synthesis&#34;&gt;Program induction and synthesis&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1804.00218&#34;target=&#34;_blank&#34;&gt;HOUDINI: Lifelong Learning as Program Synthesis&lt;/a&gt; (Valkov et al.)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In contrast to standard methods for transfer learning in deep networks, which re-use the first few layers of the network, neural libraries have the potential to enable reuse of higher, more abstract levels of the network, in what could be called high-level transfer.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;hellip; our results indicate that the modular representation used in HOUDINI allows it to transfer high-level concepts and avoid negative transfer. We demonstrate that HOUDINI offers greater transfer than progressive neural networks and traditional “low-level” transfer, in which early network layers are inherited from previous tasks.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1909.13404&#34;target=&#34;_blank&#34;&gt;Towards modular and programmable architecture search&lt;/a&gt; (Negrinho et al.)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The building blocks of our search spaces are modules and hyper-parameters. Search spaces are created through the composition of modules and their interactions.Implementing a new module only requires dealing with aspects local to the module. Modules and hyperparameters can be reused across search spaces, and new search spaces can be written by combining existing search spaces.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;how&#34;&gt;How?&lt;/h1&gt;
+&lt;p&gt;How can modularity be achieved? Two things need to be simultaneously learned:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The modules themselves.&lt;/li&gt;
+&lt;li&gt;How the modules are to be connected together.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Key ideas:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Routing&lt;/strong&gt;: How the modules are connected together.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dynamic&lt;/strong&gt; vs &lt;strong&gt;static&lt;/strong&gt; routing: Static routing is fixed for all inputs, while dynamic routing is conditioned on a given input or context. A router is a function that outputs module routing given context.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Soft&lt;/strong&gt; vs &lt;strong&gt;hard&lt;/strong&gt; routing: Soft routing is a weighted sum across all choices, while hard routing is a single discrete choice. Soft routing is differentiable while hard routing is not.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples of soft routing:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1410.5401&#34;target=&#34;_blank&#34;&gt;Neural Turing Machines&lt;/a&gt; (Graves et al.)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.nature.com/articles/nature20101&#34;target=&#34;_blank&#34;&gt;Differentiable neural computers&lt;/a&gt; (Graves et al.)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1511.08228&#34;target=&#34;_blank&#34;&gt;Neural GPUs Learn Algorithms&lt;/a&gt; (Kaiser et al.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Examples of hard routing:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1807.04640&#34;target=&#34;_blank&#34;&gt;Automatically Composing Representation Transformations as a Means for Generalization&lt;/a&gt; (Chang et al.)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1511.06392&#34;target=&#34;_blank&#34;&gt;Neural Random-Access Machines&lt;/a&gt; (Kurach et al.)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1511.07275&#34;target=&#34;_blank&#34;&gt;Learning Simple Algorithms from Examples&lt;/a&gt; (Zaremba et al.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Is there something in between soft and hard routing?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1701.06538&#34;target=&#34;_blank&#34;&gt;Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer&lt;/a&gt; (Shazeer et al.)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Modular Networks: Learning to Decompose Neural Computation&lt;/a&gt; (Kirsch et al.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;module-routing-in-detail&#34;&gt;Module routing in detail&lt;/h2&gt;
+&lt;p&gt;Following the setup in &lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt;&amp;hellip;&lt;/p&gt;
+&lt;p&gt;In the case of soft routing, think of module weights as probabilities. Instead of summing module outputs, sum probabilities of each possible output. This leads to a natural correspondence between soft and hard routing, where hard routing is sampled from the probability distribution.&lt;/p&gt;
+&lt;p&gt;In &lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt;, the choices are organized into layers, where for each layer $l$ a subset of $M$ modules are selected and their outputs are summed. In &lt;a href=&#34;https://arxiv.org/abs/2003.04227&#34;target=&#34;_blank&#34;&gt;Abolafia et al.&lt;/a&gt;, modules are connected into arbitrary computation graphs.&lt;/p&gt;
+&lt;p&gt;To keep things general, let $\mc{A}$ be a set of possible module routing choices, so that an element $a\in\mc{A}$ consists of all  choices needed for the architecture to produce an output (e.g. which modules to use in the computation graph and how they are connected).&lt;/p&gt;
+&lt;p&gt;Given a routing choice $a\in\mc{A}$, the architecture output probability given input $x$ and parameters $\t$ is&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(y\mid x,a,\t)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Under the hood this output probability may be arrived at by combining the following components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A collection of differentiable functions (modules) $f_{\t\up{i}}\up{i} : \mc{Z}\up{i} \to \mc{Z}\up{j}$ where $\mc{Z}\up{i}$ and $\mc{Z}\up{j}$ are latent spaces (e.g. vectors in $\R^n$), and $\t\up{i}$ are the function parameters. Typically $\t = (\t\up{1},\t\up{2},\dots)$ and each module has independent and isolated parameters. The input $x$ may be initially encoded into a latent space, or some modules may have $\mc{Z} = \mc{X}$ and the data can be fed in directly.&lt;/li&gt;
+&lt;li&gt;A function $g$ that takes routing specification $a$, modules $\set{f_i}$, and input $x$, and outputs hidden representation $h$ (also a real vector).&lt;/li&gt;
+&lt;li&gt;A distribution &amp;ldquo;head&amp;rdquo; on output space $\mc{Y}$, s.t. $h$ represents the parameters of the distribution. For example, a Gaussian $\mc{N}(y \mid h)$ where $h$ encodes a vector of means and a covariance matrix.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Putting these three things together produces the probability distribution $p(y\mid x,a,\t)$. Given training target $y$, this probability is fully differentiable w.r.t. $\t$ (typically given by the architecture as a &lt;a href=&#34;https://en.wikipedia.org/wiki/Logit&#34;target=&#34;_blank&#34;&gt;logit&lt;/a&gt;, or log-probability). If routing choice $a$ were held fixed, we can train this architecture with standard supervised techniques, e.g. with SGD. Furthermore, if $a\up{k}$ can be provided by some external hard-coded system given training example $(x\up{k}, y\up{k})$, then we can use SGD to maximize the dataset log-probability&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\sum_{k=1}^N \log p(y\up{k}\mid x\up{k},a\up{k},\t)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This is essentially the used in &lt;a href=&#34;https://arxiv.org/abs/1807.04640&#34;target=&#34;_blank&#34;&gt;Chang et al.&lt;/a&gt; and &lt;a href=&#34;https://arxiv.org/abs/1511.02799&#34;target=&#34;_blank&#34;&gt;Andreas et al.&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ideally, we&amp;rsquo;d like to learn the module routing $a\up{k}$ for each training example $(x\up{k}, y\up{k})$. That means learning a routing function, which produces a routing $a\up{k}$ given input $x\up{k}$. Assuming $\mc{A}$ is a discrete space (routing choices are discrete, e.g. which modules to pick and how to connect them), we cannot differentiate such a function. RL could be used, as in &lt;a href=&#34;https://arxiv.org/abs/2003.04227&#34;target=&#34;_blank&#34;&gt;Abolafia et al.&lt;/a&gt;, but &lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt; provides a more general perspective that allows for differentiation in principle, though intractable in practice.&lt;/p&gt;
+&lt;p&gt;Let the routing function output a probability distribution over $a\in\mc{A}$:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(a \mid x, \p)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This router is comprised of a function $r_\p$, parameterized by parameters $\p$, that takes in $x$ and outputs a hidden representation $h&#39;$ that, like before, holds the parameters for some probability distribution on $\mc{A}$ (e.g. Gaussian). If $a$ decomposes into a set of independent routing choices, e.g. $a=(a_1, a_2, \dots)$, then $p(a \mid x, \p) = \prod_t p(a_t \mid z_t, \p)$ where $\set{z_t}$ are potentially intermediate outputs from various modules, and at least one $z_t$ equals $x$.&lt;/p&gt;
+&lt;p&gt;This gives us a joint distribution on $y$ and $a$:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(y, a \mid x,\t,\p) = p(y\mid x,a,\t)p(a\mid x, \p)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;To find the probability of $y$ given $x$, independent of routing choice $a$, we marginalize out $a$:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(y \mid x, \t, \p) = \sum_{a\in\mc{A}} p(y\mid x,a,\t)p(a\mid x, \p)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;What this means in terms of training, is that if we are using naive SGD to maximize $\log p(y \mid x, \t, \p)$ w.r.t $\t$ and $\p$ jointly, then we simply sum over all possible routing choices in $\mc{A}$. In practice, this summation is intractable, since the number of routing decisions explodes as the number of modules is increased (as well as with other complexities like multi-input and multi-output modules).&lt;/p&gt;
+&lt;p&gt;We can view the same optimization through the lense of the REINFORCE algorithm, which naturally leads to RL optimization, where $p(a\mid x, \p)$ is the policy, $a$ are actions, and $x$ are environment observations. The reward function is then $R(a\mid x) = p(y\mid x,a,\t)$ (or the log-probability of $y$ like in &lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt;). Let the loss function $\mc{L} = p(y \mid x, \t, \p)$. Then the gradient $\nabla_\p \mc{L}$ is given using the &lt;a href=&#34;https://dallascard.github.io/the-reinforce-trick.html&#34;target=&#34;_blank&#34;&gt;&amp;ldquo;log-trick&amp;rdquo;&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\nabla_\p \mc{L} &amp;amp;= \nabla_\p\E_{p(a\mid x, \p)}[p(y\mid x,a,\t)] \\&lt;br&gt;
+&amp;amp;= \nabla_\p\E_{p(a\mid x, \p)}[R(a \mid x)] \\&lt;br&gt;
+&amp;amp;= \E_{p(a\mid x, \p)}[\nabla_\p\log p(a\mid x, \p) R(a \mid x)]\,,&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which is the gradient as given in REINFORCE.&lt;/p&gt;
+&lt;p&gt;For the experiments in &lt;a href=&#34;https://arxiv.org/abs/2003.04227&#34;target=&#34;_blank&#34;&gt;Abolafia et al.&lt;/a&gt;, I found that scaling up episode collection as much as possible using &lt;a href=&#34;https://arxiv.org/abs/1802.01561&#34;target=&#34;_blank&#34;&gt;IMPALA&lt;/a&gt; partially overcame the usual issues associated with RL: sparse reward, high variance gradients, and lack of stability. Stability is especially an issue when the modules are being trained at the same time, so that the reward being optimized is a moving target. We were not able to jointly learn module and routing, so in &lt;a href=&#34;https://arxiv.org/abs/2003.04227&#34;target=&#34;_blank&#34;&gt;Abolafia et al.&lt;/a&gt; we settled for hard coded modules and focused on getting the router to work.&lt;/p&gt;
+&lt;h2 id=&#34;other-kinds-of-training&#34;&gt;Other kinds of training&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt; introduces a modified &lt;a href=&#34;https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm&#34;target=&#34;_blank&#34;&gt;EM algorithm&lt;/a&gt; for simultaneously training $\t$ and $\p$, where routing choice $a$ is the latent variable. As with EM, this is a two step iterative process, where joint probability of $a$ and $x$ is maximized with fixed $a$, and then $a$ is locally improved according to the current probability distribution. Rather than finding the argmax $a$, which is intractable, &lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt; samples an i.i.d. batch from $p(a \mid x, \p)$ and updates $a$ only if a higher probability $a$ is found.&lt;/p&gt;
+&lt;p&gt;This training algorithm can be viewed as performing policy gradient training (RL) with a &amp;ldquo;top-$K$&amp;rdquo; buffer, as described in &lt;a href=&#34;https://arxiv.org/abs/1801.03526&#34;target=&#34;_blank&#34;&gt;Neural Program Synthesis with Priority Queue Training&lt;/a&gt; (Abolafia 2018), where $K=1$.&lt;/p&gt;
+&lt;p&gt;Here is the general case of this training procedure:&lt;/p&gt;
+&lt;p&gt;Let $\tilde{A}_n$ be a length-$S$ i.i.d. sample from $p(a_n \mid x_n,\p)$.&lt;br&gt;
+Let $A_n^*$ be a top-$K$ buffer for the $n$-th training example $(x\up{n},y\up{n})$. That means $A_n^*$ holds the best $a_n$ observed over the course of training, scored by $p(a_n \mid x_n,\p)$. Note that this is a moving target, since $\p$ is simultaneously changing, so the joint score of $A_n^*$ can decrease.&lt;br&gt;
+Let $A_n = \tilde{A}_n \cup A_n^*$.  (If $A_n^* = \emptyset$ this reduces to usual policy gradient training, and if $\tilde{A}_n = \emptyset$ this reduces to the EM algorithm described above as well as &lt;a href=&#34;https://arxiv.org/abs/1801.03526&#34;target=&#34;_blank&#34;&gt;Abolafia 2018&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;Let $B \subseteq D$ be a minibatch. The Monte Carlo gradient approximation (ala REINFORCE) is:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\nabla_\p\mc{L} \approx \frac{1}{\abs{B}}\sum_{n\in B}\frac{1}{\abs{A_n}}\sum_{a_n \in A_n} \nabla_\p\log p(a\mid x, \p) R(a \mid x)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $R(a\mid x) = p(y\mid x,a,\t)$ or $\log p(y\mid x,a,\t)$.&lt;/p&gt;
+&lt;h3 id=&#34;information-theory&#34;&gt;Information theory&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt; plots the quantities $H_a$ and $H_b$ as diagnostic tools and measures of &amp;ldquo;module collapse&amp;rdquo; and training convergence. I used the same quantities in my own experiments and found them to be similarly helpful.&lt;/p&gt;
+&lt;p&gt;There is theoretical justification for these quantities, and they may even be used as regularizers.&lt;/p&gt;
+&lt;p&gt;Let $A$ be the routing random variable and let $X$ be the input random variable, distributed jointly by $p(a \mid x, \p)p(x)$ where $p(x)$ is the true and unknown input distribution.&lt;/p&gt;
+&lt;p&gt;The mutual information between $A$ and $X$ decomposes:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\I(A, X) = \H(A) - \H(A \mid X)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;We cannot explicitly compute these entropy terms because we do not have access to $p(x)$ or $p(a \mid \p)$.&lt;/p&gt;
+&lt;p&gt;Assume we can only explicitly compute $p(a \mid x, \p)$. Let&amp;rsquo;s also suppose that we can explcitily compute $\H(A \mid X=x) = -\sum_{a\in\mc{A}} p(a \mid x, \p) \log p(a \mid x, \p)$. Though summing over $\mc{A}$ is still intractable, if we suppose that the routing distribution factors into independent choices which are themselves tractable to enumerate (like the choice for each layer in &lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt;): $\mc{A} = \mc{A}_1\times\mc{A}_2\times\dots$ and $a = (a_1, a_2, \dots) \in \mc{A}$ s.t.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+p(a \mid x, \p) = \prod_{l=1}^L p(a_l \mid x, \p_l)\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;then we can tractably compute the conditional entropy as the sum of entropies of each choice:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\H(A \mid X=x) &amp;amp;= \sum_{l=1}^L \H(A_l \mid X=x) \\&lt;br&gt;
+&amp;amp;= \sum_{l=1}^L \sum_{a_l\in\mc{A}_l} p(a_l \mid x, \p_l) \log p(a_l \mid x, \p_l)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Now we can do a Monte Carlo approximation of the entropy terms of interest using the existing dataset. The statistical properties of this MC estimation is discussed in &lt;a href=&#34;https://arxiv.org/abs/1905.06922&#34;target=&#34;_blank&#34;&gt;On Variational Bounds of Mutual Information&lt;/a&gt;. Let $B \subseteq D$ be a minibatch uniformly sampled from dataset $D$.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\H(A \mid X) &amp;amp;= -\E_{p(x)}[\H(Y\mid X=x)] \\&lt;br&gt;
+&amp;amp;\approx \frac{1}{\abs{B}}\sum_{n \in B} \H(Y\mid X=x_n)&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Letting $q(a \mid \p)$ be a Monte Carlo approximation of the marginal distribution $p(a\mid \p)$, derived from&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+p(a \mid \p) &amp;amp;= \E_{p(x)}p(a \mid x, \p) \\ &amp;amp;\approx \frac{1}{\abs{B}}\sum_{n \in B}p(a \mid x, \p) \\&lt;br&gt;
+&amp;amp;= q(a\mid \p)\,,&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;we can approximate the marginal entropy,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\H(A) &amp;amp;= -\E_{p(a \mid \p)}[\log p(a \mid \p)] \\&lt;br&gt;
+&amp;amp;\approx -\E_{q(a \mid \p)}[\log q(a\mid \p)]\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;We can think of $\I$ as measuring the bijectivness of the mapping from $x$ to $a$, where $\H(A)$ measures surjectivity and $\H(A\mid X)$ measures anti-injectivity. See &lt;a href=&#34;http://zhat.io/articles/primer-shannon-information#expected-mutual-information&#34;&gt;http://zhat.io/articles/primer-shannon-information#expected-mutual-information&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;$\H(A)$ measures module use. If its maximized, all the modules are getting used equally often.&lt;br&gt;
+$\H(A\mid X)$ measures convergence. If its maximized, then the router is completely confident that there is exactly one appropriate routing choice for any given input.&lt;/p&gt;
+&lt;p&gt;The ideal is that all modules get used often and the router thinks there is one routing choice per input.&lt;/p&gt;
+&lt;p&gt;$\H(A)$ is a typical RL regularizer (called entropy regularization, see &lt;a href=&#34;https://arxiv.org/abs/1602.01783&#34;target=&#34;_blank&#34;&gt;A3C&lt;/a&gt;). However maximizing $\I(A,X)$ (where $x$ are env states) is uncommon. It may be unnecessary since $p(a \mid x)$ naturally becomes peaky over the course of training.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Bayesian information theory</title>
@@ -68,7 +350,7 @@ $$&lt;/p&gt;
 
 
 , I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.&lt;/p&gt;
-&lt;p&gt;My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism (rather than randomness) can be interpreted as measuring the reduction in size (&amp;ldquo;narrowing down&amp;rdquo;) of a possibility space.&lt;/p&gt;
+&lt;p&gt;My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism can be interpreted as measuring the reduction in size (&amp;ldquo;narrowing down&amp;rdquo;) of a possibility space.&lt;/p&gt;
 &lt;h1 id=&#34;information-and-finite-possibilities&#34;&gt;Information and finite possibilities&lt;/h1&gt;
 &lt;p&gt;Following 
 
@@ -223,8 +505,8 @@ $$&lt;/p&gt;
 \\&amp;amp;1111111111\dots\}\}&lt;br&gt;
 \end{aligned}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;$\h_1$ contains all sequences ending in 0s, and $\h_2$ contains all sequences ending in 1s.&lt;/p&gt;
-&lt;p&gt;In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a &lt;strong&gt;compound hypothesis&lt;/strong&gt;, indicating that its composed of a set of &lt;strong&gt;primitive hypotheses&lt;/strong&gt; (data continuations). As we shall see, compound hypotheses correspond closely to hypotheses as data distributions which we saw in 
+&lt;p&gt;$\h_1$ contains only sequences ending in 0s, and $\h_2$ contains only sequences ending in 1s.&lt;/p&gt;
+&lt;p&gt;In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a &lt;strong&gt;compound hypothesis&lt;/strong&gt;, indicating that its a set of &lt;strong&gt;primitive hypotheses&lt;/strong&gt; (data continuations). As we shall see, compound hypotheses correspond closely to the hypotheses-as-data-distributions formulation which we saw in 
 
 
 
@@ -528,7 +810,7 @@ p(\mu\mid\o_{1:n}) &amp;amp;= p(\mu,\o_{1:n})/p(\o_{1:n}) \\ \\&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;is called the &lt;strong&gt;hypothesis posterior probability&lt;/strong&gt; (or more commonly, just &amp;ldquo;&lt;strong&gt;posterior&lt;/strong&gt;&amp;quot;) of hypothesis $\mu$ given data $\o_{1:n}$. This quantity represents the agent&amp;rsquo;s certainty/uncertainty about hypothesis $\mu$ after observing $\o_{1:n}$. If we are viewing $p(\mu)$ as a weight, then the weight on $\mu$ updates to $p(\mu\mid\o_{1:n})$ when $\o_{1:n}$ is observed. In this sense, the agent updates its knowledge (confidence) about the hypotheses in $\H$ when data is observed. The last equation is a prescription for an update rule on these uncertainty weights on $\mu$, taking the form $w&#39; = \gamma w$, where $\gamma = \mu(\o_{1:n})/p(\o_{1:n})$ is a multiplicative adjustment on the prior weight $w$.&lt;/p&gt;
 &lt;p&gt;Observing additional data amounts to appending $\o_{n+1:m}$ to $\o_{1:n}$, and the weight on $\mu$ updates again to $p(\mu\mid\o_{1:m})$. This iterative process of observing more data and updating can go on forever, so long as the data space $\X^\infty$ consists of infinite sequences.&lt;/p&gt;
-&lt;p&gt;As a side note, you should recognize $p(\mu\mid\o_{1:n})=p(\o_{1:n}\mid\mu)p(\mu)/p(\o_{1:n})$ as the classic form of &lt;a href=&#34;https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem&#34;target=&#34;_blank&#34;&gt;Bayes rule&lt;/a&gt; (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \mid D) = p(D \mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is not very useful pedagogically.&lt;/p&gt;
+&lt;p&gt;As a side note, you should recognize $p(\mu\mid\o_{1:n})=p(\o_{1:n}\mid\mu)p(\mu)/p(\o_{1:n})$ as the classic form of &lt;a href=&#34;https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem&#34;target=&#34;_blank&#34;&gt;Bayes rule&lt;/a&gt; (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \mid D) = p(D \mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is pedagogically confusing for that reason.&lt;/p&gt;
 &lt;p&gt;In general, the agent wants to predict what sensory data will occur after $\o_{\leq n}$ has been observed. For that, we need the &lt;strong&gt;data posterior probability&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \begin{aligned}&lt;br&gt;
@@ -696,7 +978,7 @@ p(\t\mid x_{1:n}) = p(\t)\frac{\mu_\t(x_{1:n})}{p(x_{1:n})}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;Note that the hypotheses are i.i.d. w.r.t. data position but the subjective data distribution $p$ is not. That is to say, $\mu_\t(x_n \mid x_{&amp;lt;n}) = \mu_\t(x_n)$ but $p(x_n \mid x_{&amp;lt;n}) \neq p(x_n)$.&lt;/p&gt;
 &lt;h2 id=&#34;solomonoff-induction&#34;&gt;Solomonoff Induction&lt;/h2&gt;
-&lt;p&gt;Let&amp;rsquo;s continue the coin tossing example, but in stead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s continue the coin tossing example, but instead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.&lt;/p&gt;
 &lt;p&gt;Bernoulli hypotheses are blind to patterns in the ordering of bits in the data sequence because $\mu_\t(x_{1:n}) = \mu_\t(\mathrm{permute}(x_{1:n}))$ where $\mathrm{permute}(x_{1:n})$ is any permutation (re-ordering) of $x_{1:n}$. For example, we observe a very long sequence of alternating $0$s and $1$s, i.e. $0101010101\dots$, then the Bernoulli hypothesis where $\t=1/2$ will get large posterior weight. This is the hypothesis that the data is totally random (maximum entropy). Clearly, the data is highly patterned and predictable.&lt;/p&gt;
 &lt;p&gt;What hypotheses should we add to $\H$? Is it possible to have a hypothesis for every possible data pattern? Ray Solomonoff&amp;rsquo;s answer is yes, and this is achieved by the hypothesis set containing all semicomputable semimeasures on $\X^\infty$.&lt;/p&gt;
 &lt;p&gt;A probability measure $\mu$ on $\X^\infty$ is &lt;a href=&#34;https://en.wikipedia.org/wiki/Computable_function&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;computable&lt;/strong&gt;&lt;/a&gt; if there exists a program (Turing machine) which outputs the probability $\mu(x_{1:n})$ of any input, $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$), to the requested precision, $\e &amp;gt; 0$, in finite time and then halts. Alternatively, a probability measure is computable if there exists a program that outputs each possible outcome $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$) with probability $\mu(x_{1:n})$, given a stream of uniformly random input bits (i.i.d. Bernoulli(1/2) data).&lt;/p&gt;
@@ -747,7 +1029,7 @@ $$&lt;/p&gt;
 p(\t\mid D`x_n) &amp;amp;= p(\t)\frac{\mu_\t(D`x_n)}{p(D`x_n)}&lt;br&gt;
 \end{aligned}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;In the supervised case $\mu_\t(x_1) = \mu_\t(x_2) = \dots = \mu_\t(x_n) = \gamma$, and so $\mu_\t(D`x_n) = \gamma\mu_\t(D)$.  Likewise, $p(D`x_n) = \int_\T p(\t)\mu_\t(D`x_n) d\t = \gamma\int_\T p(\t)\mu_\t(D) d\t$, and so the fraction $\mu_\t(D`x_n)/p(D`x_n)$ simplifies to $\mu_\t(D)/p(D)$. Then the parameter posterior reduces to the classic form: $p(\t\mid D`x_n) = p(\t\mid D) = p(\t)p(D\mid \t)/p(D)$. where $p(D\mid \t) = \mu_\t(D)$.&lt;/p&gt;
+&lt;p&gt;In the supervised case $\mu_\t(x_1) = \mu_\t(x_2) = \dots = \mu_\t(x_n) = \gamma$, and so $\mu_\t(D`x_n) = \gamma\mu_\t(D)$.  Likewise, $p(D`x_n) = \int_\T p(\t)\mu_\t(D`x_n) d\t = \gamma\int_\T p(\t)\mu_\t(D) d\t$, and so the fraction $\mu_\t(D`x_n)/p(D`x_n)$ simplifies to $\mu_\t(D)/p(D)$. Then the parameter posterior reduces to the &lt;a href=&#34;http://mlg.eng.cam.ac.uk/zoubin/bayesian.html&#34;target=&#34;_blank&#34;&gt;classic form&lt;/a&gt;: $p(\t\mid D`x_n) = p(\t\mid D) = p(\t)p(D\mid \t)/p(D)$. where $p(D\mid \t) = \mu_\t(D)$.&lt;/p&gt;
 </description>
     </item>
     
@@ -788,8 +1070,8 @@ $$&lt;/p&gt;
 \newcommand{\Iff}{\Leftrightarrow}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;My goal is to identify the core conceptual difference between someone who accepts &amp;ldquo;Bayesian reasoning&amp;rdquo; as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept &amp;ldquo;classical reasoning&amp;rdquo;. By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotelian logic, through propositional logic like that of Frege, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.&lt;/p&gt;
-&lt;p&gt;My thesis is that the difference between Bayesian and classical reasoners comes down to how they deal with non-determined objects (e.g. if you cannot determine the truth value of something from your givens). The classical reasoner will shrug their shoulders and say &amp;ldquo;the answer cannot be determined, collect more givens or modify your definitions&amp;rdquo;. The Bayesian reasoner will regard at the proportion of self-consistent instantiations of unknowns that make the target proposition true as useful information regarding whether it is really true. That is to say, the Bayesian reasoner continues on without uniquely determined truth values, and the classical reasoner does not.&lt;/p&gt;
-&lt;p&gt;This difference extends into the realms of machine learning and epistemology. Classical epistemology is interested in truth (i.e. uniquely determined quantities), whereas Bayesian epistemology is interested in degrees of certainty. In machine learning, the givens and unknowns in question are not boolean valued, but have arbitrary data types (e.g. vectors of reals). The classical learner is interested in what can be uniquely determined from data, and the Bayesian learner is interested in proportions of possibilities.&lt;/p&gt;
+&lt;p&gt;My thesis is that the difference between Bayesian and classical reasoners comes down to how they deal with non-determined objects (e.g. if you cannot determine the truth value of something from your givens). The classical reasoner will shrug their shoulders and say &amp;ldquo;the answer cannot be determined, collect more givens or modify your definitions&amp;rdquo;. The Bayesian reasoner will regard the proportion of self-consistent instantiations of unknowns that make the target proposition true as epistemologically salient. That is to say, the Bayesian reasoner continues on without uniquely determined truth values, and the classical reasoner does not.&lt;/p&gt;
+&lt;p&gt;This difference extends beyond epistemology into the realm of machine learning. Classical epistemology is interested in truth (i.e. uniquely determined quantities), whereas Bayesian epistemology is interested in degrees of certainty. In machine learning, the givens and unknowns in question are not boolean valued, but have arbitrary data types (e.g. vectors of reals). The classical learner is interested in what numbers can be uniquely determined from data, and the Bayesian learner is interested in proportions of possibilities that result in each number.&lt;/p&gt;
 &lt;p&gt;This philosophical difference leads to a practical methodological difference. A classical reasoner/learner will define universes such that unknowns can be uniquely determined. Otherwise, the definitions are not useful. A Bayesian reasoner/learner will define universes such that calculating posterior probabilities are tractable. Otherwise, the definitions are not useful.&lt;/p&gt;
 &lt;p&gt;A note on the definition of &lt;strong&gt;model&lt;/strong&gt;. In mathematics, a model is an instantiation of an unspecified object which satisfies given axioms. In machine learning, a model refers to a family of instantiations of free parameters, i.e. a model is the set of definitions which invoke free variables that are to be determined.&lt;/p&gt;
 &lt;h1 id=&#34;propositional-logic&#34;&gt;Propositional logic&lt;/h1&gt;

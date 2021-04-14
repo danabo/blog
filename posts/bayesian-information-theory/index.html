@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Bayesian information theory</h1><p class="article date">April 9, 2021</p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Bayesian information theory</h1><p class="article date">April 9, 2021<span class="lastmod"> • edited April 12, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -58,7 +58,7 @@ $$</p>
 
 
 , I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.</p>
-<p>My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism (rather than randomness) can be interpreted as measuring the reduction in size (&ldquo;narrowing down&rdquo;) of a possibility space.</p>
+<p>My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism can be interpreted as measuring the reduction in size (&ldquo;narrowing down&rdquo;) of a possibility space.</p>
 <h1 id="information-and-finite-possibilities">Information and finite possibilities</h1>
 <p>Following 
 
@@ -213,8 +213,8 @@ $$</p>
 \\&amp;1111111111\dots\}\}<br>
 \end{aligned}<br>
 $$</p>
-<p>$\h_1$ contains all sequences ending in 0s, and $\h_2$ contains all sequences ending in 1s.</p>
-<p>In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a <strong>compound hypothesis</strong>, indicating that its composed of a set of <strong>primitive hypotheses</strong> (data continuations). As we shall see, compound hypotheses correspond closely to hypotheses as data distributions which we saw in 
+<p>$\h_1$ contains only sequences ending in 0s, and $\h_2$ contains only sequences ending in 1s.</p>
+<p>In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a <strong>compound hypothesis</strong>, indicating that its a set of <strong>primitive hypotheses</strong> (data continuations). As we shall see, compound hypotheses correspond closely to the hypotheses-as-data-distributions formulation which we saw in 
 
 
 
@@ -453,12 +453,22 @@ $$</p>
     <li><a href="#optimal-compression">Optimal Compression</a></li>
   </ol>
 </nav></div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/"><span class="iconfont icon-article"></span>Deconstructing Bayesian Inference</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/modular-neural-networks/"><span class="iconfont icon-article"></span>Modular Neural Networks</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/"><span class="iconfont icon-article"></span>Deconstructing Bayesian Inference</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
         target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
-        <script
-            type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script></body>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
 
 </html>

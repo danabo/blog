@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Deconstructing Bayesian Inference</h1><p class="article date">March 31, 2021<span class="lastmod"> • edited April 1, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Deconstructing Bayesian Inference</h1><p class="article date">March 31, 2021<span class="lastmod"> • edited April 12, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -95,7 +95,7 @@ p(\mu\mid\o_{1:n}) &amp;= p(\mu,\o_{1:n})/p(\o_{1:n}) \\ \\<br>
 $$</p>
 <p>is called the <strong>hypothesis posterior probability</strong> (or more commonly, just &ldquo;<strong>posterior</strong>&quot;) of hypothesis $\mu$ given data $\o_{1:n}$. This quantity represents the agent&rsquo;s certainty/uncertainty about hypothesis $\mu$ after observing $\o_{1:n}$. If we are viewing $p(\mu)$ as a weight, then the weight on $\mu$ updates to $p(\mu\mid\o_{1:n})$ when $\o_{1:n}$ is observed. In this sense, the agent updates its knowledge (confidence) about the hypotheses in $\H$ when data is observed. The last equation is a prescription for an update rule on these uncertainty weights on $\mu$, taking the form $w' = \gamma w$, where $\gamma = \mu(\o_{1:n})/p(\o_{1:n})$ is a multiplicative adjustment on the prior weight $w$.</p>
 <p>Observing additional data amounts to appending $\o_{n+1:m}$ to $\o_{1:n}$, and the weight on $\mu$ updates again to $p(\mu\mid\o_{1:m})$. This iterative process of observing more data and updating can go on forever, so long as the data space $\X^\infty$ consists of infinite sequences.</p>
-<p>As a side note, you should recognize $p(\mu\mid\o_{1:n})=p(\o_{1:n}\mid\mu)p(\mu)/p(\o_{1:n})$ as the classic form of <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem"target="_blank">Bayes rule</a> (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \mid D) = p(D \mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is not very useful pedagogically.</p>
+<p>As a side note, you should recognize $p(\mu\mid\o_{1:n})=p(\o_{1:n}\mid\mu)p(\mu)/p(\o_{1:n})$ as the classic form of <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem"target="_blank">Bayes rule</a> (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \mid D) = p(D \mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is pedagogically confusing for that reason.</p>
 <p>In general, the agent wants to predict what sensory data will occur after $\o_{\leq n}$ has been observed. For that, we need the <strong>data posterior probability</strong></p>
 <p>$$<br>
 \begin{aligned}<br>
@@ -263,7 +263,7 @@ p(\t\mid x_{1:n}) = p(\t)\frac{\mu_\t(x_{1:n})}{p(x_{1:n})}<br>
 $$</p>
 <p>Note that the hypotheses are i.i.d. w.r.t. data position but the subjective data distribution $p$ is not. That is to say, $\mu_\t(x_n \mid x_{&lt;n}) = \mu_\t(x_n)$ but $p(x_n \mid x_{&lt;n}) \neq p(x_n)$.</p>
 <h2 id="solomonoff-induction">Solomonoff Induction</h2>
-<p>Let&rsquo;s continue the coin tossing example, but in stead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.</p>
+<p>Let&rsquo;s continue the coin tossing example, but instead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.</p>
 <p>Bernoulli hypotheses are blind to patterns in the ordering of bits in the data sequence because $\mu_\t(x_{1:n}) = \mu_\t(\mathrm{permute}(x_{1:n}))$ where $\mathrm{permute}(x_{1:n})$ is any permutation (re-ordering) of $x_{1:n}$. For example, we observe a very long sequence of alternating $0$s and $1$s, i.e. $0101010101\dots$, then the Bernoulli hypothesis where $\t=1/2$ will get large posterior weight. This is the hypothesis that the data is totally random (maximum entropy). Clearly, the data is highly patterned and predictable.</p>
 <p>What hypotheses should we add to $\H$? Is it possible to have a hypothesis for every possible data pattern? Ray Solomonoff&rsquo;s answer is yes, and this is achieved by the hypothesis set containing all semicomputable semimeasures on $\X^\infty$.</p>
 <p>A probability measure $\mu$ on $\X^\infty$ is <a href="https://en.wikipedia.org/wiki/Computable_function"target="_blank"><strong>computable</strong></a> if there exists a program (Turing machine) which outputs the probability $\mu(x_{1:n})$ of any input, $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$), to the requested precision, $\e &gt; 0$, in finite time and then halts. Alternatively, a probability measure is computable if there exists a program that outputs each possible outcome $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$) with probability $\mu(x_{1:n})$, given a stream of uniformly random input bits (i.i.d. Bernoulli(1/2) data).</p>
@@ -314,7 +314,7 @@ $$</p>
 p(\t\mid D`x_n) &amp;= p(\t)\frac{\mu_\t(D`x_n)}{p(D`x_n)}<br>
 \end{aligned}<br>
 $$</p>
-<p>In the supervised case $\mu_\t(x_1) = \mu_\t(x_2) = \dots = \mu_\t(x_n) = \gamma$, and so $\mu_\t(D`x_n) = \gamma\mu_\t(D)$.  Likewise, $p(D`x_n) = \int_\T p(\t)\mu_\t(D`x_n) d\t = \gamma\int_\T p(\t)\mu_\t(D) d\t$, and so the fraction $\mu_\t(D`x_n)/p(D`x_n)$ simplifies to $\mu_\t(D)/p(D)$. Then the parameter posterior reduces to the classic form: $p(\t\mid D`x_n) = p(\t\mid D) = p(\t)p(D\mid \t)/p(D)$. where $p(D\mid \t) = \mu_\t(D)$.</p>
+<p>In the supervised case $\mu_\t(x_1) = \mu_\t(x_2) = \dots = \mu_\t(x_n) = \gamma$, and so $\mu_\t(D`x_n) = \gamma\mu_\t(D)$.  Likewise, $p(D`x_n) = \int_\T p(\t)\mu_\t(D`x_n) d\t = \gamma\int_\T p(\t)\mu_\t(D) d\t$, and so the fraction $\mu_\t(D`x_n)/p(D`x_n)$ simplifies to $\mu_\t(D)/p(D)$. Then the parameter posterior reduces to the <a href="http://mlg.eng.cam.ac.uk/zoubin/bayesian.html"target="_blank">classic form</a>: $p(\t\mid D`x_n) = p(\t\mid D) = p(\t)p(D\mid \t)/p(D)$. where $p(D\mid \t) = \mu_\t(D)$.</p>
 </article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/epistemology/>epistemology</a></section>
 </div><nav id="TableOfContents">
   <ol>
@@ -354,7 +354,17 @@ $$</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
         target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
-        <script
-            type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script></body>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
 
 </html>
