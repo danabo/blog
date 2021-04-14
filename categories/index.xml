@@ -76,28 +76,16 @@ $$&lt;/p&gt;
 &lt;p&gt;Pictorial examples of modular neural networks:&lt;/p&gt;
 &lt;p&gt;
 
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141842.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;[Kirsch et al.](https://arxiv.org/abs/1811.05249&lt;/figcaption&gt;
-  &lt;/figure&gt;
-)&lt;/p&gt;
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141842.png&#34; alt=&#34;&#34;&gt;
+{&lt;a href=&#34;https://arxiv.org/abs/1811.05249&#34;target=&#34;_blank&#34;&gt;Kirsch et al.&lt;/a&gt;}&lt;/p&gt;
 &lt;p&gt;
 
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141514.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;[Chang et al.](https://arxiv.org/abs/1807.04640&lt;/figcaption&gt;
-  &lt;/figure&gt;
-)&lt;/p&gt;
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141514.png&#34; alt=&#34;&#34;&gt;
+{&lt;a href=&#34;https://arxiv.org/abs/1807.04640&#34;target=&#34;_blank&#34;&gt;Chang et al.&lt;/a&gt;}&lt;/p&gt;
 &lt;p&gt;
 
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141932.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;[Abolafia et al.](https://arxiv.org/abs/2003.04227&lt;/figcaption&gt;
-  &lt;/figure&gt;
-)&lt;/p&gt;
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210413141932.png&#34; alt=&#34;&#34;&gt;
+{&lt;a href=&#34;https://arxiv.org/abs/2003.04227&#34;target=&#34;_blank&#34;&gt;Abolafia et al.&lt;/a&gt;}&lt;/p&gt;
 &lt;h1 id=&#34;why&#34;&gt;Why?&lt;/h1&gt;
 &lt;p&gt;Why have modular neural architectures? Is it beneficial for program synthesis? Is it beneficial for machine learning in general?&lt;/p&gt;
 &lt;h2 id=&#34;data-invariances&#34;&gt;Data invariances&lt;/h2&gt;
