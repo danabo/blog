@@ -1,6 +1,6 @@
 ---
 date: 2021-04-13
-lastmod: '2021-04-14T11:14:45-05:00'
+lastmod: '2021-04-14T12:45:52-05:00'
 tags:
 - machine learning
 title: Modular Neural Networks
@@ -243,7 +243,7 @@ Here is the general case of this training procedure:
 
 Let $\\tilde{A}\_n$ be a length-$S$ i.i.d. sample from $p(a\_n \\mid x\_n,\\p)$.
 Let $A\_n^\*$ be a top-$K$ buffer for the $n$-th training example $(x\\up{n},y\\up{n})$. That means $A\_n^\*$ holds the best $a\_n$ observed over the course of training, scored by $p(a\_n \\mid x\_n,\\p)$. Note that this is a moving target, since $\\p$ is simultaneously changing, so the joint score of $A\_n^\*$ can decrease.
-Let $A\_n = \\tilde{A}\_n \\cup A\_n^\*$.  (If $A\_n^\* = \\emptyset$ this reduces to usual policy gradient training, and if $\\tilde{A}\_n = \\emptyset$ this reduces to the EM algorithm described above as well as [Abolafia 2018](https://arxiv.org/abs/1801.03526).)
+Let $A\_n = \\tilde{A}\_n \\cup A\_n^\*$.
 
 Let $B \\subseteq D$ be a minibatch. The Monte Carlo gradient approximation (ala REINFORCE) is:
 
@@ -253,6 +253,10 @@ $$
 
 where $R(a\\mid x) = p(y\\mid x,a,\\t)$ or $\\log p(y\\mid x,a,\\t)$.
 
+
+If $A\_n^\* = \\emptyset$ this setup reduces to usual policy gradient training, and if $\\tilde{A}\_n = \\emptyset$ and $\\abs{A\_n^\*}=1$ (i.e. $K=1$) this reduces to the EM algorithm (Algorithm 1) in [Kirsch et al.](https://arxiv.org/abs/1811.05249).
+
+[Abolafia 2018](https://arxiv.org/abs/1801.03526) is similar (where $K\\geq 1$), except that the reward function is assumed to be fixed through out training, so the top-$K$ buffer $A\_n^\*$ cannot diminish in total score over time.
 
 ### Information theory
 
