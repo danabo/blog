@@ -227,12 +227,14 @@ $$</p>
 <p>Here is the general case of this training procedure:</p>
 <p>Let $\tilde{A}_n$ be a length-$S$ i.i.d. sample from $p(a_n \mid x_n,\p)$.<br>
 Let $A_n^*$ be a top-$K$ buffer for the $n$-th training example $(x\up{n},y\up{n})$. That means $A_n^*$ holds the best $a_n$ observed over the course of training, scored by $p(a_n \mid x_n,\p)$. Note that this is a moving target, since $\p$ is simultaneously changing, so the joint score of $A_n^*$ can decrease.<br>
-Let $A_n = \tilde{A}_n \cup A_n^*$.  (If $A_n^* = \emptyset$ this reduces to usual policy gradient training, and if $\tilde{A}_n = \emptyset$ this reduces to the EM algorithm described above as well as <a href="https://arxiv.org/abs/1801.03526"target="_blank">Abolafia 2018</a>.)</p>
+Let $A_n = \tilde{A}_n \cup A_n^*$.</p>
 <p>Let $B \subseteq D$ be a minibatch. The Monte Carlo gradient approximation (ala REINFORCE) is:</p>
 <p>$$<br>
 \nabla_\p\mc{L} \approx \frac{1}{\abs{B}}\sum_{n\in B}\frac{1}{\abs{A_n}}\sum_{a_n \in A_n} \nabla_\p\log p(a\mid x, \p) R(a \mid x)<br>
 $$</p>
 <p>where $R(a\mid x) = p(y\mid x,a,\t)$ or $\log p(y\mid x,a,\t)$.</p>
+<p>If $A_n^* = \emptyset$ this setup reduces to usual policy gradient training, and if $\tilde{A}_n = \emptyset$ and $\abs{A_n^*}=1$ (i.e. $K=1$) this reduces to the EM algorithm (Algorithm 1) in <a href="https://arxiv.org/abs/1811.05249"target="_blank">Kirsch et al.</a>.</p>
+<p><a href="https://arxiv.org/abs/1801.03526"target="_blank">Abolafia 2018</a> is similar (where $K\geq 1$), except that the reward function is assumed to be fixed through out training, so the top-$K$ buffer $A_n^*$ cannot diminish in total score over time.</p>
 <h3 id="information-theory">Information theory</h3>
 <p><a href="https://arxiv.org/abs/1811.05249"target="_blank">Kirsch et al.</a> plots the quantities $H_a$ and $H_b$ as diagnostic tools and measures of &ldquo;module collapse&rdquo; and training convergence. I used the same quantities in my own experiments and found them to be similarly helpful.</p>
 <p>There is theoretical justification for these quantities, and they may even be used as regularizers.</p>
