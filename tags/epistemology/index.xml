@@ -629,19 +629,6 @@ $$&lt;/p&gt;
 
 
  and the hypothesis set conception, via algorithmic information theory.&lt;/p&gt;
-&lt;h2 id=&#34;shannon-equivalence&#34;&gt;Shannon Equivalence&lt;/h2&gt;
-&lt;p&gt;I defined the quantities of information above using the set cardinality function $\abs{\cdot}$ to measure the sizes of sets (called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Counting_measure&#34;target=&#34;_blank&#34;&gt;counting measure&lt;/a&gt;). In general, the size of a set can be defined with a &lt;strong&gt;measure&lt;/strong&gt;, which is a function from subsets to non-negative real numbers. So a measure $\mu$ on $\H$ has the type signature $\mu : 2^\H \to \mb{R}_{\geq 0}$ (though technically we need to restrict ourselves to &lt;em&gt;measurable&lt;/em&gt; subsets of $\H$, see my &lt;a href=&#34;http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory&#34;target=&#34;_blank&#34;&gt;primer to measure theory&lt;/a&gt; for details). Furthermore, if we choose measure $\mu$ s.t. $\mu(\H) = 1$, then $\mu$ is called a &lt;strong&gt;probability measure&lt;/strong&gt; (or a &lt;strong&gt;normalized measure&lt;/strong&gt;). See my &lt;a href=&#34;http://zhat.io/articles/primer-probability-theory#definitions&#34;target=&#34;_blank&#34;&gt;primer to probability theory&lt;/a&gt; for details.&lt;/p&gt;
-&lt;p&gt;If we replace $\abs{\cdot}$ with probability measure $\mu(\cdot)$ everywhere in the quantities of information defined above, then we get the usual Shannon definitions:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$h_\mu(A) = -\lg \mu(A)$&lt;/li&gt;
-&lt;li&gt;$h_\mu(A \mid B) = -\lg \par{\frac{\mu(A \cap B)}{\mu(B)}}$&lt;/li&gt;
-&lt;li&gt;$i_\mu(A, B) = \lg\par{\frac{\mu(A\cap B)}{\mu(A)\mu(B)}}$&lt;/li&gt;
-&lt;li&gt;$\mb{H}_\mu(\mf{A}) = \sum_{A\in\mf{A}} \mu(A) h_\mu(A)$&lt;/li&gt;
-&lt;li&gt;$\mb{H}_\mu(\mf{A}\mid B) = \sum_{A\in\mf{A}} \mu(A\mid B) h_\mu(A\mid B)$&lt;/li&gt;
-&lt;li&gt;$\mb{H}_\mu(\mf{A}\mid\mf{B}) = -\sum_{A\in\mf{A}}\sum_{B\in\mf{B}} \mu(A\cap B) h_\mu(A\mid B)$&lt;/li&gt;
-&lt;li&gt;$\mb{I}_\mu(\mf{A}, \mf{B}) = \sum_{A\in\mf{A}}\sum_{B\in\mf{B}} \mu(A\cap B) i_\mu(A, B)$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;where $A,B\subseteq\H$ and $\mf{A},\mf{B}$ are two partitions of $\H$. Note that $\abs{\H}$ disappears because it becomes $\mu(\H) = 1$.&lt;/p&gt;
 &lt;h2 id=&#34;algorithmic-randomness&#34;&gt;Algorithmic Randomness&lt;/h2&gt;
 &lt;p&gt;In 
 
@@ -698,8 +685,21 @@ $$&lt;/p&gt;
 
 ) has posterior convergence to all such $\mu$. In fact, Solomonoff&amp;rsquo;s mixture can be used as a test for whether $\o$ is $\mu$-typical by observing if $\lim_{n\to\infty} \xi(\o_n \mid \o_{&amp;lt;n}) - \mu(\o_n \mid \o_{&amp;lt;n}) = 0$ (almost surely).&lt;/p&gt;
 &lt;p&gt;The takeaway here is that if compound hypothesis $\h$ is the typical set for some measure $\mu$, then if we don&amp;rsquo;t specify any particular measure, the limiting information gain $h_\H(\dom{\h}{x&amp;rsquo;y} \mid \dom{\h}{x})$ as $\abs{x}\to\infty$ converges to something unique. So if we have infinite hypothesis sets and don&amp;rsquo;t want to arbitrarily choose a measure, not all hope is lost.&lt;/p&gt;
-&lt;h1 id=&#34;optimal-compression&#34;&gt;Optimal Compression&lt;/h1&gt;
-&lt;p&gt;As we&amp;rsquo;ve seen, Bayesian information theory is mathematically equivalent to Shannon&amp;rsquo;s information theory, where a probability measure $\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).&lt;/p&gt;
+&lt;h1 id=&#34;shannon-equivalence&#34;&gt;Shannon Equivalence&lt;/h1&gt;
+&lt;p&gt;I defined the quantities of information above using the set cardinality function $\abs{\cdot}$ to measure the sizes of sets (called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Counting_measure&#34;target=&#34;_blank&#34;&gt;counting measure&lt;/a&gt;). In general, the size of a set can be defined with a &lt;strong&gt;measure&lt;/strong&gt;, which is a function from subsets to non-negative real numbers. So a measure $\mu$ on $\H$ has the type signature $\mu : 2^\H \to \mb{R}_{\geq 0}$ (though technically we need to restrict ourselves to &lt;em&gt;measurable&lt;/em&gt; subsets of $\H$, see my &lt;a href=&#34;http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory&#34;target=&#34;_blank&#34;&gt;primer to measure theory&lt;/a&gt; for details). Furthermore, if we choose measure $\mu$ s.t. $\mu(\H) = 1$, then $\mu$ is called a &lt;strong&gt;probability measure&lt;/strong&gt; (or a &lt;strong&gt;normalized measure&lt;/strong&gt;). See my &lt;a href=&#34;http://zhat.io/articles/primer-probability-theory#definitions&#34;target=&#34;_blank&#34;&gt;primer to probability theory&lt;/a&gt; for details.&lt;/p&gt;
+&lt;p&gt;If we replace $\abs{\cdot}$ with probability measure $\mu(\cdot)$ everywhere in the quantities of information defined above, then we get the usual Shannon definitions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$h_\mu(A) = -\lg \mu(A)$&lt;/li&gt;
+&lt;li&gt;$h_\mu(A \mid B) = -\lg \par{\frac{\mu(A \cap B)}{\mu(B)}}$&lt;/li&gt;
+&lt;li&gt;$i_\mu(A, B) = \lg\par{\frac{\mu(A\cap B)}{\mu(A)\mu(B)}}$&lt;/li&gt;
+&lt;li&gt;$\mb{H}_\mu(\mf{A}) = \sum_{A\in\mf{A}} \mu(A) h_\mu(A)$&lt;/li&gt;
+&lt;li&gt;$\mb{H}_\mu(\mf{A}\mid B) = \sum_{A\in\mf{A}} \mu(A\mid B) h_\mu(A\mid B)$&lt;/li&gt;
+&lt;li&gt;$\mb{H}_\mu(\mf{A}\mid\mf{B}) = -\sum_{A\in\mf{A}}\sum_{B\in\mf{B}} \mu(A\cap B) h_\mu(A\mid B)$&lt;/li&gt;
+&lt;li&gt;$\mb{I}_\mu(\mf{A}, \mf{B}) = \sum_{A\in\mf{A}}\sum_{B\in\mf{B}} \mu(A\cap B) i_\mu(A, B)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;where $A,B\subseteq\H$ and $\mf{A},\mf{B}$ are two partitions of $\H$. Note that $\abs{\H}$ disappears because it becomes $\mu(\H) = 1$.&lt;/p&gt;
+&lt;h2 id=&#34;optimal-compression&#34;&gt;Optimal Compression&lt;/h2&gt;
+&lt;p&gt;Now we see that Bayesian information theory is mathematically equivalent to Shannon&amp;rsquo;s information theory, where a probability measure $\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).&lt;/p&gt;
 &lt;p&gt;However, what is the connection between narrowing down hypothesis sets and optimal compression? Given probability measure $\mu$ on $\H$, the $\mu$-probability of finite observation $x\in\X^*$ is $\mu(\dom{\H}{x})$. (We can abuse notation and write $\mu(x)$ where $x$ is shorthand for $\dom{\H}{x}$ when given as the argument to $\mu$.) Then is $h_\mu(\dom{\H}{x})$ the optimal compressed length of $x$?&lt;/p&gt;
 &lt;p&gt;For finite strings, optimal compression isn&amp;rsquo;t a well defined notion. According to algorithmic information theory, we use the shortest program that outputs $x$ as the compressed representation of $x$, but the length of that shortest program depends on our arbitrary choice of programming language. We can achieve an encoded length of approximately $h_\mu(\dom{\H}{x})$ by using &lt;a href=&#34;https://en.wikipedia.org/wiki/Arithmetic_coding&#34;target=&#34;_blank&#34;&gt;arithmetic coding&lt;/a&gt;, with $\mu$ as the provided measure (ignoring the length of the arithmetic decoder program itself).&lt;/p&gt;
 &lt;p&gt;Shannon&amp;rsquo;s information theory operates in the domain of random data, and provides optimal code lengths &lt;em&gt;in expectation&lt;/em&gt;. In the Bayesian information theory I&amp;rsquo;ve outlined above, we are not working with randomness, but non-determinism (the agent&amp;rsquo;s predictions are not uniquely determined). However, as the data length goes to infinity, these two conceptions of probability become intertwined.&lt;/p&gt;
