@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2021-04-12T11:55:57-05:00'
+lastmod: '2021-04-15T15:56:49-05:00'
 tags:
 - epistemology
 - information
@@ -398,20 +398,6 @@ There is a sort of middle ground that also serves as a bridge between the usual 
 
 
 
-## Shannon Equivalence
-I defined the quantities of information above using the set cardinality function $\\abs{\\cdot}$ to measure the sizes of sets (called the [counting measure](https://en.wikipedia.org/wiki/Counting_measure)). In general, the size of a set can be defined with a **measure**, which is a function from subsets to non-negative real numbers. So a measure $\\mu$ on $\\H$ has the type signature $\\mu : 2^\\H \\to \\mb{R}\_{\\geq 0}$ (though technically we need to restrict ourselves to *measurable* subsets of $\\H$, see my [primer to measure theory](http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory) for details). Furthermore, if we choose measure $\\mu$ s.t. $\\mu(\\H) = 1$, then $\\mu$ is called a **probability measure** (or a **normalized measure**). See my [primer to probability theory](http://zhat.io/articles/primer-probability-theory#definitions) for details.
-
-If we replace $\\abs{\\cdot}$ with probability measure $\\mu(\\cdot)$ everywhere in the quantities of information defined above, then we get the usual Shannon definitions:
-- $h\_\\mu(A) = -\\lg \\mu(A)$
-- $h\_\\mu(A \\mid B) = -\\lg \\par{\\frac{\\mu(A \\cap B)}{\\mu(B)}}$
-- $i\_\\mu(A, B) = \\lg\\par{\\frac{\\mu(A\\cap B)}{\\mu(A)\\mu(B)}}$
-- $\\mb{H}\_\\mu(\\mf{A}) = \\sum\_{A\\in\\mf{A}} \\mu(A) h\_\\mu(A)$ 
-- $\\mb{H}\_\\mu(\\mf{A}\\mid B) = \\sum\_{A\\in\\mf{A}} \\mu(A\\mid B) h\_\\mu(A\\mid B)$
-- $\\mb{H}\_\\mu(\\mf{A}\\mid\\mf{B}) = -\\sum\_{A\\in\\mf{A}}\\sum\_{B\\in\\mf{B}} \\mu(A\\cap B) h\_\\mu(A\\mid B)$
-- $\\mb{I}\_\\mu(\\mf{A}, \\mf{B}) = \\sum\_{A\\in\\mf{A}}\\sum\_{B\\in\\mf{B}} \\mu(A\\cap B) i\_\\mu(A, B)$
-
-where $A,B\\subseteq\\H$ and $\\mf{A},\\mf{B}$ are two partitions of $\\H$. Note that $\\abs{\\H}$ disappears because it becomes $\\mu(\\H) = 1$.
-
 ## Algorithmic Randomness
 In {{< locallink "Deconstructing Bayesian Inference" >}}, I defined Bayesian inference as a manipulation of probability measures on $\\X^\\infty$. Given a set $\\M$ of measures $\\mu$ on $\\X^\\infty$, and a prior $p$ on $\\M$, what is the corresponding "possibility space narrowing-down" perspective?
 
@@ -476,8 +462,22 @@ $$
 
 The takeaway here is that if compound hypothesis $\\h$ is the typical set for some measure $\\mu$, then if we don't specify any particular measure, the limiting information gain $h\_\\H(\\dom{\\h}{x'y} \\mid \\dom{\\h}{x})$ as $\\abs{x}\\to\\infty$ converges to something unique. So if we have infinite hypothesis sets and don't want to arbitrarily choose a measure, not all hope is lost.
 
-# Optimal Compression
-As we've seen, Bayesian information theory is mathematically equivalent to Shannon's information theory, where a probability measure $\\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).
+# Shannon Equivalence
+I defined the quantities of information above using the set cardinality function $\\abs{\\cdot}$ to measure the sizes of sets (called the [counting measure](https://en.wikipedia.org/wiki/Counting_measure)). In general, the size of a set can be defined with a **measure**, which is a function from subsets to non-negative real numbers. So a measure $\\mu$ on $\\H$ has the type signature $\\mu : 2^\\H \\to \\mb{R}\_{\\geq 0}$ (though technically we need to restrict ourselves to *measurable* subsets of $\\H$, see my [primer to measure theory](http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory) for details). Furthermore, if we choose measure $\\mu$ s.t. $\\mu(\\H) = 1$, then $\\mu$ is called a **probability measure** (or a **normalized measure**). See my [primer to probability theory](http://zhat.io/articles/primer-probability-theory#definitions) for details.
+
+If we replace $\\abs{\\cdot}$ with probability measure $\\mu(\\cdot)$ everywhere in the quantities of information defined above, then we get the usual Shannon definitions:
+- $h\_\\mu(A) = -\\lg \\mu(A)$
+- $h\_\\mu(A \\mid B) = -\\lg \\par{\\frac{\\mu(A \\cap B)}{\\mu(B)}}$
+- $i\_\\mu(A, B) = \\lg\\par{\\frac{\\mu(A\\cap B)}{\\mu(A)\\mu(B)}}$
+- $\\mb{H}\_\\mu(\\mf{A}) = \\sum\_{A\\in\\mf{A}} \\mu(A) h\_\\mu(A)$ 
+- $\\mb{H}\_\\mu(\\mf{A}\\mid B) = \\sum\_{A\\in\\mf{A}} \\mu(A\\mid B) h\_\\mu(A\\mid B)$
+- $\\mb{H}\_\\mu(\\mf{A}\\mid\\mf{B}) = -\\sum\_{A\\in\\mf{A}}\\sum\_{B\\in\\mf{B}} \\mu(A\\cap B) h\_\\mu(A\\mid B)$
+- $\\mb{I}\_\\mu(\\mf{A}, \\mf{B}) = \\sum\_{A\\in\\mf{A}}\\sum\_{B\\in\\mf{B}} \\mu(A\\cap B) i\_\\mu(A, B)$
+
+where $A,B\\subseteq\\H$ and $\\mf{A},\\mf{B}$ are two partitions of $\\H$. Note that $\\abs{\\H}$ disappears because it becomes $\\mu(\\H) = 1$.
+
+## Optimal Compression
+Now we see that Bayesian information theory is mathematically equivalent to Shannon's information theory, where a probability measure $\\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).
 
 However, what is the connection between narrowing down hypothesis sets and optimal compression? Given probability measure $\\mu$ on $\\H$, the $\\mu$-probability of finite observation $x\\in\\X^\*$ is $\\mu(\\dom{\\H}{x})$. (We can abuse notation and write $\\mu(x)$ where $x$ is shorthand for $\\dom{\\H}{x}$ when given as the argument to $\\mu$.) Then is $h\_\\mu(\\dom{\\H}{x})$ the optimal compressed length of $x$?
 
