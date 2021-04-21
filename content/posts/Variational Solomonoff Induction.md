@@ -13,11 +13,11 @@ $$
 \\newcommand{\\E}{\\mb{E}}
 \\newcommand{\\B}{\\mb{B}}
 \\newcommand{\\R}{\\mb{R}}
-\\newcommand{\\kl}[2]{D\_{KL}\\left(#1\\ \\| \\ #2\\right)}
-\\newcommand{\\argmin}[1]{\\underset{#1}{\\mathrm{argmin}}\\ }
-\\newcommand{\\argmax}[1]{\\underset{#1}{\\mathrm{argmax}}\\ }
-\\newcommand{\\abs}[1]{\\left\\lvert#1\\right\\rvert}
-\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}
+\\newcommand{\\kl}\[2\]{D\_{KL}\\left(#1\\ \\| \\ #2\\right)}
+\\newcommand{\\argmin}\[1\]{\\underset{#1}{\\mathrm{argmin}}\\ }
+\\newcommand{\\argmax}\[1\]{\\underset{#1}{\\mathrm{argmax}}\\ }
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
 \\newcommand{\\ve}{\\varepsilon}
 \\newcommand{\\t}{\\theta}
 \\newcommand{\\T}{\\Theta}
@@ -41,7 +41,7 @@ Typical usage "modes" of $q\_\\t$ in machine learning:
     - $\\t^\* = \\argmax{\\t}\\log q\_\\t(D)$ for dataset $D$.
 - **MAP** ([maximum a posteriori](https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation)): Training produces model with highest posterior probability.
     - $\\t\\in\\T$ is a hypothesis.
-    - $\\t^\* = \\argmax{\\t}\\left[\\log q\_\\t(D) + \\log p(\\t)\\right]$ for dataset $D$ and prior $p(\\t)$.
+    - $\\t^\* = \\argmax{\\t}\\left\[\\log q\_\\t(D) + \\log p(\\t)\\right\]$ for dataset $D$ and prior $p(\\t)$.
     - $\\log p(\\t)$ can be viewed as a [regularizer](https://en.wikipedia.org/wiki/Regularization_(mathematics)). MAP is just MLE plus regularization - the most typical form of parametric machine learning.
 - **Bayesian Inference**: Prior over the parameter induces a posterior over parameters given data. 
     - $\\t\\in\\T$ is a hypothesis.
@@ -50,7 +50,7 @@ Typical usage "modes" of $q\_\\t$ in machine learning:
 - **Variational Bayes** (free energy minimization): training produces a (approximate) posterior distribution over hypotheses.
     - $z \\in \\mc{Z}$ is a hypothesis.
     - $\\tilde{\\t} = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z \\mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.
-    - $\\t^\* = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z)} - \\E\_{z\\sim f\_\\t(z)}\\left[\\lg p(D \\mid z)\\right]$ is the approximation. This is what we find through optimization.
+    - $\\t^\* = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z)} - \\E\_{z\\sim f\_\\t(z)}\\left\[\\lg p(D \\mid z)\\right\]$ is the approximation. This is what we find through optimization.
 
 The variational Bayes "usage mode" is clearly different from the others. MLE and MAP are fitting $f\_\\t$ to the data, i.e. finding a single $\\t^\*\\in\\T$ that maximizes the probability of the data under $q\_\\t$. Bayesian inference is finding a distribution $p(\\t \\mid D)$ on $\\T$ which represents the model's beliefs about various parameters $\\t\\in\\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f\_\\t$ to data, since we are not choosing any particular parameter in $\\T$. Variational Bayes uses $q\_{\\t^\*}$ as an approximation of $p(\\t \\mid D)$, where $\\t^\*\\in\\T$ is the optimal parameter of distribution $q\_\\t(z)$ and $z\\in\\mc{Z}$ is a hypothesis.
 
@@ -228,38 +228,38 @@ However, if $p(h \\mid x\_{1:t})$ is intractable to calculate, then so is $\\kl{
 $$
 \\begin{aligned}
 &\\kl{q\_\\t(h)}{p(h\\mid x\_{1:t})} \\\\
-&\\quad= \\E\_{h \\sim q\_\\t}\\left[\\lg\\left(\\frac{q\_\\t(h)}{p(h\\mid x\_{1:t})}\\right)\\right] \\\\
-&\\quad= \\E\_{h \\sim q\_\\t}\\left[\\lg\\left(\\frac{q\_\\t(h)}{p(h)}\\right)-\\lg p(x\_{1:t} \\mid h) + \\lg p(x\_{1:t})\\right] \\\\
-&\\quad= \\kl{q\_\\t(h)}{p(h)} - \\E\_{h\\sim q\_\\t}\\left[\\lg p(x\_{1:t} \\mid h)\\right] - \\lg \\frac{1}{p(x\_{1:t})} \\\\
-&\\quad= \\mc{F}[q\_\\t] - \\lg \\frac{1}{p(x\_{1:t})} \\,.
+&\\quad= \\E\_{h \\sim q\_\\t}\\left\[\\lg\\left(\\frac{q\_\\t(h)}{p(h\\mid x\_{1:t})}\\right)\\right\] \\\\
+&\\quad= \\E\_{h \\sim q\_\\t}\\left\[\\lg\\left(\\frac{q\_\\t(h)}{p(h)}\\right)-\\lg p(x\_{1:t} \\mid h) + \\lg p(x\_{1:t})\\right\] \\\\
+&\\quad= \\kl{q\_\\t(h)}{p(h)} - \\E\_{h\\sim q\_\\t}\\left\[\\lg p(x\_{1:t} \\mid h)\\right\] - \\lg \\frac{1}{p(x\_{1:t})} \\\\
+&\\quad= \\mc{F}\[q\_\\t\] - \\lg \\frac{1}{p(x\_{1:t})} \\,.
 \\end{aligned}
 $$
 
-where $\\mc{F}[q\_\\t]$ is defined as
+where $\\mc{F}\[q\_\\t\]$ is defined as
 
 $$
 \\begin{aligned}
-\\mc{F}[q\_\\t] &= \\kl{q\_\\t(h)}{p(h)} - \\E\_{h\\sim q\_\\t}\\left[\\lg p(x\_{1:t} \\mid h)\\right] \\\\
-&= \\E\_{h \\sim q\_\\t}\\left[\\lg\\left(\\frac{q\_\\t(h)}{p(h)}\\right)-\\lg p(x\_{1:t} \\mid h)\\right] \\\\
-&= \\E\_{h \\sim q\_\\t}\\left[\\lg\\left(\\frac{q\_\\t(h)}{p(h,x\_{1:t})}\\right)\\right]\\,.
+\\mc{F}\[q\_\\t\] &= \\kl{q\_\\t(h)}{p(h)} - \\E\_{h\\sim q\_\\t}\\left\[\\lg p(x\_{1:t} \\mid h)\\right\] \\\\
+&= \\E\_{h \\sim q\_\\t}\\left\[\\lg\\left(\\frac{q\_\\t(h)}{p(h)}\\right)-\\lg p(x\_{1:t} \\mid h)\\right\] \\\\
+&= \\E\_{h \\sim q\_\\t}\\left\[\\lg\\left(\\frac{q\_\\t(h)}{p(h,x\_{1:t})}\\right)\\right\]\\,.
 \\end{aligned}
 $$
 
-$\\mc{F}[q\_\\t]$ is called the **variational free energy**. It depends explicitly on choice of parameter $\\t$, but also keep in mind it depends implicitly on the observation $x\_{1:t}$ and distribution $p(h, x\_{1:t})$.
+$\\mc{F}\[q\_\\t\]$ is called the **variational free energy**. It depends explicitly on choice of parameter $\\t$, but also keep in mind it depends implicitly on the observation $x\_{1:t}$ and distribution $p(h, x\_{1:t})$.
 
-Because $\\lg \\frac{1}{p(x\_{1:t})}$ (called the **surprise** of $x\_{1:t}$) is positive and constant (because observation $x\_{1:t}$ is constant), then minimizing $\\mc{F}[q\_\\t]$ to $\\lg \\frac{1}{p(x\_{1:t})}$ guarantees that $\\kl{q\_\\t(h)}{p(h\\mid x\_{1:t})}$ is 0 (KL-divergence cannot be negative), which in turn guarantees that $q\_\\t(h)$ and $p(h\\mid x\_{1:t})$ are equal distributions on $\\mc{H}$. If our optimization process does not fully minimize $\\mc{F}[q\_\\t]$, then $q\_\\t(h)$ will approximate $p(h\\mid x\_{1:t})$ with some amount of error.
+Because $\\lg \\frac{1}{p(x\_{1:t})}$ (called the **surprise** of $x\_{1:t}$) is positive and constant (because observation $x\_{1:t}$ is constant), then minimizing $\\mc{F}\[q\_\\t\]$ to $\\lg \\frac{1}{p(x\_{1:t})}$ guarantees that $\\kl{q\_\\t(h)}{p(h\\mid x\_{1:t})}$ is 0 (KL-divergence cannot be negative), which in turn guarantees that $q\_\\t(h)$ and $p(h\\mid x\_{1:t})$ are equal distributions on $\\mc{H}$. If our optimization process does not fully minimize $\\mc{F}\[q\_\\t\]$, then $q\_\\t(h)$ will approximate $p(h\\mid x\_{1:t})$ with some amount of error.
 
 The optimization procedure we want to perform is
 
 $$
 \\begin{aligned}
-&\\argmin{\\t\\in\\T} \\mc{F}[q\_\\t] \\\\
-=\\ & \\argmin{\\t\\in\\T} \\E\_{h \\sim q\_\\t}\\left[\\lg\\left(\\frac{q\_\\t(h)}{p(h,x\_{1:t})}\\right)\\right] \\\\
-=\\ & \\argmax{\\t\\in\\T}\\set{ \\E\_{h \\sim q\_\\t}\\left[R(h)\\right] + \\mb{H}\_{h \\sim q\_\\t}[q\_\\t(h)]}
+&\\argmin{\\t\\in\\T} \\mc{F}\[q\_\\t\] \\\\
+=\\ & \\argmin{\\t\\in\\T} \\E\_{h \\sim q\_\\t}\\left\[\\lg\\left(\\frac{q\_\\t(h)}{p(h,x\_{1:t})}\\right)\\right\] \\\\
+=\\ & \\argmax{\\t\\in\\T}\\set{ \\E\_{h \\sim q\_\\t}\\left\[R(h)\\right\] + \\mb{H}\_{h \\sim q\_\\t}\[q\_\\t(h)\]}
 \\end{aligned}
 $$
 
-This now has the form of a one-timestep reinforcement learning objective, where $R(h) = \\lg p(h,x\_{1:t})$ is the reward for "action" $h$, and $\\mb{H}\_{h \\sim q\_\\t}[q\_\\t(h)]$ is the entropy of $q\_\\t(h)$. Here $q\_\\t(h)$ is called the **policy**, i.e. the distribution actions are sampled from. Maximizing this objective jointly maximizes expected reward under the policy and entropy of the policy. An entropy term is typically added to RL objectives as a regularizer to encourage exploration (higher entropy policy means more random actions), but in this case the entropy term comes included.
+This now has the form of a one-timestep reinforcement learning objective, where $R(h) = \\lg p(h,x\_{1:t})$ is the reward for "action" $h$, and $\\mb{H}\_{h \\sim q\_\\t}\[q\_\\t(h)\]$ is the entropy of $q\_\\t(h)$. Here $q\_\\t(h)$ is called the **policy**, i.e. the distribution actions are sampled from. Maximizing this objective jointly maximizes expected reward under the policy and entropy of the policy. An entropy term is typically added to RL objectives as a regularizer to encourage exploration (higher entropy policy means more random actions), but in this case the entropy term comes included.
 
 We can use standard [policy gradient methods](https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html) (e.g. [IMPALA](https://deepmind.com/research/publications/impala-scalable-distributed-deep-rl-importance-weighted-actor-learner-architectures)) to maximize the above RL objective (equivalent to minimizing free energy), so long as $q\_\\t(h)$ is fast to sample from, and the reward $R(h) = \\lg p(h,x\_{1:t})$ is fast to compute. We can control both.
 
@@ -283,7 +283,7 @@ Then we need fast calculation of prior probabilities $p(h)$, and data probabilit
 We want to approximate $p(y \\mid x)$, i.e. the probability of observing string $y$ after observing $x$. This is similar to the problem of calculating $p(x)$, the data probability.
 
 $$
-p(x) = \\E\_{h\\sim p(h)} [p(x\\mid h)]\\,.
+p(x) = \\E\_{h\\sim p(h)} \[p(x\\mid h)\]\\,.
 $$
 
 If it were fast to compute $p(x\\mid h)$ for a given $h$, and fast to sample from the prior $p(h)$, then we can approximate the data probability with Monte Carlo sampling:
@@ -297,7 +297,7 @@ where $H^{(k)} = \\set{h\_1, h\_2, \\ldots, h\_k} \\sim p(h)$ is an i.i.d. sampl
 In the same way, we can approximate the data posterior using the identity
 
 $$
-p(y \\mid x) = \\E\_{h\\sim p(h \\mid x)} [p(y\\mid x, h)]\\,.
+p(y \\mid x) = \\E\_{h\\sim p(h \\mid x)} \[p(y\\mid x, h)\]\\,.
 $$
 
 The Monte Carlo approximation is:
@@ -368,5 +368,5 @@ However, if we are using the programs I previously suggested that output data pr
 # Lifelong learning
 Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it's future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).
 
-In the variational setup outlined above, we converted the problem of Bayesian inference into a reinforcement learning problem. At time $t$, data $x\_{1:t}$ is observed, and a policy $q\_{\\t^\*}$ on programs is trained using policy gradient methods. However, every $t$ requires its own $q\_{\\t\_t^\*}$, thus we would need to perform RL training at every timestep. One way to speed this up is to reuse policies from previous timesteps. That is to say, at time $t+1$ perform $\\argmax{\\t\\in\\T}\\set{ \\E\_{h \\sim q\_\\t}\\left[R(h)\\right] + \\mb{H}\_{h \\sim q\_\\t}[q\_\\t(h)]}$ using Monte Carlo gradient descent starting from the previous parameter $\\t\_t^\*$. This can be considered fine-tuning. However, this may fail to work if the posterior changes drastically between timesteps.
+In the variational setup outlined above, we converted the problem of Bayesian inference into a reinforcement learning problem. At time $t$, data $x\_{1:t}$ is observed, and a policy $q\_{\\t^\*}$ on programs is trained using policy gradient methods. However, every $t$ requires its own $q\_{\\t\_t^\*}$, thus we would need to perform RL training at every timestep. One way to speed this up is to reuse policies from previous timesteps. That is to say, at time $t+1$ perform $\\argmax{\\t\\in\\T}\\set{ \\E\_{h \\sim q\_\\t}\\left\[R(h)\\right\] + \\mb{H}\_{h \\sim q\_\\t}\[q\_\\t(h)\]}$ using Monte Carlo gradient descent starting from the previous parameter $\\t\_t^\*$. This can be considered fine-tuning. However, this may fail to work if the posterior changes drastically between timesteps.
 

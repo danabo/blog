@@ -11,12 +11,12 @@ $$
 \\newcommand{\\mc}{\\mathcal}
 \\newcommand{\\E}{\\mb{E}}
 \\newcommand{\\B}{\\mb{B}}
-\\newcommand{\\kl}[2]{D\_{KL}\\left(#1\\ \\| \\ #2\\right)}
-\\newcommand{\\argmin}[1]{\\underset{#1}{\\mathrm{argmin}}\\ }
-\\newcommand{\\argmax}[1]{\\underset{#1}{\\mathrm{argmax}}\\ }
-\\newcommand{\\abs}[1]{\\left\\lvert#1\\right\\rvert}
-\\newcommand{\\atup}[1]{\\left\\langle#1\\right\\rangle}
-\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}
+\\newcommand{\\kl}\[2\]{D\_{KL}\\left(#1\\ \\| \\ #2\\right)}
+\\newcommand{\\argmin}\[1\]{\\underset{#1}{\\mathrm{argmin}}\\ }
+\\newcommand{\\argmax}\[1\]{\\underset{#1}{\\mathrm{argmax}}\\ }
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\atup}\[1\]{\\left\\langle#1\\right\\rangle}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
 \\newcommand{\\t}{\\theta}
 \\newcommand{\\T}{\\Theta}
 \\newcommand{\\p}{\\phi}
@@ -46,10 +46,10 @@ where $\\mc{Q}$ is some space of distributions that you choose $q\_o$ from. Pres
 
 $$
 \\begin{aligned}
-\\kl{q(s)}{p(s\\mid o)} &= \\E\_{s\\sim q}\\left[\\lg\\frac{q(s)}{p(s\\mid o)}\\right] \\\\
-&= \\E\_{s\\sim q}\\left[\\lg\\frac{q(s)}{p(s)}\\right] + \\E\_{s\\sim q}\\left[\\lg \\frac{1}{p(o \\mid s)}\\right] + \\E\_{s\\sim q}[p(o)]\\\\
-&= \\kl{q(s)}{p(s)} - \\E\_{s\\sim q}\\left[\\lg p(o \\mid s)\\right] - \\lg\\frac{1}{p(o)} \\\\
-&= \\mc{F}[q] - \\lg\\frac{1}{p(o)}\\,, 
+\\kl{q(s)}{p(s\\mid o)} &= \\E\_{s\\sim q}\\left\[\\lg\\frac{q(s)}{p(s\\mid o)}\\right\] \\\\
+&= \\E\_{s\\sim q}\\left\[\\lg\\frac{q(s)}{p(s)}\\right\] + \\E\_{s\\sim q}\\left\[\\lg \\frac{1}{p(o \\mid s)}\\right\] + \\E\_{s\\sim q}\[p(o)\]\\\\
+&= \\kl{q(s)}{p(s)} - \\E\_{s\\sim q}\\left\[\\lg p(o \\mid s)\\right\] - \\lg\\frac{1}{p(o)} \\\\
+&= \\mc{F}\[q\] - \\lg\\frac{1}{p(o)}\\,, 
 \\end{aligned}
 $$
 
@@ -57,14 +57,14 @@ where
 
 $$
 \\begin{aligned}
-\\mc{F}[q] &= \\kl{q(s)}{p(s)} - \\E\_{s\\sim q}[\\lg p(o \\mid s)]\\\\
-&= \\E\_{s\\sim q}\\left[\\lg\\frac{q(s)}{p(s,o)}\\right]
+\\mc{F}\[q\] &= \\kl{q(s)}{p(s)} - \\E\_{s\\sim q}\[\\lg p(o \\mid s)\]\\\\
+&= \\E\_{s\\sim q}\\left\[\\lg\\frac{q(s)}{p(s,o)}\\right\]
 \\end{aligned}
 $$ 
 
-is called **variational free energy**. $\\kl{q(s)}{p(s)}$ is called **accuracy** and $\\E\_{s\\sim q}[\\lg p(o \\mid s)]$ is called **complexity**. $\\lg\\frac{1}{p(o)}$ is called **surprise** (self-information of the observation $o$).
+is called **variational free energy**. $\\kl{q(s)}{p(s)}$ is called **accuracy** and $\\E\_{s\\sim q}\[\\lg p(o \\mid s)\]$ is called **complexity**. $\\lg\\frac{1}{p(o)}$ is called **surprise** (self-information of the observation $o$).
 
-Minimizing $\\mc{F}[q]$ w.r.t. $q$ minimizes $\\kl{q(s)}{p(s\\mid o)}$. The surprise $\\lg\\frac{1}{p(o)}$ is constant w.r.t. this minimization. (Remember this is all assuming $o$ is given and fixed.)
+Minimizing $\\mc{F}\[q\]$ w.r.t. $q$ minimizes $\\kl{q(s)}{p(s\\mid o)}$. The surprise $\\lg\\frac{1}{p(o)}$ is constant w.r.t. this minimization. (Remember this is all assuming $o$ is given and fixed.)
 
 
 
@@ -115,7 +115,7 @@ The text says that the preferred policy also minimizes free energy:
 To simplify things, let's suppose the agent can do perfect Bayesian inference, so that $q\_o(s\\mid\\pi) = p(s \\mid o,\\pi)$. Let's see what happens if we plug in $p(s\\mid o,\\pi)$ for $q\_o(s\\mid \\pi)$ in our free energy definition:
 
 $$
-\\mc{F} = \\E\_{s \\sim p(s\\mid o,\\pi)}\\left[\\lg \\frac{p(s\\mid o,\\pi)}{p(s,o\\mid\\pi)}\\right] = \\E\_{s \\sim p(s\\mid o,\\pi)}\\left[\\lg \\frac{1}{p(o\\mid \\pi)}\\right] = \\lg \\frac{1}{p(o\\mid \\pi)}
+\\mc{F} = \\E\_{s \\sim p(s\\mid o,\\pi)}\\left\[\\lg \\frac{p(s\\mid o,\\pi)}{p(s,o\\mid\\pi)}\\right\] = \\E\_{s \\sim p(s\\mid o,\\pi)}\\left\[\\lg \\frac{1}{p(o\\mid \\pi)}\\right\] = \\lg \\frac{1}{p(o\\mid \\pi)}
 $$
 
 which is just the surprise (i.e. self-information due to observing $o$). Minimizing free energy means choosing $\\pi$ to maximize the data likelihood:
@@ -127,7 +127,7 @@ $$
 Remember that $\\mc{F}$ depends on a fixed $o$, which is what has already been observed. If $o$ is not observed, then we are talking about future $o$, and we need to take an expectation w.r.t. $o$, e.g.
 
 $$
-\\pi^\* := \\argmin{\\pi} \\E\_{o\\sim p(o\\mid\\pi)}\\lg\\frac{1}{p(o\\mid\\pi)} = \\argmin{\\pi}\\mb{H}[p(o\\mid\\pi)]
+\\pi^\* := \\argmin{\\pi} \\E\_{o\\sim p(o\\mid\\pi)}\\lg\\frac{1}{p(o\\mid\\pi)} = \\argmin{\\pi}\\mb{H}\[p(o\\mid\\pi)\]
 $$
 
 This is saying, choose a policy s.t. the future is as predictable as possible, i.e. minimizes entropy over observations, i.e. minimizes future expected surprise.
@@ -138,7 +138,7 @@ Let's replace $p(o\\mid\\pi)$ with $\\rho(o)$ (this should not depend on $\\pi$)
 
 $$
 \\begin{aligned}
-\\pi^\* &:= \\argmin{\\pi} \\E\_{o\\sim \\r(o)}\\lg\\frac{1}{p(o\\mid\\pi)} \\\\&= \\argmin{\\pi} H(\\r(o), p(o\\mid\\pi)) \\\\&= \\argmin{\\pi} \\left\\{\\kl{\\r(o)}{p(o\\mid\\pi)} + \\mb{H}[\\r(o)]\\right\\}
+\\pi^\* &:= \\argmin{\\pi} \\E\_{o\\sim \\r(o)}\\lg\\frac{1}{p(o\\mid\\pi)} \\\\&= \\argmin{\\pi} H(\\r(o), p(o\\mid\\pi)) \\\\&= \\argmin{\\pi} \\left\\{\\kl{\\r(o)}{p(o\\mid\\pi)} + \\mb{H}\[\\r(o)\]\\right\\}
 \\end{aligned}
 $$
 
@@ -159,8 +159,8 @@ If we are just trying to maximize expected total reward $r(o\_{1:n})$ w.r.t. the
 
 $$
 \\begin{aligned}
-\\pi^\* &:= \\argmax{\\pi} \\E\_{o \\sim p(o \\mid \\pi)} [r(o\_{1:n})] \\\\
-&= \\argmax{\\pi} \\E\_{o\_{1:n},a\_{1:n} \\sim p(o\_{1:n},a\_{1:n} \\mid \\pi)} [\\ln\\r(o\_{1:n})]\\,.
+\\pi^\* &:= \\argmax{\\pi} \\E\_{o \\sim p(o \\mid \\pi)} \[r(o\_{1:n})\] \\\\
+&= \\argmax{\\pi} \\E\_{o\_{1:n},a\_{1:n} \\sim p(o\_{1:n},a\_{1:n} \\mid \\pi)} \[\\ln\\r(o\_{1:n})\]\\,.
 \\end{aligned}
 $$
 
@@ -174,21 +174,21 @@ We get
 
 $$
 \\begin{aligned}
-G[\\pi]&=\\E\_\\rho[\\mc{F}[o,\\pi]] \\\\
-&= \\E\_{o\\sim\\rho}\\E\_{s \\sim q\_{o,\\pi}}\\left[\\lg\\frac{q\_{o,\\pi}(s)}{p(s,o\\mid\\pi)}\\right] \\\\
-&= \\E\_{o\\sim\\rho}\\kl{q\_{o,\\pi}(s)}{p(s\\mid\\pi)} - \\E\_{o\\sim\\rho}\\E\_{s\\sim q\_{o,\\pi}}\\left[\\lg p(o \\mid s,\\pi)\\right]
+G\[\\pi\]&=\\E\_\\rho\[\\mc{F}\[o,\\pi\]\] \\\\
+&= \\E\_{o\\sim\\rho}\\E\_{s \\sim q\_{o,\\pi}}\\left\[\\lg\\frac{q\_{o,\\pi}(s)}{p(s,o\\mid\\pi)}\\right\] \\\\
+&= \\E\_{o\\sim\\rho}\\kl{q\_{o,\\pi}(s)}{p(s\\mid\\pi)} - \\E\_{o\\sim\\rho}\\E\_{s\\sim q\_{o,\\pi}}\\left\[\\lg p(o \\mid s,\\pi)\\right\]
 \\end{aligned}
 $$
 
 where $q\_{o,\\pi}$ is the optimal approximate posterior for the given observation $o$ and policy $\\pi$ used to obtain $o$. From the perspective of $q\_{o,\\pi}$, $o$ is already observed using policy $\\pi$ which determines the probability of that observation.
 
 $$
-q\_{o,\\pi} := \\argmin{q} \\mc{F}[o,\\pi] = \\argmin{q}\\E\_{s \\sim q}\\left[\\lg\\frac{q(s)}{p(s,o\\mid\\pi)}\\right]
+q\_{o,\\pi} := \\argmin{q} \\mc{F}\[o,\\pi\] = \\argmin{q}\\E\_{s \\sim q}\\left\[\\lg\\frac{q(s)}{p(s,o\\mid\\pi)}\\right\]
 $$
 
 I believe the tutorial paper has a typo, where $p(o,s,\\pi)$ should be $p(o,s,\\mid\\pi)$.
 
-We are choosing $\\pi$ to minimize $G[\\pi]$, which is just the expected free energy under $\\rho(o)$ (preference for future observations).
+We are choosing $\\pi$ to minimize $G\[\\pi\]$, which is just the expected free energy under $\\rho(o)$ (preference for future observations).
 
 Do the optimizations on $\\pi$ and $q$ interact? It seems like they don't. $\\pi$ is an outer optimization that depends on running the optimization on $q$ internally. There is not a single $q$, but many of them which the optimization on $\\pi$ iterates through. So then what is the significance of connecting free energy minimization ($q$) to active inference ($\\pi$)? If the policy optimization part were reformulated in terms of RL, we really just have a fancy kind of approximate Bayesian model combined with RL. The action learning and model updating are totally independent.
 
@@ -211,7 +211,7 @@ I think the time-less hypothesis formulation is better, i.e. $p(o\_{1:\\infty}, 
 Something I've heard hinted at elsewhere is that the agent, as a physical system, expresses some Bayesian prior $p$ and preferences $\\r$ in an objective sense. What is the nature of this mapping between physical makeup and active-inference description? Is this entirely based on the agent's behavior, or if we looked inside an agent, we could determine its model and preferences? I expect that if we look at behavior alone, then $p$ and $\\r$ are underspecified. 
 
 So then what about the agent's physical makeup gives it a model $p$ and preferences $\\r$? The optimization process to find $q\_{o,\\pi}$ must be physically carried out, and so presumably this could be observed. In optimizing for $q\_{o,\\pi}$, the agent would actually be engaged in two processes that implicitly specify $p$. Splitting free energy into accuracy and complexity:
-1. Explaining observations: $\\E\_{h\\sim q}\\left[\\lg p(o\_{1:n} \\mid h,a\_{1:n})\\right]$
+1. Explaining observations: $\\E\_{h\\sim q}\\left\[\\lg p(o\_{1:n} \\mid h,a\_{1:n})\\right\]$
     The agent thinks of hypotheses $h$ (sampling them from $q$) to explain observations $o\_{1:n}$ given actions $a\_{1:n}$.
 2. Regularization: $\\kl{q(h)}{p(h)}$
     The agent updates its hypothesis generator $q$, implicitly conforming to $p$ which represents the agent's grand total representation capacity.
@@ -220,7 +220,7 @@ So then what about the agent's physical makeup gives it a model $p$ and preferen
 
 I'm also unconvinced about the way behavior is handled in this framework. Why think in terms of policies $\\pi$ rather than actions $a\_{1:n}$? Is the space of policies fixed through the agent's lifetime? If $\\pi$ is supposed to represent some kind of high level strategy, then how does the agent learn different kinds of strategies (updating its ontology). This is the same problem that Bayesian inference faces, that $q$ ostensibly fixes. But now we need to fix the same problem again for $\\pi$. 
 
-Question: $G[\\pi]$ appears to be intractable to compute or optimize directly. Why do we not have a variational approximation to this as well?
+Question: $G\[\\pi\]$ appears to be intractable to compute or optimize directly. Why do we not have a variational approximation to this as well?
 
 Why not just do RL? What is gained by "active inference", which seems to me to be secretly RL on top of variational Bayes.
 

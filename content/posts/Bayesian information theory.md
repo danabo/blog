@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2021-04-15T15:56:49-05:00'
+lastmod: '2021-04-16T11:03:24-05:00'
 tags:
 - epistemology
 - information
@@ -36,15 +36,15 @@ $$
 \\newcommand{\\m}{\\times}
 \\newcommand{\\E}{\\mb{E}}
 \\newcommand{\\e}{\\varepsilon}
-\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}
-\\newcommand{\\par}[1]{\\left(#1\\right)}
-\\newcommand{\\abs}[1]{\\left\\lvert#1\\right\\rvert}
-\\newcommand{\\inv}[1]{{#1}^{-1}}
-\\newcommand{\\ceil}[1]{\\left\\lceil#1\\right\\rceil}
-\\newcommand{\\dom}[2]{#1\_{\\mid #2}}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
+\\newcommand{\\par}\[1\]{\\left(#1\\right)}
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\inv}\[1\]{{#1}^{-1}}
+\\newcommand{\\ceil}\[1\]{\\left\\lceil#1\\right\\rceil}
+\\newcommand{\\dom}\[2\]{#1\_{\\mid #2}}
 \\newcommand{\\df}{\\overset{\\mathrm{def}}{=}}
 \\newcommand{\\M}{\\mc{M}}
-\\newcommand{\\up}[1]{^{(#1)}}
+\\newcommand{\\up}\[1\]{^{(#1)}}
 $$
 
 $\\newcommand{\\H}{\\Omega}$
@@ -425,7 +425,7 @@ The mysterious "information gained about whether hypothesis $\\mu$ is true" beco
 
 Finally, the information gained about which hypothesis is true is summarized by the quantity
 
-$$\\mb{I}\_p(\\mf{H}, \\mf{X}\_\\abs{x}) = \\sum\_{\\h\\up{\\mu}\\in\\mf{H}}\\sum\_{\\dom{\\H}{x}} \\mu(\\dom{\\h}{x}) i\_p(\\h\\up{\\mu}, \\dom{\\H}{x}) = \\mb{E}\_p\\left[i(H,X\_{1:\\abs{x}})\\right] = I(H, X\_{1:\\abs{x}})\\,,$$
+$$\\mb{I}\_p(\\mf{H}, \\mf{X}\_\\abs{x}) = \\sum\_{\\h\\up{\\mu}\\in\\mf{H}}\\sum\_{\\dom{\\H}{x}} \\mu(\\dom{\\h}{x}) i\_p(\\h\\up{\\mu}, \\dom{\\H}{x}) = \\mb{E}\_p\\left\[i(H,X\_{1:\\abs{x}})\\right\] = I(H, X\_{1:\\abs{x}})\\,,$$
 
 where $H$ is the random variable corresponding to choice of hypothesis $\\mu$ sampled from $p(\\mu)$ and $X\_{1:\\abs{x}}$ is the random variable corresponding to choice of length-$\\abs{x}$ data sampled from $p(x)$. This quantity is sometimes called **Bayesian surprise** (see [ref 1](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2860069/) and [ref 2](https://www.fil.ion.ucl.ac.uk/~karl/The%20free-energy%20principle%20A%20unified%20brain%20theory.pdf)), though more commonly "surprise" refers to the total info gain $h\_\\mu(\\dom{\\H}{x})$ ([ref 1](https://en.wikipedia.org/wiki/Information_content), [ref 2](https://psyarxiv.com/b4jm6/)).
 

@@ -39,15 +39,15 @@ $$
 \\newcommand{\\I}{\\mb{I}}
 \\newcommand{\\R}{\\mb{R}}
 \\newcommand{\\e}{\\varepsilon}
-\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}
-\\newcommand{\\par}[1]{\\left(#1\\right)}
-\\newcommand{\\abs}[1]{\\left\\lvert#1\\right\\rvert}
-\\newcommand{\\inv}[1]{{#1}^{-1}}
-\\newcommand{\\ceil}[1]{\\left\\lceil#1\\right\\rceil}
-\\newcommand{\\dom}[2]{#1\_{\\mid #2}}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
+\\newcommand{\\par}\[1\]{\\left(#1\\right)}
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\inv}\[1\]{{#1}^{-1}}
+\\newcommand{\\ceil}\[1\]{\\left\\lceil#1\\right\\rceil}
+\\newcommand{\\dom}\[2\]{#1\_{\\mid #2}}
 \\newcommand{\\df}{\\overset{\\mathrm{def}}{=}}
 \\newcommand{\\M}{\\mc{M}}
-\\newcommand{\\up}[1]{^{(#1)}}
+\\newcommand{\\up}\[1\]{^{(#1)}}
 $$
 
 
@@ -222,9 +222,9 @@ We can view the same optimization through the lense of the REINFORCE algorithm, 
 
 $$
 \\begin{aligned}
-\\nabla\_\\p \\mc{L} &= \\nabla\_\\p\\E\_{p(a\\mid x, \\p)}[p(y\\mid x,a,\\t)] \\\\
-  &= \\nabla\_\\p\\E\_{p(a\\mid x, \\p)}[R(a \\mid x)] \\\\
-  &= \\E\_{p(a\\mid x, \\p)}[\\nabla\_\\p\\log p(a\\mid x, \\p) R(a \\mid x)]\\,,
+\\nabla\_\\p \\mc{L} &= \\nabla\_\\p\\E\_{p(a\\mid x, \\p)}\[p(y\\mid x,a,\\t)\] \\\\
+  &= \\nabla\_\\p\\E\_{p(a\\mid x, \\p)}\[R(a \\mid x)\] \\\\
+  &= \\E\_{p(a\\mid x, \\p)}\[\\nabla\_\\p\\log p(a\\mid x, \\p) R(a \\mid x)\]\\,,
 \\end{aligned}
 $$
 
@@ -293,7 +293,7 @@ Now we can do a Monte Carlo approximation of the entropy terms of interest using
 
 $$
 \\begin{aligned}
-\\H(A \\mid X) &= -\\E\_{p(x)}[\\H(Y\\mid X=x)] \\\\
+\\H(A \\mid X) &= -\\E\_{p(x)}\[\\H(Y\\mid X=x)\] \\\\
   &\\approx \\frac{1}{\\abs{B}}\\sum\_{n \\in B} \\H(Y\\mid X=x\_n)
 \\end{aligned}
 $$
@@ -311,8 +311,8 @@ we can approximate the marginal entropy,
 
 $$
 \\begin{aligned}
-\\H(A) &= -\\E\_{p(a \\mid \\p)}[\\log p(a \\mid \\p)] \\\\
-  &\\approx -\\E\_{q(a \\mid \\p)}[\\log q(a\\mid \\p)]\\,.
+\\H(A) &= -\\E\_{p(a \\mid \\p)}\[\\log p(a \\mid \\p)\] \\\\
+  &\\approx -\\E\_{q(a \\mid \\p)}\[\\log q(a\\mid \\p)\]\\,.
 \\end{aligned}
 $$
 

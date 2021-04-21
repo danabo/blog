@@ -31,9 +31,9 @@ $$
 \\newcommand{\\m}{\\times}
 \\newcommand{\\E}{\\mc{E}}
 \\newcommand{\\e}{\\varepsilon}
-\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}
-\\newcommand{\\abs}[1]{\\left\\lvert#1\\right\\rvert}
-\\newcommand{\\inv}[1]{{#1}^{-1}}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\inv}\[1\]{{#1}^{-1}}
 \\newcommand{\\Iff}{\\Leftrightarrow}
 $$
 

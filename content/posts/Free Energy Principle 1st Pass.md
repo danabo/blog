@@ -10,11 +10,11 @@ $$
 \\newcommand{\\mc}{\\mathcal}
 \\newcommand{\\E}{\\mb{E}}
 \\newcommand{\\B}{\\mb{B}}
-\\newcommand{\\kl}[2]{D\_{KL}\\left(#1\\ \\| \\ #2\\right)}
-\\newcommand{\\argmin}[1]{\\underset{#1}{\\mathrm{argmin}}\\ }
-\\newcommand{\\abs}[1]{\\left\\lvert#1\\right\\rvert}
-\\newcommand{\\atup}[1]{\\left\\langle#1\\right\\rangle}
-\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}
+\\newcommand{\\kl}\[2\]{D\_{KL}\\left(#1\\ \\| \\ #2\\right)}
+\\newcommand{\\argmin}\[1\]{\\underset{#1}{\\mathrm{argmin}}\\ }
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\atup}\[1\]{\\left\\langle#1\\right\\rangle}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
 \\newcommand{\\t}{\\theta}
 \\newcommand{\\T}{\\Theta}
 \\newcommand{\\p}{\\phi}
@@ -66,16 +66,16 @@ Let $\\mc{X}$ be data space, $\\mc{H}$ be hypothesis space, and $X,H$ be data an
 
 $$
 \\begin{aligned}
-I[X,H] &= \\E\_X[\\kl{p\_{H\\mid X}}{p\_H}] \\\\
-& = \\E\_{x\\sim X}[H(p\_{H\\mid X=x}, p\_H) - H(p\_{H\\mid X=x})] \\\\
-& = \\E\_{x\\sim X}[\\E\_{h \\sim p\_{H\\mid X=x}}[-\\lg p\_H(h)] - \\E\_{h \\sim p\_{H\\mid X=x}}[-\\lg p\_{H\\mid X}(h \\mid x)]] \\\\
-& = \\E\_{x,h \\sim p\_{X,H}}\\left[\\lg \\left( \\frac{p\_{H\\mid X}(h\\mid x)}{p\_H(h)}\\right)\\right] \\\\
+I\[X,H\] &= \\E\_X\[\\kl{p\_{H\\mid X}}{p\_H}\] \\\\
+& = \\E\_{x\\sim X}\[H(p\_{H\\mid X=x}, p\_H) - H(p\_{H\\mid X=x})\] \\\\
+& = \\E\_{x\\sim X}\[\\E\_{h \\sim p\_{H\\mid X=x}}\[-\\lg p\_H(h)\] - \\E\_{h \\sim p\_{H\\mid X=x}}\[-\\lg p\_{H\\mid X}(h \\mid x)\]\] \\\\
+& = \\E\_{x,h \\sim p\_{X,H}}\\left\[\\lg \\left( \\frac{p\_{H\\mid X}(h\\mid x)}{p\_H(h)}\\right)\\right\] \\\\
 & = \\sum\_{x,h \\in \\mc{X} \\times \\mc{H}}p\_{X,H}(x,h)\\lg \\left( \\frac{p\_{H\\mid X}(h\\mid x)}{p\_H(h)}\\right) \\\\
 & = \\sum\_{x,h \\in \\mc{X} \\times \\mc{H}}p\_{X,H}(x,h)\\lg \\left( \\frac{p\_{X,H}(x,h)}{p\_X(x)p\_H(h)}\\right)\\,.
 \\end{aligned}
 $$
 
-$I[X,H]$ is called **Bayesian surprise**, which is the expected (over data) KL divergence from your prior to posterior (after observing data), which is itself the expected difference in uncertainty (measured in bits, the number of halvings of the full possibility space). 
+$I\[X,H\]$ is called **Bayesian surprise**, which is the expected (over data) KL divergence from your prior to posterior (after observing data), which is itself the expected difference in uncertainty (measured in bits, the number of halvings of the full possibility space). 
 
 Pointwise Bayesian information gain (information gained about hypothesis $h$ from data $x$) is $\\lg (1/p\_H(h)) - \\lg (1/p\_{H \\mid X}(h \\mid x)) = \\lg (1/p\_X(x)) - \\lg (1/p\_{X \\mid H}(x\\mid h))$, which is the change in amount of hypothesis weight (posterior mass) that shifted onto $h$.
 
@@ -97,19 +97,19 @@ $$
 q\_x^\* = \\argmin{q \\in \\mc{Q}} \\kl{q}{p\_{H \\mid X=x}}
 $$
 
-where $\\mc{Q}$ is some set of probability mass functions $q : \\mc{H} \\to [0, 1]$, chosen for convenience.
+where $\\mc{Q}$ is some set of probability mass functions $q : \\mc{H} \\to \[0, 1\]$, chosen for convenience.
 
 Assuming we cannot perform this minimization directly, we can make use of the identity
 
 $$
-\\kl{q}{p\_{H \\mid X=x}} = \\mc{F}[q] - \\lg (1/p\_X(x)) 
+\\kl{q}{p\_{H \\mid X=x}} = \\mc{F}\[q\] - \\lg (1/p\_X(x)) 
 $$
 
 where 
 
 $$
 \\begin{aligned}
-\\mc{F}[q] &= \\kl{q}{p\_{H,X=x}} \\\\
+\\mc{F}\[q\] &= \\kl{q}{p\_{H,X=x}} \\\\
 &= \\E\_{h \\sim q} \\lg\\left(\\frac{q(h)}{p\_{H,X}(h,x)}\\right) \\\\
 &= \\sum\_{h\\in\\mc{H}} q(h) \\lg\\left(\\frac{q(h)}{p\_{H,X}(h,x)}\\right)
 \\end{aligned}
@@ -121,8 +121,8 @@ Free energy also equals
 
 $$
 \\begin{aligned}
-\\mc{F}[q] &= H(q, p\_{H, X=x}) - H(q) \\\\
-&= \\E\_{h \\sim q}\\left[\\lg\\left(\\frac{1}{p\_{H, X}(h,x)}\\right) - \\lg\\left(\\frac{1}{q(h)}\\right) \\right] \\\\
+\\mc{F}\[q\] &= H(q, p\_{H, X=x}) - H(q) \\\\
+&= \\E\_{h \\sim q}\\left\[\\lg\\left(\\frac{1}{p\_{H, X}(h,x)}\\right) - \\lg\\left(\\frac{1}{q(h)}\\right) \\right\] \\\\
 &= \\sum\_{h \\in \\mc{H}} q(h) \\lg\\left(\\frac{q(h)}{p\_{H,X}(h,x)}\\right)\\,,
 \\end{aligned}
 $$
@@ -135,13 +135,13 @@ We also have free energy as **complexity** minus **accuracy**,
 
 $$
 \\begin{aligned}
-\\mc{F}[q] &= \\kl{q}{p\_H} - \\E\_{h\\sim q}\\left[\\lg p\_{X \\mid H}(x \\mid h)\\right] \\\\
-&= \\E\_{h \\sim q}\\left[\\lg\\left(\\frac{q(h)}{p\_H(h)}\\right)-\\lg p\_{X \\mid H}(x \\mid h)\\right] \\\\
-&= \\E\_{h \\sim q}\\left[\\lg\\left(\\frac{q(h)}{p\_{H,X}(h,x)}\\right)\\right]\\,.
+\\mc{F}\[q\] &= \\kl{q}{p\_H} - \\E\_{h\\sim q}\\left\[\\lg p\_{X \\mid H}(x \\mid h)\\right\] \\\\
+&= \\E\_{h \\sim q}\\left\[\\lg\\left(\\frac{q(h)}{p\_H(h)}\\right)-\\lg p\_{X \\mid H}(x \\mid h)\\right\] \\\\
+&= \\E\_{h \\sim q}\\left\[\\lg\\left(\\frac{q(h)}{p\_{H,X}(h,x)}\\right)\\right\]\\,.
 \\end{aligned}
 $$
 
-This form of free energy can be used in practice. Given any particular $q$ (e.g. as a neural network), the complexity $\\kl{q}{p\_H}$ and the accuracy $\\E\_{h\\sim q}\\left[\\lg p\_{X \\mid H}(x \\mid h)\\right]$ can be approximated using Monte-Carlo sampling from $q$. This is assuming we have access to a prior $p\_H$ over hidden states and predictive (or generative) distribution $p\_{X\\mid H}$. If $p\_{H\\mid X}$ is intractable, then a suitable $q^\*$ that approximately and sufficiently minimizes $\\mc{F}[q]$ becomes our approximation of that posterior.
+This form of free energy can be used in practice. Given any particular $q$ (e.g. as a neural network), the complexity $\\kl{q}{p\_H}$ and the accuracy $\\E\_{h\\sim q}\\left\[\\lg p\_{X \\mid H}(x \\mid h)\\right\]$ can be approximated using Monte-Carlo sampling from $q$. This is assuming we have access to a prior $p\_H$ over hidden states and predictive (or generative) distribution $p\_{X\\mid H}$. If $p\_{H\\mid X}$ is intractable, then a suitable $q^\*$ that approximately and sufficiently minimizes $\\mc{F}\[q\]$ becomes our approximation of that posterior.
 
 Note that there is a $q^\*$ for every partial observation $x\_{1:t}$, i.e. we need to perform another minimization to arrive at $q\_{x\_{1:t}}^\*$ for every $t$.
 

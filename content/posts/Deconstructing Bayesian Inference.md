@@ -34,10 +34,10 @@ $$
 \\newcommand{\\m}{\\times}
 \\newcommand{\\E}{\\mb{E}}
 \\newcommand{\\e}{\\varepsilon}
-\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}
-\\newcommand{\\abs}[1]{\\left\\lvert#1\\right\\rvert}
-\\newcommand{\\inv}[1]{{#1}^{-1}}
-\\newcommand{\\ceil}[1]{\\left\\lceil#1\\right\\rceil}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\inv}\[1\]{{#1}^{-1}}
+\\newcommand{\\ceil}\[1\]{\\left\\lceil#1\\right\\rceil}
 $$
 
 
@@ -209,7 +209,7 @@ To add clarity to what I want to explain next, let's represent the deterministic
 
 Suppose we want to predict what will happen further out into the future. Specifically, suppose we observe $\\o\_{<n}\\in\\X^\*$ and we want to predict the outcome $\\o\_m$ at time $m > n$. We don't have access to the outcome $\\o\_n$ or anything after it. That is to say, the prediction tree gives the prediction $f(\\o\_{<n})$ for step $n$, but to predict step $m$ we need $\\o\_{<m} = \\o\_{<n}\`\\o\_{n:m-1}$.
 
-You might say that the solution is to fill in our missing data with predictions, i.e. choose $\\hat{\\o}\_n=f(\\o\_{<n})$ as the outcome for step $n$, and $\\hat{\\o}\_{n+1} = f(\\o\_{<n}\`\\hat{\\o}\_n)$ as the outcome for step $n+1$, etc., so that our prediction at step $m$ is $\\hat{\\o}\_m=f(\\o\_{<n}\`\\hat{\\o}\_{n:m-1})$. However, I'd argue that this is not actually the agent's prediction as defined by the prediction tree. If the agent instead observed $\\o\_{n:m-1} \\neq \\hat{\\o}\_{n:m-1}$, the agent might predict something different from $\\hat{\\o}\_m$. We could define $\\hat{\\o}\_m$ as the agent's prediction of step $m$ given $\\o\_{<n}$. By doing so, we'd be assigning infinite sequences to each node $x$ in the prediction tree, rather than single outcomes, so that we may query the prediction of arbitrarily many timesteps given ONLY data $x$. We can represent this prediction tree by the function $g:\\X^\*\\to\\X^\\infty$, which returns an infinite sequence in $\\X^\\infty$ instead of a single element of $\\X$, such that $[g(x\_{<n})]\_{<n} = x\_{<n}$ and $[g(x\_{<n})]\_n$ is the next-step prediction for $x\_{<n}$. The sequence $[g(x\_{<n})]\_{\\geq n}$  is the multi-step prediction for $x\_{<n}$. Now it is clear that $[g(\\o\_{<m})]\_m$ and $[g(\\o\_{<n})]\_m$ are potentially different predictions, and we need to distinguish between them.
+You might say that the solution is to fill in our missing data with predictions, i.e. choose $\\hat{\\o}\_n=f(\\o\_{<n})$ as the outcome for step $n$, and $\\hat{\\o}\_{n+1} = f(\\o\_{<n}\`\\hat{\\o}\_n)$ as the outcome for step $n+1$, etc., so that our prediction at step $m$ is $\\hat{\\o}\_m=f(\\o\_{<n}\`\\hat{\\o}\_{n:m-1})$. However, I'd argue that this is not actually the agent's prediction as defined by the prediction tree. If the agent instead observed $\\o\_{n:m-1} \\neq \\hat{\\o}\_{n:m-1}$, the agent might predict something different from $\\hat{\\o}\_m$. We could define $\\hat{\\o}\_m$ as the agent's prediction of step $m$ given $\\o\_{<n}$. By doing so, we'd be assigning infinite sequences to each node $x$ in the prediction tree, rather than single outcomes, so that we may query the prediction of arbitrarily many timesteps given ONLY data $x$. We can represent this prediction tree by the function $g:\\X^\*\\to\\X^\\infty$, which returns an infinite sequence in $\\X^\\infty$ instead of a single element of $\\X$, such that $\[g(x\_{<n})\]\_{<n} = x\_{<n}$ and $\[g(x\_{<n})\]\_n$ is the next-step prediction for $x\_{<n}$. The sequence $\[g(x\_{<n})\]\_{\\geq n}$  is the multi-step prediction for $x\_{<n}$. Now it is clear that $\[g(\\o\_{<m})\]\_m$ and $\[g(\\o\_{<n})\]\_m$ are potentially different predictions, and we need to distinguish between them.
 
 
 
@@ -263,7 +263,7 @@ This section runs through a few canonical examples of Bayesian inference which c
 ## Inferring bias on a coin
 Let $\\X = \\set{0,1}$ be the outcome of a coin toss, and $\\o \\in \\X^\\infty$ be an infinite sequence of coin toss outcomes.
 
-Let $\\mc{B}\_\\t$ be the Bernoulli distribution on $\\X$ with parameter $\\t\\in[0,1]$ which is the probability of $1$, so $\\mc{B}\_\\t(1) = \\t$ and $\\mc{B}\_\\t(0) = 1-\\t$.
+Let $\\mc{B}\_\\t$ be the Bernoulli distribution on $\\X$ with parameter $\\t\\in\[0,1\]$ which is the probability of $1$, so $\\mc{B}\_\\t(1) = \\t$ and $\\mc{B}\_\\t(0) = 1-\\t$.
 
 The hypothesis $\\mu\_\\t$ is the product of Bernoulli distributions:
 
@@ -271,7 +271,7 @@ $$
 \\mu\_\\t(x\_{1:n}) = \\prod\_{i=1}^n\\mc{B}\_\\t(x\_i) = \\t^{\\sum\_i x\_i}(1-\\t)^{n-\\sum\_i x\_i}\\,.
 $$
 
-The hypothesis set is $\\H = \\set{\\mu\_\\t}\_{\\t\\in[0,1]}$. These hypotheses are i.i.d. w.r.t. sequence position, i.e. $\\mu\_\\t(x\_n \\mid x\_{<n}) = \\mu\_\\t(x\_n)$.
+The hypothesis set is $\\H = \\set{\\mu\_\\t}\_{\\t\\in\[0,1\]}$. These hypotheses are i.i.d. w.r.t. sequence position, i.e. $\\mu\_\\t(x\_n \\mid x\_{<n}) = \\mu\_\\t(x\_n)$.
 
 Subjective data probability:
 $$
