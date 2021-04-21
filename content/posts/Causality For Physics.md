@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2021-04-21T13:31:35-05:00'
+lastmod: '2021-04-21T13:38:25-05:00'
 tags:
 - physics
 title: Causality For Physics
@@ -93,6 +93,11 @@ That is to say, the parents $PA\_i$ of node $X\_i$ is the set of nodes with arro
 
 $U\_i$ is an auxiliary input node to each $X\_i$ which is not depicted in the graph, which makes the output value $x\_i$ random. In my view, each value $u\_i$ is pulled from an algorithmically random stream. Given the set of values $pa\_i$ and value $u\_i$, the output of the function $f\_i$ is then able to be random.
 
+A note about notation: It would not be correct to write $f\_i(PA\_i,U\_i)$ which passes the nodes themselves into the function $f\_i$. On the other hand, $f\_i(pa\_i,u\_i)$ is passing the values $pa\_i$ of the parent nodes $PA\_i$ and $u\_i$ of the noise input node $U\_i$ into the function.
+
+
+## Do-Notation
+
 If $P$ is the probability measure on the initial graph (e.g. figure 1.2 above), then what is the probability measure on the modified graph after taking an intervention (e.g. figure 1.4)? Pearl uses "do"-notation, which for the example above looks like this:
 
 $$
@@ -100,6 +105,7 @@ P(x\_1, x\_2, x\_3, x\_4, x\_5 \\mid \\Do(X\_3 = \\mathrm{ON}))\\,.
 $$
 
 This is the probability of the vector of node values $(x\_1, x\_2, x\_3, x\_4, x\_5)$ given that the intervention setting node $X\_3$ to constant value $\\mathrm{ON}$ was taken. Note the notational similarity to conditional probability: $P(x\_1, x\_2, x\_3, x\_4, x\_5 \\mid X\_3 = \\mathrm{ON})$. Conditionalization is a different operation on the measure $P$ than the "do"-operator, but they are mathematically related and their similar notation is justified.
+
 
 For an arbitrary graph with nodes $X\_1,\\dots,X\_n$, and probability measure $P$ on node values, the conditional probability of value vector $(x\_1, \\dots, x\_n)$ given $X\_i = x'\_i$ is
 
