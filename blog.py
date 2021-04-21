@@ -164,7 +164,7 @@ class SimpleParser(object):
 
   def _math_replace(self, s):
     # https://wilsonmar.github.io/markdown-text-for-github-from-html/#special-characters
-    return s.replace('\\', '\\\\').replace('*', r'\*').replace('_', r'\_').replace('`', r'\`')
+    return s.replace('\\', '\\\\').replace('*', r'\*').replace('_', r'\_').replace('`', r'\`').replace('[', r'\[').replace(']', r'\]')
 
   def comment(self, it):
     # Note, use match rather than search, because it requires that the match be at pos.
