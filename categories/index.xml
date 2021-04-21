@@ -93,6 +93,8 @@ where $pa_i$ (connoting parents) stands for the set of variables that directly d
 &lt;/blockquote&gt;
 &lt;p&gt;That is to say, the parents $PA_i$ of node $X_i$ is the set of nodes with arrows pointing into $X_i$. So in the example, $PA_3 = \set{X_1}$ because $X_1$ is the only node pointing into $X_3$, and $PA_4 = \set{X_2, X_3}$ because both $X_2$ and $X_3$ point into $X_4$. Node $X_1$ is not a direct parent of $X_4$.&lt;/p&gt;
 &lt;p&gt;$U_i$ is an auxiliary input node to each $X_i$ which is not depicted in the graph, which makes the output value $x_i$ random. In my view, each value $u_i$ is pulled from an algorithmically random stream. Given the set of values $pa_i$ and value $u_i$, the output of the function $f_i$ is then able to be random.&lt;/p&gt;
+&lt;p&gt;A note about notation: It would not be correct to write $f_i(PA_i,U_i)$ which passes the nodes themselves into the function $f_i$. On the other hand, $f_i(pa_i,u_i)$ is passing the values $pa_i$ of the parent nodes $PA_i$ and $u_i$ of the noise input node $U_i$ into the function.&lt;/p&gt;
+&lt;h2 id=&#34;do-notation&#34;&gt;Do-Notation&lt;/h2&gt;
 &lt;p&gt;If $P$ is the probability measure on the initial graph (e.g. figure 1.2 above), then what is the probability measure on the modified graph after taking an intervention (e.g. figure 1.4)? Pearl uses &amp;ldquo;do&amp;rdquo;-notation, which for the example above looks like this:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 P(x_1, x_2, x_3, x_4, x_5 \mid \Do(X_3 = \mathrm{ON}))\,.&lt;br&gt;
