@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2021-04-21T13:38:25-05:00'
+lastmod: '2021-04-21T13:39:55-05:00'
 tags:
 - physics
 title: Causality For Physics
@@ -79,7 +79,7 @@ An example of an intervention:
 ![](</Pasted image 20210412175953.png>)
 An intervention in this graph is a **graph surgery** (as Pearl calls it). Graph interventions correspond to real-world interventions. The intervention depicted above corresponds to someone forcing the sprinkler system to turn on (e.g. by switching the sprinkler system's setting from auto to manual). The sprinkler state is now causally independent of everything else in the graph, because we, the experimenters, have directly determined its state (we would need to be careful to ensure our own actions are not causally linked to the system we are studying). By observing the down stream effects of this change to the graph, the **causal effect** of the particular node $X\_3$ can be measured. That is the effect of $X\_3$, independent of other nodes like $X\_1$.
 
-Generally Pearl places a probability distribution on graph node states, given by $P(X\_1=x\_1, X\_2=x\_2, X\_3=x\_3, \\dots)$, or using shorthand, $P(x\_1, x\_2, x\_3, \\dots)$. I'll use capital letters, $X\_i$, to denote graph nodes themselves (or random variables on graph nodes), and lowercase letters, $x\_i$, to denote a specific value that the correspond node takes on. So for example, node $X\_3$, the sprinkler state, could take on the values $\\mathrm{ON}$ or $\\mathrm{OFF}$. In the abstract, $X\_3$ takes on some value $x\_3$. Sometimes I'll introduce a "prime" tick, $x'\_3$ to denote some other value that may be distinct from $x\_3$.
+Generally Pearl places a probability distribution on graph node states, given by $P(X\_1=x\_1, X\_2=x\_2, X\_3=x\_3, \\dots)$, or using shorthand, $P(x\_1, x\_2, x\_3, \\dots)$. I'll use capital letters, $X\_i$, to denote graph nodes themselves (or random variables on graph nodes), and lowercase letters, $x\_i$, to denote a specific value that the correspond node takes on. So for example, node $X\_3$, the sprinkler state, could take on the values $\\mathrm{ON}$ or $\\mathrm{OFF}$. In the abstract, $X\_3$ takes on some value $x\_3$. Sometimes I'll introduce a "prime" tick, $x'\_3$, to denote some other value that may be distinct from $x\_3$.
 
 
 There is an alternative **functional** perspective, where each node's value is a deterministic function of incoming values traveling along inward arrows, and an auxiliary noise input not depicted in the graph. Those noise inputs can themselves be determined (i.e. held fixed), but be pulled from an algorithmically random stream. I will stick to the deterministic perspective when I discuss physics, while recognizing that random physical processes can be viewed as deterministic but algorithmically random.
@@ -152,7 +152,7 @@ When $Q(x\_i \\mid pa'\_i) = Q(x\_i) = \\d\_{x'\_i}$ this expression reduces to 
 In the functional perspective, an intervention replaces $f\_i(pa\_i, u\_i)$ with some other function $f'\_i(pa'\_i, u\_i)$.
 
 ## Causal Effect
-In [Causality](http://bayes.cs.ucla.edu/BOOK-2K/), definition 3.2.1, Pearl defines causal effect.
+In [Causality](http://bayes.cs.ucla.edu/BOOK-2K/), definition 3.2.1, Pearl defines causal effect as follows:
 
 Let $X$ and $Y$ be two disjoint sets of graph nodes. The **causal effect** of $X$ on $Y$ is the *function* $\\mc{E}$ from the space of node values for $X$ to the space of probability measures on $Y$, 
 
