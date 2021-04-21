@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2021-04-20T19:31:59-05:00'
+lastmod: '2021-04-21T13:31:35-05:00'
 tags:
 - physics
 title: Causality For Physics
@@ -62,9 +62,9 @@ $$
 
 
 
-The definition of causality within physics is not a settled matter, perhaps surprisingly. My understanding is that this question is studied more by philosophers than physicists, as physics tend to avoid interpretational problems. That is to say, theories like relativity or quantum mechanics are mathematically well defined and make predictions, so what else do you need? 
+The definition of causality within physics is not a settled matter, perhaps surprisingly. My understanding is that this question is studied more by philosophers than physicists, as the field of physics tends to avoid interpretational problems. That is to say, theories like relativity or quantum mechanics are mathematically well defined and make predictions, so that's all there is to it, right? I'm not a physicist, so I will proceed to ask such questions.
 
-I'm not a physicist, and I suspect that causality and information are intimately related. To initiate my pursuit to understand physical information, I am starting by trying to understand causality in physics. The [SEP](https://plato.stanford.edu/entries/causation-physics) outlines some of the conversation and ideas around causality and physics. I haven't read these ideas yet, but I am familiar with Judea Pearl's notion of causality in machine learning and statistics. The following is my first-pass attempt at directly applying Pearlian causality to physics in the abstract.
+I suspect that causality and information are intimately related. To initiate my pursuit to understand physical information, I am starting by trying to understand the role causality plays in physics. The [SEP](https://plato.stanford.edu/entries/causation-physics) outlines some of the conversation and ideas around causality and physics. I haven't read these ideas yet, but I want to take my own tabula rasa stab at the problem before reading about what other people have tried. I am familiar with Judea Pearl's notion of causality in machine learning and statistics, which I will attempt to apply to physics below.
 
 # Causal Models
 First, I'll outline Pearl's framework for causality. I used [Causality](http://bayes.cs.ucla.edu/BOOK-2K/) (Pearl) and [Elements of Causal Inference](https://mitpress.mit.edu/books/elements-causal-inference) (Peters, Janzing, Schölkopf) to learn about this topic.
@@ -79,7 +79,10 @@ An example of an intervention:
 ![](</Pasted image 20210412175953.png>)
 An intervention in this graph is a **graph surgery** (as Pearl calls it). Graph interventions correspond to real-world interventions. The intervention depicted above corresponds to someone forcing the sprinkler system to turn on (e.g. by switching the sprinkler system's setting from auto to manual). The sprinkler state is now causally independent of everything else in the graph, because we, the experimenters, have directly determined its state (we would need to be careful to ensure our own actions are not causally linked to the system we are studying). By observing the down stream effects of this change to the graph, the **causal effect** of the particular node $X\_3$ can be measured. That is the effect of $X\_3$, independent of other nodes like $X\_1$.
 
-Generally Pearl places a probability distribution on graph node states, given by $P(X\_1=x\_1, X\_2=x\_2, X\_3=x\_3, \\dots)$, or using shorthand, $P(x\_1, x\_2, x\_3, \\dots)$. There is an alternative **functional** perspective, where each node's value is a deterministic function of incoming values traveling along inward arrows, and an auxiliary noise input not depicted in the graph. Those noise inputs can themselves be determined (i.e. held fixed), but be pulled from an algorithmically random stream. I will stick to the deterministic perspective when I discuss physics, while recognizing that random physical processes can be viewed as deterministic but algorithmically random.
+Generally Pearl places a probability distribution on graph node states, given by $P(X\_1=x\_1, X\_2=x\_2, X\_3=x\_3, \\dots)$, or using shorthand, $P(x\_1, x\_2, x\_3, \\dots)$. I'll use capital letters, $X\_i$, to denote graph nodes themselves (or random variables on graph nodes), and lowercase letters, $x\_i$, to denote a specific value that the correspond node takes on. So for example, node $X\_3$, the sprinkler state, could take on the values $\\mathrm{ON}$ or $\\mathrm{OFF}$. In the abstract, $X\_3$ takes on some value $x\_3$. Sometimes I'll introduce a "prime" tick, $x'\_3$ to denote some other value that may be distinct from $x\_3$.
+
+
+There is an alternative **functional** perspective, where each node's value is a deterministic function of incoming values traveling along inward arrows, and an auxiliary noise input not depicted in the graph. Those noise inputs can themselves be determined (i.e. held fixed), but be pulled from an algorithmically random stream. I will stick to the deterministic perspective when I discuss physics, while recognizing that random physical processes can be viewed as deterministic but algorithmically random.
 
 Quoting [Causality](http://bayes.cs.ucla.edu/BOOK-2K/), section 1.4.1, *Structural Equations*:
 >  In its general form, a functional causal model consists of a set of equations of the form 
@@ -172,7 +175,7 @@ My objective here is to define an abstract definition for theories of physics in
 
 
 ## Abstract Physics
-In any theory of physics there is a state space $\\O$. In Newtonian mechanics, state is a vector of various components of the system, such as a [vector of positions and momenta](https://en.wikipedia.org/wiki/Canonical_coordinates#Definition_in_classical_mechanics) given by$\\o = (\\vec{q}, \\vec{p}) \\in \\O$. In general state can include other kinds of [degrees of freedom](https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)) such as the orientation of solid bodies in 3D space. In quantum mechanics there is [quantum state](https://en.wikipedia.org/wiki/Quantum_state), and state spaces are [Hilbert spaces](https://en.wikipedia.org/wiki/Hilbert_space#Quantum_mechanics).
+In any theory of physics there is a state space $\\O$. In Newtonian mechanics, state is a vector of various components of the system, such as a [vector of positions and momenta](https://en.wikipedia.org/wiki/Canonical_coordinates#Definition_in_classical_mechanics) given by $\\o = (\\vec{q}, \\vec{p}) \\in \\O$. In general state can include other kinds of [degrees of freedom](https://en.wikipedia.org/wiki/Degrees_of_freedom_(mechanics)) such as the orientation of solid bodies in 3D space. In quantum mechanics there is [quantum state](https://en.wikipedia.org/wiki/Quantum_state), and state spaces are [Hilbert spaces](https://en.wikipedia.org/wiki/Hilbert_space#Quantum_mechanics).
 
 A **theory of physics** specifies both the state space $\\O$ and how to solve for the time-evolution of the system given a particular state $\\o\_t$ at time $t$. The result is a complete description of a system's time evolution through state space given as a state-function of time, $\\s : \\R \\to \\O : t \\mapsto \\s(t)$, which I'll call a **trajectory**. To be clear, a single trajectory $\\s$ is a single possible time-evolution, e.g. where $\\s(t) = \\o\_t$.
 
