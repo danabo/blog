@@ -188,11 +188,11 @@ In terms of quantity, what has changed is the ratio: $\frac{\mu(\O)}{\mu(A)}$ to
 &lt;p&gt;$$&lt;br&gt;
 \begin{aligned}&lt;br&gt;
 i_\O(A,R) &amp;amp;= \lg\par{\frac{\mu(\O)}{\mu(R)\frac{\mu(A)}{\mu(A\dom{R})}}} \\&lt;br&gt;
-&amp;amp;= \lg\par{\frac{\nu(\O)}{\nu(R)}}\,,&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(\O)}{\nu(R)}}\,,&lt;br&gt;
 \end{aligned}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;where $\nu(R)=\mu(R)\frac{\mu(A)}{\mu(A\dom{R})}$ rescales the size of $R$ so that $\nu(A\dom{R}) = \mu(A\dom{R})\frac{\mu(A)}{\mu(A\dom{R})} = \mu(A)$. Then $i_\O(A,R)$ is just the quantity of information $h\up{\nu}(\O\tr R)$ using this alternative measure $\nu$.&lt;/p&gt;
-&lt;p&gt;This can be visualized by drawing to scale the relative proportions of $\mu(\O)$ and $\mu(A)$, and show below that the same relative proportions of $\nu(R)$ and $\nu(A\dom{R})$, so that $\nu(A\dom{R})$ is visually the same size as $\mu(A)$:&lt;/p&gt;
+&lt;p&gt;where $\nu(Q)=\mu(Q)\frac{\mu(A)}{\mu(A\dom{R})}$ rescales the size of any set $Q$ so that $\nu(A\dom{R}) = \mu(A\dom{R})\frac{\mu(A)}{\mu(A\dom{R})} = \mu(A)$. In this form, $i_\O(A,R)$ looks like the quantity of information for $\O\tr R$, but where the numerator and denominator use different measures. This quantity of information can be negative, unlike $h(\O\tr R)$.&lt;/p&gt;
+&lt;p&gt;This rescaling can be visualized by drawing to scale the relative proportions of $\mu(\O)$ and $\mu(A)$, and show below that the same relative proportions of $\nu(R)$ and $\nu(A\dom{R})$, so that $\nu(A\dom{R})$ is visually the same size as $\mu(A)$:&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505104409.png&#34; 
         target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505104409.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;br&gt;
