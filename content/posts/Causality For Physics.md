@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2021-04-21T13:39:55-05:00'
+lastmod: '2021-05-05T13:47:32-05:00'
 tags:
 - physics
 title: Causality For Physics
@@ -96,7 +96,7 @@ $U\_i$ is an auxiliary input node to each $X\_i$ which is not depicted in the gr
 A note about notation: It would not be correct to write $f\_i(PA\_i,U\_i)$ which passes the nodes themselves into the function $f\_i$. On the other hand, $f\_i(pa\_i,u\_i)$ is passing the values $pa\_i$ of the parent nodes $PA\_i$ and $u\_i$ of the noise input node $U\_i$ into the function.
 
 
-## Do-Notation
+## Do-Operator
 
 If $P$ is the probability measure on the initial graph (e.g. figure 1.2 above), then what is the probability measure on the modified graph after taking an intervention (e.g. figure 1.4)? Pearl uses "do"-notation, which for the example above looks like this:
 
@@ -421,6 +421,8 @@ $$
 which is non-zero only if $\\s(T) = \\o^\*\_T$. If $\\s\\restr{(T-\\dt,T)}$ is itself not $\\t$-valid, we can define $M(\\s(T) \\mid \\s\_{\\ddT})$ to be an improper probability measure that is always $0$.
 
 I'd argue that interventions on deterministic trajectories is a limiting case of interventions on probabilistic trajectories where the transition probabilities converge to delta distributions. Then $M(\\s(T) \\mid \\s\_{\\ddT})/M(\\s(T) \\mid \\s\_{\\ddT})\\to 1$ no matter what and the cancellation works.
+
+
 
 ## Compatibility with modern physics
 

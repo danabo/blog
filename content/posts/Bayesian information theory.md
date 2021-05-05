@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2021-04-16T11:03:24-05:00'
+lastmod: '2021-04-28T12:12:33-05:00'
 tags:
 - epistemology
 - information
@@ -45,6 +45,7 @@ $$
 \\newcommand{\\df}{\\overset{\\mathrm{def}}{=}}
 \\newcommand{\\M}{\\mc{M}}
 \\newcommand{\\up}\[1\]{^{(#1)}}
+\\newcommand{\\tr}{\\rightarrowtail}
 $$
 
 $\\newcommand{\\H}{\\Omega}$
@@ -229,7 +230,7 @@ $$
 
 The first symbol in these sequences fully determines the long-run behavior of the sequences, i.e. sequences starting with 0 end with 0s, and sequences starting with 1 end with 1s. However, the 2nd and 3rd symbols are not determined by the 1st. Perhaps it would make sense to not care about predicting them. In that case, we are not so interested in narrowing down $\\H$ to one sequence, as we are in narrowing down $\\H$ into a particular long-run pattern.
 
-$\\newcommand{\\h}{\\mc{H}}$$\\newcommand{\\tr}{\\rightarrowtail}$We can formally represent what we care about and don't care about predicting, by partitioning $\\H$. In this example, suppose we make the following partition:
+$\\newcommand{\\h}{\\mc{H}}$We can formally represent what we care about and don't care about predicting, by partitioning $\\H$. In this example, suppose we make the following partition:
 
 $$
 \\begin{aligned}
@@ -252,6 +253,24 @@ In general, for a partition $\\mf{H}$ of $\\H$, call each $\\h\\in\\mf{H}$ a **c
 For some partition $\\mf{H}$ of $\\H$, let $\\dom{\\mf{H}}{x} = \\set{\\dom{\\h}{x} \\mid \\h \\in \\mf{H}}$ be the partition of $\\dom{\\H}{x}$ consisting of the parts in $\\mf{H}$ which have each been conditionalized on $x$ (narrowed down to the sequences starting with $x$).
 
 In our example, $\\dom{\\mf{H}}{0} = \\set{\\h\_1, \\set{}}$ and $\\dom{\\mf{H}}{1} = \\set{\\set{}, \\h\_2}$. Let's consider empty compound hypotheses to be eliminated. Then in either scenario, observing just the 1st symbol narrows down $\\mf{H}$ to exactly one compound hypothesis, analogous to our original goal of narrowing down $\\H$ to one hypothesis. The remaining compound hypothesis (either $\\h\_1$ or $\\h\_2$) is uncertain about what the 2nd and 3rd symbols will be, but certain about all symbols after that.
+
+## Defining Information
+
+Let $\\H \\subseteq \\X^\\infty$ be a hypothesis set and $\\o\\in\\X^\\infty$ be the *true* data sequence, i.e. the data sequence that will be observed. Let $\\mc{O}\\subseteq\\H$ be some subset of $\\H$ containing $\\o$. I define **information** as a tuple of the form $(\\H, \\mc{O})$, which specifies a set of possibilities and a narrowed down subset of remaining possibilities. The information $(\\H, \\mc{O})$ represents the *knowledge* that $\\o\\in\\mc{O}$ and $\\o\\notin\\H\\setminus\\mc{O}$. This definition allows us to separate the issue of quantifying information with specifying information. Quantity of information may depend on an arbitrary choice of measure, whereas the information itself is what we often care about.
+
+Below I will use the notation
+
+$$
+\\H \\tr \\mc{O} \\df (\\H, \\mc{O})\\,,
+$$
+
+which can be read as "$\\H$ is narrowed down to $\\mc{O}$." This arrow-notation represents information gain, which is equivalent to having the knowledge that $\\o\\in\\mc{O}$ and $\\o\\notin\\H\\setminus\\mc{O}$. The information gain $\\H \\tr \\mc{O}$ is quantified by $h\_\\H(\\mc{O})$.
+
+Some special cases:
+- $(\\O, \\set{\\o})$ is called **total information**. 
+- $(\\O, \\mc{O})$ where $\\o\\in\\mc{O}$ and $\\mc{O}\\setminus\\set{\\o}$ is non-empty is called **partial information**.
+- $(\\O, \\emptyset)$ is called **contradictory information**
+- $(\\O, \\O)$ is called **trivial information**.
 
 ## Information Gain
 
