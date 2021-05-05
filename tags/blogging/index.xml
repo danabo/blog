@@ -11,6 +11,232 @@
     
     
     <item>
+      <title>Information Algebra</title>
+      <link>https://danabo.github.io/blog/posts/information-algebra/</link>
+      <pubDate>Wed, 05 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/information-algebra/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\0}{\mathrm{false}}&lt;br&gt;
+\newcommand{\1}{\mathrm{true}}&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\mf}{\mathfrak}&lt;br&gt;
+\newcommand{\and}{\wedge}&lt;br&gt;
+\newcommand{\or}{\vee}&lt;br&gt;
+\newcommand{\es}{\emptyset}&lt;br&gt;
+\newcommand{\a}{\alpha}&lt;br&gt;
+\newcommand{\t}{\tau}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\D}{\Delta}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\x}{\xi}&lt;br&gt;
+\newcommand{\z}{\zeta}&lt;br&gt;
+\newcommand{\fa}{\forall}&lt;br&gt;
+\newcommand{\ex}{\exists}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\Y}{\mc{Y}}&lt;br&gt;
+\newcommand{\Z}{\mc{Z}}&lt;br&gt;
+\newcommand{\P}{\Psi}&lt;br&gt;
+\newcommand{\y}{\psi}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\l}{\lambda}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\m}{\times}&lt;br&gt;
+\newcommand{\E}{\mb{E}}&lt;br&gt;
+\newcommand{\N}{\mb{N}}&lt;br&gt;
+\newcommand{\I}{\mb{I}}&lt;br&gt;
+\newcommand{\H}{\mb{H}}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
+\newcommand{\dom}[1]{_{|#1}}&lt;br&gt;
+\newcommand{\df}{\overset{\mathrm{def}}{=}}&lt;br&gt;
+\newcommand{\M}{\mc{M}}&lt;br&gt;
+\newcommand{\up}[1]{^{(#1)}}&lt;br&gt;
+\newcommand{\Dt}{{\Delta t}}&lt;br&gt;
+\newcommand{\Dh}{{\Delta h}}&lt;br&gt;
+\newcommand{\tr}{\rightarrowtail}&lt;br&gt;
+\newcommand{\tra}[2]{\,^{#1\!\!}\searrow _{#2\,}}&lt;br&gt;
+\newcommand{\mi}[4]{\,^{#1\!\!}\searrow _{#2\,}\rightrightarrows ^{#3}\searrow _{#4\,}}&lt;br&gt;
+\newcommand{\absp}[1]{\abs{#1}^+}&lt;br&gt;
+\newcommand{\Bar}{\overline}&lt;br&gt;
+\newcommand{\dmid}{\,\|\,}&lt;br&gt;
+\newcommand{\V}[1]{\begin{pmatrix}#1\end{pmatrix}}&lt;br&gt;
+\require{cancel}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This is a review of the ideas I introduced in 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;
+  
+
+
+.&lt;/p&gt;
+&lt;p&gt;We have a set of possibilities $\O$, and there is a &lt;em&gt;true&lt;/em&gt; but unknown possibility $\o^*\in\O$. I define information as a tuple of the form $(\O,R)$ where $R\subseteq \O$, which asserts that $\o^*\in R$. I notate these information tuples with arrows:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\O\tr R \df (\O, R)\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which makes it clear that information is the &lt;em&gt;narrowing-down&lt;/em&gt; of a possibility space.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505092619.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505092619.png&#34; width=&#34;600&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+I also use the following notation for &lt;strong&gt;domain restriction&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+A\dom{B} \df A \cap B\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which is the set $A$ restricted to the domain of $B$. This notation is more compact than intersection notation, and I can use it to emphasize the semantic distinction between which set is being restricted and which set is the domain.&lt;/p&gt;
+&lt;p&gt;To quantify information, we need a measure $\mu$ on $\O$. When $\O$ is finite, I always use the counting measure $\mu(A) = \abs{A}$. The measure $\mu$ need not be normalized on $\O$, i.e. $\mu(\O)$ need not be $1$. I interpret $\mu$ as just a measure of the size of regions of the possibility space, rather than a measure of probability or randomness.&lt;/p&gt;
+&lt;p&gt;The information $\O \tr R$ is quantified by&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+h_\O(R) \df \lg\par{\frac{\mu(\O)}{\mu(R)}} = \lg\par{\frac{1}{\mu(R\mid \O)}}\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which has the unit &lt;em&gt;bits&lt;/em&gt; and measures the number of halvings it takes to go from $\O$ to $R$.&lt;/p&gt;
+&lt;p&gt;I put $\O$ in the subscript of $h$ to make it clear what the domain is. Let $\mu(A \mid B) \df \mu(A\dom{B} \mid B) = \mu(A\cap B\mid B)$ be the measure $\mu$ restricted to $B$ and normalized so that $\mu(B \mid B) = 1$. When $\mu(\O) = 1$, then $h_\O(R) = -\lg\mu(R)$ which is called &lt;em&gt;self-information&lt;/em&gt; in Shannon&amp;rsquo;s information theory, and $h(A \mid B) = -\lg\mu(A \mid B)$ is called &lt;em&gt;conditional self-information&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If $\O$ has already been narrowed down to $R$, and is then further narrowed down to $R&#39;\subseteq R$, the incremental quantity of information, i.e. the quantity of $R\tr R&#39;$, is given by $h(R&#39; \mid R)$. In general, for any sets $A,B \subseteq \O$, the information $B \tr A\dom{B}$ is quantified by&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(A \mid B) &amp;amp;\df h_\O(A\dom{B}) - h_\O(B) \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(B)}{\mu(A\dom{B})}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{1}{\mu(A\mid B)}}\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;I leave off the $\O$ subscript because it has no bearing on this quantity. Note that $h(A \mid B) = h_B(A\dom{B}) = h_B(A\cap B)$ is just another way to specify the domain $B$. This is convenient notationally when $A\setminus B\neq \es$.&lt;/p&gt;
+&lt;p&gt;To make working with these quantities easier, I adopt the following shorthand:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(B \tr A\dom{B}) &amp;amp;\df h(A\dom{B} \mid B) = h_B(A\dom{B}) \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(B)}{\mu(A\dom{B})}}\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;The lhs of the arrow goes in the numerator, and the rhs of the arrow goes in the denominator. This is convenient for thinking algebraically about more complex manipulations:&lt;/p&gt;
+&lt;p&gt;For $A \subseteq B$ and $B\subseteq C$,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(C \tr B) + h(B \tr A) &amp;amp;= \lg\par{\frac{\mu(C)}{\cancel{\mu(B)}}} + \lg\par{\frac{\cancel{\mu(B)}}{\mu(A)}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(C)}{\mu(A)}} \\&lt;br&gt;
+&amp;amp;= h(C\tr A)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Likewise we obtain the following identities:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(C\tr A) - h(B \tr A) &amp;amp;= h(C \tr B) \\&lt;br&gt;
+h(C \tr A) - h(C \tr B) &amp;amp;= h(B \tr A)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This successive narrowing down can be represented visually:&lt;/p&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505092828.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505092828.png&#34; width=&#34;600&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;h1 id=&#34;mutual-information&#34;&gt;Mutual Information&lt;/h1&gt;
+&lt;p&gt;Let $A,R\subseteq \O$. Suppose we have the information $\O\tr R$, corresponding to the knowledge that $\o^*\in R$. To be more succinct, I will say that we know that $R$ is &lt;em&gt;true&lt;/em&gt;. Also suppose we don&amp;rsquo;t know whether $A$ is true, i.e. we don&amp;rsquo;t have the information $\O\tr A$. For information that is not known, I will use a &lt;em&gt;small diagonal arrow&lt;/em&gt;, $\tra{\O}{A}$. We can think of this as aspirational information, i.e. information we do not have but would like to have.&lt;/p&gt;
+&lt;p&gt;Since $\tra{\O}{A}$ and $\O\tr A$ are mathematically equivalent, $h(\tra{\O}{A}) = h(\O\tr A) = \lg\frac{\mu(\O)}{\mu(A)}$.&lt;/p&gt;
+&lt;p&gt;Does $\O\tr R$ move us closer to the goal of $\tra{\O}{A}$?&lt;/p&gt;
+&lt;p&gt;There are three ways $R$ and $A$ can interact:&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505094432.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505094432.png&#34; width=&#34;600&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505094504.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505094504.png&#34; width=&#34;600&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505094519.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505094519.png&#34; width=&#34;600&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+Arrows here indicate information we actually have, i.e. $\O\tr R$, and lack of arrows indicates information we don&amp;rsquo;t have, i.e. $\tra{\O}{A}$ and $\tra{R}{A\cap R}$.&lt;/p&gt;
+&lt;p&gt;In the first case, $A \subseteq R$, and $\tra{\O}{A}$ is transformed into $\tra{R}{A}$. Clearly $h(\tra{\O}{A}) - h(\tra{R}{A}) = h(\O\tr R)$ which is the quantity of information we have gained towards $\tra{\O}{A}$, and $h(\tra{R}{A})$ is the quantity of information still needed to know that $A$ is true.&lt;/p&gt;
+&lt;p&gt;In the other two cases, parts of $A$ are ruled out, which shrinks $A$ or reduces it to the empty set. The aspirational information $\tra{\O}{A}$ is transformed into $\tra{R}{A\dom{R}}$. The change in quantity is&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(\tra{\O}{A}) - h(\tra{R}{A\dom{R}}) &amp;amp;= \lg\par{\frac{\mu(\O)}{\mu(A)}} - \lg\par{\frac{\mu(R)}{\mu(A\dom{R})}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(A\dom{R})\mu(\O)}{\mu(A)\mu(R)}}\,,&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;and nothing cancels out if $A \neq A\dom{R}$. This is an irreducible quantity of interest, called &lt;strong&gt;pointwise mutual information&lt;/strong&gt; (PMI), formally defined as&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+i_\O(A, R) &amp;amp;\df \lg\par{\frac{\mu(A\dom{R})\mu(\O)}{\mu(A)\mu(R)}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(A \mid \O)}{\mu(A \mid R)}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(R \mid \O)}{\mu(R \mid A)}} \,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;When $\mu(\O) = 1$ we get the more familiar expression, $i_\O(A, R) = \lg\par{\frac{\mu(A \cap R)}{\mu(A)\mu(R)}}$.&lt;/p&gt;
+&lt;p&gt;We can see that $i_\O(A, R)$ can also be written&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+i_\O(A, R) &amp;amp;= \lg\par{\frac{\mu(\O)}{\mu(R)}} - \lg\par{\frac{\mu(A)}{\mu(A\dom{R})}} \\&lt;br&gt;
+&amp;amp;= h(\O\tr R) - h(\tra{A}{A\dom{R}}) \\&lt;br&gt;
+&amp;amp;= i_\O(R, A)\,,&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where the $A$ and $R$ corners are swapped.&lt;/p&gt;
+&lt;p&gt;Since $h(\tra{A}{A\dom{R}})$ is always positive (because $\mu(A\dom{R})\leq\mu(A)$), we see that $i_\O(A, R)$ is upper bounded by $h(\O\tr R)$, and $i_\O(A, R) = h(\O\tr R)$ when $A \subseteq R$ (since $\mu(A\dom{R}) = \mu(A)$), which we previously derived.&lt;/p&gt;
+&lt;p&gt;What about when $A\dom{R} \neq A$? It turns out that $i_\O(A, R)$ is not lower bounded, and can be arbitrarily negative. To interpret these negative values, let&amp;rsquo;s think about what is going on visually. The information $\O\tr R$ transforms $(\O,A)$ to $(R,A\dom{R})$:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210505104353.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+In terms of quantity, what has changed is the ratio: $\frac{\mu(\O)}{\mu(A)}$ to $\frac{\mu(R)}{\mu(A\dom{R})}$. Specifically, if $\frac{\mu(\O)}{\mu(A)} \to \frac{\mu(R)}{\mu(A\dom{R})}$ is one halving, i.e. $\frac{\mu(R)}{\mu(A\dom{R})} = \frac{1}{2}\frac{\mu(\O)}{\mu(A)}$, then $i_\O(A, R) = \lg\par{\frac{\mu(\O)}{\mu(A)}\Big{/}\frac{\mu(R)}{\mu(A\dom{R})}} = \lg\par{\frac{\mu(\O)}{\mu(A)}\Big{/}\frac{1}{2}\frac{\mu(\O)}{\mu(A)}} = \lg(2) = 1$ bit.&lt;/p&gt;
+&lt;p&gt;A different way to visualize this is to draw to scale the relative proportions of $\mu(\O)$ and $\mu(A)$, and show side-by-side the same relative proportions of $\mu(R)$ and $\mu(A\dom{R})$, but where $\mu(A\dom{R})$ is scaled to be visually the same size as $\mu(R)$:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505104409.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505104409.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+This image shows that 1 bit is gained about whether $A$ is true because the domain is halved, i.e. we are 1 bit closer to knowing that $A$ is true. However, the bottom rectangle is rescaled so that $A$ and $A\dom{R}$ are visually the same size. $h(\O\tr R)$ may not be 1.&lt;/p&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505104419.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505104419.png&#34; width=&#34;740&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;p&gt;Here is another example where the narrowing down $\tra{A}{A\dom{R}}$ outpaces the narrowing down $\O\tr R$, i.e. more of $A$ is ruled out than the domain of $A$ is reduced. We see that this scaled domain appears to be doubled, which is the loss of 1 bit, i.e. $i_\O(A,R) = -1$. We are 1 bit further away from knowing that $A$ is true, and we now need an additional bit of information to know $\tra{\O}{A}$ compared with before $\O\tr R$ was known (compared with total ignorance).&lt;/p&gt;
+&lt;p&gt;Now we see why PMI is upper bounded but not lower bounded. At most, $i_\O(A, R) = h(\O\tr A)$ if $R = A$, which is equivalent to gaining the information that $A$ is true. This can be achieved in a finite number of halvings. On the other hand, the scaled domain of $A\dom{R}$ can grow arbitrarily large as $R$ rules out more and more of $A$, i.e. $\mu(A \setminus R) \to \mu(A)$ implies $\mu(A\dom{R}) \to 0$. If $A \cap R = \es$, then $i_\O(A,R) = -\infty$, which we can interpret to mean that $\O\tr R$ proves that $A$ is &lt;em&gt;false&lt;/em&gt;, i.e. the knowledge that $\o^* \notin A$. Thus no amount of information can make $A$ true (an infinite quantity of information here indicates a contradiction).&lt;/p&gt;
+&lt;h2 id=&#34;pmi-vs-conditional-information&#34;&gt;PMI vs conditional information&lt;/h2&gt;
+&lt;p&gt;$i_\O(A, R)$ and $h(A \mid R)$ are each quantifying a kind of transformation on $\tra{\O}{A}$. Assuming that $\O\tr R$ is already known,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$i_\O(A, R)$ quantifies a change in the lhs (domain) and a rescaling of the rhs: $\tra{\O}{A} \to \tra{R}{A\dom{R}}$, whereas&lt;/li&gt;
+&lt;li&gt;$h(A \mid R)$ quantifies a change in the rhs (target): $(\O\tr R) \to (\O \tr A)$, i.e. the amount of additional bits gained by this transformation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;A well known identity from information theory is $i_\O(A, R) + h(A \mid R) = h_\O(A)$, or written another way:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+i_\O(A, R) + h(R \tr A\dom{R}) = h(\O\tr A)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Why is this sum not equal to $h(\O\tr A\dom{R})$? Note that $h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$. As we saw, $i_\O(A, R)$ is closely related to $h(\O\tr R)$ but not always the same.&lt;/p&gt;
+&lt;p&gt;The difference between $i_\O(A, R) + h(R \tr A\dom{R})$ and $h(\O\tr R) + h(R \tr A\dom{R})$ can be illustrated visually.&lt;/p&gt;
+&lt;p&gt;Double domain reduction $h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$:&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505132315.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505132315.png&#34; width=&#34;600&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The PMI $i_\O(A, R)$ involves a rescaling of $A\dom{R}$ to $A$, shown visually. The transformation $\tra{\O}{A} \to \tra{R}{A\dom{R}}$, when rescaled covers the &lt;em&gt;distance&lt;/em&gt; $i_\O(A, R)$ in the diagram. $h(R \tr A\dom{R})$ covers the remaining &lt;em&gt;distance&lt;/em&gt;, which is equivalent to the total distance $h(\O\tr A)$.&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505134431.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505134431.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;appendix-pmi-algebra&#34;&gt;Appendix: PMI Algebra&lt;/h1&gt;
+&lt;p&gt;I&amp;rsquo;ve played around with an algebraically convenient notation for PMI, and this is what I arrived at:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+h(\mi{\O}{A}{R}{A\dom{R}}) \df h(\tra{\O}{A}) - h(\tra{R}{A\dom{R}}) = i_\O(A, R)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;It visualizes the joint narrowing down involved in mutual information:&lt;/p&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505100706.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505100706.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;p&gt;This notation has the downside of not being compact. I&amp;rsquo;m not sure if it helps with reasoning about relations between quantities. You can evaluate that for yourself:&lt;/p&gt;
+&lt;p&gt;$h(\mi{\O}{A}{R}{A\dom{R}}) = h(\mi{\O}{R}{A}{A\dom{R}})$&lt;br&gt;
+$h(\mi{\O}{A}{R}{A\dom{R}}) = h(\O\tr R) - h(A \tr A\dom{R})$&lt;/p&gt;
+&lt;p&gt;$h(\O\tr R) - h(\mi{\O}{A}{R}{A\dom{R}}) = h(A \tr A\dom{R})$&lt;br&gt;
+$h(\tra{\O}{A}) - h(\mi{\O}{A}{R}{A\dom{R}}) = h(\tra{R}{A\dom{R}})$&lt;br&gt;
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\tra{R}{A\dom{R}}) = h(\tra{\O}{A})$&lt;br&gt;
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(A \tr A\dom{R}) = h(\O\tr R)$&lt;/p&gt;
+&lt;p&gt;$h(\mi{\O}{A}{R}{A\dom{R}}) + h(R\tr A\dom{R}) + h(A \tr A\dom{R}) = h(\O\tr A\dom{R})$&lt;br&gt;
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Causality For Physics</title>
       <link>https://danabo.github.io/blog/posts/causality-for-physics/</link>
       <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
@@ -95,7 +321,7 @@ where $pa_i$ (connoting parents) stands for the set of variables that directly d
 &lt;p&gt;That is to say, the parents $PA_i$ of node $X_i$ is the set of nodes with arrows pointing into $X_i$. So in the example, $PA_3 = \set{X_1}$ because $X_1$ is the only node pointing into $X_3$, and $PA_4 = \set{X_2, X_3}$ because both $X_2$ and $X_3$ point into $X_4$. Node $X_1$ is not a direct parent of $X_4$.&lt;/p&gt;
 &lt;p&gt;$U_i$ is an auxiliary input node to each $X_i$ which is not depicted in the graph, which makes the output value $x_i$ random. In my view, each value $u_i$ is pulled from an algorithmically random stream. Given the set of values $pa_i$ and value $u_i$, the output of the function $f_i$ is then able to be random.&lt;/p&gt;
 &lt;p&gt;A note about notation: It would not be correct to write $f_i(PA_i,U_i)$ which passes the nodes themselves into the function $f_i$. On the other hand, $f_i(pa_i,u_i)$ is passing the values $pa_i$ of the parent nodes $PA_i$ and $u_i$ of the noise input node $U_i$ into the function.&lt;/p&gt;
-&lt;h2 id=&#34;do-notation&#34;&gt;Do-Notation&lt;/h2&gt;
+&lt;h2 id=&#34;do-operator&#34;&gt;Do-Operator&lt;/h2&gt;
 &lt;p&gt;If $P$ is the probability measure on the initial graph (e.g. figure 1.2 above), then what is the probability measure on the modified graph after taking an intervention (e.g. figure 1.4)? Pearl uses &amp;ldquo;do&amp;rdquo;-notation, which for the example above looks like this:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 P(x_1, x_2, x_3, x_4, x_5 \mid \Do(X_3 = \mathrm{ON}))\,.&lt;br&gt;
@@ -656,6 +882,7 @@ $\H(A\mid X)$ measures convergence. If its maximized, then the router is complet
 \newcommand{\df}{\overset{\mathrm{def}}{=}}&lt;br&gt;
 \newcommand{\M}{\mc{M}}&lt;br&gt;
 \newcommand{\up}[1]{^{(#1)}}&lt;br&gt;
+\newcommand{\tr}{\rightarrowtail}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;$\newcommand{\H}{\Omega}$&lt;/p&gt;
 &lt;p&gt;Shannon&amp;rsquo;s information theory defines quantity of information (e.g. &lt;a href=&#34;https://en.wikipedia.org/wiki/Information_content#Definition&#34;target=&#34;_blank&#34;&gt;self-information&lt;/a&gt; $-\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his &lt;a href=&#34;http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf&#34;target=&#34;_blank&#34;&gt;1948 paper&lt;/a&gt;). In 
@@ -811,7 +1038,7 @@ $$&lt;/p&gt;
 \end{aligned}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;The first symbol in these sequences fully determines the long-run behavior of the sequences, i.e. sequences starting with 0 end with 0s, and sequences starting with 1 end with 1s. However, the 2nd and 3rd symbols are not determined by the 1st. Perhaps it would make sense to not care about predicting them. In that case, we are not so interested in narrowing down $\H$ to one sequence, as we are in narrowing down $\H$ into a particular long-run pattern.&lt;/p&gt;
-&lt;p&gt;$\newcommand{\h}{\mc{H}}$$\newcommand{\tr}{\rightarrowtail}$We can formally represent what we care about and don&amp;rsquo;t care about predicting, by partitioning $\H$. In this example, suppose we make the following partition:&lt;/p&gt;
+&lt;p&gt;$\newcommand{\h}{\mc{H}}$We can formally represent what we care about and don&amp;rsquo;t care about predicting, by partitioning $\H$. In this example, suppose we make the following partition:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \begin{aligned}&lt;br&gt;
 \mf{H} = \set{\h_1, \h_2} = \{&lt;br&gt;
@@ -840,6 +1067,20 @@ $$&lt;/p&gt;
 .&lt;/p&gt;
 &lt;p&gt;For some partition $\mf{H}$ of $\H$, let $\dom{\mf{H}}{x} = \set{\dom{\h}{x} \mid \h \in \mf{H}}$ be the partition of $\dom{\H}{x}$ consisting of the parts in $\mf{H}$ which have each been conditionalized on $x$ (narrowed down to the sequences starting with $x$).&lt;/p&gt;
 &lt;p&gt;In our example, $\dom{\mf{H}}{0} = \set{\h_1, \set{}}$ and $\dom{\mf{H}}{1} = \set{\set{}, \h_2}$. Let&amp;rsquo;s consider empty compound hypotheses to be eliminated. Then in either scenario, observing just the 1st symbol narrows down $\mf{H}$ to exactly one compound hypothesis, analogous to our original goal of narrowing down $\H$ to one hypothesis. The remaining compound hypothesis (either $\h_1$ or $\h_2$) is uncertain about what the 2nd and 3rd symbols will be, but certain about all symbols after that.&lt;/p&gt;
+&lt;h2 id=&#34;defining-information&#34;&gt;Defining Information&lt;/h2&gt;
+&lt;p&gt;Let $\H \subseteq \X^\infty$ be a hypothesis set and $\o\in\X^\infty$ be the &lt;em&gt;true&lt;/em&gt; data sequence, i.e. the data sequence that will be observed. Let $\mc{O}\subseteq\H$ be some subset of $\H$ containing $\o$. I define &lt;strong&gt;information&lt;/strong&gt; as a tuple of the form $(\H, \mc{O})$, which specifies a set of possibilities and a narrowed down subset of remaining possibilities. The information $(\H, \mc{O})$ represents the &lt;em&gt;knowledge&lt;/em&gt; that $\o\in\mc{O}$ and $\o\notin\H\setminus\mc{O}$. This definition allows us to separate the issue of quantifying information with specifying information. Quantity of information may depend on an arbitrary choice of measure, whereas the information itself is what we often care about.&lt;/p&gt;
+&lt;p&gt;Below I will use the notation&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\H \tr \mc{O} \df (\H, \mc{O})\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which can be read as &amp;ldquo;$\H$ is narrowed down to $\mc{O}$.&amp;rdquo; This arrow-notation represents information gain, which is equivalent to having the knowledge that $\o\in\mc{O}$ and $\o\notin\H\setminus\mc{O}$. The information gain $\H \tr \mc{O}$ is quantified by $h_\H(\mc{O})$.&lt;/p&gt;
+&lt;p&gt;Some special cases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$(\O, \set{\o})$ is called &lt;strong&gt;total information&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;$(\O, \mc{O})$ where $\o\in\mc{O}$ and $\mc{O}\setminus\set{\o}$ is non-empty is called &lt;strong&gt;partial information&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;$(\O, \emptyset)$ is called &lt;strong&gt;contradictory information&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;$(\O, \O)$ is called &lt;strong&gt;trivial information&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;information-gain&#34;&gt;Information Gain&lt;/h2&gt;
 &lt;p&gt;Earlier, agent&amp;rsquo;s goal was to gain maximum prediction certainty by narrowing down $\H$ as much as possible. Now with partition $\mf{H}$, the agent&amp;rsquo;s goal is to narrow down $\mf{H}$ as much as possible, ideally reducing all of the parts but one to empty sets. However, if no compound hypothesis $\dom{\h}{x}\in\dom{\mf{H}}{x}$ is empty, is there still a sense in which the agent narrowed its compound hypotheses down? This question can be answered by considering information gain quantities.&lt;/p&gt;
 &lt;p&gt;$\H \tr \dom{\H}{x}$ is the total information gained, and is quantified by $h_\H(\dom{\H}{x})$. This is the number of halvings the hypothesis set $\H$ is reduced by due to observing $x$. This quantity does not depend on the choice of partition $\mf{H}$.&lt;/p&gt;
@@ -2450,28 +2691,6 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; will first run blog.py, and then run &lt;code&gt;git commit -v&lt;/code&gt; which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.&lt;/p&gt;
 &lt;h1 id=&#34;reader-experience&#34;&gt;Reader experience&lt;/h1&gt;
 &lt;p&gt;Currently the reader sees a typical blog layout: a &amp;ldquo;blog roll&amp;rdquo; of recent posts with previews and tags. I don&amp;rsquo;t intend my notes to have any particular time ordering. Notes are objects in flux. I might edit anything. Since I&amp;rsquo;m using time of last edit as the post date, anything I touch will float back to the top. I might decide to change that.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Blogging experiment</title>
-      <link>https://danabo.github.io/blog/posts/blogging-experiment/</link>
-      <pubDate>Mon, 01 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/blogging-experiment/</guid>
-      <description>&lt;p&gt;What is this blog?&lt;/p&gt;
-&lt;p&gt;It&amp;rsquo;s a collection of notes pulled directly from my digital journal. My digital journal is a bunch of &lt;a href=&#34;https://www.markdownguide.org/&#34;target=&#34;_blank&#34;&gt;markdown&lt;/a&gt; files that I edit in &lt;a href=&#34;https://obsidian.md/&#34;target=&#34;_blank&#34;&gt;obsidian&lt;/a&gt;. You could call it my &amp;ldquo;second brain&amp;rdquo;. I write everything here. It&amp;rsquo;s a journal in the traditional sense, in that I write about what&amp;rsquo;s going on in my life and what&amp;rsquo;s on my mind in order to collect my thoughts. I also write down logical stuff like TODO-lists, lists of links I want to keep, things I might want to look into. I take copious notes here when I am reading about technical topics. I write down and develop my spurious ideas.&lt;/p&gt;
-&lt;p&gt;I want to give the world a window into some of what&amp;rsquo;s in this journal; not because I derive pleasure from exposing my private life to the world (I&amp;rsquo;m actually fairly shy), but because I don&amp;rsquo;t want to be isolated. Learning and thinking alone is less than ideal. I risk reinforcing my own misunderstandings. Feedback from people can reveal things I would not otherwise see.&lt;/p&gt;
-&lt;p&gt;Beyond just the benefits for academic studying, feedback from the world helps to give purpose and context to my life. &lt;a href=&#34;https://astralcodexten.substack.com/p/still-alive&#34;target=&#34;_blank&#34;&gt;Scott Alexander recently wrote&lt;/a&gt; that a lot of his  intellectual growth came as a result of blogging, because his blog caused people to reach out to him and tell him things. So the basic premise is that if I broadcast to the world what&amp;rsquo;s on my mind, someone somewhere will take interest and connect with me. Otherwise, we may never know each other exists.&lt;/p&gt;
-&lt;p&gt;There is, however, a fundamental tension between quality and broadcasting. Can my notes ever be too raw, too personal, too incomplete, or too short to publish? I want to have a steady stream of output, but I don&amp;rsquo;t want to hide the occasional good stuff in a barrage of no-effort text that one cares about. Not to mention the privacy issues of having a public journal. I don&amp;rsquo;t have a good solution to this tension, so that is why I&amp;rsquo;m experimenting. I said I&amp;rsquo;m providing a window into my personal journal because I will have a process for auto-publishing notes I mark for publication. Hopefully that will remove the activation barrier for posting while also allowing me to keep my finger on quality control (and privacy). More on how this works below.&lt;/p&gt;
-&lt;h1 id=&#34;intellectual-journey&#34;&gt;Intellectual journey&lt;/h1&gt;
-&lt;p&gt;While I intend to post about miscellaneous topics, there will be a main topic of interest.&lt;/p&gt;
-&lt;p&gt;I have been embarking on an academic project to make sense of ideas floating around in machine learning, artificial intelligence, and other fields like neuroscience and epistemology. I want to form my own perspective, independently, on information, uncertainty, randomness, and epistemology.&lt;/p&gt;
-&lt;p&gt;Progress is slow. It takes months of on-and-off reading to understand a theoretical topic like &lt;a href=&#34;http://www.scholarpedia.org/article/Algorithmic_randomness&#34;target=&#34;_blank&#34;&gt;algorithmic randomness&lt;/a&gt;. I want people to see what I&amp;rsquo;m working on. I have another blog, &lt;a href=&#34;https://zhat.io/,&#34;&gt;https://zhat.io/,&lt;/a&gt; where I posted explainers on topics that I&amp;rsquo;ve been learning about. The problem is that it takes so long to write pedagogical material, that I haven&amp;rsquo;t even gotten to the topics I&amp;rsquo;ve been studying (still explaining the prerequisites). I tried posting &amp;ldquo;notes&amp;rdquo; (separate from &amp;ldquo;posts&amp;rdquo;) which are informal and often incomplete snapshots of my actual study notes. However I found that I didn&amp;rsquo;t have a clear sense of when my study notes were ready to be published as notes. There was a certain amount of work that I had to do to translate my raw notes over to blog notes, which created a sense of officiality.&lt;/p&gt;
-&lt;p&gt;I air on the side of caution when I feel I need to be correct about everything I say. That of course makes total sense. However that stands in contrast with a piece of advice I&amp;rsquo;ve been given for blogging: don&amp;rsquo;t revise, just publish. Blogging is fast and lose. Blogs are just public personal notes. In &lt;a href=&#34;https://zhat.io/&#34;&gt;https://zhat.io/&lt;/a&gt; I made the mistake of taking an authoritative tone, which created a burden of perfectionism. I can&amp;rsquo;t claim something and be wrong about it. But the result was very long technical posts that no one was reading anyway.&lt;/p&gt;
-&lt;p&gt;This new blog is an experiment in something more lightweight and streamlined. It&amp;rsquo;s a window into my intellectual journey. My posts are journalism. I&amp;rsquo;m writing about what I saw and experienced while reading and thinking. This is my way of handling the quality-broadcasting tension for academic writing. I&amp;rsquo;m not claiming to be an expert on any topic, or to be explaining any topic. If readers cannot follow along, then that is a good problem to have (that means I have readers). Ideally I&amp;rsquo;ll post often, receive feedback through various channels (such as not following something), and that will provide motivation to explain things. I like writing pedagogy, but I need to know it will actually be read for it to be worth the time investment.&lt;/p&gt;
-&lt;p&gt;I intend this blog to be very incremental. Everything is in flux (even it&amp;rsquo;s name, visual style and domain). I want to avoid having to spend a month writing drafts of a long post on a big topic. Instead, I will write a little bit every so often. Think of them as teasers. If people want to hear more, I&amp;rsquo;ll write more. This allows me to get things out of my head and feel good about it. Perhaps I can create more flow in my studying if I feel accomplished more often.&lt;/p&gt;
-&lt;p&gt;In that vein, I leave the details of my blogging system and digital journal to future posts.&lt;/p&gt;
 </description>
     </item>
     

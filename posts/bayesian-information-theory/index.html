@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Bayesian information theory</h1><p class="article date">April 9, 2021<span class="lastmod"> • edited April 16, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Bayesian information theory</h1><p class="article date">April 9, 2021<span class="lastmod"> • edited April 28, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -44,6 +44,7 @@
 \newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
 \newcommand{\M}{\mc{M}}<br>
 \newcommand{\up}[1]{^{(#1)}}<br>
+\newcommand{\tr}{\rightarrowtail}<br>
 $$</p>
 <p>$\newcommand{\H}{\Omega}$</p>
 <p>Shannon&rsquo;s information theory defines quantity of information (e.g. <a href="https://en.wikipedia.org/wiki/Information_content#Definition"target="_blank">self-information</a> $-\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his <a href="http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf"target="_blank">1948 paper</a>). In 
@@ -199,7 +200,7 @@ $$</p>
 \end{aligned}<br>
 $$</p>
 <p>The first symbol in these sequences fully determines the long-run behavior of the sequences, i.e. sequences starting with 0 end with 0s, and sequences starting with 1 end with 1s. However, the 2nd and 3rd symbols are not determined by the 1st. Perhaps it would make sense to not care about predicting them. In that case, we are not so interested in narrowing down $\H$ to one sequence, as we are in narrowing down $\H$ into a particular long-run pattern.</p>
-<p>$\newcommand{\h}{\mc{H}}$$\newcommand{\tr}{\rightarrowtail}$We can formally represent what we care about and don&rsquo;t care about predicting, by partitioning $\H$. In this example, suppose we make the following partition:</p>
+<p>$\newcommand{\h}{\mc{H}}$We can formally represent what we care about and don&rsquo;t care about predicting, by partitioning $\H$. In this example, suppose we make the following partition:</p>
 <p>$$<br>
 \begin{aligned}<br>
 \mf{H} = \set{\h_1, \h_2} = \{<br>
@@ -228,6 +229,20 @@ $$</p>
 .</p>
 <p>For some partition $\mf{H}$ of $\H$, let $\dom{\mf{H}}{x} = \set{\dom{\h}{x} \mid \h \in \mf{H}}$ be the partition of $\dom{\H}{x}$ consisting of the parts in $\mf{H}$ which have each been conditionalized on $x$ (narrowed down to the sequences starting with $x$).</p>
 <p>In our example, $\dom{\mf{H}}{0} = \set{\h_1, \set{}}$ and $\dom{\mf{H}}{1} = \set{\set{}, \h_2}$. Let&rsquo;s consider empty compound hypotheses to be eliminated. Then in either scenario, observing just the 1st symbol narrows down $\mf{H}$ to exactly one compound hypothesis, analogous to our original goal of narrowing down $\H$ to one hypothesis. The remaining compound hypothesis (either $\h_1$ or $\h_2$) is uncertain about what the 2nd and 3rd symbols will be, but certain about all symbols after that.</p>
+<h2 id="defining-information">Defining Information</h2>
+<p>Let $\H \subseteq \X^\infty$ be a hypothesis set and $\o\in\X^\infty$ be the <em>true</em> data sequence, i.e. the data sequence that will be observed. Let $\mc{O}\subseteq\H$ be some subset of $\H$ containing $\o$. I define <strong>information</strong> as a tuple of the form $(\H, \mc{O})$, which specifies a set of possibilities and a narrowed down subset of remaining possibilities. The information $(\H, \mc{O})$ represents the <em>knowledge</em> that $\o\in\mc{O}$ and $\o\notin\H\setminus\mc{O}$. This definition allows us to separate the issue of quantifying information with specifying information. Quantity of information may depend on an arbitrary choice of measure, whereas the information itself is what we often care about.</p>
+<p>Below I will use the notation</p>
+<p>$$<br>
+\H \tr \mc{O} \df (\H, \mc{O})\,,<br>
+$$</p>
+<p>which can be read as &ldquo;$\H$ is narrowed down to $\mc{O}$.&rdquo; This arrow-notation represents information gain, which is equivalent to having the knowledge that $\o\in\mc{O}$ and $\o\notin\H\setminus\mc{O}$. The information gain $\H \tr \mc{O}$ is quantified by $h_\H(\mc{O})$.</p>
+<p>Some special cases:</p>
+<ul>
+<li>$(\O, \set{\o})$ is called <strong>total information</strong>.</li>
+<li>$(\O, \mc{O})$ where $\o\in\mc{O}$ and $\mc{O}\setminus\set{\o}$ is non-empty is called <strong>partial information</strong>.</li>
+<li>$(\O, \emptyset)$ is called <strong>contradictory information</strong></li>
+<li>$(\O, \O)$ is called <strong>trivial information</strong>.</li>
+</ul>
 <h2 id="information-gain">Information Gain</h2>
 <p>Earlier, agent&rsquo;s goal was to gain maximum prediction certainty by narrowing down $\H$ as much as possible. Now with partition $\mf{H}$, the agent&rsquo;s goal is to narrow down $\mf{H}$ as much as possible, ideally reducing all of the parts but one to empty sets. However, if no compound hypothesis $\dom{\h}{x}\in\dom{\mf{H}}{x}$ is empty, is there still a sense in which the agent narrowed its compound hypotheses down? This question can be answered by considering information gain quantities.</p>
 <p>$\H \tr \dom{\H}{x}$ is the total information gained, and is quantified by $h_\H(\dom{\H}{x})$. This is the number of halvings the hypothesis set $\H$ is reduced by due to observing $x$. This quantity does not depend on the choice of partition $\mf{H}$.</p>
@@ -426,6 +441,7 @@ $$</p>
     <li><a href="#information-and-finite-possibilities">Information and finite possibilities</a>
       <ol>
         <li><a href="#compound-hypotheses">Compound hypotheses</a></li>
+        <li><a href="#defining-information">Defining Information</a></li>
         <li><a href="#information-gain">Information Gain</a>
           <ol>
             <li><a href="#useful-identities">Useful Identities</a></li>

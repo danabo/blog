@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Information Algebra&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Information Algebra" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Information Algebra</h1><p class="article date">May 5, 2021</p></section><article class="article markdown-body"><p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\es}{\emptyset}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\D}{\Delta}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\m}{\times}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\N}{\mb{N}}<br>
+\newcommand{\I}{\mb{I}}<br>
+\newcommand{\H}{\mb{H}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\par}[1]{\left(#1\right)}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\dom}[1]{_{|#1}}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\M}{\mc{M}}<br>
+\newcommand{\up}[1]{^{(#1)}}<br>
+\newcommand{\Dt}{{\Delta t}}<br>
+\newcommand{\Dh}{{\Delta h}}<br>
+\newcommand{\tr}{\rightarrowtail}<br>
+\newcommand{\tra}[2]{\,^{#1\!\!}\searrow _{#2\,}}<br>
+\newcommand{\mi}[4]{\,^{#1\!\!}\searrow _{#2\,}\rightrightarrows ^{#3}\searrow _{#4\,}}<br>
+\newcommand{\absp}[1]{\abs{#1}^+}<br>
+\newcommand{\Bar}{\overline}<br>
+\newcommand{\dmid}{\,\|\,}<br>
+\newcommand{\V}[1]{\begin{pmatrix}#1\end{pmatrix}}<br>
+\require{cancel}<br>
+$$</p>
+<p>This is a review of the ideas I introduced in 
+
+
+
+
+
+  
+    <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a>
+  
+
+
+.</p>
+<p>We have a set of possibilities $\O$, and there is a <em>true</em> but unknown possibility $\o^*\in\O$. I define information as a tuple of the form $(\O,R)$ where $R\subseteq \O$, which asserts that $\o^*\in R$. I notate these information tuples with arrows:</p>
+<p>$$<br>
+\O\tr R \df (\O, R)\,,<br>
+$$</p>
+<p>which makes it clear that information is the <em>narrowing-down</em> of a possibility space.</p>
+<p><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505092619.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505092619.png" width="600"/></a></span>
+</span><br>
+I also use the following notation for <strong>domain restriction</strong>:</p>
+<p>$$<br>
+A\dom{B} \df A \cap B\,,<br>
+$$</p>
+<p>which is the set $A$ restricted to the domain of $B$. This notation is more compact than intersection notation, and I can use it to emphasize the semantic distinction between which set is being restricted and which set is the domain.</p>
+<p>To quantify information, we need a measure $\mu$ on $\O$. When $\O$ is finite, I always use the counting measure $\mu(A) = \abs{A}$. The measure $\mu$ need not be normalized on $\O$, i.e. $\mu(\O)$ need not be $1$. I interpret $\mu$ as just a measure of the size of regions of the possibility space, rather than a measure of probability or randomness.</p>
+<p>The information $\O \tr R$ is quantified by</p>
+<p>$$<br>
+h_\O(R) \df \lg\par{\frac{\mu(\O)}{\mu(R)}} = \lg\par{\frac{1}{\mu(R\mid \O)}}\,,<br>
+$$</p>
+<p>which has the unit <em>bits</em> and measures the number of halvings it takes to go from $\O$ to $R$.</p>
+<p>I put $\O$ in the subscript of $h$ to make it clear what the domain is. Let $\mu(A \mid B) \df \mu(A\dom{B} \mid B) = \mu(A\cap B\mid B)$ be the measure $\mu$ restricted to $B$ and normalized so that $\mu(B \mid B) = 1$. When $\mu(\O) = 1$, then $h_\O(R) = -\lg\mu(R)$ which is called <em>self-information</em> in Shannon&rsquo;s information theory, and $h(A \mid B) = -\lg\mu(A \mid B)$ is called <em>conditional self-information</em>.</p>
+<p>If $\O$ has already been narrowed down to $R$, and is then further narrowed down to $R'\subseteq R$, the incremental quantity of information, i.e. the quantity of $R\tr R'$, is given by $h(R' \mid R)$. In general, for any sets $A,B \subseteq \O$, the information $B \tr A\dom{B}$ is quantified by</p>
+<p>$$<br>
+\begin{aligned}<br>
+h(A \mid B) &amp;\df h_\O(A\dom{B}) - h_\O(B) \\<br>
+&amp;= \lg\par{\frac{\mu(B)}{\mu(A\dom{B})}} \\<br>
+&amp;= \lg\par{\frac{1}{\mu(A\mid B)}}\,.<br>
+\end{aligned}<br>
+$$</p>
+<p>I leave off the $\O$ subscript because it has no bearing on this quantity. Note that $h(A \mid B) = h_B(A\dom{B}) = h_B(A\cap B)$ is just another way to specify the domain $B$. This is convenient notationally when $A\setminus B\neq \es$.</p>
+<p>To make working with these quantities easier, I adopt the following shorthand:</p>
+<p>$$<br>
+\begin{aligned}<br>
+h(B \tr A\dom{B}) &amp;\df h(A\dom{B} \mid B) = h_B(A\dom{B}) \\<br>
+&amp;= \lg\par{\frac{\mu(B)}{\mu(A\dom{B})}}\,.<br>
+\end{aligned}<br>
+$$</p>
+<p>The lhs of the arrow goes in the numerator, and the rhs of the arrow goes in the denominator. This is convenient for thinking algebraically about more complex manipulations:</p>
+<p>For $A \subseteq B$ and $B\subseteq C$,</p>
+<p>$$<br>
+\begin{aligned}<br>
+h(C \tr B) + h(B \tr A) &amp;= \lg\par{\frac{\mu(C)}{\cancel{\mu(B)}}} + \lg\par{\frac{\cancel{\mu(B)}}{\mu(A)}} \\<br>
+&amp;= \lg\par{\frac{\mu(C)}{\mu(A)}} \\<br>
+&amp;= h(C\tr A)\,.<br>
+\end{aligned}<br>
+$$</p>
+<p>Likewise we obtain the following identities:</p>
+<p>$$<br>
+\begin{aligned}<br>
+h(C\tr A) - h(B \tr A) &amp;= h(C \tr B) \\<br>
+h(C \tr A) - h(C \tr B) &amp;= h(B \tr A)\,.<br>
+\end{aligned}<br>
+$$</p>
+<p>This successive narrowing down can be represented visually:</p>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505092828.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505092828.png" width="600"/></a></span>
+</span>
+<h1 id="mutual-information">Mutual Information</h1>
+<p>Let $A,R\subseteq \O$. Suppose we have the information $\O\tr R$, corresponding to the knowledge that $\o^*\in R$. To be more succinct, I will say that we know that $R$ is <em>true</em>. Also suppose we don&rsquo;t know whether $A$ is true, i.e. we don&rsquo;t have the information $\O\tr A$. For information that is not known, I will use a <em>small diagonal arrow</em>, $\tra{\O}{A}$. We can think of this as aspirational information, i.e. information we do not have but would like to have.</p>
+<p>Since $\tra{\O}{A}$ and $\O\tr A$ are mathematically equivalent, $h(\tra{\O}{A}) = h(\O\tr A) = \lg\frac{\mu(\O)}{\mu(A)}$.</p>
+<p>Does $\O\tr R$ move us closer to the goal of $\tra{\O}{A}$?</p>
+<p>There are three ways $R$ and $A$ can interact:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505094432.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505094432.png" width="600"/></a></span>
+</span><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505094504.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505094504.png" width="600"/></a></span>
+</span><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505094519.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505094519.png" width="600"/></a></span>
+</span><br>
+Arrows here indicate information we actually have, i.e. $\O\tr R$, and lack of arrows indicates information we don&rsquo;t have, i.e. $\tra{\O}{A}$ and $\tra{R}{A\cap R}$.</p>
+<p>In the first case, $A \subseteq R$, and $\tra{\O}{A}$ is transformed into $\tra{R}{A}$. Clearly $h(\tra{\O}{A}) - h(\tra{R}{A}) = h(\O\tr R)$ which is the quantity of information we have gained towards $\tra{\O}{A}$, and $h(\tra{R}{A})$ is the quantity of information still needed to know that $A$ is true.</p>
+<p>In the other two cases, parts of $A$ are ruled out, which shrinks $A$ or reduces it to the empty set. The aspirational information $\tra{\O}{A}$ is transformed into $\tra{R}{A\dom{R}}$. The change in quantity is</p>
+<p>$$<br>
+\begin{aligned}<br>
+h(\tra{\O}{A}) - h(\tra{R}{A\dom{R}}) &amp;= \lg\par{\frac{\mu(\O)}{\mu(A)}} - \lg\par{\frac{\mu(R)}{\mu(A\dom{R})}} \\<br>
+&amp;= \lg\par{\frac{\mu(A\dom{R})\mu(\O)}{\mu(A)\mu(R)}}\,,<br>
+\end{aligned}<br>
+$$</p>
+<p>and nothing cancels out if $A \neq A\dom{R}$. This is an irreducible quantity of interest, called <strong>pointwise mutual information</strong> (PMI), formally defined as</p>
+<p>$$<br>
+\begin{aligned}<br>
+i_\O(A, R) &amp;\df \lg\par{\frac{\mu(A\dom{R})\mu(\O)}{\mu(A)\mu(R)}} \\<br>
+&amp;= \lg\par{\frac{\mu(A \mid \O)}{\mu(A \mid R)}} \\<br>
+&amp;= \lg\par{\frac{\mu(R \mid \O)}{\mu(R \mid A)}} \,.<br>
+\end{aligned}<br>
+$$</p>
+<p>When $\mu(\O) = 1$ we get the more familiar expression, $i_\O(A, R) = \lg\par{\frac{\mu(A \cap R)}{\mu(A)\mu(R)}}$.</p>
+<p>We can see that $i_\O(A, R)$ can also be written</p>
+<p>$$<br>
+\begin{aligned}<br>
+i_\O(A, R) &amp;= \lg\par{\frac{\mu(\O)}{\mu(R)}} - \lg\par{\frac{\mu(A)}{\mu(A\dom{R})}} \\<br>
+&amp;= h(\O\tr R) - h(\tra{A}{A\dom{R}}) \\<br>
+&amp;= i_\O(R, A)\,,<br>
+\end{aligned}<br>
+$$</p>
+<p>where the $A$ and $R$ corners are swapped.</p>
+<p>Since $h(\tra{A}{A\dom{R}})$ is always positive (because $\mu(A\dom{R})\leq\mu(A)$), we see that $i_\O(A, R)$ is upper bounded by $h(\O\tr R)$, and $i_\O(A, R) = h(\O\tr R)$ when $A \subseteq R$ (since $\mu(A\dom{R}) = \mu(A)$), which we previously derived.</p>
+<p>What about when $A\dom{R} \neq A$? It turns out that $i_\O(A, R)$ is not lower bounded, and can be arbitrarily negative. To interpret these negative values, let&rsquo;s think about what is going on visually. The information $\O\tr R$ transforms $(\O,A)$ to $(R,A\dom{R})$:</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210505104353.png" alt="">
+<br>
+In terms of quantity, what has changed is the ratio: $\frac{\mu(\O)}{\mu(A)}$ to $\frac{\mu(R)}{\mu(A\dom{R})}$. Specifically, if $\frac{\mu(\O)}{\mu(A)} \to \frac{\mu(R)}{\mu(A\dom{R})}$ is one halving, i.e. $\frac{\mu(R)}{\mu(A\dom{R})} = \frac{1}{2}\frac{\mu(\O)}{\mu(A)}$, then $i_\O(A, R) = \lg\par{\frac{\mu(\O)}{\mu(A)}\Big{/}\frac{\mu(R)}{\mu(A\dom{R})}} = \lg\par{\frac{\mu(\O)}{\mu(A)}\Big{/}\frac{1}{2}\frac{\mu(\O)}{\mu(A)}} = \lg(2) = 1$ bit.</p>
+<p>A different way to visualize this is to draw to scale the relative proportions of $\mu(\O)$ and $\mu(A)$, and show side-by-side the same relative proportions of $\mu(R)$ and $\mu(A\dom{R})$, but where $\mu(A\dom{R})$ is scaled to be visually the same size as $\mu(R)$:</p>
+<p><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505104409.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505104409.png" width="400"/></a></span>
+</span><br>
+This image shows that 1 bit is gained about whether $A$ is true because the domain is halved, i.e. we are 1 bit closer to knowing that $A$ is true. However, the bottom rectangle is rescaled so that $A$ and $A\dom{R}$ are visually the same size. $h(\O\tr R)$ may not be 1.</p>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505104419.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505104419.png" width="740"/></a></span>
+</span>
+<p>Here is another example where the narrowing down $\tra{A}{A\dom{R}}$ outpaces the narrowing down $\O\tr R$, i.e. more of $A$ is ruled out than the domain of $A$ is reduced. We see that this scaled domain appears to be doubled, which is the loss of 1 bit, i.e. $i_\O(A,R) = -1$. We are 1 bit further away from knowing that $A$ is true, and we now need an additional bit of information to know $\tra{\O}{A}$ compared with before $\O\tr R$ was known (compared with total ignorance).</p>
+<p>Now we see why PMI is upper bounded but not lower bounded. At most, $i_\O(A, R) = h(\O\tr A)$ if $R = A$, which is equivalent to gaining the information that $A$ is true. This can be achieved in a finite number of halvings. On the other hand, the scaled domain of $A\dom{R}$ can grow arbitrarily large as $R$ rules out more and more of $A$, i.e. $\mu(A \setminus R) \to \mu(A)$ implies $\mu(A\dom{R}) \to 0$. If $A \cap R = \es$, then $i_\O(A,R) = -\infty$, which we can interpret to mean that $\O\tr R$ proves that $A$ is <em>false</em>, i.e. the knowledge that $\o^* \notin A$. Thus no amount of information can make $A$ true (an infinite quantity of information here indicates a contradiction).</p>
+<h2 id="pmi-vs-conditional-information">PMI vs conditional information</h2>
+<p>$i_\O(A, R)$ and $h(A \mid R)$ are each quantifying a kind of transformation on $\tra{\O}{A}$. Assuming that $\O\tr R$ is already known,</p>
+<ul>
+<li>$i_\O(A, R)$ quantifies a change in the lhs (domain) and a rescaling of the rhs: $\tra{\O}{A} \to \tra{R}{A\dom{R}}$, whereas</li>
+<li>$h(A \mid R)$ quantifies a change in the rhs (target): $(\O\tr R) \to (\O \tr A)$, i.e. the amount of additional bits gained by this transformation.</li>
+</ul>
+<hr>
+<p>A well known identity from information theory is $i_\O(A, R) + h(A \mid R) = h_\O(A)$, or written another way:</p>
+<p>$$<br>
+i_\O(A, R) + h(R \tr A\dom{R}) = h(\O\tr A)\,.<br>
+$$</p>
+<p>Why is this sum not equal to $h(\O\tr A\dom{R})$? Note that $h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$. As we saw, $i_\O(A, R)$ is closely related to $h(\O\tr R)$ but not always the same.</p>
+<p>The difference between $i_\O(A, R) + h(R \tr A\dom{R})$ and $h(\O\tr R) + h(R \tr A\dom{R})$ can be illustrated visually.</p>
+<p>Double domain reduction $h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505132315.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505132315.png" width="600"/></a></span>
+</span></p>
+<p>The PMI $i_\O(A, R)$ involves a rescaling of $A\dom{R}$ to $A$, shown visually. The transformation $\tra{\O}{A} \to \tra{R}{A\dom{R}}$, when rescaled covers the <em>distance</em> $i_\O(A, R)$ in the diagram. $h(R \tr A\dom{R})$ covers the remaining <em>distance</em>, which is equivalent to the total distance $h(\O\tr A)$.<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505134431.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505134431.png" width="400"/></a></span>
+</span></p>
+<h1 id="appendix-pmi-algebra">Appendix: PMI Algebra</h1>
+<p>I&rsquo;ve played around with an algebraically convenient notation for PMI, and this is what I arrived at:</p>
+<p>$$<br>
+h(\mi{\O}{A}{R}{A\dom{R}}) \df h(\tra{\O}{A}) - h(\tra{R}{A\dom{R}}) = i_\O(A, R)\,.<br>
+$$</p>
+<p>It visualizes the joint narrowing down involved in mutual information:</p>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505100706.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210505100706.png" width="400"/></a></span>
+</span>
+<p>This notation has the downside of not being compact. I&rsquo;m not sure if it helps with reasoning about relations between quantities. You can evaluate that for yourself:</p>
+<p>$h(\mi{\O}{A}{R}{A\dom{R}}) = h(\mi{\O}{R}{A}{A\dom{R}})$<br>
+$h(\mi{\O}{A}{R}{A\dom{R}}) = h(\O\tr R) - h(A \tr A\dom{R})$</p>
+<p>$h(\O\tr R) - h(\mi{\O}{A}{R}{A\dom{R}}) = h(A \tr A\dom{R})$<br>
+$h(\tra{\O}{A}) - h(\mi{\O}{A}{R}{A\dom{R}}) = h(\tra{R}{A\dom{R}})$<br>
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\tra{R}{A\dom{R}}) = h(\tra{\O}{A})$<br>
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(A \tr A\dom{R}) = h(\O\tr R)$</p>
+<p>$h(\mi{\O}{A}{R}{A\dom{R}}) + h(R\tr A\dom{R}) + h(A \tr A\dom{R}) = h(\O\tr A\dom{R})$<br>
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$</p>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/information/>information</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#mutual-information">Mutual Information</a>
+      <ol>
+        <li><a href="#pmi-vs-conditional-information">PMI vs conditional information</a></li>
+      </ol>
+    </li>
+    <li><a href="#appendix-pmi-algebra">Appendix: PMI Algebra</a></li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/causality-for-physics/"><span class="iconfont icon-article"></span>Causality For Physics</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>

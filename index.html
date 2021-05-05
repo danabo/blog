@@ -4,7 +4,62 @@
 <meta name="supported-color-schemes" content="light dark"><title>Dan&#39;s Notepad&nbsp;&ndash;&nbsp;A window into my second brain</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><link rel="alternate" type="application/rss+xml" href="https://danabo.github.io/blog/index.xml" title="Dan's Notepad" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Dan&#39;s Notepad" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/causality-for-physics/">
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/information-algebra/">
+            <p class="note title">Information Algebra</p><p class="note date">May 5, 2021</p><p class="note content">$$
+\newcommand{\0}{\mathrm{false}}
+\newcommand{\1}{\mathrm{true}}
+\newcommand{\mb}{\mathbb}
+\newcommand{\mc}{\mathcal}
+\newcommand{\mf}{\mathfrak}
+\newcommand{\and}{\wedge}
+\newcommand{\or}{\vee}
+\newcommand{\es}{\emptyset}
+\newcommand{\a}{\alpha}
+\newcommand{\t}{\tau}
+\newcommand{\T}{\Theta}
+\newcommand{\D}{\Delta}
+\newcommand{\o}{\omega}
+\newcommand{\O}{\Omega}
+\newcommand{\x}{\xi}
+\newcommand{\z}{\zeta}
+\newcommand{\fa}{\forall}
+\newcommand{\ex}{\exists}
+\newcommand{\X}{\mc{X}}
+\newcommand{\Y}{\mc{Y}}
+\newcommand{\Z}{\mc{Z}}
+\newcommand{\P}{\Psi}
+\newcommand{\y}{\psi}
+\newcommand{\p}{\phi}
+\newcommand{\l}{\lambda}
+\newcommand{\B}{\mb{B}}
+\newcommand{\m}{\times}
+\newcommand{\E}{\mb{E}}
+\newcommand{\N}{\mb{N}}
+\newcommand{\I}{\mb{I}}
+\newcommand{\H}{\mb{H}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\par}[1]{\left(#1\right)}
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\inv}[1]{{#1}^{-1}}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\dom}[1]{_{|#1}}
+\newcommand{\df}{\overset{\mathrm{def}}{=}}
+\newcommand{\M}{\mc{M}}
+\newcommand{\up}[1]{^{(#1)}}
+\newcommand{\Dt}{{\Delta t}}
+\newcommand{\Dh}{{\Delta h}}
+\newcommand{\tr}{\rightarrowtail}
+\newcommand{\tra}[2]{\,^{#1\!\!}\searrow _{#2\,}}
+\newcommand{\mi}[4]{\,^{#1\!\!}\searrow _{#2\,}\rightrightarrows ^{#3}\searrow _{#4\,}}
+\newcommand{\absp}[1]{\abs{#1}^+}
+\newcommand{\Bar}{\overline}
+\newcommand{\dmid}{\,\|\,}
+\newcommand{\V}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\require{cancel}
+$$
+This is a review of the ideas I introduced in Bayesian information theory .<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/causality-for-physics/">
             <p class="note title">Causality For Physics</p><p class="note date">April 20, 2021</p><p class="note content">$$
 \newcommand{\0}{\mathrm{false}}
 \newcommand{\1}{\mathrm{true}}
@@ -142,6 +197,7 @@ Selected papers
 \newcommand{\df}{\overset{\mathrm{def}}{=}}
 \newcommand{\M}{\mc{M}}
 \newcommand{\up}[1]{^{(#1)}}
+\newcommand{\tr}{\rightarrowtail}
 $$
 $\newcommand{\H}{\Omega}$
 Shannon&rsquo;s information theory defines quantity of information (e.g. self-information $-\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his 1948 paper).<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/epistemology/">epistemology</a><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">
@@ -266,9 +322,9 @@ $$
 Related notes:
   The free-energy principle a unified brain theory   Friston&#39;s Free Energy (Active Inference)  Hackmd version of this note: https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO  My current understanding Note on probability notation These are my informal notes. Probability notation can be cumbersome and overly verbose. As is customary in machine learning and many of the sciences, I&rsquo;m not going to bother using probability notation correctly.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/free-energy/">free energy</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/how-this-blog-works/">
             <p class="note title">How this blog works</p><p class="note date">February 6, 2021</p><p class="note content">This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.
-Second brain I use the Obsidian editor to organize my second brain. It looks like this:<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/personal/">personal</a><a class="tag" href="https://danabo.github.io/blog/tags/blogging/">blogging</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/blogging-experiment/">
-            <p class="note title">Blogging experiment</p><p class="note date">February 1, 2021</p><p class="note content">What is this blog?
-It&rsquo;s a collection of notes pulled directly from my digital journal. My digital journal is a bunch of markdown files that I edit in obsidian. You could call it my &ldquo;second brain&rdquo;. I write everything here. It&rsquo;s a journal in the traditional sense, in that I write about what&rsquo;s going on in my life and what&rsquo;s on my mind in order to collect my thoughts. I also write down logical stuff like TODO-lists, lists of links I want to keep, things I might want to look into.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/personal/">personal</a><a class="tag" href="https://danabo.github.io/blog/tags/blogging/">blogging</a></p></li></ul></section><section id="footer"><div class="footer-wrap">
+Second brain I use the Obsidian editor to organize my second brain. It looks like this:<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/personal/">personal</a><a class="tag" href="https://danabo.github.io/blog/tags/blogging/">blogging</a></p></li></ul><div class="pagination">
+    <ul><li><a class="active" href="https://danabo.github.io/blog/">1</a></li><li><a class="" href="https://danabo.github.io/blog/page/2/">2</a></li></ul>
+</div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 

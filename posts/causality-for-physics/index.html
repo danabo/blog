@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Causality For Physics</h1><p class="article date">April 20, 2021<span class="lastmod"> • edited April 21, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Causality For Physics</h1><p class="article date">April 20, 2021<span class="lastmod"> • edited May 5, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -85,7 +85,7 @@ where $pa_i$ (connoting parents) stands for the set of variables that directly d
 <p>That is to say, the parents $PA_i$ of node $X_i$ is the set of nodes with arrows pointing into $X_i$. So in the example, $PA_3 = \set{X_1}$ because $X_1$ is the only node pointing into $X_3$, and $PA_4 = \set{X_2, X_3}$ because both $X_2$ and $X_3$ point into $X_4$. Node $X_1$ is not a direct parent of $X_4$.</p>
 <p>$U_i$ is an auxiliary input node to each $X_i$ which is not depicted in the graph, which makes the output value $x_i$ random. In my view, each value $u_i$ is pulled from an algorithmically random stream. Given the set of values $pa_i$ and value $u_i$, the output of the function $f_i$ is then able to be random.</p>
 <p>A note about notation: It would not be correct to write $f_i(PA_i,U_i)$ which passes the nodes themselves into the function $f_i$. On the other hand, $f_i(pa_i,u_i)$ is passing the values $pa_i$ of the parent nodes $PA_i$ and $u_i$ of the noise input node $U_i$ into the function.</p>
-<h2 id="do-notation">Do-Notation</h2>
+<h2 id="do-operator">Do-Operator</h2>
 <p>If $P$ is the probability measure on the initial graph (e.g. figure 1.2 above), then what is the probability measure on the modified graph after taking an intervention (e.g. figure 1.4)? Pearl uses &ldquo;do&rdquo;-notation, which for the example above looks like this:</p>
 <p>$$<br>
 P(x_1, x_2, x_3, x_4, x_5 \mid \Do(X_3 = \mathrm{ON}))\,.<br>
@@ -320,7 +320,7 @@ $$</p>
   <ol>
     <li><a href="#causal-models">Causal Models</a>
       <ol>
-        <li><a href="#do-notation">Do-Notation</a></li>
+        <li><a href="#do-operator">Do-Operator</a></li>
         <li><a href="#causal-effect">Causal Effect</a></li>
       </ol>
     </li>
@@ -341,7 +341,7 @@ $$</p>
     </li>
   </ol>
 </nav></div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/modular-neural-networks/"><span class="iconfont icon-article"></span>Modular Neural Networks</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/information-algebra/"><span class="iconfont icon-article"></span>Information Algebra</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/modular-neural-networks/"><span class="iconfont icon-article"></span>Modular Neural Networks</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
