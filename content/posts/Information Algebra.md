@@ -1,6 +1,6 @@
 ---
 date: 2021-05-05
-lastmod: '2021-05-05T16:07:16-05:00'
+lastmod: '2021-05-05T17:07:39-05:00'
 tags:
 - information
 title: Information Algebra
@@ -200,13 +200,13 @@ A different way to think about it is
 $$
 \\begin{aligned}
 i\_\\O(A,R) &= \\lg\\par{\\frac{\\mu(\\O)}{\\mu(R)\\frac{\\mu(A)}{\\mu(A\\dom{R})}}} \\\\
-    &= \\lg\\par{\\frac{\\nu(\\O)}{\\nu(R)}}\\,,
+    &= \\lg\\par{\\frac{\\mu(\\O)}{\\nu(R)}}\\,,
 \\end{aligned}
 $$
 
-where $\\nu(R)=\\mu(R)\\frac{\\mu(A)}{\\mu(A\\dom{R})}$ rescales the size of $R$ so that $\\nu(A\\dom{R}) = \\mu(A\\dom{R})\\frac{\\mu(A)}{\\mu(A\\dom{R})} = \\mu(A)$. Then $i\_\\O(A,R)$ is just the quantity of information $h\\up{\\nu}(\\O\\tr R)$ using this alternative measure $\\nu$.
+where $\\nu(Q)=\\mu(Q)\\frac{\\mu(A)}{\\mu(A\\dom{R})}$ rescales the size of any set $Q$ so that $\\nu(A\\dom{R}) = \\mu(A\\dom{R})\\frac{\\mu(A)}{\\mu(A\\dom{R})} = \\mu(A)$. In this form, $i\_\\O(A,R)$ looks like the quantity of information for $\\O\\tr R$, but where the numerator and denominator use different measures. This quantity of information can be negative, unlike $h(\\O\\tr R)$.
 
-This can be visualized by drawing to scale the relative proportions of $\\mu(\\O)$ and $\\mu(A)$, and show below that the same relative proportions of $\\nu(R)$ and $\\nu(A\\dom{R})$, so that $\\nu(A\\dom{R})$ is visually the same size as $\\mu(A)$:
+This rescaling can be visualized by drawing to scale the relative proportions of $\\mu(\\O)$ and $\\mu(A)$, and show below that the same relative proportions of $\\nu(R)$ and $\\nu(A\\dom{R})$, so that $\\nu(A\\dom{R})$ is visually the same size as $\\mu(A)$:
 
 {{< figure src="../../Pasted image 20210505104409.png" width="400" caption="" >}}
 Here lengths denote size. This image shows that 1 bit is gained about whether $A$ is true because the domain is halved, i.e. we are 1 bit closer to knowing that $A$ is true. However, the bottom rectangle is rescaled so that $A$ and $A\\dom{R}$ are visually the same size. $h(\\O\\tr R)$ may not be 1.
