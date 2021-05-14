@@ -1,6 +1,6 @@
 ---
 date: 2021-05-05
-lastmod: '2021-05-05T17:07:39-05:00'
+lastmod: '2021-05-07T11:40:09-05:00'
 tags:
 - information
 title: Information Algebra
@@ -146,7 +146,7 @@ Let $A,R\\subseteq \\O$. Suppose we have the information $\\O\\tr R$, correspond
 
 Since $\\tra{\\O}{A}$ and $\\O\\tr A$ are mathematically equivalent, $h(\\tra{\\O}{A}) = h(\\O\\tr A) = \\lg\\frac{\\mu(\\O)}{\\mu(A)}$.
 
-Does $\\O\\tr R$ move us closer to the goal of $\\tra{\\O}{A}$?
+Does $\\O\\tr R$ move us closer to the goal of $\\tra{\\O}{A}$? That is to say, given we have the information $\\O\\tr R$, what **information about** $A$ do we have? As we shall see, pointwise mutual information quantifies "information about".
 
 There are three ways $R$ and $A$ can interact:
 {{< figure src="../../Pasted image 20210505094432.png" width="600" caption="" >}}{{< figure src="../../Pasted image 20210505094504.png" width="600" caption="" >}}{{< figure src="../../Pasted image 20210505094519.png" width="600" caption="" >}}
@@ -208,11 +208,12 @@ where $\\nu(Q)=\\mu(Q)\\frac{\\mu(A)}{\\mu(A\\dom{R})}$ rescales the size of any
 
 This rescaling can be visualized by drawing to scale the relative proportions of $\\mu(\\O)$ and $\\mu(A)$, and show below that the same relative proportions of $\\nu(R)$ and $\\nu(A\\dom{R})$, so that $\\nu(A\\dom{R})$ is visually the same size as $\\mu(A)$:
 
-{{< figure src="../../Pasted image 20210505104409.png" width="400" caption="" >}}
+
+{{< figure src="../../Pasted image 20210506164550.png" width="400" caption="" >}}
 Here lengths denote size. This image shows that 1 bit is gained about whether $A$ is true because the domain is halved, i.e. we are 1 bit closer to knowing that $A$ is true. However, the bottom rectangle is rescaled so that $A$ and $A\\dom{R}$ are visually the same size. $h(\\O\\tr R)$ may not be 1.
 
-{{< figure src="../../Pasted image 20210505104419.png" width="740" caption="" >}}
 
+{{< figure src="../../Pasted image 20210506164602.png" width="740" caption="" >}}
 Here is another example where the narrowing down $\\tra{A}{A\\dom{R}}$ outpaces the narrowing down $\\O\\tr R$, i.e. more of $A$ is ruled out than the domain of $A$ is reduced. We see that this scaled domain appears to be doubled, which is the loss of 1 bit, i.e. $i\_\\O(A,R) = -1$. We are 1 bit further away from knowing that $A$ is true, and we now need an additional bit of information to know $\\tra{\\O}{A}$ compared with before $\\O\\tr R$ was known (compared with total ignorance).
 
 Now we see why PMI is upper bounded but not lower bounded. At most, $i\_\\O(A, R) = h(\\O\\tr A)$ if $R = A$, which is equivalent to gaining the information that $A$ is true. This can be achieved in a finite number of halvings. On the other hand, the scaled domain of $A\\dom{R}$ can grow arbitrarily large as $R$ rules out more and more of $A$, i.e. $\\mu(A \\setminus R) \\to \\mu(A)$ implies $\\mu(A\\dom{R}) \\to 0$. If $A \\cap R = \\es$, then $i\_\\O(A,R) = -\\infty$, which we can interpret to mean that $\\O\\tr R$ proves that $A$ is *false*, i.e. the knowledge that $\\o^\* \\notin A$. Thus no amount of information can make $A$ true (an infinite quantity of information here indicates a contradiction).
