@@ -11,6 +11,450 @@
     
     
     <item>
+      <title>Physical Information</title>
+      <link>https://danabo.github.io/blog/posts/physical-information/</link>
+      <pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/physical-information/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\0}{\mathrm{false}}&lt;br&gt;
+\newcommand{\1}{\mathrm{true}}&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\mf}{\mathfrak}&lt;br&gt;
+\newcommand{\and}{\wedge}&lt;br&gt;
+\newcommand{\or}{\vee}&lt;br&gt;
+\newcommand{\es}{\emptyset}&lt;br&gt;
+\newcommand{\a}{\alpha}&lt;br&gt;
+\newcommand{\t}{\tau}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\D}{\Delta}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\x}{\xi}&lt;br&gt;
+\newcommand{\z}{\zeta}&lt;br&gt;
+\newcommand{\fa}{\forall}&lt;br&gt;
+\newcommand{\ex}{\exists}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\Y}{\mc{Y}}&lt;br&gt;
+\newcommand{\Z}{\mc{Z}}&lt;br&gt;
+\newcommand{\P}{\Psi}&lt;br&gt;
+\newcommand{\y}{\psi}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\l}{\lambda}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\m}{\times}&lt;br&gt;
+\newcommand{\N}{\mb{N}}&lt;br&gt;
+\newcommand{\R}{\mb{R}}&lt;br&gt;
+\newcommand{\I}{\mb{I}}&lt;br&gt;
+\newcommand{\H}{\mb{H}}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\Env}{\mf{E}}&lt;br&gt;
+\newcommand{\expt}[2]{\mb{E}_{#1}\left[#2\right]}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
+\newcommand{\dom}[1]{_{\mid #1}}&lt;br&gt;
+\newcommand{\df}{\overset{\mathrm{def}}{=}}&lt;br&gt;
+\newcommand{\M}{\mc{M}}&lt;br&gt;
+\newcommand{\up}[1]{^{(#1)}}&lt;br&gt;
+\newcommand{\Dt}{{\Delta t}}&lt;br&gt;
+\newcommand{\tr}{\rightarrowtail}&lt;br&gt;
+\newcommand{\tx}{\prec}&lt;br&gt;
+\newcommand{\qed}{\ \ \blacksquare}&lt;br&gt;
+\newcommand{\c}{\overline}&lt;br&gt;
+\newcommand{\A}{\mf{A}}&lt;br&gt;
+\newcommand{\cA}{\c{\mf{A}}}&lt;br&gt;
+\newcommand{\dg}{\dagger}&lt;br&gt;
+\require{cancel}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;$\newcommand{\sys}[2]{\left[#2\right]_{#1}}$&lt;/p&gt;
+&lt;p&gt;I will apply to abstract physics the same information algebra I introduced in 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;
+  
+
+
+ and further developed in 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;
+  
+
+
+. &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
+&lt;h1 id=&#34;information-theory-of-systems&#34;&gt;Information Theory Of Systems&lt;/h1&gt;
+&lt;p&gt;Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt&#39;} = \t_\Dt\circ\t_{\Dt&#39;}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.&lt;/p&gt;
+&lt;p&gt;I will regard $\O$ as the state-space of an entire universe (i.e. a closed system). The universe may contain any number of systems labeled &amp;ldquo;A&amp;rdquo;, &amp;ldquo;B&amp;rdquo;, &amp;ldquo;C&amp;rdquo;, etc., with respective state-spaces $A, B, C,\dots$, so that $\O\subseteq A\m B\m C\m \dots$ and states are tuples, $\o = (a, b, c, \dots) \in \O$. Then the time-evolution function&lt;/p&gt;
+&lt;p&gt;$$\t_\Dt : (a, b, c, \dots) \mapsto \t_\Dt(a, b, c, \dots)$$&lt;/p&gt;
+&lt;p&gt;jointly time-evolves all the systems simultaneously, which allows $\t_\Dt$ to incorporate arbitrary interactions between systems. This also means that the time evolution of, say, system A, depends on not just A&amp;rsquo;s state, but the state of all systems, i.e. the universe&amp;rsquo;s state $\o$.&lt;/p&gt;
+&lt;p&gt;There is an alternative way to describe systems using partitions. Let $\mf{A}, \mf{B}, \mf{C},\dots$ each be a partition on $\O$. Partition $\mc{A}$ is a representation of system A&amp;rsquo;s state space, partition $\mf{B}$ is a representation of system B&amp;rsquo;s state space, and so on. I&amp;rsquo;ll denote elements of a partition with lowercase letters, e.g. $a\in\mf{A},\ b\in\mf{B},\ c\in\mf{C},\ \dots$&lt;/p&gt;
+&lt;p&gt;In the state-space view, $a\in A$ is a featureless element of which universal states $\o$ are composed. In the partition view, on the other hand, $a\in\mf{A}$ is a subset of $\O$, corresponding to all the states of the universe that are indistinguishable to system A, i.e. the set of all universal states $\o\in\O$ for which system A is in the same state $a$. You can think of $\mf{A}$ as the set of equivalence classes for the relation &amp;ldquo;same state from system A&amp;rsquo;s perspective&amp;rdquo;. Let $\sys{\mf{A}}{\o}$ be the equivalence class containing $\o$, i.e. $\sys{\mf{A}}{\o} = a\in\mf{A}$ s.t. $\o\in a$.&lt;/p&gt;
+&lt;p&gt;From here on I will treat the states of systems as subsets of $\O$, and the state spaces of systems will be partitions of $\O$.&lt;/p&gt;
+&lt;h2 id=&#34;systems-have-information&#34;&gt;Systems Have Information&lt;/h2&gt;
+&lt;p&gt;Suppose the universe is in state $\o\up{t}\in\O$ at time $t$. Then system A, with state space $\mf{A}$, is in state $a\up{t} = \sys{\mf{A}}{\o\up{t}}$. From system A&amp;rsquo;s perspective, $a\up{t}$ is the set of states the universe can be in.&lt;/p&gt;
+&lt;p&gt;System A has the information $\O \tr a\up{t}$, which reads &amp;ldquo;$\O$ is narrowed down to $a\up{t}$.&amp;rdquo; System A possesses this information in a purely physical sense. System A need not have awareness or understanding that it posses information, or even the capacity for awareness or understanding of anything. Merely as a physical description, I define any system with state space $\mf{A}$ to have the information $\O \tr \sys{\mf{A}}{\o\up{t}}$ at time $t$.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153113.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+As a corollary, the universe has the information $\O\tr\set{\o\up{t}}$ at time $t$. The universe can be viewed as the &lt;em&gt;supersystem&lt;/em&gt; with state space $\mf{O} = \set{\set{\o} \mid \o\in\O}$, the singleton partition. In this sense, the universe has total information, corresponding to narrowing down to a single state.&lt;/p&gt;
+&lt;p&gt;This definition of what it means for a system to have information will allow us to talk about what information the system has about itself and other systems at various times, as well as the information the system gains or losses about them as time evolves.&lt;/p&gt;
+&lt;h2 id=&#34;interactions&#34;&gt;Interactions&lt;/h2&gt;
+&lt;p&gt;If $a\up{t}$ is the state of system A at time $t$, then $\t_{\Dt}(a\up{t})$ is NOT the time-evolution of system A&amp;rsquo;s state. A&amp;rsquo;s state at time $t+\Dt$ is $a\up{t+\Dt}=\sys{\mf{A}}{\o\up{t+\Dt}}$ where $\o\up{t+\Dt} = \t_\Dt(\o\up{t})$. If $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt}$, then system A &lt;strong&gt;interacted&lt;/strong&gt; with another system (or the environment) in the time interval $(t, t+\Dt)$. Note that by necessity, $\o\up{t+\Dt} \in \t_{\Dt}(a\up{t})\cap a\up{t+\Dt}$.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153146.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just about time $t$, but about all other points in time. Specifically, at time $t$, system A has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. It is important to distinguish between the time when a system has information and the time it has information about. So at time $t+\Dt$, system A has information $\O\tr \t_{-\Dt}(a\up{t+\Dt})$ about time $t$.&lt;/p&gt;
+&lt;p&gt;If $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt}$, then system A does not have complete information about its own future state, which is the necessary result of interaction. Furthermore, $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt} \iff \t_{-\Dt}(a\up{t+\Dt}) \neq a\up{t}$, and so after system A interacted, it has forgotten information about its previous state at time $t$. That is to say, interaction causes a system to lose information about its past.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153301.png&#34; alt=&#34;&#34;&gt;
+&lt;/p&gt;
+&lt;h1 id=&#34;conservation-of-information&#34;&gt;Conservation Of Information&lt;/h1&gt;
+&lt;p&gt;Recapping 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;
+  
+
+
+, suppose we are given some measure $\mu$ on $\O$. This measure need not be normalized. Then for measureable set $R\subseteq\O$, the quantity of the information $\O\tr R$ is given by&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+h(\O\tr R) = h(R) = \lg\par{\frac{\mu(\O)}{\mu(R)}}\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Conservation of information&lt;/strong&gt; is the property of any bijective time-evolution, whereby the information $\O\tr \t_\Dt(a\up{t})$ is enough to recover the information $\O\tr a\up{t}$, because $a\up{t} = \t^{-1}_\Dt(\t_\Dt(a\up{t}))$, for all $\Dt\in\R$. That is to say, time-evolution of arbitrary state sets $R\subseteq\O$ does not destroy the information $\O\tr R$ (this is distinct from the time-evolution of systems which, as we saw, can lose information).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Conservation of information quantity&lt;/strong&gt; is a property of &lt;strong&gt;measure-preserving&lt;/strong&gt; time-evolution. Let $\mu$ additionally be a $\t_\Dt$-&lt;a href=&#34;https://en.wikipedia.org/wiki/Invariant_measure&#34;target=&#34;_blank&#34;&gt;invariant measure&lt;/a&gt; on $\O$, i.e. $\mu(\t_\Dt^{-1}(A)) = \mu(A)$ for all measurable $A\subseteq \O$ and for all $\Dt\in\R$. Because $\t_\Dt$ is bijective, &lt;a href=&#34;https://encyclopediaofmath.org/wiki/Invariant_measure&#34;target=&#34;_blank&#34;&gt;this is equivalent to&lt;/a&gt; requiring $\mu(\t_\Dt(A)) = \mu(A)$. Then $h(\O\tr a\up{t}) = h(\O\tr \t_\Dt(a\up{t}))$ for all $t, \Dt\in\R$.&lt;/p&gt;
+&lt;p&gt;Conservation of information quantity is a stronger property that requires a $\t$-invariant measure in addition to bijective time-evolution. In classical mechanics, &lt;a href=&#34;https://en.wikipedia.org/wiki/Liouville%27s_theorem_%28Hamiltonian%29&#34;target=&#34;_blank&#34;&gt;Liouville&amp;rsquo;s theorem&lt;/a&gt; shows that any Newtonian time-evolution preserves uniform measures on phase space. This result is sometimes referred to as &lt;em&gt;conservation of information&lt;/em&gt; by physicists, who are referring to conservation of information quantity within my nomenclature. For details, see&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://physicstravelguide.com/theorems/liouvilles_theorem&#34;target=&#34;_blank&#34;&gt;Liouville&amp;rsquo;s theorem - physicstravelguide.com&lt;/a&gt; (Davis &amp;amp; Schwichtenberg)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://theoreticalminimum.com/courses/statistical-mechanics/2013/spring/lecture-1&#34;target=&#34;_blank&#34;&gt;Entropy and conservation of information - theoreticalminimum.com&lt;/a&gt; - (Susskind)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://philsci-archive.pitt.edu/15985/1/gibbsliouville.pdf&#34;target=&#34;_blank&#34;&gt;On the Gibbs-Liouville theorem in classical mechanics&lt;/a&gt; (Henriksson)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://arxiv.org/abs/2004.11569&#34;target=&#34;_blank&#34;&gt;Hamiltonian mechanics is conservation of information entropy&lt;/a&gt; (Carcassi &amp;amp; Aidala)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;information-about-systems&#34;&gt;Information About Systems&lt;/h1&gt;
+&lt;p&gt;Suppose there are at least two systems, A and B, with respective state spaces $\mf{A}$ and $\mf{B}$. Let system A be in state $a\up{t}$ at time $t$. System A (at $t$) has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. What information does A have about B&amp;rsquo;s state at time $t+\Dt$?&lt;/p&gt;
+&lt;p&gt;In 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/#mutual-information&#34;&gt;Information Algebra#mutual-information&lt;/a&gt;
+  
+
+
+, I showed that pointwise mutual information (PMI) quantifies &amp;ldquo;information about&amp;rdquo;. Specifically,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+i(a\up{t}, b) = i(b, a\up{t}) = \lg\par{\frac{\mu(a\up{t}\cap b)\mu(\O)}{\mu(a\up{t})\mu(b)}}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;quantifies how much information system A, being in state $a\up{t}$, has about whether system B is in state $b\in\mf{B}$ at time $t$.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153829.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+If $i(a\up{t}, b) = 0$, then $a\up{t}$ and $b$ are &lt;strong&gt;orthogonal&lt;/strong&gt; states. State spaces $\mf{A}$ and $\mf{B}$ are called orthogonal iff $i(a,b) = 0$ for all $a\in\mf{A}$ and $b\in\mf{B}$. Usually, systems are defined to be orthogonal, meaning that the state of one system can be chosen totally independently of the state of the other. Non-orthogonal systems have information about each other &lt;em&gt;by construction&lt;/em&gt;, regardless of their mutual time-evolution. On the other hand, orthogonal systems always have zero information about each other at the present moment. That is to say, $i(a\up{t}, b) = 0$ for all $\mf{B}$, i.e. system A has no information about the state of system B at time $t$. However, system A may have information about system B&amp;rsquo;s past or future state.&lt;/p&gt;
+&lt;p&gt;$\O\tr \t_\Dt(a\up{t})$ is the information system A has &lt;em&gt;at time $t$&lt;/em&gt; about time $t+\Dt$. Then it follows that $i(\t_\Dt(a\up{t}), b)$ is the quantity of information system A has, &lt;em&gt;at time $t$&lt;/em&gt;, about whether system B is in state $b$ &lt;em&gt;at time $t+\Dt$&lt;/em&gt;. If $\t_\Dt(a\up{t}) \in b$, then $i(\t_\Dt(a\up{t}), b) = h(b) = h(\O\tr b)$ and system A (at time $t$) has certainty that system B is in state $b$ at time $t+\Dt$. On the other hand, if $b \in \t_\Dt(a\up{t})$, then $i(\t_\Dt(a\up{t}), b) = h(\t_\Dt(a\up{t})) = h(\O\tr \t_\Dt(a\up{t}))$ which is just the total quantity of information that system A has about time $t+\Dt$.&lt;/p&gt;
+&lt;p&gt;To fully lay out what information system A has (at time $t$) about system B&amp;rsquo;s state at time $t+\Dt$, we need to look at all the quantities of information A has about every state $b\in\mf{B}$, which can be given as the vector&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\vtup{i(\t_\Dt(a\up{t}), b) \mid b\in\mf{B}}\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Note that $i(\t_\Dt(a\up{t}), b)$ can be negative (and has no lower bound), which means that system A has needs more quantity of information than $h(\O\tr b)$ to have certainty that system B is in state $b$. If system A has information that rules out state $b$ with certainty, i.e. $b\cap \t_\Dt(a\up{t}) = \es$, then $i(\t_\Dt(a\up{t}), b) = -\infty$. 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/#mutual-information&#34;&gt;Information Algebra#mutual-information&lt;/a&gt;
+  
+
+
+ goes into further detail about the interpretation of PMI quantities.&lt;/p&gt;
+&lt;h2 id=&#34;information-gain&#34;&gt;Information Gain&lt;/h2&gt;
+&lt;p&gt;The difference&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+i(\t_{t&#39;-t-\Dt}(a\up{t+\Dt}), b) - i(\t_{t&#39;-t}(a\up{t}), b)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;is &lt;strong&gt;information gain&lt;/strong&gt;, i.e. the information system A gained (or lost if negative) about whether system B is in state $b$ at time $t&#39;$ due to the time-evolution of system A&amp;rsquo;s state over the time interval $(t,t+\Dt)$.&lt;/p&gt;
+&lt;p&gt;Likewise, $i(\t_{t&#39;-t-\Dt}(a\up{t+\Dt}), a) - i(\t_{t&#39;-t}(a\up{t}), a)$ is system A&amp;rsquo;s information gain (or loss) about itself, specifically whether it is in state $a$ at time $t&#39;$.&lt;/p&gt;
+&lt;h1 id=&#34;sum-conservation-laws&#34;&gt;Sum-Conservation Laws&lt;/h1&gt;
+&lt;p&gt;Let $\O\tr R$ be the information some unspecified system at some unspecified time has about some other time. Then that system has the quantity of information $h(\O\tr R)$.&lt;/p&gt;
+&lt;p&gt;Let $b\in\mf{B}$ be a possible state of system B. Suppose $i(b, R) &amp;lt; h(\O\tr R)$. Then you might ask, &amp;ldquo;where did the remaining information go?&amp;rdquo; That is to say, does it make sense to think that the complete quantity of information $h(\O\tr R)$ should be divided among information about various things? Could we then have the information about everything add up to $h(\O\tr R)$, analogous to how conservation of mass and energy in physics results in reactions or interactions s.t. the energies and masses of the outputs add up to the input energy and mass?&lt;/p&gt;
+&lt;p&gt;Information does not quite work like this. For instance, the sum of the vector $\vtup{i(\t_\Dt(a\up{t}), b) \mid b\in\mf{B}}$ need not be $h(R)$. This is evident when you consider that it&amp;rsquo;s possible for the system with information $\O\tr R$ to have the information quantity $h(R)$ about $b\in\mf{B}$ and about $b&#39;\in\mf{B}$, if both $b$ and $b&#39;$ are contained within $R$. Then at least two entries in the vector are each $h(R)$. Furthermore, entries can be arbitrarily negative, and even $-\infty$ as we saw above.&lt;/p&gt;
+&lt;p&gt;I have found two ways to achieve something like a sum-conservation law for information quantity. One way uses pointwise quantities, and the other way uses expected quantities, i.e. entropy and mutual information.&lt;/p&gt;
+&lt;h2 id=&#34;pointwise&#34;&gt;Pointwise&lt;/h2&gt;
+&lt;p&gt;Suppose $i(b, R) &amp;lt; h(\O\tr R)$. If we &amp;ldquo;shrank&amp;rdquo; $b$ down by intersecting with some other set $c$ such that $b \cap c \in R$, then we&amp;rsquo;d have  $i(b\cap c, R) = h(\O\tr R)$. Writing $i(b\cap c, R)$ as a sum involving $i(b, R)$ gives us a sum-conservation law:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+i(b \cap c, R) &amp;amp;= i(b, R) + i(c, R) - i(b, c, R) \\&lt;br&gt;
+&amp;amp;= i(b, R) + i(c, R) - i(b, c) + i(b, c \mid R) \\&lt;br&gt;
+&amp;amp;= h(\O\tr R)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This is easy to check using the definition of PMI and $i(b, c, R)\df i(b, c) - i(b, c \mid R)$, and&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+i(b, c \mid R) \df \lg\par{\frac{\mu(b\cap c\cap R)\mu(R)}{\mu(b\cap R)\mu(c \cap R)}}\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;If $c$ is chosen such that $b$ and $c$ are orthogonal, i.e. $i(b,c)=0$, and plugging in $h(\O\tr R)$ for $i(b \cap c, R)$, then we have the simpler form&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+h(\O\tr R) = i(b, R) + i(c, R) + i(b, c \mid R)\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which does not involve the information quantity $i(b,c)$ due to redundancy between the choice of $b$ and $c$.&lt;/p&gt;
+&lt;p&gt;Note that the &amp;ldquo;$i$&amp;rdquo; quantities may be negative, but $h(\O\tr R)$ is always positive. Thus at least one of these terms is positive.&lt;/p&gt;
+&lt;p&gt;It is possible for the information $\O\tr R$ to not contain information (or contain negative information) about $b$ or $c$. Then all of the positive information quantity goes into the term $i(b, c \mid R)$, which can be thought of as the quantity of information $\O\tr b$ has about whether $c$ is the case, given the smaller state space $R$.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153229.png&#34; alt=&#34;&#34;&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;information-about-more-than-two-sets&#34;&gt;Information about more than two sets&lt;/h3&gt;
+&lt;p&gt;Suppose $i(b\cap c, R) &amp;lt; h(\O\tr R)$. We can repeat the process above again by choosing a third set $a$ s.t. $i(a\cap b\cap c, R) = h(\O\tr R)$. In general, there is an $n$-way relationship.&lt;/p&gt;
+&lt;p&gt;Let $x_1,\dots,x_n,R \subseteq \O$ be arbitrary sets. Then,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+i(x_1\cap\dots\cap x_n,R) = i(x_1\cap\dots\cap x_{n-1},R) + i(x_n, R \mid x_1\cap\dots\cap x_{n-1})\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Using the identity&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+&amp;amp; i(x_{n-k+1}, \dots, x_n, R \mid x_1\cap\dots\cap x_{n-k}) \\&lt;br&gt;
+&amp;amp;\quad\,\, = \,\,i(x_{n-k+1}, \dots, x_n, R \mid x_1\cap\dots\cap x_{n-k-1}) \\&lt;br&gt;
+&amp;amp;\qquad\quad- i(x_{n-k}, \dots, x_n, R \mid x_1\cap\dots\cap x_{n-k-1})&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;we can recursively expanding out these terms to produce an expression for $i(x_1\cap\dots\cap x_n,R)$ entirely composed of non-conditional PMI terms, which can be further expanded out using&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+i(x_1, \dots, x_n) \df i(x_1, \dots, x_{n-1}) - i(x_1, \dots, x_{n-1} \mid x_n)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;For case of three sets $a,b,c$, we have&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+&amp;amp; i(a\cap b\cap c,R) \\&lt;br&gt;
+&amp;amp;\quad\,=\, i(a, R) + i(b, R) + i(c, R) \\&lt;br&gt;
+&amp;amp;\qquad\,\,- i(a, b, R) - i(a, c, R) - i(b, c, R) \\&lt;br&gt;
+&amp;amp;\qquad\,\,+ i(a,b,c,R)&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+i(a,b,c,R) &amp;amp;= i(a,b,c) - i(a,b,c\mid R)\\&lt;br&gt;
+&amp;amp;= i(a,b) - i(a,b \mid c) - i(a,b \mid R) + i(a,b \mid c\cap R)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;If $a,b,c$ are all mutually orthogonal, i.e. $i(a,b) = i(a,c) = i(b,c) = i(a,b,c) = 0$, then&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+&amp;amp; i(a\cap b\cap c,R) \\&lt;br&gt;
+&amp;amp;\quad\,=\, i(a, R) + i(b, R) + i(c, R) \\&lt;br&gt;
+&amp;amp;\qquad\,\,+ i(a,b \mid R) + i(b,c \mid R) + i(a,b \mid c\cap R)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;h2 id=&#34;expectation&#34;&gt;Expectation&lt;/h2&gt;
+&lt;p&gt;It would be nice if there was a single quantity describing $\mf{B}\tr\mf{B}\dom{R}$, the narrowing down of partition $\mf{B}$ to domain $R$, analogous to $h(\O\tr R)$ for individual sets. I will motivate such a quantity from a few special cases.&lt;/p&gt;
+&lt;p&gt;If $P\subseteq 2^\O$ is some set of sets, then let $\mu(P) = \mu(\bigcup P)$. Then for partition $\mf{B}$ of $\O$, we have $\mu(\mf{B}) = \mu(\bigcup\mf{B}) = \mu(\O)$. Let&amp;rsquo;s define the quantity $h(\mf{B}\tr \mf{B}\dom{R})$ on a few special cases.&lt;/p&gt;
+&lt;p&gt;Consider $\mf{B}\tr \set{b}$ for some $b\in\mf{B}$.&lt;br&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514154831.png&#34; alt=&#34;&#34;&gt;
+&lt;/p&gt;
+&lt;p&gt;Let&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(\mf{B}\tr \set{b}) &amp;amp;= \lg\par{\frac{\mu(\mf{B})}{\mu\set{b}}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(\O)}{\mu(b)}} \\&lt;br&gt;
+&amp;amp;= h(\O\tr b)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Then the quantity of information due to narrowing down the partition $\mf{B}$ to one of its elements $b$ is equal to the quantity of information due to narrowing down the possibility space $\O$ to $b$.&lt;/p&gt;
+&lt;p&gt;In general, let $\mf{B}&#39; \subseteq \mf{B}$. Then&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(\mf{B}\tr \mf{B}&#39;) &amp;amp;= \lg\par{\frac{\mu(\mf{B})}{\mu(\mf{B}&#39;)}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(\O)}{\mu(\bigcup \mf{B}&#39;)}} \\&lt;br&gt;
+&amp;amp;= h\par{\O\tr \bigcup \mf{B}&#39;}\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514154938.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+One more special case: suppose $\mf{B}$ and $\mf{B}\dom{R}$ are &lt;strong&gt;uniform&lt;/strong&gt;, meaning that $\mu(b) = \mu(b&#39;)$ or $0$ for all $b,b&#39;\in\mf{B}$, and likewise for $\mf{B}\dom{R}$ (which may contain the empty set).&lt;/p&gt;
+&lt;p&gt;Then&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+h(\mf{B}\tr \mf{B}\dom{R}) &amp;amp;= h(\O\tr b) - h(R \tr b\cap R)\\&lt;br&gt;
+&amp;amp;= h(\O\tr R) - h(b \tr b\cap R)\\&lt;br&gt;
+&amp;amp;= i(b, \bigcup \mf{B}\dom{R}) \\&lt;br&gt;
+&amp;amp;= i(b, R)&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;for some $b\in\mf{B}$ s.t. $b\cap R \neq \es$. If $R$ reduces each $b\in\mf{B}$ by the same amount, then $i(b, R) = 0$ for all $b\in\mf{B}$ (i.e. $R$ and $b$ are orthogonal), and so $h(\mf{B}\tr \mf{B}\dom{R}) = 0$, indicating that $\O\tr R$ contains no information about the partition $\mf{B}$.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514155029.png&#34; alt=&#34;&#34;&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514155002.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+Let $\hat{\mf{B}}\dom{R} = \set{b\in\mf{B} \mid b\cap R \neq \es}$ be the subset of $\mf{B}$ containing elements that have non-zero intersection with $R$. We&amp;rsquo;d like $h(\mf{B}\tr \mf{B}\dom{R}) = h(\mf{B}\tr \hat{\mf{B}}\dom{R}) = \lg\par{\frac{\mu(\mf{B})}{\mu(\hat{\mf{B}}\dom{R})}}$. Notice that $\mu(b)/\mu(\bigcup\hat{\mf{B}}\dom{R}) = \mu(b\cap R)/\mu(R)$, which gives us&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mu(\bigcup\hat{\mf{B}}\dom{R}) = \mu(b)\frac{\mu(R)}{\mu(b\cap R)}\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Plugging in, we get $\lg\par{\frac{\mu(\mf{B})}{\mu(\hat{\mf{B}}\dom{R})}} = \lg\par{\frac{\mu(\O)}{\mu(b)\frac{\mu(R)}{\mu(b\cap R)}}} = i(b, R)$.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;In the more general case $\mf{B}$ and $\mf{B}\dom{R}$ are not uniform partitions. We will need some kind of averaging operation over $i(b,R)$ for $b\in\mf{B}$ that reduces to our special cases above, and zeros out all the $i(b,R) = -\infty$ terms where $b\cap R = \es$. Taking the expectation w.r.t. $\mu(\cdot \mid R)$ fulfills both requirements.&lt;/p&gt;
+&lt;p&gt;Let&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\expt{x\in\mf{X}}{f(x)} = \frac{1}{\mu(\bigcup\mf{X})} \sum_{x\in\mf{X}} \mu(x)\,f(b)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;for discrete $\mf{X}$ and&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\expt{x\in\mf{X}}{f(x)} = \frac{1}{\mu(\bigcup\mf{X})}\int_{x\in\mf{X}} \rho(x)\,f(b)\,\mathrm{d}x&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;for continuous $\mf{X}$, where $\rho$ is the density function for measure $\mu$. These quantities are normalized by $\mu(\bigcup\mf{X})$ where $\bigcup\mf{X}$ is the domain of the partition $\mf{X}$.&lt;/p&gt;
+&lt;p&gt;Define the mutual information between partitions $\mf{A}$ and $\mf{B}$ as&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\I(\mf{A}, \mf{B}) \df \expt{a\in\mf{A},b\in\mf{B}}{i(a,b)}\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;as well as the conditional mutual information&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\I(\mf{A}, \mf{B} \mid R) \df \expt{a\dom{R}\in\mf{A}\dom{R},b\dom{R}\in\mf{B}\dom{R}}{i(a,b\mid R)}\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Define the mutual information between partition $\mf{B}$ and set $R$ as&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\I(\mf{B}, R) \df \expt{b\dom{R}\in\mf{B}\dom{R}}{i(b,R)}\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;In the discrete case,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\I(\mf{B}, R) = \sum_{b\in\mf{B}} \frac{\mu(b\cap R)}{\mu(R)}i(b,R)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;In general, define&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+h(\mf{B}\tr \mf{B}\dom{R}) \df \I(\mf{B}, R)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Let $\mf{C}$ be the state space of some other system. Taking the expectation of the pointwise sum-conservation law from above, we get&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\I(\mf{B}\otimes\mf{C}, R) &amp;amp;= \I(\mf{B}, R) + \I(\mf{C}, R) - \I(\mf{B}, \mf{C}, R) \\&lt;br&gt;
+&amp;amp;= \I(\mf{B}, R) + \I(\mf{C}, R) - \I(\mf{B}, \mf{C}) + \I(\mf{B}, \mf{C} \mid R)\,,&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mf{B}\otimes\mf{C}\df \set{b\cap c \mid b\in\mf{B} \and c\in\mf{C}}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;is the &lt;strong&gt;partition product&lt;/strong&gt; of $\mf{B}$ and $\mf{C}$, i.e. the intersection of all pairs of elements of $\mf{B}$ and $\mf{C}$.&lt;/p&gt;
+&lt;p&gt;Each &amp;ldquo;$\I$&amp;rdquo; in the expression $\I(\mf{B}, R) + \I(\mf{C}, R) - \I(\mf{B}, \mf{C}) + \I(\mf{B}, \mf{C} \mid R)$ is always positive (though 3-way &amp;ldquo;$\I$&amp;rdquo; can be negative). If $\mf{B}$ and $\mf{C}$ are orthogonal, i.e. $\I(\mf{B}, \mf{C}) = 0$, then&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\I(\mf{B}\otimes\mf{C}, R) = \I(\mf{B}, R) + \I(\mf{C}, R) + \I(\mf{B}, \mf{C} \mid R)\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;which is a decomposition of $\I(\mf{B}\otimes\mf{C}, R)$ into positive terms.&lt;/p&gt;
+&lt;h3 id=&#34;environments&#34;&gt;Environments&lt;/h3&gt;
+&lt;p&gt;Let $\mf{B}$ be some state space. A &lt;strong&gt;partition complement&lt;/strong&gt; of $\mf{B}$, denoted $\c{\mf{B}}$, satisfies the following properties:&lt;/p&gt;
+&lt;ol start=&#34;0&#34;&gt;
+&lt;li&gt;$\c{\mf{B}}$ is a partition of $\O$.&lt;/li&gt;
+&lt;li&gt;$\I(\mf{B}, \c{\mf{B}}) = 0$,&lt;/li&gt;
+&lt;li&gt;$\mf{B}\otimes\c{\mf{B}} = \mf{O} = \set{\set{\o}\mid\o\in\O}$.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In general, $\mf{B}$ does not have a unique complement, and may not have any complement. For example, if $\O = \set{\o_1, \o_2, \o_3}$ and $\mf{B} = \set{\set{\o_1, \o_2}, \set{\o_3}}$, then it is easy to check that $\mf{B}$ has no complement.&lt;/p&gt;
+&lt;p&gt;If each element of $\mf{B}$ is infinite, then $\mf{B}$ always has a complement. If each element of $\mf{B}$ is finite, then it has a complement if each element has the same cardinality.&lt;/p&gt;
+&lt;p&gt;We can regard a complement $\c{\mf{B}}$ as the &lt;strong&gt;environment&lt;/strong&gt; of system B, which is everything in the universe outside of system B.&lt;/p&gt;
+&lt;p&gt;Assuming $\mf{B}$ has a complement $\c{\mf{B}}$, then the sum-conservation law from above is&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\I(\mf{B}\otimes\c{\mf{B}}, R) = \I(\mf{B}, R) + \I(\c{\mf{B}}, R) + \I(\mf{B}, \c{\mf{B}} \mid R)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;A useful identity here is that $\I(\mf{O}, R) = h(\O\tr R)$. Since $\mf{B}\otimes\c{\mf{B}} = \mf{O}$, then we have&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+h(\O\tr R) = \I(\mf{B}, R) + \I(\c{\mf{B}}, R) + \I(\mf{B}, \c{\mf{B}} \mid R)\,.&lt;br&gt;
+$$&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Proof&lt;/strong&gt;&lt;/em&gt; that $\I(\mf{O}, R) = h(\O\tr R)$.&lt;/p&gt;
+&lt;p&gt;Let $\mf{X}$ be a partition of $\O$ s.t. for each $x\in\mf{X}$, either $x\cap R = \es$ or $x$. That is to say, there is some subset $Y \subseteq \mf{X}$ s.t. $R = \bigcup Y$. Then $Y = \mf{X}\dom{R}$.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\I(\mf{X}, R) &amp;amp;= \sum_{x\in\mf{X}} \mu(x \mid R) \lg\par{\frac{\mu(x\cap R)\mu(\O)}{\mu(x)\mu(R)}} \\&lt;br&gt;
+&amp;amp;= \sum_{x\in \mf{X}\dom{R}} \mu(x \mid R) \lg\par{\frac{\cancel{\mu(x)}\mu(\O)}{\cancel{\mu(x)}\mu(R)}} \\&lt;br&gt;
+&amp;amp;= \lg\par{\frac{\mu(\O)}{\mu(R)}} \\&lt;br&gt;
+&amp;amp;= h(\O\tr R)\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Since $\mf{O}$ is the singleton partition, it satisfies the condition above for all $R\subseteq \O$. Thus $\I(\mf{O}, R) = h(\O\tr R)$. $\qed$&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Combining conservation of information quantity,&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+h(\O\tr R) = h(\O\tr \t_\Dt(R))\,,&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;with the sum-conservation law,  we get&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+&amp;amp; \I(\mf{B}, R) + \I(\c{\mf{B}}, R) + \I(\mf{B}, \c{\mf{B}} \mid R) \\&lt;br&gt;
+=\,\, &amp;amp; \I(\mf{B}, \t_\Dt(R)) + \I(\c{\mf{B}}, \t_\Dt(R)) + \I(\mf{B}, \c{\mf{B}} \mid \t_\Dt(R))\,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Consider system A with state space $\A$, and its environment with state space $\cA$. At time $t$, system A is in state $a\up{t}\in\mf{A}$ and has the information $\O\tr a\up{t}$ about time $t$. Since $\I(\A, a\up{t}) = h(\O\tr a\up{t})$, then $\I(\cA, a\up{t}) + \I(\A, \cA \mid a\up{t}) = 0$.&lt;/p&gt;
+&lt;p&gt;Then our conservation law reduces to&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\begin{aligned}&lt;br&gt;
+\I(\A, a\up{t}) &amp;amp;= \I(\A, \t_\Dt(a\up{t})) + \I(\cA, \t_\Dt(a\up{t})) + \I(\A, \cA \mid \t_\Dt(a\up{t})) \\&lt;br&gt;
+&amp;amp;= h(\O\tr a\up{t}) \,.&lt;br&gt;
+\end{aligned}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;If $\I(\A, \t_\Dt(a\up{t})) = h(\O\tr \t_\Dt(a\up{t})) = h(\O\tr a\up{t})$, then $\I(\cA, \t_\Dt(a\up{t})) + \I(\A, \cA \mid \t_\Dt(a\up{t})) = 0$ and system A (at time $t$) has no information about the environment at time $t+\Dt$. Since all the terms are positive, for system A to have information about the future environment, system A must have less than complete information about its own future state.&lt;/p&gt;
+&lt;p&gt;A tricky case to be aware of is when $\I(\A, \t_\Dt(a\up{t})) = 0$ and $\I(\cA, \t_\Dt(a\up{t})) = 0$. This would seem to be saying that system A has no information about its own future state and the environment&amp;rsquo;s future state. It would then seem that the information quantity $h(\O\tr a\up{t})$ simply disappeared and was not conserved. That quantity went into the third term, $\I(\A, \cA \mid \t_\Dt(a\up{t})) = h(\O\tr a\up{t})$, which indicates that system A becomes highly correlated with its environment in the future.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514160217.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;$R=a\in\A$. Then $\I(\A,R) = h(\O\tr R)$ and $\I(\cA,R) = 0$, $\I(\A,\cA \mid R) = 0$.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;br&gt;
+
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514160232.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;$R=a^\dg\in\cA$. Then $\I(\cA,R) = h(\O\tr R)$ and $\I(\A,R) = 0$, $\I(\A,\cA \mid R) = 0$.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;br&gt;
+
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514160247.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;$\I(\A,R)$ and $\I(\cA,R)$ are both non-zero, and $\I(\A,\cA \mid R) = 0$, meaning $\A$ and $\cA$ are still orthogonal when restricted to the domain $R$.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;br&gt;
+
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514160256.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;$\I(\A,R) = 0$ and $\I(\cA,R) = 0$, since restricting either partition to the domain $R$ still tells you nothing about the other partition. However, $\I(\A,\cA \mid R) = h(\O\tr R)$, meaning $\A$ and $\cA$ restricted to the domain $R$ are maximally redundant, i.e. given $R$ and some $a\in\mf{A}$, you can uniquely determine $a^\dg\in\mf{A}$, and vice versa.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Information Algebra</title>
       <link>https://danabo.github.io/blog/posts/information-algebra/</link>
       <pubDate>Wed, 05 May 2021 00:00:00 +0000</pubDate>
@@ -141,7 +585,7 @@ $$&lt;/p&gt;
 &lt;h1 id=&#34;mutual-information&#34;&gt;Mutual Information&lt;/h1&gt;
 &lt;p&gt;Let $A,R\subseteq \O$. Suppose we have the information $\O\tr R$, corresponding to the knowledge that $\o^*\in R$. To be more succinct, I will say that we know that $R$ is &lt;em&gt;true&lt;/em&gt;. Also suppose we don&amp;rsquo;t know whether $A$ is true, i.e. we don&amp;rsquo;t have the information $\O\tr A$. For information that is not known, I will use a &lt;em&gt;small diagonal arrow&lt;/em&gt;, $\tra{\O}{A}$. We can think of this as aspirational information, i.e. information we do not have but would like to have.&lt;/p&gt;
 &lt;p&gt;Since $\tra{\O}{A}$ and $\O\tr A$ are mathematically equivalent, $h(\tra{\O}{A}) = h(\O\tr A) = \lg\frac{\mu(\O)}{\mu(A)}$.&lt;/p&gt;
-&lt;p&gt;Does $\O\tr R$ move us closer to the goal of $\tra{\O}{A}$?&lt;/p&gt;
+&lt;p&gt;Does $\O\tr R$ move us closer to the goal of $\tra{\O}{A}$? That is to say, given we have the information $\O\tr R$, what &lt;strong&gt;information about&lt;/strong&gt; $A$ do we have? As we shall see, pointwise mutual information quantifies &amp;ldquo;information about&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;There are three ways $R$ and $A$ can interact:&lt;br&gt;
 &lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505094432.png&#34; 
         target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505094432.png&#34; width=&#34;600&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
@@ -193,14 +637,14 @@ i_\O(A,R) &amp;amp;= \lg\par{\frac{\mu(\O)}{\mu(R)\frac{\mu(A)}{\mu(A\dom{R})}}}
 $$&lt;/p&gt;
 &lt;p&gt;where $\nu(Q)=\mu(Q)\frac{\mu(A)}{\mu(A\dom{R})}$ rescales the size of any set $Q$ so that $\nu(A\dom{R}) = \mu(A\dom{R})\frac{\mu(A)}{\mu(A\dom{R})} = \mu(A)$. In this form, $i_\O(A,R)$ looks like the quantity of information for $\O\tr R$, but where the numerator and denominator use different measures. This quantity of information can be negative, unlike $h(\O\tr R)$.&lt;/p&gt;
 &lt;p&gt;This rescaling can be visualized by drawing to scale the relative proportions of $\mu(\O)$ and $\mu(A)$, and show below that the same relative proportions of $\nu(R)$ and $\nu(A\dom{R})$, so that $\nu(A\dom{R})$ is visually the same size as $\mu(A)$:&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505104409.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505104409.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210506164550.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210506164550.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;br&gt;
 Here lengths denote size. This image shows that 1 bit is gained about whether $A$ is true because the domain is halved, i.e. we are 1 bit closer to knowing that $A$ is true. However, the bottom rectangle is rescaled so that $A$ and $A\dom{R}$ are visually the same size. $h(\O\tr R)$ may not be 1.&lt;/p&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210505104419.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210505104419.png&#34; width=&#34;740&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;
-&lt;p&gt;Here is another example where the narrowing down $\tra{A}{A\dom{R}}$ outpaces the narrowing down $\O\tr R$, i.e. more of $A$ is ruled out than the domain of $A$ is reduced. We see that this scaled domain appears to be doubled, which is the loss of 1 bit, i.e. $i_\O(A,R) = -1$. We are 1 bit further away from knowing that $A$ is true, and we now need an additional bit of information to know $\tra{\O}{A}$ compared with before $\O\tr R$ was known (compared with total ignorance).&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210506164602.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210506164602.png&#34; width=&#34;740&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+Here is another example where the narrowing down $\tra{A}{A\dom{R}}$ outpaces the narrowing down $\O\tr R$, i.e. more of $A$ is ruled out than the domain of $A$ is reduced. We see that this scaled domain appears to be doubled, which is the loss of 1 bit, i.e. $i_\O(A,R) = -1$. We are 1 bit further away from knowing that $A$ is true, and we now need an additional bit of information to know $\tra{\O}{A}$ compared with before $\O\tr R$ was known (compared with total ignorance).&lt;/p&gt;
 &lt;p&gt;Now we see why PMI is upper bounded but not lower bounded. At most, $i_\O(A, R) = h(\O\tr A)$ if $R = A$, which is equivalent to gaining the information that $A$ is true. This can be achieved in a finite number of halvings. On the other hand, the scaled domain of $A\dom{R}$ can grow arbitrarily large as $R$ rules out more and more of $A$, i.e. $\mu(A \setminus R) \to \mu(A)$ implies $\mu(A\dom{R}) \to 0$. If $A \cap R = \es$, then $i_\O(A,R) = -\infty$, which we can interpret to mean that $\O\tr R$ proves that $A$ is &lt;em&gt;false&lt;/em&gt;, i.e. the knowledge that $\o^* \notin A$. Thus no amount of information can make $A$ true (an infinite quantity of information here indicates a contradiction).&lt;/p&gt;
 &lt;h2 id=&#34;pmi-vs-conditional-information&#34;&gt;PMI vs conditional information&lt;/h2&gt;
 &lt;p&gt;$i_\O(A, R)$ and $h(A \mid R)$ are each quantifying a kind of transformation on $\tra{\O}{A}$. Assuming that $\O\tr R$ is already known,&lt;/p&gt;
@@ -2601,104 +3045,6 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 &lt;li&gt;Is the agent assumed to have a dynamics model of the environment where all that&amp;rsquo;s unknown to the agent is the environment state? that seems unrealistic. if the agent doesn&amp;rsquo;t know the &amp;ldquo;true&amp;rdquo; dynamics model, by what mechanism would the agent improve its dynamics model? The Bayesian posterior approximation is for estimating the effect of its actions on environment state, but this doesn&amp;rsquo;t address how the agent learns about the relationship between action and state.&lt;/li&gt;
 &lt;li&gt;How are time and actions incorporated? I understand the time-less variational free energy formulation that I explained above. What I don&amp;rsquo;t understand is what this looks like when applied to an agent-environment interaction loop over time.&lt;/li&gt;
 &lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How this blog works</title>
-      <link>https://danabo.github.io/blog/posts/how-this-blog-works/</link>
-      <pubDate>Sat, 06 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/how-this-blog-works/</guid>
-      <description>&lt;p&gt;This blog is a window into my second brain. That is where I store all of my personal notes, ranging from journal entries to productive materials like study notes and math problems. I can mark any of these items for publication on my blog, and I have a script take care of the rest.&lt;/p&gt;
-&lt;h1 id=&#34;second-brain&#34;&gt;Second brain&lt;/h1&gt;
-&lt;p&gt;I use the &lt;a href=&#34;https://obsidian.md/&#34;target=&#34;_blank&#34;&gt;Obsidian&lt;/a&gt; editor to organize my second brain. It looks like this:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206135929.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Writing some blog posts in Obsidian.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;Every note is a markdown file, with support for extra features like &lt;a href=&#34;https://www.mathjax.org/&#34;target=&#34;_blank&#34;&gt;MathJax&lt;/a&gt; (latex math mode), and some of the features in &lt;a href=&#34;https://roamresearch.com/&#34;target=&#34;_blank&#34;&gt;Roam&lt;/a&gt;, namely &lt;a href=&#34;https://publish.obsidian.md/help/How&amp;#43;to/Format&amp;#43;your&amp;#43;notes&#34;target=&#34;_blank&#34;&gt;wiki-style internal links&lt;/a&gt;. So &lt;code&gt;[[Blogging experiment]]&lt;/code&gt; becomes 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/blogging-experiment/&#34;&gt;Blogging experiment&lt;/a&gt;
-  
-
-
-. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140636.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Previous screenshot I pasted into this very markdown file.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;There is also a nifty graph view of all my notes:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210206140906.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Looks like a constellation! Each node is a markdown file. Each edge is due to one file linking to another with `[[...]]`. I&amp;#39;m not yet sure how helpful this is, but it&amp;#39;s nice to have a way to look at everything at once, in lieu of a traditional hierarchical structure.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;h1 id=&#34;publishing-flow&#34;&gt;Publishing flow&lt;/h1&gt;
-&lt;p&gt;My blog is written in &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; (for now), which is a static site generator that takes markdown files as input. Ideally, I could just run hugo directly on my Obsidian directory, but (1) I don&amp;rsquo;t want to publish everything and (2) Obsidian defines its own extended markdown syntax, as I explained above. My workaround is to have a script copy and transform my Obsidian notes marked for publication. Here&amp;rsquo;s how I do it&amp;hellip;&lt;/p&gt;
-&lt;p&gt;Markdown files can optionally have a frontmatter, which is a yaml header at the top of the page. For example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Hello World&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;John Doe&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In any note in my second brain (Obsidian), I can set &lt;code&gt;blog: true&lt;/code&gt; and that note will be published on my blog.&lt;/p&gt;
-&lt;p&gt;Every so often, I run &lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; from the blog repo, which in turn runs &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; is where the magic happens. It&amp;rsquo;s a Python script that uses &lt;a href=&#34;https://github.com/google/python-fire&#34;target=&#34;_blank&#34;&gt;fire&lt;/a&gt; to give it a &lt;a href=&#34;https://en.wikipedia.org/wiki/Command-line_interface&#34;target=&#34;_blank&#34;&gt;CLI&lt;/a&gt;. It will go through all the markdown files in my second brain directory and look for the ones with frontmatter containing &lt;code&gt;blog: true&lt;/code&gt;. For those files, it will do a few transformations, like converting internal links, &lt;code&gt;[[...]]&lt;/code&gt; and Obsidian&amp;rsquo;s image command &lt;code&gt;![[...]]&lt;/code&gt; to regular markdown. It also scrubs markdown comments, &lt;code&gt;&amp;lt;!-- ... --&amp;gt;&lt;/code&gt;, and anything inside a &lt;code&gt;&amp;lt;!-- hide --&amp;gt;...&amp;lt;!-- endhide --&amp;gt;&lt;/code&gt; pair so that I can have private sections inside published notes.&lt;/p&gt;
-&lt;p&gt;Code to transform Obsidian markdown to &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; markdown:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;transform_body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# Remove local-only blocks&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*&amp;lt;!--\s*endhide\s*--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Remove everything after unclosed `&amp;lt;!-- hide --&amp;gt;`&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--\s*hide\s*--&amp;gt;.*)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Remove comments&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# https://stackoverflow.com/a/28208465&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;(&amp;lt;!--.*?--&amp;gt;)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MULTILINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-    &lt;span class=&#34;c1&#34;&gt;# Transform internal links (wiki-style links).&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# https://gohugo.io/content-management/cross-references/#use-ref-and-relref&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;([^!])\[\[(.*?)\]\]&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;\1\{\{\&amp;lt; locallink &amp;#34;\2&amp;#34; \&amp;gt;\}\}&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;re&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DOTALL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[&lt;em&gt;Edit: I&amp;rsquo;ve since updated &lt;a href=&#34;https://github.com/danabo/blog/blob/master/blog.py&#34;target=&#34;_blank&#34;&gt;blog.py&lt;/a&gt; to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!&lt;/em&gt;]&lt;/p&gt;
-&lt;p&gt;For internal links, I call the &lt;a href=&#34;https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html&#34;target=&#34;_blank&#34;&gt;locallink&lt;/a&gt; Hugo &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;target=&#34;_blank&#34;&gt;shortcode&lt;/a&gt; I made, i.e. &lt;code&gt;{{ locallink &amp;quot;...&amp;quot; }}&lt;/code&gt;, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a &lt;em&gt;red&lt;/em&gt; anchor indicating the post does not exist, 
-
-
-
-
-
-  
-    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;like this&lt;/a&gt;
-  
-
-
-. That way, if I&amp;rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a &lt;a href=&#34;https://en.wikipedia.org/wiki/Wikipedia:Red_link&#34;target=&#34;_blank&#34;&gt;missing wiki page&lt;/a&gt;. Perhaps if readers become curious about notes I didn&amp;rsquo;t publish, I might become motivated to publish them.&lt;/p&gt;
-&lt;p&gt;locallink &lt;a href=&#34;https://gohugo.io/&#34;target=&#34;_blank&#34;&gt;Hugo&lt;/a&gt; shortcode:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;{{ $name := (.Get 0) }}
-{{ $postFile := (print &amp;#34;content/posts/&amp;#34; $name &amp;#34;.md&amp;#34;) }}
-{{ if (fileExists $postFile) }}
-&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;{{&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;ref&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;}}&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
-{{ else }}
-&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;href&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\=&amp;#34;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;broken&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#34;\&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;{{ $name }}&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;/a\&amp;gt;
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/danabo/blog/blob/master/publish.sh&#34;target=&#34;_blank&#34;&gt;publish.sh&lt;/a&gt; will first run blog.py, and then run &lt;code&gt;git commit -v&lt;/code&gt; which shows me the diff. If I add a commit description in the prompt, publish.sh will go ahead and push the changes, and then update the gh-pages branch. If I quit the editor without adding a commit message, publish.sh will abort.&lt;/p&gt;
-&lt;h1 id=&#34;reader-experience&#34;&gt;Reader experience&lt;/h1&gt;
-&lt;p&gt;Currently the reader sees a typical blog layout: a &amp;ldquo;blog roll&amp;rdquo; of recent posts with previews and tags. I don&amp;rsquo;t intend my notes to have any particular time ordering. Notes are objects in flux. I might edit anything. Since I&amp;rsquo;m using time of last edit as the post date, anything I touch will float back to the top. I might decide to change that.&lt;/p&gt;
 </description>
     </item>
     

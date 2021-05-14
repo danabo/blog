@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Information Algebra</h1><p class="article date">May 5, 2021</p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Information Algebra</h1><p class="article date">May 5, 2021<span class="lastmod"> • edited May 7, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -131,7 +131,7 @@ $$</p>
 <h1 id="mutual-information">Mutual Information</h1>
 <p>Let $A,R\subseteq \O$. Suppose we have the information $\O\tr R$, corresponding to the knowledge that $\o^*\in R$. To be more succinct, I will say that we know that $R$ is <em>true</em>. Also suppose we don&rsquo;t know whether $A$ is true, i.e. we don&rsquo;t have the information $\O\tr A$. For information that is not known, I will use a <em>small diagonal arrow</em>, $\tra{\O}{A}$. We can think of this as aspirational information, i.e. information we do not have but would like to have.</p>
 <p>Since $\tra{\O}{A}$ and $\O\tr A$ are mathematically equivalent, $h(\tra{\O}{A}) = h(\O\tr A) = \lg\frac{\mu(\O)}{\mu(A)}$.</p>
-<p>Does $\O\tr R$ move us closer to the goal of $\tra{\O}{A}$?</p>
+<p>Does $\O\tr R$ move us closer to the goal of $\tra{\O}{A}$? That is to say, given we have the information $\O\tr R$, what <strong>information about</strong> $A$ do we have? As we shall see, pointwise mutual information quantifies &ldquo;information about&rdquo;.</p>
 <p>There are three ways $R$ and $A$ can interact:<br>
 <span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505094432.png" 
         target="_blank"><img class="img" src="../../Pasted%20image%2020210505094432.png" width="600"/></a></span>
@@ -183,14 +183,14 @@ i_\O(A,R) &amp;= \lg\par{\frac{\mu(\O)}{\mu(R)\frac{\mu(A)}{\mu(A\dom{R})}}} \\<
 $$</p>
 <p>where $\nu(Q)=\mu(Q)\frac{\mu(A)}{\mu(A\dom{R})}$ rescales the size of any set $Q$ so that $\nu(A\dom{R}) = \mu(A\dom{R})\frac{\mu(A)}{\mu(A\dom{R})} = \mu(A)$. In this form, $i_\O(A,R)$ looks like the quantity of information for $\O\tr R$, but where the numerator and denominator use different measures. This quantity of information can be negative, unlike $h(\O\tr R)$.</p>
 <p>This rescaling can be visualized by drawing to scale the relative proportions of $\mu(\O)$ and $\mu(A)$, and show below that the same relative proportions of $\nu(R)$ and $\nu(A\dom{R})$, so that $\nu(A\dom{R})$ is visually the same size as $\mu(A)$:</p>
-<p><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505104409.png" 
-        target="_blank"><img class="img" src="../../Pasted%20image%2020210505104409.png" width="400"/></a></span>
+<p><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210506164550.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210506164550.png" width="400"/></a></span>
 </span><br>
 Here lengths denote size. This image shows that 1 bit is gained about whether $A$ is true because the domain is halved, i.e. we are 1 bit closer to knowing that $A$ is true. However, the bottom rectangle is rescaled so that $A$ and $A\dom{R}$ are visually the same size. $h(\O\tr R)$ may not be 1.</p>
-<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210505104419.png" 
-        target="_blank"><img class="img" src="../../Pasted%20image%2020210505104419.png" width="740"/></a></span>
-</span>
-<p>Here is another example where the narrowing down $\tra{A}{A\dom{R}}$ outpaces the narrowing down $\O\tr R$, i.e. more of $A$ is ruled out than the domain of $A$ is reduced. We see that this scaled domain appears to be doubled, which is the loss of 1 bit, i.e. $i_\O(A,R) = -1$. We are 1 bit further away from knowing that $A$ is true, and we now need an additional bit of information to know $\tra{\O}{A}$ compared with before $\O\tr R$ was known (compared with total ignorance).</p>
+<p><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020210506164602.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020210506164602.png" width="740"/></a></span>
+</span><br>
+Here is another example where the narrowing down $\tra{A}{A\dom{R}}$ outpaces the narrowing down $\O\tr R$, i.e. more of $A$ is ruled out than the domain of $A$ is reduced. We see that this scaled domain appears to be doubled, which is the loss of 1 bit, i.e. $i_\O(A,R) = -1$. We are 1 bit further away from knowing that $A$ is true, and we now need an additional bit of information to know $\tra{\O}{A}$ compared with before $\O\tr R$ was known (compared with total ignorance).</p>
 <p>Now we see why PMI is upper bounded but not lower bounded. At most, $i_\O(A, R) = h(\O\tr A)$ if $R = A$, which is equivalent to gaining the information that $A$ is true. This can be achieved in a finite number of halvings. On the other hand, the scaled domain of $A\dom{R}$ can grow arbitrarily large as $R$ rules out more and more of $A$, i.e. $\mu(A \setminus R) \to \mu(A)$ implies $\mu(A\dom{R}) \to 0$. If $A \cap R = \es$, then $i_\O(A,R) = -\infty$, which we can interpret to mean that $\O\tr R$ proves that $A$ is <em>false</em>, i.e. the knowledge that $\o^* \notin A$. Thus no amount of information can make $A$ true (an infinite quantity of information here indicates a contradiction).</p>
 <h2 id="pmi-vs-conditional-information">PMI vs conditional information</h2>
 <p>$i_\O(A, R)$ and $h(A \mid R)$ are each quantifying a kind of transformation on $\tra{\O}{A}$. Assuming that $\O\tr R$ is already known,</p>
@@ -242,7 +242,7 @@ $h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})
     <li><a href="#appendix-pmi-algebra">Appendix: PMI Algebra</a></li>
   </ol>
 </nav></div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/causality-for-physics/"><span class="iconfont icon-article"></span>Causality For Physics</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/physical-information/"><span class="iconfont icon-article"></span>Physical Information</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/causality-for-physics/"><span class="iconfont icon-article"></span>Causality For Physics</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
