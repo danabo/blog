@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-05-14T17:33:24-05:00'
+lastmod: '2021-05-14T20:17:01-05:00'
 tags:
 - physics
 - information
@@ -73,7 +73,7 @@ I will apply to abstract physics the same information algebra I introduced in {{
 
 # Information Theory Of Systems
 
-Let $\\O$ be a set of possible states and $\\t\_\\Dt : \\O\\to\\O$, $\\Dt\\in\\R$, be a family of bijective time-evolution functions on $\\O$. In general, time-evolution forms the group $(\\set{\\t\_\\Dt \\mid \\Dt\\in\\R}, \\circ)$, where $\\t\_{\\Dt+\\Dt'} = \\t\_\\Dt\\circ\\t\_{\\Dt'}$ and $\\t\_{-\\Dt}=\\t^{-1}\_\\Dt$, and $\\t\_0:\\o\\mapsto\\o$ is the identity function.
+I will use the abstraction of physics that I introduced in {{< locallink "Causality For Physics" "abstract-physics" >}}. Let $\\O$ be a set of possible states and $\\t\_\\Dt : \\O\\to\\O$, $\\Dt\\in\\R$, be a family of bijective time-evolution functions on $\\O$. In general, time-evolution forms the group $(\\set{\\t\_\\Dt \\mid \\Dt\\in\\R}, \\circ)$, where $\\t\_{\\Dt+\\Dt'} = \\t\_\\Dt\\circ\\t\_{\\Dt'}$ and $\\t\_{-\\Dt}=\\t^{-1}\_\\Dt$, and $\\t\_0:\\o\\mapsto\\o$ is the identity function.
 
 I will regard $\\O$ as the state-space of an entire universe (i.e. a closed system). The universe may contain any number of systems labeled "A", "B", "C", etc., with respective state-spaces $A, B, C,\\dots$, so that $\\O\\subseteq A\\m B\\m C\\m \\dots$ and states are tuples, $\\o = (a, b, c, \\dots) \\in \\O$. Then the time-evolution function
 
