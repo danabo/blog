@@ -124,18 +124,7 @@ $$</p>
 <p>Each node&rsquo;s distribution, $p(\chi \mid \dots)$, can be chosen independently from every other node (there are no constraints on these conditional distributions). Therefore, since the entire tree uniquely determines $p(x_{&lt;n})$ (by walking down the edges of the tree corresponding to the observed data sequence $x_{&lt;n}$ and multiplying the conditional probabilities at each node in the path, i.e. $p(x_i \mid x_{&lt;i})$ at node $x_{&lt;i}$), a Bayesian agent is free to choose any arbitrary conditional predictions it wants.</p>
 <p>Clearly, if we are only concerned with data predictions of the form $p(\o_{n:m}\mid \o_{&lt;n})$, then we do not actually need hypotheses at all. Providing a tree specifying the subjective conditional data probabilities is enough to perform Bayesian inference.</p>
 <p>This reveals something peculiar about Bayesian inference: <strong>A Bayesian agent chooses its predictions for all eventualities beforehand, and never deviates for all time. Furthermore these predictions can be totally arbitrary.</strong> There does not appear to be any actual learning taking place, since the agent just follows a path down the tree as data comes in and provides predetermined prediction probabilities. In the Bayesian perspective, learning IS narrowing down a pre-defined possibility space with data. If decision making using Bayesian inference is rational, perhaps rationality amounts to consistency, i.e. never deviating from pre-chosen predictions.</p>
-<p>One might argue that freely choosing a subjective data distribution without defining hypotheses is not Bayesian. My reply is that I&rsquo;ve shifted what we are counting as hypothesis. In this perspective, a hypothesis is a single data sequence continuation. In this sense, all hypotheses are deterministic data sequences (though they may be algorithmically random), and the subjective data distribution is counting up the contributions of all these hypotheses to each finite length prediction. More on this in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a>
-  
-
-
-.</p>
+<p>One might argue that freely choosing a subjective data distribution without defining hypotheses is not Bayesian. My reply is that I&rsquo;ve shifted what we are counting as hypothesis. In this perspective, a hypothesis is a single data sequence continuation. In this sense, all hypotheses are deterministic data sequences (though they may be algorithmically random), and the subjective data distribution is counting up the contributions of all these hypotheses to each finite length prediction. More on this in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a>.</p>
 <h2 id="removing-probabilities">Removing probabilities</h2>
 <p>We can go a step further and ask, do we need probabilities at all?</p>
 <p>Let&rsquo;s imagine that the agent has the same predetermined tree as above, except each node is assigned a single prediction instead of a probability distribution over $\X$. Let $x\in\X^*$ and denote $\hat{\x}_x\in\X$ as the prediction given the sequence $x$ is observed. Choosing $\hat{\x}_x$ for each $x$ uniquely defines a tree, where $x = (x_1, x_2, \dots)$ encodes a path from the root to a node, and $\hat{\x}_x$ is the value assigned to that node.</p>
@@ -189,34 +178,12 @@ $$</p>
 </p>
 <p>This understanding of the word &ldquo;non-deterministic&rdquo; is standard in computer science, exemplified by the <a href="https://en.wikipedia.org/wiki/Nondeterministic_Turing_machine"target="_blank">non-deterministic Turing machine</a>, which defines a set of possible state transitions and tape operations given any state (of both the tape and automata), rather than single one determined uniquely by each state. In general, something is regarded as non-deterministic if it can take on more than one possible value, i.e. it is not determined.</p>
 <p>I distinguish non-determinism from randomness, the latter of which can be defined as maximal incompressibility (called <a href="http://www.scholarpedia.org/article/Algorithmic_randomness"target="_blank">algorithmic randomness</a>). Often these two concepts are conflated. Probability distributions can represent both non-determinism (by quantifying relative amounts of possibilities) or degrees of randomness (via Martin-Lof randomness). The key insight is that probability need not represent both at the same time. If Bayesian probability is generally understood as quantifying prediction non-determinism, then we can view the <a href="https://en.wikipedia.org/wiki/Probability_interpretations"target="_blank">Bayesian-frequentist distinction</a> as stemming from this conceptual decoupling of non-determinism from randomness.</p>
-<p>I make the same connection between Bayesian uncertainty and non-determinism in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective">Classical vs Bayesian Reasoning#the-bayesian-perspective</a>
-  
-
-
-.</p>
+<p>I make the same connection between Bayesian uncertainty and non-determinism in <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective">Classical vs Bayesian Reasoning#the-bayesian-perspective</a>.</p>
 <h3 id="the-general-case">The General Case</h3>
 <p>We can go a step further. Why are we assuming that a prediction of step $n$ can be made given $\o_{&lt;n}$? Plenty of pertinent information may not be available in the data at all (or the agent does not know how to extract such information from the data, e.g. encrypted information). An honest agent would account for every input needed to make a certain prediction, even inputs that are not available in $\o_{&lt;n}$.</p>
 <p>In general, we are left with a non-deterministic next-step prediction tree represented by $f : \Z \times \X^* \to \X$ where $\Z$ is an auxiliary input space (input in addition to the observed data stream), which is usually some latent space (set of possible data or world-states not observed). Each node $x$ in the prediction tree is assigned the prediction set $f(\Z, x) = \set{f(z,x) \mid z\in\Z}$. If the prediction set for $x$ is singleton (contains one element), then that prediction is deterministic. $f$ represents a prediction tree where each node is assigned a set of next-step predictions instead of just one.</p>
 <h2 id="the-return-of-probability">The Return Of Probability</h2>
-<p>In 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom">Classical vs Bayesian Reasoning#the-bayesian-axiom</a>
-  
-
-
-, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&rsquo;s prediction $f(\Z, \o_{&lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is</p>
+<p>In <a href="https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom">Classical vs Bayesian Reasoning#the-bayesian-axiom</a>, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&rsquo;s prediction $f(\Z, \o_{&lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is</p>
 <p>$$p(\chi \mid x) = \mu\set{f(z,x) \mid z\in\Z \and f(z,x) = \chi}\,.$$</p>
 <p>Though the agent&rsquo;s prediction is not uniquely determined, we&rsquo;ve quantified the relative number of possible auxiliary inputs to $f$ that give each prediction. These quantities can be used for decision making (e.g. most likely outcome or expected return).</p>
 <p>We have recovered the probabilistic prediction tree paradigm from earlier without presupposing that predictions should be probabilistic. Though not defined to be probabilistic, an agent&rsquo;s prediction function that requires inputs which are not on hand naturally results in non-determinism. Quantifying that non-determinism using relative sizes of possibility sets naturally results in probabilities.</p>

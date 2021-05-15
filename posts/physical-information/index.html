@@ -62,42 +62,9 @@
 \require{cancel}<br>
 $$</p>
 <p>$\newcommand{\sys}[2]{\left[#2\right]_{#1}}$</p>
-<p>I will apply to abstract physics the same information algebra I introduced in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a>
-  
-
-
- and further developed in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>
-  
-
-
-. <em>Bayesian</em> information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has <em>agenty</em> attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.</p>
+<p>I will apply to abstract physics the same information algebra I introduced in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a> and further developed in <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>. <em>Bayesian</em> information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has <em>agenty</em> attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.</p>
 <h1 id="information-theory-of-systems">Information Theory Of Systems</h1>
-<p>I will use the abstraction of physics that I introduced in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/causality-for-physics/#abstract-physics">Causality For Physics#abstract-physics</a>
-  
-
-
-. Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt'} = \t_\Dt\circ\t_{\Dt'}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.</p>
+<p>I will use the abstraction of physics that I introduced in <a href="https://danabo.github.io/blog/posts/causality-for-physics/#abstract-physics">Causality For Physics#abstract-physics</a>. Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt'} = \t_\Dt\circ\t_{\Dt'}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.</p>
 <p>I will regard $\O$ as the state-space of an entire universe (i.e. a closed system). The universe may contain any number of systems labeled &ldquo;A&rdquo;, &ldquo;B&rdquo;, &ldquo;C&rdquo;, etc., with respective state-spaces $A, B, C,\dots$, so that $\O\subseteq A\m B\m C\m \dots$ and states are tuples, $\o = (a, b, c, \dots) \in \O$. Then the time-evolution function</p>
 <p>$$\t_\Dt : (a, b, c, \dots) \mapsto \t_\Dt(a, b, c, \dots)$$</p>
 <p>jointly time-evolves all the systems simultaneously, which allows $\t_\Dt$ to incorporate arbitrary interactions between systems. This also means that the time evolution of, say, system A, depends on not just A&rsquo;s state, but the state of all systems, i.e. the universe&rsquo;s state $\o$.</p>
@@ -126,18 +93,7 @@ Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just
   <img src="https://danabo.github.io/blog/Pasted%20image%2020210514153301.png" alt="">
 </p>
 <h1 id="conservation-of-information">Conservation Of Information</h1>
-<p>Recapping 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>
-  
-
-
-, suppose we are given some measure $\mu$ on $\O$. This measure need not be normalized. Then for measureable set $R\subseteq\O$, the quantity of the information $\O\tr R$ is given by</p>
+<p>Recapping <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>, suppose we are given some measure $\mu$ on $\O$. This measure need not be normalized. Then for measureable set $R\subseteq\O$, the quantity of the information $\O\tr R$ is given by</p>
 <p>$$<br>
 h(\O\tr R) = h(R) = \lg\par{\frac{\mu(\O)}{\mu(R)}}\,.<br>
 $$</p>
@@ -152,18 +108,7 @@ $$</p>
 </ul>
 <h1 id="information-about-systems">Information About Systems</h1>
 <p>Suppose there are at least two systems, A and B, with respective state spaces $\mf{A}$ and $\mf{B}$. Let system A be in state $a\up{t}$ at time $t$. System A (at $t$) has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. What information does A have about B&rsquo;s state at time $t+\Dt$?</p>
-<p>In 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/information-algebra/#mutual-information">Information Algebra#mutual-information</a>
-  
-
-
-, I showed that pointwise mutual information (PMI) quantifies &ldquo;information about&rdquo;. Specifically,</p>
+<p>In <a href="https://danabo.github.io/blog/posts/information-algebra/#mutual-information">Information Algebra#mutual-information</a>, I showed that pointwise mutual information (PMI) quantifies &ldquo;information about&rdquo;. Specifically,</p>
 <p>$$<br>
 i(a\up{t}, b) = i(b, a\up{t}) = \lg\par{\frac{\mu(a\up{t}\cap b)\mu(\O)}{\mu(a\up{t})\mu(b)}}<br>
 $$</p>
@@ -178,18 +123,7 @@ If $i(a\up{t}, b) = 0$, then $a\up{t}$ and $b$ are <strong>orthogonal</strong> s
 <p>$$<br>
 \vtup{i(\t_\Dt(a\up{t}), b) \mid b\in\mf{B}}\,.<br>
 $$</p>
-<p>Note that $i(\t_\Dt(a\up{t}), b)$ can be negative (and has no lower bound), which means that system A has needs more quantity of information than $h(\O\tr b)$ to have certainty that system B is in state $b$. If system A has information that rules out state $b$ with certainty, i.e. $b\cap \t_\Dt(a\up{t}) = \es$, then $i(\t_\Dt(a\up{t}), b) = -\infty$. 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/information-algebra/#mutual-information">Information Algebra#mutual-information</a>
-  
-
-
- goes into further detail about the interpretation of PMI quantities.</p>
+<p>Note that $i(\t_\Dt(a\up{t}), b)$ can be negative (and has no lower bound), which means that system A has needs more quantity of information than $h(\O\tr b)$ to have certainty that system B is in state $b$. If system A has information that rules out state $b$ with certainty, i.e. $b\cap \t_\Dt(a\up{t}) = \es$, then $i(\t_\Dt(a\up{t}), b) = -\infty$. <a href="https://danabo.github.io/blog/posts/information-algebra/#mutual-information">Information Algebra#mutual-information</a> goes into further detail about the interpretation of PMI quantities.</p>
 <h2 id="information-gain">Information Gain</h2>
 <p>The difference</p>
 <p>$$<br>

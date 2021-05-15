@@ -246,18 +246,7 @@ $$</p>
 <h2 id="generalization">Generalization</h2>
 <p>Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.</p>
 <p>Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h') \approx p(h' \mid x)$ for some program $h'$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.</p>
-<p>The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior">Variational Solomonoff Induction#prior</a>
-  
-
-
- section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.</p>
+<p>The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the <a href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior">Variational Solomonoff Induction#prior</a> section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.</p>
 <p>As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn&rsquo;t start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.</p>
 <h1 id="choices">Choices</h1>
 <p>To summarize the requirements we found above:<br>

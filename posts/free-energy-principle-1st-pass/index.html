@@ -22,30 +22,8 @@
 $$</p>
 <p>Related notes:</p>
 <ul>
-<li>
-
-
-
-
-
-  
-    <a href="" class="broken">The free-energy principle a unified brain theory</a>
-  
-
-
-</li>
-<li>
-
-
-
-
-
-  
-    <a href="" class="broken">Friston&#39;s Free Energy (Active Inference)</a>
-  
-
-
-</li>
+<li><a href="" class="broken">The free-energy principle a unified brain theory</a></li>
+<li><a href="" class="broken">Friston&#39;s Free Energy (Active Inference)</a></li>
 <li>Hackmd version of this note: <a href="https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO">https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO</a></li>
 </ul>
 <h1 id="my-current-understanding">My current understanding</h1>
@@ -86,18 +64,7 @@ $$</p>
 <p>$\lg (1/p_{X \mid H}(x \mid h))$ is the <strong>surprise</strong> (also <strong>self-information</strong>) of observing $x$ under $h$. The higher this quantity, the more the possibility space of $h$ was narrowed down by $x$.</p>
 <h2 id="variational-bayes">Variational Bayes</h2>
 <p>Variational approximation to calculating the Bayesian posterior:<br>
-
-
-
-
-
-
-  
-    <a href="" class="broken">The free-energy principle a unified brain theory#free-energy</a>
-  
-
-
-</p>
+<a href="" class="broken">The free-energy principle a unified brain theory#free-energy</a></p>
 <p>sources:</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception">https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception</a></li>
@@ -173,18 +140,7 @@ p(X_{&gt;n} \mid X_{1:n}=x_{1:n}) = \sum_{\mu\in\mc{M}} w_\mu(x_{1:n})\mu(X_{&gt
 $$</p>
 <p>which has the same form as the prior mixture, except that we reweighted by switching from $\pi(\mu)$ to $w_\mu(x_{1:n})$, and we conditionalized the hypotheses, i.e. switched from $\mu(X_{1:\infty})$ to $\mu(X_{&gt;n} \mid X_{1:n}=x_{1:n})$.</p>
 <p>We can incorporate actions into this framework by specifying that all hypotheses in $\mu\in\mc{M}$ must be distributions over a combined observation and action stream. This stream would be a sequence $(x_1, a_1, x_2, a_2, \ldots)$ of alternating observation $x_t \in \mc{X}$ and action $a_t \in \mc{A}$ at every time step. Note that a hypothesis predicts the next observation $\mu(x_t \mid x_{&lt;t}, a_{&lt;t})$, but we don&rsquo;t ask a hypothesis to predict a next action, i.e. $a_t$ given $x_{&lt;t}, a_{&lt;t}$, since that is the agent&rsquo;s decision to make.</p>
-
-
-
-
-
-
-  
-    <a href="" class="broken">Free energy principle and Solomonoff induction</a>
-  
-
-
-
+<a href="" class="broken">Free energy principle and Solomonoff induction</a>
 <h2 id="hypotheses-vs-states-policies-vs-actions">Hypotheses vs states; policies vs actions</h2>
 <p>There is a key distinction to make here: a hypothesis $\mu$ is itself a possible universe. $\mu$ is a distribution over all possible infinite data streams $\mc{X}^\infty$. $\mu$ can be arbitrarily complex, and consider all counterfactual latent states in the universe. $\mu$ may encode the dynamics of a time evolving system in its conditional probabilities $\mu(x_n \mid x_{&lt;n})$. In this way $\mu$ is not a hidden state, but an entire possible universe.</p>
 <p>This is in contrast to the idea of a <strong>hidden state</strong>, which is an unknown state of the universe <strong>at some point in time</strong>. In the hidden state framework, the environment is defined by a known dynamics distribution $p(x_t, s_t \mid s_{t-1})$ or $p(x_t, s_t \mid s_{t-1}, a_{t-1})$ if we include actions. The only thing that is unknown is $s_{1:t}$. In this framework, knowing $s_{t-1}$ does not mean you know $s_t$ with certainty. In the mixture of hypotheses framework, if you know $\mu$, you know it for all time.</p>

@@ -17,18 +17,7 @@
     <figcaption>Writing some blog posts in Obsidian.</figcaption>
   </figure>
 </p>
-<p>Every note is a markdown file, with support for extra features like <a href="https://www.mathjax.org/"target="_blank">MathJax</a> (latex math mode), and some of the features in <a href="https://roamresearch.com/"target="_blank">Roam</a>, namely <a href="https://publish.obsidian.md/help/How&#43;to/Format&#43;your&#43;notes"target="_blank">wiki-style internal links</a>. So <code>[[Blogging experiment]]</code> becomes 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/blogging-experiment/">Blogging experiment</a>
-  
-
-
-. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:</p>
+<p>Every note is a markdown file, with support for extra features like <a href="https://www.mathjax.org/"target="_blank">MathJax</a> (latex math mode), and some of the features in <a href="https://roamresearch.com/"target="_blank">Roam</a>, namely <a href="https://publish.obsidian.md/help/How&#43;to/Format&#43;your&#43;notes"target="_blank">wiki-style internal links</a>. So <code>[[Blogging experiment]]</code> becomes <a href="https://danabo.github.io/blog/posts/blogging-experiment/">Blogging experiment</a>. It has some convenient features like being able to paste images from my clipboard and auto-generate an image embed command:</p>
 <p>
 
   <figure>
@@ -72,18 +61,7 @@
     <span class="c1"># https://gohugo.io/content-management/cross-references/#use-ref-and-relref</span>
     <span class="n">body</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;([^!])\[\[(.*?)\]\]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;\1\{\{\&lt; locallink &#34;\2&#34; \&gt;\}\}&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
 </code></pre></div><p>[<em>Edit: I&rsquo;ve since updated <a href="https://github.com/danabo/blog/blob/master/blog.py"target="_blank">blog.py</a> to use an iterator-based parser so that I can ignore comments and wiki-links inside code blocks, which is a problem I ran into writing this very post!</em>]</p>
-<p>For internal links, I call the <a href="https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html"target="_blank">locallink</a> Hugo <a href="https://gohugo.io/content-management/shortcodes/"target="_blank">shortcode</a> I made, i.e. <code>{{ locallink &quot;...&quot; }}</code>, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a <em>red</em> anchor indicating the post does not exist, 
-
-
-
-
-
-  
-    <a href="" class="broken">like this</a>
-  
-
-
-. That way, if I&rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a <a href="https://en.wikipedia.org/wiki/Wikipedia:Red_link"target="_blank">missing wiki page</a>. Perhaps if readers become curious about notes I didn&rsquo;t publish, I might become motivated to publish them.</p>
+<p>For internal links, I call the <a href="https://github.com/danabo/blog/blob/master/layouts/shortcodes/locallink.html"target="_blank">locallink</a> Hugo <a href="https://gohugo.io/content-management/shortcodes/"target="_blank">shortcode</a> I made, i.e. <code>{{ locallink &quot;...&quot; }}</code>, which checks if the given post name exists. If so, it returns an anchor to the absolute URL for that note. If not, it returns a <em>red</em> anchor indicating the post does not exist, <a href="" class="broken">like this</a>. That way, if I&rsquo;ve referenced a note that is not marked for publication, the current note will be published. The red link is kind of like a <a href="https://en.wikipedia.org/wiki/Wikipedia:Red_link"target="_blank">missing wiki page</a>. Perhaps if readers become curious about notes I didn&rsquo;t publish, I might become motivated to publish them.</p>
 <p>locallink <a href="https://gohugo.io/"target="_blank">Hugo</a> shortcode:</p>
 <div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html">{{ $name := (.Get 0) }}
 {{ $postFile := (print &#34;content/posts/&#34; $name &#34;.md&#34;) }}

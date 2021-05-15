@@ -47,32 +47,10 @@
 \newcommand{\tr}{\rightarrowtail}<br>
 $$</p>
 <p>$\newcommand{\H}{\Omega}$</p>
-<p>Shannon&rsquo;s information theory defines quantity of information (e.g. <a href="https://en.wikipedia.org/wiki/Information_content#Definition"target="_blank">self-information</a> $-\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his <a href="http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf"target="_blank">1948 paper</a>). In 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>
-  
-
-
-, I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.</p>
+<p>Shannon&rsquo;s information theory defines quantity of information (e.g. <a href="https://en.wikipedia.org/wiki/Information_content#Definition"target="_blank">self-information</a> $-\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his <a href="http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf"target="_blank">1948 paper</a>). In <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>, I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.</p>
 <p>My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism can be interpreted as measuring the reduction in size (&ldquo;narrowing down&rdquo;) of a possibility space.</p>
 <h1 id="information-and-finite-possibilities">Information and finite possibilities</h1>
-<p>Following 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>
-  
-
-
-, let&rsquo;s suppose an agent is predicting the continuation of a data string, and the agent&rsquo;s prediction is not uniquely determined, i.e. non-deterministic. I will represent the agent&rsquo;s prediction as a set of possible predictions, called the agent&rsquo;s <strong>hypothesis set</strong>.</p>
+<p>Following <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>, let&rsquo;s suppose an agent is predicting the continuation of a data string, and the agent&rsquo;s prediction is not uniquely determined, i.e. non-deterministic. I will represent the agent&rsquo;s prediction as a set of possible predictions, called the agent&rsquo;s <strong>hypothesis set</strong>.</p>
 <p>Formally, the agent receives an endless stream of data $\o$ drawn from the set $\X^\infty$, where $\X$ is some finite character set. In the examples below, let&rsquo;s assume $\X = \set{0,1}$. Given some finite sequence $x\in\X^*$, a prediction is a continuation (not necessarily the correct continuation), i.e. an infinite sequence starting with prefix $x$.</p>
 <p>Let $\H \subseteq \X^\infty$ be the agent&rsquo;s hypothesis set. When finite data $x$ is observed, we narrow down $\H$ to the subset of all sequences starting with $x$. This is called <strong>conditionalizing</strong> (or <strong>restriction</strong>). Denote $\dom{\H}{x} = \set{\o\in\H \mid x\sqsubset\o}$ as the subset of $\H$ consisting of sequences starting with the prefix $x$. The set $\dom{\H}{x}$ is $\H$ conditioned on $x$.</p>
 <p>For example, a rigid agent that only ever predicts $0$s no matter what has the following hypothesis set:</p>
@@ -215,18 +193,7 @@ $$</p>
 \end{aligned}<br>
 $$</p>
 <p>$\h_1$ contains only sequences ending in 0s, and $\h_2$ contains only sequences ending in 1s.</p>
-<p>In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a <strong>compound hypothesis</strong>, indicating that its a set of <strong>primitive hypotheses</strong> (data continuations). As we shall see, compound hypotheses correspond closely to the hypotheses-as-data-distributions formulation which we saw in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>
-  
-
-
-.</p>
+<p>In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a <strong>compound hypothesis</strong>, indicating that its a set of <strong>primitive hypotheses</strong> (data continuations). As we shall see, compound hypotheses correspond closely to the hypotheses-as-data-distributions formulation which we saw in <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>.</p>
 <p>For some partition $\mf{H}$ of $\H$, let $\dom{\mf{H}}{x} = \set{\dom{\h}{x} \mid \h \in \mf{H}}$ be the partition of $\dom{\H}{x}$ consisting of the parts in $\mf{H}$ which have each been conditionalized on $x$ (narrowed down to the sequences starting with $x$).</p>
 <p>In our example, $\dom{\mf{H}}{0} = \set{\h_1, \set{}}$ and $\dom{\mf{H}}{1} = \set{\set{}, \h_2}$. Let&rsquo;s consider empty compound hypotheses to be eliminated. Then in either scenario, observing just the 1st symbol narrows down $\mf{H}$ to exactly one compound hypothesis, analogous to our original goal of narrowing down $\H$ to one hypothesis. The remaining compound hypothesis (either $\h_1$ or $\h_2$) is uncertain about what the 2nd and 3rd symbols will be, but certain about all symbols after that.</p>
 <h2 id="defining-information">Defining Information</h2>
@@ -338,31 +305,9 @@ $$</p>
 <p>However, $\H$ can be too big. Suppose $\H=\X^\infty$. Then $\dom{\H}{x} = \X^\infty$ for all $x\in\X^*$. This hypothesis set can never be narrowed down to anything, i.e. there is never information gain. An agent with this hypothesis set remains maximally uncertain always, and so it is not useful.</p>
 <p>Even if $\H$ is a strict subset of $\X^\infty$ but contains every finite data sequence (so that $\dom{\H}{x}$ is non-empty for all $x$), it&rsquo;s usefulness is still dubious. In general $\abs{\dom{\H}{x}}=\infty$ for all $x$ (the cardinality of $\dom{\H}{x}$ is always infinite; disregarding different sizes of infinity), so we cannot compare to what extent we&rsquo;ve narrowed down $\H$ further by observing $x$ rather than $y$. That is to say, $\abs{\dom{\H}{x}}/\abs{\H} = \infty/\infty$ is indeterminate. Furthermore, $\dom{\H}{x}$ will contain every finite data sequence starting with $x$, so there is no tangible sense in which the agent&rsquo;s predictions at finite time are narrowed down.</p>
 <p>The problem of measuring narrowing-down of infinite possibility sets is resolved by choosing a measure $\mu$ on $\H$. However a new problem arises: how to choose $\mu$. My purpose in presenting Bayesian information theory as narrowing down possibility spaces is to give meaning to probability values. Now, we&rsquo;ve reintroduced an arbitrary measure $\mu$.</p>
-<p>There is a sort of middle ground that also serves as a bridge between the usual probabilistic conception of Bayesian inference I introduced in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>
-  
-
-
- and the hypothesis set conception, via algorithmic information theory.</p>
+<p>There is a sort of middle ground that also serves as a bridge between the usual probabilistic conception of Bayesian inference I introduced in <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a> and the hypothesis set conception, via algorithmic information theory.</p>
 <h2 id="algorithmic-randomness">Algorithmic Randomness</h2>
-<p>In 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>
-  
-
-
-, I defined Bayesian inference as a manipulation of probability measures on $\X^\infty$. Given a set $\M$ of measures $\mu$ on $\X^\infty$, and a prior $p$ on $\M$, what is the corresponding &ldquo;possibility space narrowing-down&rdquo; perspective?</p>
+<p>In <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/">Deconstructing Bayesian Inference</a>, I defined Bayesian inference as a manipulation of probability measures on $\X^\infty$. Given a set $\M$ of measures $\mu$ on $\X^\infty$, and a prior $p$ on $\M$, what is the corresponding &ldquo;possibility space narrowing-down&rdquo; perspective?</p>
 <p>I supposed that hypothesis probabilities $\mu(\o_{1:n})$ for $\mu\in\M$ represented irreducible uncertainty about the world, whereas subjective probabilities $p(\o_{1:n})$ represented a mixture of reducible and irreducible uncertainty, where knowing which hypothesis $\mu$ is true maximally reduces your uncertainty.</p>
 <p>I also introduced a distinction between randomness and non-determinism. Randomness can be defined as incompressibility, and non-determinism refers to the output of a mathematical construct (such as a function) being not uniquely determined by givens (such as an input). Probabilities can measure both, which can lead to confusion.</p>
 <p>Let&rsquo;s suppose here that hypothesis probabilities always measure randomness. Assuming $\mu\in\M$ is computable, we can precisely define what it means for an infinite sequence $\o\in\X^\infty$ to &ldquo;look like&rdquo; a typical sequence randomly drawn from $\mu$. Call such &ldquo;typical looking&rdquo; sequences <strong>$\mu$-typical</strong> (or <strong>$\mu$-random</strong>). Formally, $\o\in\X^\infty$ is $\mu$-typical iff the optimal compression rate of $\o$ (via monotone algorithmic complexity $Km$) is achieved with arithmetic coding using $\mu$. (See <a href="https://www.springer.com/gp/book/9781489984456"target="_blank">Li &amp; Vitányi</a>, 3rd edition, theorem 4.5.3 on page 318, which states, $\sup_n\left\{\lg(1/\mu(\o_{1:n})) - Km(\o_{1:n})\right\} &lt; \infty$.)</p>
@@ -393,18 +338,7 @@ $$</p>
 <p>$$<br>
 \lim_{n\to\infty} \mu(\o_n \mid \o_{&lt;n}) - \mu'(\o_n \mid \o_{&lt;n}) = 0\,,<br>
 $$</p>
-<p>(almost surely), for any two measures $\mu$ and $\mu'$ which have the same typical set $\h\up{\mu}$. Solomonoff&rsquo;s universal data distribution $\xi$ (the mixture of all semicomputable semimeasures, see 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/#solomonoff-induction">Deconstructing Bayesian Inference#solomonoff-induction</a>
-  
-
-
-) has posterior convergence to all such $\mu$. In fact, Solomonoff&rsquo;s mixture can be used as a test for whether $\o$ is $\mu$-typical by observing if $\lim_{n\to\infty} \xi(\o_n \mid \o_{&lt;n}) - \mu(\o_n \mid \o_{&lt;n}) = 0$ (almost surely).</p>
+<p>(almost surely), for any two measures $\mu$ and $\mu'$ which have the same typical set $\h\up{\mu}$. Solomonoff&rsquo;s universal data distribution $\xi$ (the mixture of all semicomputable semimeasures, see <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/#solomonoff-induction">Deconstructing Bayesian Inference#solomonoff-induction</a>) has posterior convergence to all such $\mu$. In fact, Solomonoff&rsquo;s mixture can be used as a test for whether $\o$ is $\mu$-typical by observing if $\lim_{n\to\infty} \xi(\o_n \mid \o_{&lt;n}) - \mu(\o_n \mid \o_{&lt;n}) = 0$ (almost surely).</p>
 <p>The takeaway here is that if compound hypothesis $\h$ is the typical set for some measure $\mu$, then if we don&rsquo;t specify any particular measure, the limiting information gain $h_\H(\dom{\h}{x&rsquo;y} \mid \dom{\h}{x})$ as $\abs{x}\to\infty$ converges to something unique. So if we have infinite hypothesis sets and don&rsquo;t want to arbitrarily choose a measure, not all hope is lost.</p>
 <h1 id="shannon-equivalence">Shannon Equivalence</h1>
 <p>I defined the quantities of information above using the set cardinality function $\abs{\cdot}$ to measure the sizes of sets (called the <a href="https://en.wikipedia.org/wiki/Counting_measure"target="_blank">counting measure</a>). In general, the size of a set can be defined with a <strong>measure</strong>, which is a function from subsets to non-negative real numbers. So a measure $\mu$ on $\H$ has the type signature $\mu : 2^\H \to \mb{R}_{\geq 0}$ (though technically we need to restrict ourselves to <em>measurable</em> subsets of $\H$, see my <a href="http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory"target="_blank">primer to measure theory</a> for details). Furthermore, if we choose measure $\mu$ s.t. $\mu(\H) = 1$, then $\mu$ is called a <strong>probability measure</strong> (or a <strong>normalized measure</strong>). See my <a href="http://zhat.io/articles/primer-probability-theory#definitions"target="_blank">primer to probability theory</a> for details.</p>

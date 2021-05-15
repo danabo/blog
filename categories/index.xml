@@ -71,42 +71,9 @@
 \require{cancel}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;$\newcommand{\sys}[2]{\left[#2\right]_{#1}}$&lt;/p&gt;
-&lt;p&gt;I will apply to abstract physics the same information algebra I introduced in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;
-  
-
-
- and further developed in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;
-  
-
-
-. &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
+&lt;p&gt;I will apply to abstract physics the same information algebra I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt; and further developed in &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;. &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
 &lt;h1 id=&#34;information-theory-of-systems&#34;&gt;Information Theory Of Systems&lt;/h1&gt;
-&lt;p&gt;I will use the abstraction of physics that I introduced in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/causality-for-physics/#abstract-physics&#34;&gt;Causality For Physics#abstract-physics&lt;/a&gt;
-  
-
-
-. Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt&#39;} = \t_\Dt\circ\t_{\Dt&#39;}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.&lt;/p&gt;
+&lt;p&gt;I will use the abstraction of physics that I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/causality-for-physics/#abstract-physics&#34;&gt;Causality For Physics#abstract-physics&lt;/a&gt;. Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt&#39;} = \t_\Dt\circ\t_{\Dt&#39;}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.&lt;/p&gt;
 &lt;p&gt;I will regard $\O$ as the state-space of an entire universe (i.e. a closed system). The universe may contain any number of systems labeled &amp;ldquo;A&amp;rdquo;, &amp;ldquo;B&amp;rdquo;, &amp;ldquo;C&amp;rdquo;, etc., with respective state-spaces $A, B, C,\dots$, so that $\O\subseteq A\m B\m C\m \dots$ and states are tuples, $\o = (a, b, c, \dots) \in \O$. Then the time-evolution function&lt;/p&gt;
 &lt;p&gt;$$\t_\Dt : (a, b, c, \dots) \mapsto \t_\Dt(a, b, c, \dots)$$&lt;/p&gt;
 &lt;p&gt;jointly time-evolves all the systems simultaneously, which allows $\t_\Dt$ to incorporate arbitrary interactions between systems. This also means that the time evolution of, say, system A, depends on not just A&amp;rsquo;s state, but the state of all systems, i.e. the universe&amp;rsquo;s state $\o$.&lt;/p&gt;
@@ -135,18 +102,7 @@ Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just
   &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153301.png&#34; alt=&#34;&#34;&gt;
 &lt;/p&gt;
 &lt;h1 id=&#34;conservation-of-information&#34;&gt;Conservation Of Information&lt;/h1&gt;
-&lt;p&gt;Recapping 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;
-  
-
-
-, suppose we are given some measure $\mu$ on $\O$. This measure need not be normalized. Then for measureable set $R\subseteq\O$, the quantity of the information $\O\tr R$ is given by&lt;/p&gt;
+&lt;p&gt;Recapping &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;, suppose we are given some measure $\mu$ on $\O$. This measure need not be normalized. Then for measureable set $R\subseteq\O$, the quantity of the information $\O\tr R$ is given by&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 h(\O\tr R) = h(R) = \lg\par{\frac{\mu(\O)}{\mu(R)}}\,.&lt;br&gt;
 $$&lt;/p&gt;
@@ -161,18 +117,7 @@ $$&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;information-about-systems&#34;&gt;Information About Systems&lt;/h1&gt;
 &lt;p&gt;Suppose there are at least two systems, A and B, with respective state spaces $\mf{A}$ and $\mf{B}$. Let system A be in state $a\up{t}$ at time $t$. System A (at $t$) has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. What information does A have about B&amp;rsquo;s state at time $t+\Dt$?&lt;/p&gt;
-&lt;p&gt;In 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/#mutual-information&#34;&gt;Information Algebra#mutual-information&lt;/a&gt;
-  
-
-
-, I showed that pointwise mutual information (PMI) quantifies &amp;ldquo;information about&amp;rdquo;. Specifically,&lt;/p&gt;
+&lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/#mutual-information&#34;&gt;Information Algebra#mutual-information&lt;/a&gt;, I showed that pointwise mutual information (PMI) quantifies &amp;ldquo;information about&amp;rdquo;. Specifically,&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 i(a\up{t}, b) = i(b, a\up{t}) = \lg\par{\frac{\mu(a\up{t}\cap b)\mu(\O)}{\mu(a\up{t})\mu(b)}}&lt;br&gt;
 $$&lt;/p&gt;
@@ -187,18 +132,7 @@ If $i(a\up{t}, b) = 0$, then $a\up{t}$ and $b$ are &lt;strong&gt;orthogonal&lt;/
 &lt;p&gt;$$&lt;br&gt;
 \vtup{i(\t_\Dt(a\up{t}), b) \mid b\in\mf{B}}\,.&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;Note that $i(\t_\Dt(a\up{t}), b)$ can be negative (and has no lower bound), which means that system A has needs more quantity of information than $h(\O\tr b)$ to have certainty that system B is in state $b$. If system A has information that rules out state $b$ with certainty, i.e. $b\cap \t_\Dt(a\up{t}) = \es$, then $i(\t_\Dt(a\up{t}), b) = -\infty$. 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/#mutual-information&#34;&gt;Information Algebra#mutual-information&lt;/a&gt;
-  
-
-
- goes into further detail about the interpretation of PMI quantities.&lt;/p&gt;
+&lt;p&gt;Note that $i(\t_\Dt(a\up{t}), b)$ can be negative (and has no lower bound), which means that system A has needs more quantity of information than $h(\O\tr b)$ to have certainty that system B is in state $b$. If system A has information that rules out state $b$ with certainty, i.e. $b\cap \t_\Dt(a\up{t}) = \es$, then $i(\t_\Dt(a\up{t}), b) = -\infty$. &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/#mutual-information&#34;&gt;Information Algebra#mutual-information&lt;/a&gt; goes into further detail about the interpretation of PMI quantities.&lt;/p&gt;
 &lt;h2 id=&#34;information-gain&#34;&gt;Information Gain&lt;/h2&gt;
 &lt;p&gt;The difference&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -524,18 +458,7 @@ $$&lt;/p&gt;
 \newcommand{\V}[1]{\begin{pmatrix}#1\end{pmatrix}}&lt;br&gt;
 \require{cancel}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;This is a review of the ideas I introduced in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;
-  
-
-
-.&lt;/p&gt;
+&lt;p&gt;This is a review of the ideas I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;We have a set of possibilities $\O$, and there is a &lt;em&gt;true&lt;/em&gt; but unknown possibility $\o^*\in\O$. I define information as a tuple of the form $(\O,R)$ where $R\subseteq \O$, which asserts that $\o^*\in R$. I notate these information tuples with arrows:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \O\tr R \df (\O, R)\,,&lt;br&gt;
@@ -1347,32 +1270,10 @@ $\H(A\mid X)$ measures convergence. If its maximized, then the router is complet
 \newcommand{\tr}{\rightarrowtail}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;$\newcommand{\H}{\Omega}$&lt;/p&gt;
-&lt;p&gt;Shannon&amp;rsquo;s information theory defines quantity of information (e.g. &lt;a href=&#34;https://en.wikipedia.org/wiki/Information_content#Definition&#34;target=&#34;_blank&#34;&gt;self-information&lt;/a&gt; $-\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his &lt;a href=&#34;http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf&#34;target=&#34;_blank&#34;&gt;1948 paper&lt;/a&gt;). In 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;
-  
-
-
-, I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.&lt;/p&gt;
+&lt;p&gt;Shannon&amp;rsquo;s information theory defines quantity of information (e.g. &lt;a href=&#34;https://en.wikipedia.org/wiki/Information_content#Definition&#34;target=&#34;_blank&#34;&gt;self-information&lt;/a&gt; $-\lg p(x)$) in terms of probabilities. In the context of data compression, these probabilities are given a frequentist interpretation (Shannon makes this interpretation explicit in his &lt;a href=&#34;http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf&#34;target=&#34;_blank&#34;&gt;1948 paper&lt;/a&gt;). In &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;, I introduced the idea of a subjective data distribution. If quantities of information are calculated using a subjective data distribution, what is their meaning? Below I will answer this question by building from the ground up a different notion of Bayesian inference.&lt;/p&gt;
 &lt;p&gt;My thesis is that subjective (Bayesian) probabilities quantify non-determinism, rather than randomness (where non-determinism means that something takes on more than one value, i.e. is a set rather than a single value). Below I motivate the idea that quantity of information based on non-determinism can be interpreted as measuring the reduction in size (&amp;ldquo;narrowing down&amp;rdquo;) of a possibility space.&lt;/p&gt;
 &lt;h1 id=&#34;information-and-finite-possibilities&#34;&gt;Information and finite possibilities&lt;/h1&gt;
-&lt;p&gt;Following 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;
-  
-
-
-, let&amp;rsquo;s suppose an agent is predicting the continuation of a data string, and the agent&amp;rsquo;s prediction is not uniquely determined, i.e. non-deterministic. I will represent the agent&amp;rsquo;s prediction as a set of possible predictions, called the agent&amp;rsquo;s &lt;strong&gt;hypothesis set&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Following &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;, let&amp;rsquo;s suppose an agent is predicting the continuation of a data string, and the agent&amp;rsquo;s prediction is not uniquely determined, i.e. non-deterministic. I will represent the agent&amp;rsquo;s prediction as a set of possible predictions, called the agent&amp;rsquo;s &lt;strong&gt;hypothesis set&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Formally, the agent receives an endless stream of data $\o$ drawn from the set $\X^\infty$, where $\X$ is some finite character set. In the examples below, let&amp;rsquo;s assume $\X = \set{0,1}$. Given some finite sequence $x\in\X^*$, a prediction is a continuation (not necessarily the correct continuation), i.e. an infinite sequence starting with prefix $x$.&lt;/p&gt;
 &lt;p&gt;Let $\H \subseteq \X^\infty$ be the agent&amp;rsquo;s hypothesis set. When finite data $x$ is observed, we narrow down $\H$ to the subset of all sequences starting with $x$. This is called &lt;strong&gt;conditionalizing&lt;/strong&gt; (or &lt;strong&gt;restriction&lt;/strong&gt;). Denote $\dom{\H}{x} = \set{\o\in\H \mid x\sqsubset\o}$ as the subset of $\H$ consisting of sequences starting with the prefix $x$. The set $\dom{\H}{x}$ is $\H$ conditioned on $x$.&lt;/p&gt;
 &lt;p&gt;For example, a rigid agent that only ever predicts $0$s no matter what has the following hypothesis set:&lt;/p&gt;
@@ -1515,18 +1416,7 @@ $$&lt;/p&gt;
 \end{aligned}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;$\h_1$ contains only sequences ending in 0s, and $\h_2$ contains only sequences ending in 1s.&lt;/p&gt;
-&lt;p&gt;In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a &lt;strong&gt;compound hypothesis&lt;/strong&gt;, indicating that its a set of &lt;strong&gt;primitive hypotheses&lt;/strong&gt; (data continuations). As we shall see, compound hypotheses correspond closely to the hypotheses-as-data-distributions formulation which we saw in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;
-  
-
-
-.&lt;/p&gt;
+&lt;p&gt;In general, for a partition $\mf{H}$ of $\H$, call each $\h\in\mf{H}$ a &lt;strong&gt;compound hypothesis&lt;/strong&gt;, indicating that its a set of &lt;strong&gt;primitive hypotheses&lt;/strong&gt; (data continuations). As we shall see, compound hypotheses correspond closely to the hypotheses-as-data-distributions formulation which we saw in &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;For some partition $\mf{H}$ of $\H$, let $\dom{\mf{H}}{x} = \set{\dom{\h}{x} \mid \h \in \mf{H}}$ be the partition of $\dom{\H}{x}$ consisting of the parts in $\mf{H}$ which have each been conditionalized on $x$ (narrowed down to the sequences starting with $x$).&lt;/p&gt;
 &lt;p&gt;In our example, $\dom{\mf{H}}{0} = \set{\h_1, \set{}}$ and $\dom{\mf{H}}{1} = \set{\set{}, \h_2}$. Let&amp;rsquo;s consider empty compound hypotheses to be eliminated. Then in either scenario, observing just the 1st symbol narrows down $\mf{H}$ to exactly one compound hypothesis, analogous to our original goal of narrowing down $\H$ to one hypothesis. The remaining compound hypothesis (either $\h_1$ or $\h_2$) is uncertain about what the 2nd and 3rd symbols will be, but certain about all symbols after that.&lt;/p&gt;
 &lt;h2 id=&#34;defining-information&#34;&gt;Defining Information&lt;/h2&gt;
@@ -1638,31 +1528,9 @@ $$&lt;/p&gt;
 &lt;p&gt;However, $\H$ can be too big. Suppose $\H=\X^\infty$. Then $\dom{\H}{x} = \X^\infty$ for all $x\in\X^*$. This hypothesis set can never be narrowed down to anything, i.e. there is never information gain. An agent with this hypothesis set remains maximally uncertain always, and so it is not useful.&lt;/p&gt;
 &lt;p&gt;Even if $\H$ is a strict subset of $\X^\infty$ but contains every finite data sequence (so that $\dom{\H}{x}$ is non-empty for all $x$), it&amp;rsquo;s usefulness is still dubious. In general $\abs{\dom{\H}{x}}=\infty$ for all $x$ (the cardinality of $\dom{\H}{x}$ is always infinite; disregarding different sizes of infinity), so we cannot compare to what extent we&amp;rsquo;ve narrowed down $\H$ further by observing $x$ rather than $y$. That is to say, $\abs{\dom{\H}{x}}/\abs{\H} = \infty/\infty$ is indeterminate. Furthermore, $\dom{\H}{x}$ will contain every finite data sequence starting with $x$, so there is no tangible sense in which the agent&amp;rsquo;s predictions at finite time are narrowed down.&lt;/p&gt;
 &lt;p&gt;The problem of measuring narrowing-down of infinite possibility sets is resolved by choosing a measure $\mu$ on $\H$. However a new problem arises: how to choose $\mu$. My purpose in presenting Bayesian information theory as narrowing down possibility spaces is to give meaning to probability values. Now, we&amp;rsquo;ve reintroduced an arbitrary measure $\mu$.&lt;/p&gt;
-&lt;p&gt;There is a sort of middle ground that also serves as a bridge between the usual probabilistic conception of Bayesian inference I introduced in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;
-  
-
-
- and the hypothesis set conception, via algorithmic information theory.&lt;/p&gt;
+&lt;p&gt;There is a sort of middle ground that also serves as a bridge between the usual probabilistic conception of Bayesian inference I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt; and the hypothesis set conception, via algorithmic information theory.&lt;/p&gt;
 &lt;h2 id=&#34;algorithmic-randomness&#34;&gt;Algorithmic Randomness&lt;/h2&gt;
-&lt;p&gt;In 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;
-  
-
-
-, I defined Bayesian inference as a manipulation of probability measures on $\X^\infty$. Given a set $\M$ of measures $\mu$ on $\X^\infty$, and a prior $p$ on $\M$, what is the corresponding &amp;ldquo;possibility space narrowing-down&amp;rdquo; perspective?&lt;/p&gt;
+&lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/&#34;&gt;Deconstructing Bayesian Inference&lt;/a&gt;, I defined Bayesian inference as a manipulation of probability measures on $\X^\infty$. Given a set $\M$ of measures $\mu$ on $\X^\infty$, and a prior $p$ on $\M$, what is the corresponding &amp;ldquo;possibility space narrowing-down&amp;rdquo; perspective?&lt;/p&gt;
 &lt;p&gt;I supposed that hypothesis probabilities $\mu(\o_{1:n})$ for $\mu\in\M$ represented irreducible uncertainty about the world, whereas subjective probabilities $p(\o_{1:n})$ represented a mixture of reducible and irreducible uncertainty, where knowing which hypothesis $\mu$ is true maximally reduces your uncertainty.&lt;/p&gt;
 &lt;p&gt;I also introduced a distinction between randomness and non-determinism. Randomness can be defined as incompressibility, and non-determinism refers to the output of a mathematical construct (such as a function) being not uniquely determined by givens (such as an input). Probabilities can measure both, which can lead to confusion.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s suppose here that hypothesis probabilities always measure randomness. Assuming $\mu\in\M$ is computable, we can precisely define what it means for an infinite sequence $\o\in\X^\infty$ to &amp;ldquo;look like&amp;rdquo; a typical sequence randomly drawn from $\mu$. Call such &amp;ldquo;typical looking&amp;rdquo; sequences &lt;strong&gt;$\mu$-typical&lt;/strong&gt; (or &lt;strong&gt;$\mu$-random&lt;/strong&gt;). Formally, $\o\in\X^\infty$ is $\mu$-typical iff the optimal compression rate of $\o$ (via monotone algorithmic complexity $Km$) is achieved with arithmetic coding using $\mu$. (See &lt;a href=&#34;https://www.springer.com/gp/book/9781489984456&#34;target=&#34;_blank&#34;&gt;Li &amp;amp; Vitányi&lt;/a&gt;, 3rd edition, theorem 4.5.3 on page 318, which states, $\sup_n\left\{\lg(1/\mu(\o_{1:n})) - Km(\o_{1:n})\right\} &amp;lt; \infty$.)&lt;/p&gt;
@@ -1693,18 +1561,7 @@ $$&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \lim_{n\to\infty} \mu(\o_n \mid \o_{&amp;lt;n}) - \mu&#39;(\o_n \mid \o_{&amp;lt;n}) = 0\,,&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;(almost surely), for any two measures $\mu$ and $\mu&#39;$ which have the same typical set $\h\up{\mu}$. Solomonoff&amp;rsquo;s universal data distribution $\xi$ (the mixture of all semicomputable semimeasures, see 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/#solomonoff-induction&#34;&gt;Deconstructing Bayesian Inference#solomonoff-induction&lt;/a&gt;
-  
-
-
-) has posterior convergence to all such $\mu$. In fact, Solomonoff&amp;rsquo;s mixture can be used as a test for whether $\o$ is $\mu$-typical by observing if $\lim_{n\to\infty} \xi(\o_n \mid \o_{&amp;lt;n}) - \mu(\o_n \mid \o_{&amp;lt;n}) = 0$ (almost surely).&lt;/p&gt;
+&lt;p&gt;(almost surely), for any two measures $\mu$ and $\mu&#39;$ which have the same typical set $\h\up{\mu}$. Solomonoff&amp;rsquo;s universal data distribution $\xi$ (the mixture of all semicomputable semimeasures, see &lt;a href=&#34;https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/#solomonoff-induction&#34;&gt;Deconstructing Bayesian Inference#solomonoff-induction&lt;/a&gt;) has posterior convergence to all such $\mu$. In fact, Solomonoff&amp;rsquo;s mixture can be used as a test for whether $\o$ is $\mu$-typical by observing if $\lim_{n\to\infty} \xi(\o_n \mid \o_{&amp;lt;n}) - \mu(\o_n \mid \o_{&amp;lt;n}) = 0$ (almost surely).&lt;/p&gt;
 &lt;p&gt;The takeaway here is that if compound hypothesis $\h$ is the typical set for some measure $\mu$, then if we don&amp;rsquo;t specify any particular measure, the limiting information gain $h_\H(\dom{\h}{x&amp;rsquo;y} \mid \dom{\h}{x})$ as $\abs{x}\to\infty$ converges to something unique. So if we have infinite hypothesis sets and don&amp;rsquo;t want to arbitrarily choose a measure, not all hope is lost.&lt;/p&gt;
 &lt;h1 id=&#34;shannon-equivalence&#34;&gt;Shannon Equivalence&lt;/h1&gt;
 &lt;p&gt;I defined the quantities of information above using the set cardinality function $\abs{\cdot}$ to measure the sizes of sets (called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Counting_measure&#34;target=&#34;_blank&#34;&gt;counting measure&lt;/a&gt;). In general, the size of a set can be defined with a &lt;strong&gt;measure&lt;/strong&gt;, which is a function from subsets to non-negative real numbers. So a measure $\mu$ on $\H$ has the type signature $\mu : 2^\H \to \mb{R}_{\geq 0}$ (though technically we need to restrict ourselves to &lt;em&gt;measurable&lt;/em&gt; subsets of $\H$, see my &lt;a href=&#34;http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory&#34;target=&#34;_blank&#34;&gt;primer to measure theory&lt;/a&gt; for details). Furthermore, if we choose measure $\mu$ s.t. $\mu(\H) = 1$, then $\mu$ is called a &lt;strong&gt;probability measure&lt;/strong&gt; (or a &lt;strong&gt;normalized measure&lt;/strong&gt;). See my &lt;a href=&#34;http://zhat.io/articles/primer-probability-theory#definitions&#34;target=&#34;_blank&#34;&gt;primer to probability theory&lt;/a&gt; for details.&lt;/p&gt;
@@ -1862,18 +1719,7 @@ $$&lt;/p&gt;
 &lt;p&gt;Each node&amp;rsquo;s distribution, $p(\chi \mid \dots)$, can be chosen independently from every other node (there are no constraints on these conditional distributions). Therefore, since the entire tree uniquely determines $p(x_{&amp;lt;n})$ (by walking down the edges of the tree corresponding to the observed data sequence $x_{&amp;lt;n}$ and multiplying the conditional probabilities at each node in the path, i.e. $p(x_i \mid x_{&amp;lt;i})$ at node $x_{&amp;lt;i}$), a Bayesian agent is free to choose any arbitrary conditional predictions it wants.&lt;/p&gt;
 &lt;p&gt;Clearly, if we are only concerned with data predictions of the form $p(\o_{n:m}\mid \o_{&amp;lt;n})$, then we do not actually need hypotheses at all. Providing a tree specifying the subjective conditional data probabilities is enough to perform Bayesian inference.&lt;/p&gt;
 &lt;p&gt;This reveals something peculiar about Bayesian inference: &lt;strong&gt;A Bayesian agent chooses its predictions for all eventualities beforehand, and never deviates for all time. Furthermore these predictions can be totally arbitrary.&lt;/strong&gt; There does not appear to be any actual learning taking place, since the agent just follows a path down the tree as data comes in and provides predetermined prediction probabilities. In the Bayesian perspective, learning IS narrowing down a pre-defined possibility space with data. If decision making using Bayesian inference is rational, perhaps rationality amounts to consistency, i.e. never deviating from pre-chosen predictions.&lt;/p&gt;
-&lt;p&gt;One might argue that freely choosing a subjective data distribution without defining hypotheses is not Bayesian. My reply is that I&amp;rsquo;ve shifted what we are counting as hypothesis. In this perspective, a hypothesis is a single data sequence continuation. In this sense, all hypotheses are deterministic data sequences (though they may be algorithmically random), and the subjective data distribution is counting up the contributions of all these hypotheses to each finite length prediction. More on this in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;
-  
-
-
-.&lt;/p&gt;
+&lt;p&gt;One might argue that freely choosing a subjective data distribution without defining hypotheses is not Bayesian. My reply is that I&amp;rsquo;ve shifted what we are counting as hypothesis. In this perspective, a hypothesis is a single data sequence continuation. In this sense, all hypotheses are deterministic data sequences (though they may be algorithmically random), and the subjective data distribution is counting up the contributions of all these hypotheses to each finite length prediction. More on this in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;removing-probabilities&#34;&gt;Removing probabilities&lt;/h2&gt;
 &lt;p&gt;We can go a step further and ask, do we need probabilities at all?&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s imagine that the agent has the same predetermined tree as above, except each node is assigned a single prediction instead of a probability distribution over $\X$. Let $x\in\X^*$ and denote $\hat{\x}_x\in\X$ as the prediction given the sequence $x$ is observed. Choosing $\hat{\x}_x$ for each $x$ uniquely defines a tree, where $x = (x_1, x_2, \dots)$ encodes a path from the root to a node, and $\hat{\x}_x$ is the value assigned to that node.&lt;/p&gt;
@@ -1927,34 +1773,12 @@ $$&lt;/p&gt;
 &lt;/p&gt;
 &lt;p&gt;This understanding of the word &amp;ldquo;non-deterministic&amp;rdquo; is standard in computer science, exemplified by the &lt;a href=&#34;https://en.wikipedia.org/wiki/Nondeterministic_Turing_machine&#34;target=&#34;_blank&#34;&gt;non-deterministic Turing machine&lt;/a&gt;, which defines a set of possible state transitions and tape operations given any state (of both the tape and automata), rather than single one determined uniquely by each state. In general, something is regarded as non-deterministic if it can take on more than one possible value, i.e. it is not determined.&lt;/p&gt;
 &lt;p&gt;I distinguish non-determinism from randomness, the latter of which can be defined as maximal incompressibility (called &lt;a href=&#34;http://www.scholarpedia.org/article/Algorithmic_randomness&#34;target=&#34;_blank&#34;&gt;algorithmic randomness&lt;/a&gt;). Often these two concepts are conflated. Probability distributions can represent both non-determinism (by quantifying relative amounts of possibilities) or degrees of randomness (via Martin-Lof randomness). The key insight is that probability need not represent both at the same time. If Bayesian probability is generally understood as quantifying prediction non-determinism, then we can view the &lt;a href=&#34;https://en.wikipedia.org/wiki/Probability_interpretations&#34;target=&#34;_blank&#34;&gt;Bayesian-frequentist distinction&lt;/a&gt; as stemming from this conceptual decoupling of non-determinism from randomness.&lt;/p&gt;
-&lt;p&gt;I make the same connection between Bayesian uncertainty and non-determinism in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-perspective&lt;/a&gt;
-  
-
-
-.&lt;/p&gt;
+&lt;p&gt;I make the same connection between Bayesian uncertainty and non-determinism in &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-perspective&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;the-general-case&#34;&gt;The General Case&lt;/h3&gt;
 &lt;p&gt;We can go a step further. Why are we assuming that a prediction of step $n$ can be made given $\o_{&amp;lt;n}$? Plenty of pertinent information may not be available in the data at all (or the agent does not know how to extract such information from the data, e.g. encrypted information). An honest agent would account for every input needed to make a certain prediction, even inputs that are not available in $\o_{&amp;lt;n}$.&lt;/p&gt;
 &lt;p&gt;In general, we are left with a non-deterministic next-step prediction tree represented by $f : \Z \times \X^* \to \X$ where $\Z$ is an auxiliary input space (input in addition to the observed data stream), which is usually some latent space (set of possible data or world-states not observed). Each node $x$ in the prediction tree is assigned the prediction set $f(\Z, x) = \set{f(z,x) \mid z\in\Z}$. If the prediction set for $x$ is singleton (contains one element), then that prediction is deterministic. $f$ represents a prediction tree where each node is assigned a set of next-step predictions instead of just one.&lt;/p&gt;
 &lt;h2 id=&#34;the-return-of-probability&#34;&gt;The Return Of Probability&lt;/h2&gt;
-&lt;p&gt;In 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-axiom&lt;/a&gt;
-  
-
-
-, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&amp;rsquo;s prediction $f(\Z, \o_{&amp;lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is&lt;/p&gt;
+&lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-axiom&lt;/a&gt;, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&amp;rsquo;s prediction $f(\Z, \o_{&amp;lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is&lt;/p&gt;
 &lt;p&gt;$$p(\chi \mid x) = \mu\set{f(z,x) \mid z\in\Z \and f(z,x) = \chi}\,.$$&lt;/p&gt;
 &lt;p&gt;Though the agent&amp;rsquo;s prediction is not uniquely determined, we&amp;rsquo;ve quantified the relative number of possible auxiliary inputs to $f$ that give each prediction. These quantities can be used for decision making (e.g. most likely outcome or expected return).&lt;/p&gt;
 &lt;p&gt;We have recovered the probabilistic prediction tree paradigm from earlier without presupposing that predictions should be probabilistic. Though not defined to be probabilistic, an agent&amp;rsquo;s prediction function that requires inputs which are not on hand naturally results in non-determinism. Quantifying that non-determinism using relative sizes of possibility sets naturally results in probabilities.&lt;/p&gt;
@@ -2556,18 +2380,7 @@ $$&lt;/p&gt;
 &lt;h2 id=&#34;generalization&#34;&gt;Generalization&lt;/h2&gt;
 &lt;p&gt;Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.&lt;/p&gt;
 &lt;p&gt;Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h&#39;) \approx p(h&#39; \mid x)$ for some program $h&#39;$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.&lt;/p&gt;
-&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior&#34;&gt;Variational Solomonoff Induction#prior&lt;/a&gt;
-  
-
-
- section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
+&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior&#34;&gt;Variational Solomonoff Induction#prior&lt;/a&gt; section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
 &lt;p&gt;As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn&amp;rsquo;t start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.&lt;/p&gt;
 &lt;h1 id=&#34;choices&#34;&gt;Choices&lt;/h1&gt;
 &lt;p&gt;To summarize the requirements we found above:&lt;br&gt;
@@ -2623,57 +2436,13 @@ $$&lt;/p&gt;
 $$&lt;/p&gt;
 &lt;p&gt;Previous attempts:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;In 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
-  
-
-
-, I used a &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt; to try to understand the free energy formalism. I figured out the &amp;ldquo;timeless&amp;rdquo; and actionless case, but I became confused when actions and time were added.&lt;/li&gt;
-&lt;li&gt;In 
-
-
-
-
-
-  
-    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
-  
-
-
-, I tried to translate between the formalism presented in &lt;a href=&#34;https://danijar.com/apd/&#34;&gt;https://danijar.com/apd/&lt;/a&gt; (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;. I also tried to make the connection to Solomonoff induction.&lt;/li&gt;
-&lt;li&gt;In 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt;
-  
-
-
-, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.&lt;/li&gt;
+&lt;li&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;, I used a &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt; to try to understand the free energy formalism. I figured out the &amp;ldquo;timeless&amp;rdquo; and actionless case, but I became confused when actions and time were added.&lt;/li&gt;
+&lt;li&gt;In &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;, I tried to translate between the formalism presented in &lt;a href=&#34;https://danijar.com/apd/&#34;&gt;https://danijar.com/apd/&lt;/a&gt; (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;. I also tried to make the connection to Solomonoff induction.&lt;/li&gt;
+&lt;li&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt;, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Using the same tutorial as before, &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data&lt;/a&gt;, I will go through the free energy formalism again and try to work out time and actions.&lt;/p&gt;
 &lt;h1 id=&#34;review&#34;&gt;Review&lt;/h1&gt;
-&lt;p&gt;To recap what I figured out in 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;
-  
-
-
-:&lt;/p&gt;
+&lt;p&gt;To recap what I figured out in &lt;a href=&#34;https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/&#34;&gt;Free Energy Principle 1st Pass&lt;/a&gt;:&lt;/p&gt;
 &lt;p&gt;Suppose $o\in\mc{O}$ is the observation space and $s\in\mc{S}$ is the hypothesis/state space (to use the notation of the &lt;a href=&#34;https://psyarxiv.com/b4jm6/&#34;target=&#34;_blank&#34;&gt;tutorial&lt;/a&gt;). For now, let&amp;rsquo;s assume that $\mc{S}$ is the hidden state space of the environment in some timestep. $p(o,s)$ is the agent&amp;rsquo;s model of the environment, relating observations to hidden states, and the prior probability of the environment being in any particular hidden state. Let&amp;rsquo;s also ignore questions about the meaning of these probabilities (objective or subjective) and where they come from. If it&amp;rsquo;s easier to think about, assume these probabilities are subjective.&lt;/p&gt;
 &lt;p&gt;If $o$ is observed (one timestep only), then we want to calculate the posterior probability $p(s\mid o)$ of each $s\in\mc{S}$. If this is intractable to do, we can instead find an approximation $q_o(s)$:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -2708,18 +2477,7 @@ $$&lt;/p&gt;
 &lt;br&gt;
 The policy $\pi$ is a probability distribution over actions (, e.g. $\pi(a_t \mid o_{1:t}, a_{1:t-1})$. More on that later.&lt;/p&gt;
 &lt;h2 id=&#34;interaction-loop&#34;&gt;Interaction loop&lt;/h2&gt;
-&lt;p&gt;It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In 
-
-
-
-
-
-  
-    &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt;
-  
-
-
- I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&amp;rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.&lt;/p&gt;
+&lt;p&gt;It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/&#34;&gt;Variational Solomonoff Induction&lt;/a&gt; I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&amp;rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s unpack the agent-environment interaction loop. Given policy $\pi$,&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 p(o_{1:\infty},s_{1:\infty}\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t,s_t\mid a_t,s_{t-1})\pi(a_t\mid o_{1:t-1},a_{1:t-1})&lt;br&gt;
@@ -2843,30 +2601,8 @@ The agent updates its hypothesis generator $q$, implicitly conforming to $p$ whi
 $$&lt;/p&gt;
 &lt;p&gt;Related notes:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;
-
-
-
-
-
-  
-    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory&lt;/a&gt;
-  
-
-
-&lt;/li&gt;
-&lt;li&gt;
-
-
-
-
-
-  
-    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Friston&amp;#39;s Free Energy (Active Inference)&lt;/a&gt;
-  
-
-
-&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Friston&amp;#39;s Free Energy (Active Inference)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Hackmd version of this note: &lt;a href=&#34;https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO&#34;&gt;https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;my-current-understanding&#34;&gt;My current understanding&lt;/h1&gt;
@@ -2907,18 +2643,7 @@ $$&lt;/p&gt;
 &lt;p&gt;$\lg (1/p_{X \mid H}(x \mid h))$ is the &lt;strong&gt;surprise&lt;/strong&gt; (also &lt;strong&gt;self-information&lt;/strong&gt;) of observing $x$ under $h$. The higher this quantity, the more the possibility space of $h$ was narrowed down by $x$.&lt;/p&gt;
 &lt;h2 id=&#34;variational-bayes&#34;&gt;Variational Bayes&lt;/h2&gt;
 &lt;p&gt;Variational approximation to calculating the Bayesian posterior:&lt;br&gt;
-
-
-
-
-
-
-  
-    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory#free-energy&lt;/a&gt;
-  
-
-
-&lt;/p&gt;
+&lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The free-energy principle a unified brain theory#free-energy&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;sources:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception&#34;&gt;https://en.wikipedia.org/wiki/Free_energy_principle#Action_and_perception&lt;/a&gt;&lt;/li&gt;
@@ -2994,18 +2719,7 @@ p(X_{&amp;gt;n} \mid X_{1:n}=x_{1:n}) = \sum_{\mu\in\mc{M}} w_\mu(x_{1:n})\mu(X_
 $$&lt;/p&gt;
 &lt;p&gt;which has the same form as the prior mixture, except that we reweighted by switching from $\pi(\mu)$ to $w_\mu(x_{1:n})$, and we conditionalized the hypotheses, i.e. switched from $\mu(X_{1:\infty})$ to $\mu(X_{&amp;gt;n} \mid X_{1:n}=x_{1:n})$.&lt;/p&gt;
 &lt;p&gt;We can incorporate actions into this framework by specifying that all hypotheses in $\mu\in\mc{M}$ must be distributions over a combined observation and action stream. This stream would be a sequence $(x_1, a_1, x_2, a_2, \ldots)$ of alternating observation $x_t \in \mc{X}$ and action $a_t \in \mc{A}$ at every time step. Note that a hypothesis predicts the next observation $\mu(x_t \mid x_{&amp;lt;t}, a_{&amp;lt;t})$, but we don&amp;rsquo;t ask a hypothesis to predict a next action, i.e. $a_t$ given $x_{&amp;lt;t}, a_{&amp;lt;t}$, since that is the agent&amp;rsquo;s decision to make.&lt;/p&gt;
-
-
-
-
-
-
-  
-    &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
-  
-
-
-
+&lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Free energy principle and Solomonoff induction&lt;/a&gt;
 &lt;h2 id=&#34;hypotheses-vs-states-policies-vs-actions&#34;&gt;Hypotheses vs states; policies vs actions&lt;/h2&gt;
 &lt;p&gt;There is a key distinction to make here: a hypothesis $\mu$ is itself a possible universe. $\mu$ is a distribution over all possible infinite data streams $\mc{X}^\infty$. $\mu$ can be arbitrarily complex, and consider all counterfactual latent states in the universe. $\mu$ may encode the dynamics of a time evolving system in its conditional probabilities $\mu(x_n \mid x_{&amp;lt;n})$. In this way $\mu$ is not a hidden state, but an entire possible universe.&lt;/p&gt;
 &lt;p&gt;This is in contrast to the idea of a &lt;strong&gt;hidden state&lt;/strong&gt;, which is an unknown state of the universe &lt;strong&gt;at some point in time&lt;/strong&gt;. In the hidden state framework, the environment is defined by a known dynamics distribution $p(x_t, s_t \mid s_{t-1})$ or $p(x_t, s_t \mid s_{t-1}, a_{t-1})$ if we include actions. The only thing that is unknown is $s_{1:t}$. In this framework, knowing $s_{t-1}$ does not mean you know $s_t$ with certainty. In the mixture of hypotheses framework, if you know $\mu$, you know it for all time.&lt;/p&gt;

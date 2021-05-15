@@ -24,57 +24,13 @@
 $$</p>
 <p>Previous attempts:</p>
 <ul>
-<li>In 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/">Free Energy Principle 1st Pass</a>
-  
-
-
-, I used a <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a> to try to understand the free energy formalism. I figured out the &ldquo;timeless&rdquo; and actionless case, but I became confused when actions and time were added.</li>
-<li>In 
-
-
-
-
-
-  
-    <a href="" class="broken">Free energy principle and Solomonoff induction</a>
-  
-
-
-, I tried to translate between the formalism presented in <a href="https://danijar.com/apd/">https://danijar.com/apd/</a> (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a>. I also tried to make the connection to Solomonoff induction.</li>
-<li>In 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/">Variational Solomonoff Induction</a>
-  
-
-
-, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.</li>
+<li>In <a href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/">Free Energy Principle 1st Pass</a>, I used a <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a> to try to understand the free energy formalism. I figured out the &ldquo;timeless&rdquo; and actionless case, but I became confused when actions and time were added.</li>
+<li>In <a href="" class="broken">Free energy principle and Solomonoff induction</a>, I tried to translate between the formalism presented in <a href="https://danijar.com/apd/">https://danijar.com/apd/</a> (which is a deep learning collaboration between  Danijar Hafner and Karl Friston) and the tutorial <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a>. I also tried to make the connection to Solomonoff induction.</li>
+<li>In <a href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/">Variational Solomonoff Induction</a>, I thought about whether free energy (as variational inference) could be applied to deep program synthesis to approximate Solomonoff induction.</li>
 </ul>
 <p>Using the same tutorial as before, <a href="https://psyarxiv.com/b4jm6/"target="_blank">A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data</a>, I will go through the free energy formalism again and try to work out time and actions.</p>
 <h1 id="review">Review</h1>
-<p>To recap what I figured out in 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/">Free Energy Principle 1st Pass</a>
-  
-
-
-:</p>
+<p>To recap what I figured out in <a href="https://danabo.github.io/blog/posts/free-energy-principle-1st-pass/">Free Energy Principle 1st Pass</a>:</p>
 <p>Suppose $o\in\mc{O}$ is the observation space and $s\in\mc{S}$ is the hypothesis/state space (to use the notation of the <a href="https://psyarxiv.com/b4jm6/"target="_blank">tutorial</a>). For now, let&rsquo;s assume that $\mc{S}$ is the hidden state space of the environment in some timestep. $p(o,s)$ is the agent&rsquo;s model of the environment, relating observations to hidden states, and the prior probability of the environment being in any particular hidden state. Let&rsquo;s also ignore questions about the meaning of these probabilities (objective or subjective) and where they come from. If it&rsquo;s easier to think about, assume these probabilities are subjective.</p>
 <p>If $o$ is observed (one timestep only), then we want to calculate the posterior probability $p(s\mid o)$ of each $s\in\mc{S}$. If this is intractable to do, we can instead find an approximation $q_o(s)$:</p>
 <p>$$<br>
@@ -109,18 +65,7 @@ $$</p>
 <br>
 The policy $\pi$ is a probability distribution over actions (, e.g. $\pi(a_t \mid o_{1:t}, a_{1:t-1})$. More on that later.</p>
 <h2 id="interaction-loop">Interaction loop</h2>
-<p>It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In 
-
-
-
-
-
-  
-    <a href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/">Variational Solomonoff Induction</a>
-  
-
-
- I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.</p>
+<p>It is not clear to me whether $o,s$ are sequences over time, or just one time-step. In <a href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/">Variational Solomonoff Induction</a> I showed how to interpret $s$ as a hypothesis that explains an infinite sequence of observations, i.e. $s$ is not a sequence but $o$ is. When I write $o_{1:\infty}$, that is an observation sequence over time. When I write $s_{1:\infty}$ that is a state sequence over time. I&rsquo;ll use $h$ later to denote a time-less hypothesis on observation sequences $o_{1:\infty}$.</p>
 <p>Let&rsquo;s unpack the agent-environment interaction loop. Given policy $\pi$,</p>
 <p>$$<br>
 p(o_{1:\infty},s_{1:\infty}\mid\pi) = \sum_{a_{1:\infty}}\prod_t p(o_t,s_t\mid a_t,s_{t-1})\pi(a_t\mid o_{1:t-1},a_{1:t-1})<br>
