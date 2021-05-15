@@ -6,22 +6,27 @@
   error handling: https://gohugo.io/functions/errorf
   making my own shortcodes: https://gohugo.io/templates/shortcode-templates/
 
+  Note: use dashes, `- ... -`, inside all function calls.
+  See 
+    - https://discourse.gohugo.io/t/solved-extra-space-after-shortcode-output/6736
+    - https://gohugo.io/templates/introduction/#whitespace.
+
 -->
-{{ $name := (.Get 0) }}
-{{ $heading := (.Get 1) }}
-{{ $postFile := (print "content/posts/" $name ".md") }}
-{{ $fullTarget := (print $name "#" $heading) }}
-{{ if (fileExists $postFile) }}
-  {{ if eq $heading "" }}
-    <a href="{{ ref . $name }}">{{ $name }}</a>
-  {{ else }}
-    <a href="{{ ref . $fullTarget }}">{{ $fullTarget }}</a>
-  {{ end }}
-{{ else }}
-  {{ if eq $heading "" }}
-    <a href="" class="broken">{{ $name }}</a>
-  {{ else }}
-    <a href="" class="broken">{{ $fullTarget }}</a>
-  {{ end }}
-{{ end }}
+{{- $name := (.Get 0) -}}
+{{- $heading := (.Get 1) -}}
+{{- $postFile := (print "content/posts/" $name ".md") -}}
+{{- $fullTarget := (print $name "#" $heading) -}}
+{{- if (fileExists $postFile) -}}
+  {{- if eq $heading "" -}}
+    <a href="{{- ref . $name -}}">{{- $name -}}</a>
+  {{- else -}}
+    <a href="{{- ref . $fullTarget -}}">{{- $fullTarget -}}</a>
+  {{- end -}}
+{{- else -}}
+  {{- if eq $heading "" -}}
+    <a href="" class="broken">{{- $name -}}</a>
+  {{- else -}}
+    <a href="" class="broken">{{- $fullTarget -}}</a>
+  {{- end -}}
+{{- end -}}
 
