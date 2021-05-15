@@ -95,7 +95,18 @@ $$&lt;/p&gt;
 
 . &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
 &lt;h1 id=&#34;information-theory-of-systems&#34;&gt;Information Theory Of Systems&lt;/h1&gt;
-&lt;p&gt;Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt&#39;} = \t_\Dt\circ\t_{\Dt&#39;}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.&lt;/p&gt;
+&lt;p&gt;I will use the abstraction of physics that I introduced in 
+
+
+
+
+
+  
+    &lt;a href=&#34;https://danabo.github.io/blog/posts/causality-for-physics/#abstract-physics&#34;&gt;Causality For Physics#abstract-physics&lt;/a&gt;
+  
+
+
+. Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt&#39;} = \t_\Dt\circ\t_{\Dt&#39;}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.&lt;/p&gt;
 &lt;p&gt;I will regard $\O$ as the state-space of an entire universe (i.e. a closed system). The universe may contain any number of systems labeled &amp;ldquo;A&amp;rdquo;, &amp;ldquo;B&amp;rdquo;, &amp;ldquo;C&amp;rdquo;, etc., with respective state-spaces $A, B, C,\dots$, so that $\O\subseteq A\m B\m C\m \dots$ and states are tuples, $\o = (a, b, c, \dots) \in \O$. Then the time-evolution function&lt;/p&gt;
 &lt;p&gt;$$\t_\Dt : (a, b, c, \dots) \mapsto \t_\Dt(a, b, c, \dots)$$&lt;/p&gt;
 &lt;p&gt;jointly time-evolves all the systems simultaneously, which allows $\t_\Dt$ to incorporate arbitrary interactions between systems. This also means that the time evolution of, say, system A, depends on not just A&amp;rsquo;s state, but the state of all systems, i.e. the universe&amp;rsquo;s state $\o$.&lt;/p&gt;
