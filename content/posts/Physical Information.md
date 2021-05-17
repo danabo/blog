@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-05-14T20:17:01-05:00'
+lastmod: '2021-05-17T10:58:28-05:00'
 tags:
 - physics
 - information
@@ -69,7 +69,36 @@ $\\newcommand{\\sys}\[2\]{\\left\[#2\\right\]\_{#1}}$
 
 
 
-I will apply to abstract physics the same information algebra I introduced in {{< locallink "Bayesian information theory" >}} and further developed in {{< locallink "Information Algebra" >}}. *Bayesian* information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has *agenty* attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.
+I will apply to abstract physics the same information algebra I introduced in {{< locallink "Bayesian information theory" "defining-information" >}} and further developed in {{< locallink "Information Algebra" >}}. *Bayesian* information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has *agenty* attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.
+
+# Information Preliminaries
+
+For sets $\\O$ and $A \\subseteq \\O$,
+
+$$
+\\O\\tr \\A
+$$
+
+*is* information. This denotes the narrowing down of possibility space $\\O$ to possibility space $A$ containing the *true* possibility $\\o^\*\\in A$.
+
+The information $\\O\\tr \\A$ implies a domain restriction. For some other set $B \\subseteq \\O$,
+
+$$
+B\\dom{A} \\df B \\cap A
+$$
+
+is the domain restriction operation on $B$, which makes clear which set is the domain and which set is being restricted.
+
+Let $\\mf{P}$ be a partition of $\\O$. Then
+
+$$
+\\begin{aligned}
+\\mf{P}\\dom{A} &\\df \\set{p\\dom{A} \\mid p\\in\\mf{P}} \\\\
+    &= \\set{p\\cap A \\mid p\\in\\mf{P}}
+\\end{aligned}
+$$
+
+is the domain restriction of partition $\\mf{P}$ to domain $A$, s.t. $\\bigcup\\mf{P} = A$.
 
 # Information Theory Of Systems
 
@@ -113,8 +142,10 @@ If $\\t\_{\\Dt}(a\\up{t}) \\neq a\\up{t+\\Dt}$, then system A does not have comp
 Recapping {{< locallink "Information Algebra" >}}, suppose we are given some measure $\\mu$ on $\\O$. This measure need not be normalized. Then for measureable set $R\\subseteq\\O$, the quantity of the information $\\O\\tr R$ is given by
 
 $$
-h(\\O\\tr R) = h(R) = \\lg\\par{\\frac{\\mu(\\O)}{\\mu(R)}}\\,.
+h(\\O\\tr R) = h(R) = \\lg\\par{\\frac{\\mu(\\O)}{\\mu(R)}}\\,,
 $$
+
+where $h(R)$ is the [information content](https://en.wikipedia.org/wiki/Information_content) (or pointwise entropy) of $R$, and $h(\\O\\tr R)$ is my own shorthand notation to make it clear what information is being quantified.
 
 **Conservation of information** is the property of any bijective time-evolution, whereby the information $\\O\\tr \\t\_\\Dt(a\\up{t})$ is enough to recover the information $\\O\\tr a\\up{t}$, because $a\\up{t} = \\t^{-1}\_\\Dt(\\t\_\\Dt(a\\up{t}))$, for all $\\Dt\\in\\R$. That is to say, time-evolution of arbitrary state sets $R\\subseteq\\O$ does not destroy the information $\\O\\tr R$ (this is distinct from the time-evolution of systems which, as we saw, can lose information).
 
