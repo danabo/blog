@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-05-17T10:58:28-05:00'
+lastmod: '2021-05-17T11:01:06-05:00'
 tags:
 - physics
 - information
@@ -76,12 +76,12 @@ I will apply to abstract physics the same information algebra I introduced in {{
 For sets $\\O$ and $A \\subseteq \\O$,
 
 $$
-\\O\\tr \\A
+\\O\\tr A
 $$
 
 *is* information. This denotes the narrowing down of possibility space $\\O$ to possibility space $A$ containing the *true* possibility $\\o^\*\\in A$.
 
-The information $\\O\\tr \\A$ implies a domain restriction. For some other set $B \\subseteq \\O$,
+The information $\\O\\tr A$ implies a domain restriction. For some other set $B \\subseteq \\O$,
 
 $$
 B\\dom{A} \\df B \\cap A
