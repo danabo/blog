@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021</p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021<span class="lastmod"> • edited May 17, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -62,7 +62,26 @@
 \require{cancel}<br>
 $$</p>
 <p>$\newcommand{\sys}[2]{\left[#2\right]_{#1}}$</p>
-<p>I will apply to abstract physics the same information algebra I introduced in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a> and further developed in <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>. <em>Bayesian</em> information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has <em>agenty</em> attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.</p>
+<p>I will apply to abstract physics the same information algebra I introduced in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/#defining-information">Bayesian information theory#defining-information</a> and further developed in <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>. <em>Bayesian</em> information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has <em>agenty</em> attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.</p>
+<h1 id="information-preliminaries">Information Preliminaries</h1>
+<p>For sets $\O$ and $A \subseteq \O$,</p>
+<p>$$<br>
+\O\tr \A<br>
+$$</p>
+<p><em>is</em> information. This denotes the narrowing down of possibility space $\O$ to possibility space $A$ containing the <em>true</em> possibility $\o^*\in A$.</p>
+<p>The information $\O\tr \A$ implies a domain restriction. For some other set $B \subseteq \O$,</p>
+<p>$$<br>
+B\dom{A} \df B \cap A<br>
+$$</p>
+<p>is the domain restriction operation on $B$, which makes clear which set is the domain and which set is being restricted.</p>
+<p>Let $\mf{P}$ be a partition of $\O$. Then</p>
+<p>$$<br>
+\begin{aligned}<br>
+\mf{P}\dom{A} &amp;\df \set{p\dom{A} \mid p\in\mf{P}} \\<br>
+&amp;= \set{p\cap A \mid p\in\mf{P}}<br>
+\end{aligned}<br>
+$$</p>
+<p>is the domain restriction of partition $\mf{P}$ to domain $A$, s.t. $\bigcup\mf{P} = A$.</p>
 <h1 id="information-theory-of-systems">Information Theory Of Systems</h1>
 <p>I will use the abstraction of physics that I introduced in <a href="https://danabo.github.io/blog/posts/causality-for-physics/#abstract-physics">Causality For Physics#abstract-physics</a>. Let $\O$ be a set of possible states and $\t_\Dt : \O\to\O$, $\Dt\in\R$, be a family of bijective time-evolution functions on $\O$. In general, time-evolution forms the group $(\set{\t_\Dt \mid \Dt\in\R}, \circ)$, where $\t_{\Dt+\Dt'} = \t_\Dt\circ\t_{\Dt'}$ and $\t_{-\Dt}=\t^{-1}_\Dt$, and $\t_0:\o\mapsto\o$ is the identity function.</p>
 <p>I will regard $\O$ as the state-space of an entire universe (i.e. a closed system). The universe may contain any number of systems labeled &ldquo;A&rdquo;, &ldquo;B&rdquo;, &ldquo;C&rdquo;, etc., with respective state-spaces $A, B, C,\dots$, so that $\O\subseteq A\m B\m C\m \dots$ and states are tuples, $\o = (a, b, c, \dots) \in \O$. Then the time-evolution function</p>
@@ -95,8 +114,9 @@ Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just
 <h1 id="conservation-of-information">Conservation Of Information</h1>
 <p>Recapping <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>, suppose we are given some measure $\mu$ on $\O$. This measure need not be normalized. Then for measureable set $R\subseteq\O$, the quantity of the information $\O\tr R$ is given by</p>
 <p>$$<br>
-h(\O\tr R) = h(R) = \lg\par{\frac{\mu(\O)}{\mu(R)}}\,.<br>
+h(\O\tr R) = h(R) = \lg\par{\frac{\mu(\O)}{\mu(R)}}\,,<br>
 $$</p>
+<p>where $h(R)$ is the <a href="https://en.wikipedia.org/wiki/Information_content"target="_blank">information content</a> (or pointwise entropy) of $R$, and $h(\O\tr R)$ is my own shorthand notation to make it clear what information is being quantified.</p>
 <p><strong>Conservation of information</strong> is the property of any bijective time-evolution, whereby the information $\O\tr \t_\Dt(a\up{t})$ is enough to recover the information $\O\tr a\up{t}$, because $a\up{t} = \t^{-1}_\Dt(\t_\Dt(a\up{t}))$, for all $\Dt\in\R$. That is to say, time-evolution of arbitrary state sets $R\subseteq\O$ does not destroy the information $\O\tr R$ (this is distinct from the time-evolution of systems which, as we saw, can lose information).</p>
 <p><strong>Conservation of information quantity</strong> is a property of <strong>measure-preserving</strong> time-evolution. Let $\mu$ additionally be a $\t_\Dt$-<a href="https://en.wikipedia.org/wiki/Invariant_measure"target="_blank">invariant measure</a> on $\O$, i.e. $\mu(\t_\Dt^{-1}(A)) = \mu(A)$ for all measurable $A\subseteq \O$ and for all $\Dt\in\R$. Because $\t_\Dt$ is bijective, <a href="https://encyclopediaofmath.org/wiki/Invariant_measure"target="_blank">this is equivalent to</a> requiring $\mu(\t_\Dt(A)) = \mu(A)$. Then $h(\O\tr a\up{t}) = h(\O\tr \t_\Dt(a\up{t}))$ for all $t, \Dt\in\R$.</p>
 <p>Conservation of information quantity is a stronger property that requires a $\t$-invariant measure in addition to bijective time-evolution. In classical mechanics, <a href="https://en.wikipedia.org/wiki/Liouville%27s_theorem_%28Hamiltonian%29"target="_blank">Liouville&rsquo;s theorem</a> shows that any Newtonian time-evolution preserves uniform measures on phase space. This result is sometimes referred to as <em>conservation of information</em> by physicists, who are referring to conservation of information quantity within my nomenclature. For details, see</p>
@@ -389,6 +409,7 @@ $$</p>
 </article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/physics/>physics</a><a class="tag" href=https://danabo.github.io/blog/tags/information/>information</a></section>
 </div><nav id="TableOfContents">
   <ol>
+    <li><a href="#information-preliminaries">Information Preliminaries</a></li>
     <li><a href="#information-theory-of-systems">Information Theory Of Systems</a>
       <ol>
         <li><a href="#systems-have-information">Systems Have Information</a></li>
