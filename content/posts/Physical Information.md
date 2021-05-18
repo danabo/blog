@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-05-18T17:55:23-05:00'
+lastmod: '2021-05-18T17:57:11-05:00'
 tags:
 - physics
 - information
@@ -61,6 +61,7 @@ $$
 \\newcommand{\\A}{\\mf{A}}
 \\newcommand{\\cA}{\\c{\\mf{A}}}
 \\newcommand{\\dg}{\\dagger}
+\\newcommand{\\lgfr}\[2\]{\\lg\\par{\\frac{#1}{#2}}}
 \\newcommand{\\rv}{\\boldsymbol}
 \\require{cancel}
 $$
