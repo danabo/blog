@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-05-17T11:01:06-05:00'
+lastmod: '2021-05-18T17:55:23-05:00'
 tags:
 - physics
 - information
@@ -61,6 +61,7 @@ $$
 \\newcommand{\\A}{\\mf{A}}
 \\newcommand{\\cA}{\\c{\\mf{A}}}
 \\newcommand{\\dg}{\\dagger}
+\\newcommand{\\rv}{\\boldsymbol}
 \\require{cancel}
 $$
 
@@ -250,17 +251,49 @@ Using the identity
 
 $$
 \\begin{aligned}
-& i(x\_{n-k+1}, \\dots, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-k}) \\\\
-&\\quad\\,\\, = \\,\\,i(x\_{n-k+1}, \\dots, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-k-1}) \\\\
-&\\qquad\\quad- i(x\_{n-k}, \\dots, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-k-1})
+& i(y\_{n-k+1}, \\dots, y\_n, R \\mid y\_1\\cap\\dots\\cap y\_{n-k}) \\\\
+&\\quad\\,\\, = \\,\\,i(y\_{n-k+1}, \\dots, y\_n, R \\mid y\_1\\cap\\dots\\cap y\_{n-k-1}) \\\\
+&\\qquad\\quad- i(y\_{n-k}, \\dots, y\_n, R \\mid y\_1\\cap\\dots\\cap y\_{n-k-1})
 \\end{aligned}
 $$
 
-we can recursively expanding out these terms to produce an expression for $i(x\_1\\cap\\dots\\cap x\_n,R)$ entirely composed of non-conditional PMI terms, which can be further expanded out using
+we can recursively expanding out these terms to produce an expression for $i(x\_1\\cap\\dots\\cap x\_n,R)$ entirely composed of non-conditional multi-way PMI terms of the form $i(y\_1, \\dots, y\_n)$.
+
+So for example, expanding out $i(x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-1})$ with $k=1$, we have
 
 $$
-i(x\_1, \\dots, x\_n) \\df i(x\_1, \\dots, x\_{n-1}) - i(x\_1, \\dots, x\_{n-1} \\mid x\_n)\\,.
+\\begin{aligned}
+& i(x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-1}) \\\\ 
+&\\quad=\\,\\, i(x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-2}) \\\\
+&\\qquad\\,\\,- i(x\_{n-1}, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-2})\\,.
+\\end{aligned}
 $$
+
+Then further expanding out the resulting terms, using $y\_1, \\dots, y\_{n'} = x\_1, \\dots, x\_{n-2}, x\_n$ and $k=1$, we get
+
+$$
+\\begin{aligned}
+& i(x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-2})\\\\ 
+&\\quad=\\,\\, i(x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-3}) \\\\
+&\\qquad\\,\\,- i(x\_{n-2}, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-3})\\,,
+\\end{aligned}
+$$
+
+and using $y\_1, \\dots, y\_n = x\_1, \\dots, x\_n$ and $k=2$, we get
+
+$$
+\\begin{aligned}
+& i(x\_{n-1}, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-2}) \\\\ 
+&\\quad=\\,\\, i(x\_{n-1}, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-3}) \\\\
+&\\qquad\\,\\,- i(x\_{n-2}, x\_{n-1}, x\_n, R \\mid x\_1\\cap\\dots\\cap x\_{n-3})\\,.
+\\end{aligned}
+$$
+
+Repeat this process of expanding out these terms until all conditional arguments are gone.
+
+Multi-way PMI terms can then be converted into 2-way PMI terms using the definition $i(y\_1, \\dots, y\_n) \\df i(y\_1, \\dots, y\_{n-1}) - i(y\_1, \\dots, y\_{n-1}\\mid y\_n)$.
+
+---
 
 For case of three sets $a,b,c$, we have
 
@@ -295,6 +328,7 @@ $$
 
 ## Expectation
 
+![](</Pasted image 20210518175356.png>)
 It would be nice if there was a single quantity describing $\\mf{B}\\tr\\mf{B}\\dom{R}$, the narrowing down of partition $\\mf{B}$ to domain $R$, analogous to $h(\\O\\tr R)$ for individual sets. I will motivate such a quantity from a few special cases.
 
 If $P\\subseteq 2^\\O$ is some set of sets, then let $\\mu(P) = \\mu(\\bigcup P)$. Then for partition $\\mf{B}$ of $\\O$, we have $\\mu(\\mf{B}) = \\mu(\\bigcup\\mf{B}) = \\mu(\\O)$. Let's define the quantity $h(\\mf{B}\\tr \\mf{B}\\dom{R})$ on a few special cases.
@@ -393,13 +427,13 @@ $$
 \\I(\\mf{B}, R) = \\sum\_{b\\in\\mf{B}} \\frac{\\mu(b\\cap R)}{\\mu(R)}i(b,R)\\,.
 $$
 
-In general, define
+In general, define the quantity of information that $\\O\\tr R$ contains about which element of partition $\\mf{B}$ is the state of system B:
 
 $$
 h(\\mf{B}\\tr \\mf{B}\\dom{R}) \\df \\I(\\mf{B}, R)\\,.
 $$
 
-Let $\\mf{C}$ be the state space of some other system. Taking the expectation of the pointwise sum-conservation law from above, we get
+Let $\\mf{C}$ be the state space of some other system C. Taking the expectation of the pointwise sum-conservation law from above, we get
 
 $$
 \\begin{aligned}
@@ -416,13 +450,13 @@ $$
 
 is the **partition product** of $\\mf{B}$ and $\\mf{C}$, i.e. the intersection of all pairs of elements of $\\mf{B}$ and $\\mf{C}$.
 
-Each "$\\I$" in the expression $\\I(\\mf{B}, R) + \\I(\\mf{C}, R) - \\I(\\mf{B}, \\mf{C}) + \\I(\\mf{B}, \\mf{C} \\mid R)$ is always positive (though 3-way "$\\I$" can be negative). If $\\mf{B}$ and $\\mf{C}$ are orthogonal, i.e. $\\I(\\mf{B}, \\mf{C}) = 0$, then 
+While $\\I(\\mf{B}, R)$ and $\\I(\\mf{C}, R)$ are always non-negative (2-way mutual information is always non-negative), the 3-way mutual information $\\I(\\mf{B}, \\mf{C}, R)$ can be negative. If $\\mf{B}$ and $\\mf{C}$ are orthogonal, i.e. $\\I(\\mf{B}, \\mf{C}) = 0$, then 
 
 $$
 \\I(\\mf{B}\\otimes\\mf{C}, R) = \\I(\\mf{B}, R) + \\I(\\mf{C}, R) + \\I(\\mf{B}, \\mf{C} \\mid R)\\,,
 $$
 
-which is a decomposition of $\\I(\\mf{B}\\otimes\\mf{C}, R)$ into positive terms.
+which is a decomposition of $\\I(\\mf{B}\\otimes\\mf{C}, R)$ into non-negative terms. This looks more like the sum-conservation laws we have for mass and energy (sum of non-negative terms is conserved).
 
 ### Environments
 
@@ -510,3 +544,66 @@ A tricky case to be aware of is when $\\I(\\A, \\t\_\\Dt(a\\up{t})) = 0$ and $\\
 ![](</Pasted image 20210514160247.png> "$\I(\A,R)$ and $\I(\cA,R)$ are both non-zero, and $\I(\A,\cA \mid R) = 0$, meaning $\A$ and $\cA$ are still orthogonal when restricted to the domain $R$.")
 ![](</Pasted image 20210514160256.png> "$\I(\A,R) = 0$ and $\I(\cA,R) = 0$, since restricting either partition to the domain $R$ still tells you nothing about the other partition. However, $\I(\A,\cA \mid R) = h(\O\tr R)$, meaning $\A$ and $\cA$ restricted to the domain $R$ are maximally redundant, i.e. given $R$ and some $a\in\mf{A}$, you can uniquely determine $a^\dg\in\mf{A}$, and vice versa.")
 
+## Shannon Quantities
+
+It is helpful to connect this all back to the standard language of information theory. Let $\\rv{A}, \\rv{B}, \\rv{C}$ be random variables with joint distribution $p(\\rv{A}, \\rv{B}, \\rv{C})$.
+
+Mutual information is
+
+$$
+I(\\rv{A}, \\rv{B}) = \\expt{a,b\\sim p(\\rv{A},\\rv{B})}{\\lgfr{p(a, b)}{p(a)p(b)}}\\,.
+$$
+
+What are less obvious are the Shannon analogs to $\\I(\\mf{A}, R)$ and $\\I(\\mf{A}\\otimes\\mf{B}, R)$.
+
+I'll define the non-standard Shannon quantity:
+
+$$
+I(\\rv{A}, \\rv{B} = b) \\df \\expt{a\\sim p(\\rv{A} \\mid \\rv{B}=b)}{\\lgfr{p(a, b)}{p(a)p(b)}}\\,.
+$$
+
+This is not quite a conditional quantity like $H(\\rv{A} \\mid \\rv{B} = b)$, because the contents of the expectation are not a pointwise conditional quantity (like $h(a \\mid b)$). Then $I(\\rv{A}, \\rv{B} = b)$ is really its own thing. It is the expectation of non-conditional pointwise mutual information $i(a,b)$, but over a conditional probability distribution. Then (for $b\\in\\mf{B}$ on the lhs) we have the analog
+
+$$
+\\I(\\mf{A}, b) \\iff I(\\rv{A}, \\rv{B} = b)
+$$
+
+Next we have the partition product, $\\mf{A}\\otimes\\mf{B}$. As a random variable, this is just the random tuple $\\rv{T\_{A,B}} = (\\rv{A}, \\rv{B})$. The random variable $\\rv{T\_{A,B}}$ is just the combined outcome of both random variables $\\rv{A}$ and $\\rv{B}$. We must distinguish between
+
+$$
+\\begin{aligned}
+I((\\rv{A}, \\rv{B}), \\rv{C}) &= \\expt{a,b,c\\sim p(\\rv{A},\\rv{B},\\rv{C})}{\\lgfr{p(a, b, c)}{p(a,b)p(c)}} \\\\
+    &= \\expt{t,c\\sim p(\\rv{T\_{A,B}},\\rv{C})}{\\lgfr{p(t, c)}{p(t)p(c)}} \\\\
+    &= I(\\rv{T\_{A,B}}, \\rv{C})
+\\end{aligned}
+$$
+
+and the 3-way mutual information
+
+$$
+I(\\rv{A}, \\rv{B}, \\rv{C}) = I(\\rv{A}, \\rv{B}) - I(\\rv{A}, \\rv{B} \\mid \\rv{C})\\,.
+$$
+
+Then we have the analogs (for $c\\in\\mf{C}$)
+
+$$
+\\I(\\mf{A}\\otimes\\mf{B}, c) \\iff I((\\rv{A}, \\rv{B}), \\rv{C}=c)
+$$
+
+and
+
+$$
+\\I(\\mf{A}, \\mf{B}, c) \\iff I(\\rv{A}, \\rv{B}, \\rv{C}=c)\\,.
+$$
+
+We also have the same decompositions on these Shannon quantities:
+
+$$
+I((\\rv{A}, \\rv{B}), \\rv{C}) = I(\\rv{A}, \\rv{C}) + I(\\rv{B}, \\rv{C}) - I(\\rv{A}, \\rv{B}, \\rv{C})
+$$
+
+and
+
+$$
+I((\\rv{A}, \\rv{B}), \\rv{C}=c) = I(\\rv{A}, \\rv{C}=c) + I(\\rv{B}, \\rv{C}=c) - I(\\rv{A}, \\rv{B}, \\rv{C}=c)\\,.
+$$
