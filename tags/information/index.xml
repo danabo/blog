@@ -69,6 +69,7 @@
 \newcommand{\A}{\mf{A}}&lt;br&gt;
 \newcommand{\cA}{\c{\mf{A}}}&lt;br&gt;
 \newcommand{\dg}{\dagger}&lt;br&gt;
+\newcommand{\lgfr}[2]{\lg\par{\frac{#1}{#2}}}&lt;br&gt;
 \newcommand{\rv}{\boldsymbol}&lt;br&gt;
 \require{cancel}&lt;br&gt;
 $$&lt;/p&gt;
