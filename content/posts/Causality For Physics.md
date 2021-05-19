@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2021-05-05T13:47:32-05:00'
+lastmod: '2021-05-19T12:23:01-05:00'
 tags:
 - physics
 title: Causality For Physics
@@ -163,6 +163,32 @@ $$
 where $x$ is some chosen vector of values for the nodes $X$.
 
 That is to say, the causal effect of nodes $X$ on nodes $Y$ is characterized by the set of all interventions obtained setting $X$ to every possible value $x$, where each intervention is characterized by a change in probability distribution on $Y$. That is to say, the causal effect of $X$ on $Y$ is characterized by how $P(Y \\mid \\Do(X=x))$ varies for different $x$, and compared to no intervention $P(Y)$.
+
+## When Interventions And Conditionalization Are Equivalent
+
+
+
+It should be obvious that when node $X\_i$ has no parents then $P(x\_{1:n} \\mid \\Do(x'\_i)) = P(x\_{1:n} \\mid x'\_i)$ for all node values $x'\_i$, because $PA\_i = \\emptyset$ and so $P(x'\_i \\mid pa\_i) = P(x'\_i)$.
+
+Another case is when we are only considering the marginal distribution on a subset of variables. Then the conditional distribution and intervention distribution on the [Markov blanket](https://en.wikipedia.org/wiki/Markov_blanket) of that subset are equivalent.
+
+To see what I mean, let's consider the Markov chain $X\_1, \\dots, X\_n$ where $P(x\_1, \\dots, x\_n) = P(x\_n \\mid x\_{n-1})P(x\_{n-1} \\mid x\_{n-2})\\dots P(x\_2 \\mid x\_1)P(x\_1)$ and $PA\_i = \\set{X\_{i-1}}$ for all $i > 1$. Then we have
+
+
+
+$$
+\\begin{aligned}
+P(x\_n, \\dots, x\_{i+1} \\mid \\Do(x'\_i)) &= \\sum\_{x\_{i-1},\\dots,x\_1} P(x\_n, \\dots, x\_1 \\mid \\Do(x'\_i)) \\\\
+ &= \\begin{cases}
+        \\sum\_{x\_{i-1},\\dots,x\_1}\\frac{P(x\_n, \\dots, x\_{i+1}\\mid x\_i)P(x\_i \\mid x\_{i-1})P(x\_{i-1},\\dots,x\_1)}{P(x'\_i \\mid x\_{i-1})} & x\_i=x'\_i \\\\
+        0 & x\_i \\neq x'\_i
+    \\end{cases} \\\\
+ &= \\sum\_{x\_{i-1},\\dots,x\_1}P(x\_n, \\dots, x\_{i+1} \\mid x'\_i)P(x\_{i-1},\\dots,x\_1) \\\\
+ &= P(x\_n, \\dots, x\_{i+1} \\mid x'\_i)\\,.
+\\end{aligned}
+$$
+
+![](</Pasted image 20210519122301.png>)
 
 # Causality For Physics
 Pearl's causality is based on the idea of the intervention, which is a kind of graph surgery.
@@ -421,8 +447,6 @@ $$
 which is non-zero only if $\\s(T) = \\o^\*\_T$. If $\\s\\restr{(T-\\dt,T)}$ is itself not $\\t$-valid, we can define $M(\\s(T) \\mid \\s\_{\\ddT})$ to be an improper probability measure that is always $0$.
 
 I'd argue that interventions on deterministic trajectories is a limiting case of interventions on probabilistic trajectories where the transition probabilities converge to delta distributions. Then $M(\\s(T) \\mid \\s\_{\\ddT})/M(\\s(T) \\mid \\s\_{\\ddT})\\to 1$ no matter what and the cancellation works.
-
-
 
 ## Compatibility with modern physics
 
