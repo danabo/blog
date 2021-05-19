@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Causality For Physics</h1><p class="article date">April 20, 2021<span class="lastmod"> • edited May 5, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Causality For Physics</h1><p class="article date">April 20, 2021<span class="lastmod"> • edited May 19, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -130,6 +130,25 @@ $$</p>
 $$</p>
 <p>where $x$ is some chosen vector of values for the nodes $X$.</p>
 <p>That is to say, the causal effect of nodes $X$ on nodes $Y$ is characterized by the set of all interventions obtained setting $X$ to every possible value $x$, where each intervention is characterized by a change in probability distribution on $Y$. That is to say, the causal effect of $X$ on $Y$ is characterized by how $P(Y \mid \Do(X=x))$ varies for different $x$, and compared to no intervention $P(Y)$.</p>
+<h2 id="when-interventions-and-conditionalization-are-equivalent">When Interventions And Conditionalization Are Equivalent</h2>
+<p>It should be obvious that when node $X_i$ has no parents then $P(x_{1:n} \mid \Do(x'_i)) = P(x_{1:n} \mid x'_i)$ for all node values $x'_i$, because $PA_i = \emptyset$ and so $P(x'_i \mid pa_i) = P(x'_i)$.</p>
+<p>Another case is when we are only considering the marginal distribution on a subset of variables. Then the conditional distribution and intervention distribution on the <a href="https://en.wikipedia.org/wiki/Markov_blanket"target="_blank">Markov blanket</a> of that subset are equivalent.</p>
+<p>To see what I mean, let&rsquo;s consider the Markov chain $X_1, \dots, X_n$ where $P(x_1, \dots, x_n) = P(x_n \mid x_{n-1})P(x_{n-1} \mid x_{n-2})\dots P(x_2 \mid x_1)P(x_1)$ and $PA_i = \set{X_{i-1}}$ for all $i &gt; 1$. Then we have</p>
+<p>$$<br>
+\begin{aligned}<br>
+P(x_n, \dots, x_{i+1} \mid \Do(x'_i)) &amp;= \sum_{x_{i-1},\dots,x_1} P(x_n, \dots, x_1 \mid \Do(x'_i)) \\<br>
+&amp;= \begin{cases}<br>
+\sum_{x_{i-1},\dots,x_1}\frac{P(x_n, \dots, x_{i+1}\mid x_i)P(x_i \mid x_{i-1})P(x_{i-1},\dots,x_1)}{P(x'_i \mid x_{i-1})} &amp; x_i=x'_i \\<br>
+0 &amp; x_i \neq x'_i<br>
+\end{cases} \\<br>
+&amp;= \sum_{x_{i-1},\dots,x_1}P(x_n, \dots, x_{i+1} \mid x'_i)P(x_{i-1},\dots,x_1) \\<br>
+&amp;= P(x_n, \dots, x_{i+1} \mid x'_i)\,.<br>
+\end{aligned}<br>
+$$</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020210519122301.png" alt="">
+</p>
 <h1 id="causality-for-physics">Causality For Physics</h1>
 <p>Pearl&rsquo;s causality is based on the idea of the intervention, which is a kind of graph surgery.</p>
 <p>To apply Pearl&rsquo;s causality to physics, we&rsquo;d need to define what an intervention does to physical processes. There are two immediate problems:</p>
@@ -322,6 +341,7 @@ $$</p>
       <ol>
         <li><a href="#do-operator">Do-Operator</a></li>
         <li><a href="#causal-effect">Causal Effect</a></li>
+        <li><a href="#when-interventions-and-conditionalization-are-equivalent">When Interventions And Conditionalization Are Equivalent</a></li>
       </ol>
     </li>
     <li><a href="#causality-for-physics">Causality For Physics</a>
