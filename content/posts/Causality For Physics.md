@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2021-05-19T12:23:01-05:00'
+lastmod: '2021-05-19T12:25:46-05:00'
 tags:
 - physics
 title: Causality For Physics
@@ -178,13 +178,14 @@ To see what I mean, let's consider the Markov chain $X\_1, \\dots, X\_n$ where $
 
 $$
 \\begin{aligned}
-P(x\_n, \\dots, x\_{i+1} \\mid \\Do(x'\_i)) &= \\sum\_{x\_{i-1},\\dots,x\_1} P(x\_n, \\dots, x\_1 \\mid \\Do(x'\_i)) \\\\
- &= \\begin{cases}
+& P(x\_n, \\dots, x\_{i+1} \\mid \\Do(x'\_i)) \\\\
+  &\\quad= \\sum\_{x\_{i-1},\\dots,x\_1} P(x\_n, \\dots, x\_1 \\mid \\Do(x'\_i)) \\\\
+ &\\quad= \\begin{cases}
         \\sum\_{x\_{i-1},\\dots,x\_1}\\frac{P(x\_n, \\dots, x\_{i+1}\\mid x\_i)P(x\_i \\mid x\_{i-1})P(x\_{i-1},\\dots,x\_1)}{P(x'\_i \\mid x\_{i-1})} & x\_i=x'\_i \\\\
         0 & x\_i \\neq x'\_i
     \\end{cases} \\\\
- &= \\sum\_{x\_{i-1},\\dots,x\_1}P(x\_n, \\dots, x\_{i+1} \\mid x'\_i)P(x\_{i-1},\\dots,x\_1) \\\\
- &= P(x\_n, \\dots, x\_{i+1} \\mid x'\_i)\\,.
+ &\\quad= \\sum\_{x\_{i-1},\\dots,x\_1}P(x\_n, \\dots, x\_{i+1} \\mid x'\_i)P(x\_{i-1},\\dots,x\_1) \\\\
+ &\\quad= P(x\_n, \\dots, x\_{i+1} \\mid x'\_i)\\,.
 \\end{aligned}
 $$
 
