@@ -136,13 +136,14 @@ $$</p>
 <p>To see what I mean, let&rsquo;s consider the Markov chain $X_1, \dots, X_n$ where $P(x_1, \dots, x_n) = P(x_n \mid x_{n-1})P(x_{n-1} \mid x_{n-2})\dots P(x_2 \mid x_1)P(x_1)$ and $PA_i = \set{X_{i-1}}$ for all $i &gt; 1$. Then we have</p>
 <p>$$<br>
 \begin{aligned}<br>
-P(x_n, \dots, x_{i+1} \mid \Do(x'_i)) &amp;= \sum_{x_{i-1},\dots,x_1} P(x_n, \dots, x_1 \mid \Do(x'_i)) \\<br>
-&amp;= \begin{cases}<br>
+&amp; P(x_n, \dots, x_{i+1} \mid \Do(x'_i)) \\<br>
+&amp;\quad= \sum_{x_{i-1},\dots,x_1} P(x_n, \dots, x_1 \mid \Do(x'_i)) \\<br>
+&amp;\quad= \begin{cases}<br>
 \sum_{x_{i-1},\dots,x_1}\frac{P(x_n, \dots, x_{i+1}\mid x_i)P(x_i \mid x_{i-1})P(x_{i-1},\dots,x_1)}{P(x'_i \mid x_{i-1})} &amp; x_i=x'_i \\<br>
 0 &amp; x_i \neq x'_i<br>
 \end{cases} \\<br>
-&amp;= \sum_{x_{i-1},\dots,x_1}P(x_n, \dots, x_{i+1} \mid x'_i)P(x_{i-1},\dots,x_1) \\<br>
-&amp;= P(x_n, \dots, x_{i+1} \mid x'_i)\,.<br>
+&amp;\quad= \sum_{x_{i-1},\dots,x_1}P(x_n, \dots, x_{i+1} \mid x'_i)P(x_{i-1},\dots,x_1) \\<br>
+&amp;\quad= P(x_n, \dots, x_{i+1} \mid x'_i)\,.<br>
 \end{aligned}<br>
 $$</p>
 <p>
