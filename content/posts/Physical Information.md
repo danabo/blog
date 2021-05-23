@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-05-18T17:58:03-05:00'
+lastmod: '2021-05-21T20:58:47-05:00'
 tags:
 - physics
 - information
@@ -209,7 +209,7 @@ Information does not quite work like this. For instance, the sum of the vector $
 I have found two ways to achieve something like a sum-conservation law for information quantity. One way uses pointwise quantities, and the other way uses expected quantities, i.e. entropy and mutual information.
 
 ## Pointwise
-Suppose $i(b, R) < h(\\O\\tr R)$. If we "shrank" $b$ down by intersecting with some other set $c$ such that $b \\cap c \\in R$, then we'd have  $i(b\\cap c, R) = h(\\O\\tr R)$. Writing $i(b\\cap c, R)$ as a sum involving $i(b, R)$ gives us a sum-conservation law:
+Suppose $i(b, R) < h(\\O\\tr R)$. If we "shrank" $b$ down by intersecting with some other set $c$ such that $b \\cap c \\subseteq R$, then we'd have  $i(b\\cap c, R) = h(\\O\\tr R)$. Writing $i(b\\cap c, R)$ as a sum involving $i(b, R)$ gives us a sum-conservation law:
 
 $$
 \\begin{aligned}
