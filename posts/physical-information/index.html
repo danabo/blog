@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021<span class="lastmod"> • edited May 18, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021<span class="lastmod"> • edited May 21, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -159,7 +159,7 @@ $$</p>
 <p>Information does not quite work like this. For instance, the sum of the vector $\vtup{i(\t_\Dt(a\up{t}), b) \mid b\in\mf{B}}$ need not be $h(R)$. This is evident when you consider that it&rsquo;s possible for the system with information $\O\tr R$ to have the information quantity $h(R)$ about $b\in\mf{B}$ and about $b'\in\mf{B}$, if both $b$ and $b'$ are contained within $R$. Then at least two entries in the vector are each $h(R)$. Furthermore, entries can be arbitrarily negative, and even $-\infty$ as we saw above.</p>
 <p>I have found two ways to achieve something like a sum-conservation law for information quantity. One way uses pointwise quantities, and the other way uses expected quantities, i.e. entropy and mutual information.</p>
 <h2 id="pointwise">Pointwise</h2>
-<p>Suppose $i(b, R) &lt; h(\O\tr R)$. If we &ldquo;shrank&rdquo; $b$ down by intersecting with some other set $c$ such that $b \cap c \in R$, then we&rsquo;d have  $i(b\cap c, R) = h(\O\tr R)$. Writing $i(b\cap c, R)$ as a sum involving $i(b, R)$ gives us a sum-conservation law:</p>
+<p>Suppose $i(b, R) &lt; h(\O\tr R)$. If we &ldquo;shrank&rdquo; $b$ down by intersecting with some other set $c$ such that $b \cap c \subseteq R$, then we&rsquo;d have  $i(b\cap c, R) = h(\O\tr R)$. Writing $i(b\cap c, R)$ as a sum involving $i(b, R)$ gives us a sum-conservation law:</p>
 <p>$$<br>
 \begin{aligned}<br>
 i(b \cap c, R) &amp;= i(b, R) + i(c, R) - i(b, c, R) \\<br>
@@ -512,7 +512,7 @@ $$</p>
     </li>
   </ol>
 </nav></div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/information-algebra/"><span class="iconfont icon-article"></span>Information Algebra</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/causality-and-information/"><span class="iconfont icon-article"></span>Causality And Information</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/information-algebra/"><span class="iconfont icon-article"></span>Information Algebra</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
