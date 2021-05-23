@@ -96,6 +96,7 @@ class SimpleParser(object):
   RE_HIDE_ENDHIDE = re.compile(r'(<!--\s*hide\s*-->.*?<!--\s*endhide\s*-->)', flags=re.DOTALL | re.MULTILINE)
   RE_HIDE = re.compile(r'(<!--\s*hide\s*-->.*)', flags=re.DOTALL | re.MULTILINE)
   RE_COMMENT = re.compile(r'(<!--.*?-->)', flags=re.DOTALL | re.MULTILINE)
+  RE_MORE = re.compile(r'<!--more-->')
 
   def __init__(self):
     self.images = []
@@ -185,6 +186,12 @@ class SimpleParser(object):
         print(it.s[it.section_start:it.i])
       it.section()
       return
+
+    # Preserve the directive "<!--more-->" which denotes the end of the content summary.
+    m = self.RE_MORE.match(it.s, it.i)
+    if m:
+      it.next(len(m.group(0)))
+      it.emit()  # Keep it
 
     m = self.RE_COMMENT.match(it.s, it.i)
     if m:
