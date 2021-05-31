@@ -1,7 +1,7 @@
 ---
 date: 2021-02-18
 draft: false
-lastmod: '2021-04-01T10:24:13-05:00'
+lastmod: '2021-05-31T16:26:10-05:00'
 tags:
 - free energy
 title: Variational Solomonoff Induction
@@ -50,7 +50,7 @@ Typical usage "modes" of $q\_\\t$ in machine learning:
 - **Variational Bayes** (free energy minimization): training produces a (approximate) posterior distribution over hypotheses.
     - $z \\in \\mc{Z}$ is a hypothesis.
     - $\\tilde{\\t} = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z \\mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.
-    - $\\t^\* = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z)} - \\E\_{z\\sim f\_\\t(z)}\\left\[\\lg p(D \\mid z)\\right\]$ is the approximation. This is what we find through optimization.
+    - $\\t^\* = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z)} - \\E\_{z\\sim q\_\\t(z)}\\left\[\\lg p(D \\mid z)\\right\]$ is the approximation. This is what we find through optimization.
 
 The variational Bayes "usage mode" is clearly different from the others. MLE and MAP are fitting $f\_\\t$ to the data, i.e. finding a single $\\t^\*\\in\\T$ that maximizes the probability of the data under $q\_\\t$. Bayesian inference is finding a distribution $p(\\t \\mid D)$ on $\\T$ which represents the model's beliefs about various parameters $\\t\\in\\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f\_\\t$ to data, since we are not choosing any particular parameter in $\\T$. Variational Bayes uses $q\_{\\t^\*}$ as an approximation of $p(\\t \\mid D)$, where $\\t^\*\\in\\T$ is the optimal parameter of distribution $q\_\\t(z)$ and $z\\in\\mc{Z}$ is a hypothesis.
 
