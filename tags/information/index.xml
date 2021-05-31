@@ -2713,7 +2713,7 @@ $$&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;$z \in \mc{Z}$ is a hypothesis.&lt;/li&gt;
 &lt;li&gt;$\tilde{\t} = \argmin{\t}\kl{q_\t(z)}{p(z \mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.&lt;/li&gt;
-&lt;li&gt;$\t^* = \argmin{\t}\kl{q_\t(z)}{p(z)} - \E_{z\sim f_\t(z)}\left[\lg p(D \mid z)\right]$ is the approximation. This is what we find through optimization.&lt;/li&gt;
+&lt;li&gt;$\t^* = \argmin{\t}\kl{q_\t(z)}{p(z)} - \E_{z\sim q_\t(z)}\left[\lg p(D \mid z)\right]$ is the approximation. This is what we find through optimization.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
