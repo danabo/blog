@@ -1,6 +1,6 @@
 ---
 date: 23-06-2021
-lastmod: '2021-06-23T21:19:06-05:00'
+lastmod: '2021-06-24T00:23:25-05:00'
 tags:
 - information
 - physics
@@ -278,7 +278,7 @@ Example:
 
 ## Scrambler
 
-$A = B = \\set{0,\\dots,k-1}$ where $k$ is odd.
+$A = B = \\set{0,\\dots,k-1}$ are integer sets where $k$ is odd.
 
 $$
 \\t\_1(a,b) = \\Big(a+b \\pmod{k},\\ b-a \\pmod{k}\\Big)
@@ -287,6 +287,8 @@ $$
 $$
 \\t\_{-1}(a,b) = \\Big(\\frac{1}{2}(a-b) \\pmod{k},\\ \\frac{1}{2}(a+b) \\pmod{k}\\Big)
 $$
+
+(Addition and subtraction here mean integer arithmetic, rather than boolean operations.)
 
 For example when $k=3$, the I/O table is
 
@@ -520,10 +522,10 @@ So from A's perspective information is being moved to B (while also moving B to 
 In general, I define the **redundancy** between $\\A$ and $\\fB$ due to domain restriction $J\\subseteq\\O$ as
 
 $$
-\\rho \\df \\I(\\mf{A}, \\mf{B} \\mid \\t\_\\Dt(J))\\,,
+\\rho \\df \\I(\\mf{A}, \\mf{B} \\mid J)\\,,
 $$
 
-(rho for "redundancy") and the **change in redundancy** due to domain restriction $J \\subseteq \\O$ as
+(rho for "redundancy") and the **change in redundancy** due to domain restriction $J \\subseteq \\O$ over time period $\\Dt$ as
 
 $$
 \\D\\rho = \\I(\\mf{A}, \\mf{B} \\mid \\t\_\\Dt(J)) - \\I(\\mf{A}, \\mf{B} \\mid J)\\,.
@@ -555,7 +557,7 @@ $$
 
 (see {{< locallink "Physical Information" "general-case" >}})
 
-we see that for $\\H(\\A \\mid \\t\_\\Dt(J)) + \\H(\\fB \\mid \\t\_\\Dt(J)) > \\H(\\A\\otimes\\fB \\mid \\t\_\\Dt(J))$ then $\\I(\\A,\\fB \\mid \\t\_\\Dt(J))$ must be positive. Thus, for system A to have a large causal effect on both system A and system B (in the future), there needs to be redundancy between A and B. We also see that  $\\I(\\A, \\mf{B} \\mid \\t\_\\Dt(J))$ is bounded above by $\\I(\\A\\otimes\\mf{B}, \\t\_\\Dt(J)) + \\I(\\A, \\mf{B})$. This puts a limit on how much information redundancy there can be, and thus how much information can be copied.
+we see that for $\\H(\\A \\mid \\t\_\\Dt(J)) + \\H(\\fB \\mid \\t\_\\Dt(J)) > \\H(\\A\\otimes\\fB \\mid \\t\_\\Dt(J))$ to be the case then $\\I(\\A,\\fB \\mid \\t\_\\Dt(J))$ must be non-zero. Thus, for system A to have a large causal effect on both system A and system B (in the future), there needs to be redundancy between A and B. We also see that  $\\I(\\A, \\mf{B} \\mid \\t\_\\Dt(J))$ is bounded above by $\\I(\\A\\otimes\\mf{B}, \\t\_\\Dt(J)) + \\I(\\A, \\mf{B})$. This puts a limit on how much information redundancy there can be, and thus how much information can be copied.
 
 ## Scrambler revisited
 
@@ -616,7 +618,7 @@ $\\I(\\A, \\fB \\mid b\\up{0})) = 0$
 $\\I(\\A,\\fB\\mid \\t\_1(b\\up{0})) = \\lg(3) = h(b\\up{0})$
 $\\H(\\A \\mid \\t\_1(b\\up{0})) = \\H(\\fB \\mid \\t\_1(b\\up{0})) = \\lg(3)$
 
-So $\\I(\\A,\\fB\\mid \\t\_1(a\\up{0})) = h(a\\up{0})$ and $\\I(\\A,\\fB\\mid \\t\_1(b\\up{0})) = h(b\\up{0})$ which are their respective maximum values.
+So $\\I(\\A,\\fB\\mid \\t\_1(a\\up{0})) = h(a\\up{0})$ and $\\I(\\A,\\fB\\mid \\t\_1(b\\up{0})) = h(b\\up{0})$ which are their respective maximum values (because $\\I(\\A,\\fB) = 0$ and $\\I(\\A\\otimes\\fB, R) = h(R)$ for any $R\\subseteq\\O$).
 
 
 # Is Redundancy Fictitious?
@@ -624,7 +626,7 @@ So $\\I(\\A,\\fB\\mid \\t\_1(a\\up{0})) = h(a\\up{0})$ and $\\I(\\A,\\fB\\mid \\
 
 The appearance of copied state is due to the representation of systems that we use. Notice that my proposed definition of copying and redundancy each rely on state partitions to be provided. If we just had a universe consisting of state space $\\O$ and bijective time-evolution $\\t\_\\Dt$, without any systems defined within the universe, there would not be any apparent copying or redundancy.
 
-Take the simple copier again. I defined the state space as $\\O = \\set{00,01,10,11}$. The representation of theses states as binary strings begs the copying interpretation. What if instead I defined it like this:
+Take the simple copier again. I defined the state space as $\\O = \\set{00,01,10,11}$. The representation of theses states as binary strings begs the copying interpretation. What if instead I stripped away the extraneous representation of these states so that they became featureless objects? Like this:
 
 $$
 \\O = \\set{\\o\_1, \\o\_2, \\o\_3, \\o\_4}
@@ -636,9 +638,9 @@ $\\o\_2 \\mapsto \\o\_3$
 $\\o\_3 \\mapsto \\o\_4$
 $\\o\_4 \\mapsto \\o\_2$
 
-Now all that is apparent here are the cycles $\\o\_1 \\to \\o\_1$ and $\\o\_2 \\to \\o\_3 \\to \\o\_4 \\to \\o\_1$.
+Now the possible states in $\\O$ don't have any inherent interpretation, representation, or meaning. Their only feature is that they can be distinguished, i.e. they have identity. Combined with the time-evolution function $\\t\_1$, the only structure that is apparent here are the cycles $\\o\_1 \\to \\o\_1$ and $\\o\_2 \\to \\o\_3 \\to \\o\_4 \\to \\o\_1$.
 
-There are two trivial systems for this universe.
+We can go ahead and define whatever systems we like (having arbitrary state spaces). However, there are two trivial systems for this toy universe.
 
 System T, whose states are the cycles:
 
