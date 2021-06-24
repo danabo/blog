@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021<span class="lastmod"> • edited May 21, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021<span class="lastmod"> • edited June 23, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -304,7 +304,7 @@ Let $\hat{\mf{B}}\dom{R} = \set{b\in\mf{B} \mid b\cap R \neq \es}$ be the subset
 \mu(\bigcup\hat{\mf{B}}\dom{R}) = \mu(b)\frac{\mu(R)}{\mu(b\cap R)}\,.<br>
 $$</p>
 <p>Plugging in, we get $\lg\par{\frac{\mu(\mf{B})}{\mu(\hat{\mf{B}}\dom{R})}} = \lg\par{\frac{\mu(\O)}{\mu(b)\frac{\mu(R)}{\mu(b\cap R)}}} = i(b, R)$.</p>
-<hr>
+<h3 id="mutual-information">Mutual Information</h3>
 <p>In the more general case $\mf{B}$ and $\mf{B}\dom{R}$ are not uniform partitions. We will need some kind of averaging operation over $i(b,R)$ for $b\in\mf{B}$ that reduces to our special cases above, and zeros out all the $i(b,R) = -\infty$ terms where $b\cap R = \es$. Taking the expectation w.r.t. $\mu(\cdot \mid R)$ fulfills both requirements.</p>
 <p>Let</p>
 <p>$$<br>
@@ -436,6 +436,25 @@ $$</p>
     <figcaption>$\I(\A,R) = 0$ and $\I(\cA,R) = 0$, since restricting either partition to the domain $R$ still tells you nothing about the other partition. However, $\I(\A,\cA \mid R) = h(\O\tr R)$, meaning $\A$ and $\cA$ restricted to the domain $R$ are maximally redundant, i.e. given $R$ and some $a\in\mf{A}$, you can uniquely determine $a^\dg\in\mf{A}$, and vice versa.</figcaption>
   </figure>
 </p>
+<h4 id="general-case">General Case</h4>
+<p>For arbitrary systems with state spaces $\A$ and $\mf{B}$, we have</p>
+<p>$$<br>
+\I(\A\otimes\mf{B}, R) = \I(\A, R) + \I(\mf{B}, R) + \I(\A, \mf{B} \mid R) - \I(\A, \mf{B})<br>
+$$</p>
+<p>Using the identity $\I(\A\otimes\mf{B}, R) = h(R) - \H(R \mid \A\otimes\mf{B})$, where $h(R) = h(\O\tr R)$ and</p>
+<p>$$<br>
+\begin{aligned}<br>
+\H(R \mid \A\otimes\mf{B}) &amp;= \expt{z\dom{R} \in (\A\otimes\mf{B})\dom{R}}{h(R \mid z)} \\<br>
+&amp;= \sum_{z \in \A\otimes\mf{B}} \frac{\mu(z\cap R)}{\mu(R)}\lgfr{\mu(z)}{\mu(R \cap z)}\,,<br>
+\end{aligned}<br>
+$$</p>
+<p>(for discrete $\A\otimes\mf{B}$)</p>
+<p>we can write the above identity in terms of $h(R)$:</p>
+<p>$$<br>
+h(R) = \H(R \mid \A\otimes\mf{B}) + \I(\A, R) + \I(\mf{B}, R) + \I(\A, \mf{B} \mid R) - \I(\A, \mf{B})\,.<br>
+$$</p>
+<p>When all $z \in \A\otimes\mf{B}$ are either contained in $R$ or outside of $R$ (i.e. $z \cap R = \es$ or $R$), then $\H(R \mid \A\otimes\mf{B}) = 0$.</p>
+<p>When $\A$ and $\mf{B}$ are orthogonal, then $\I(\A, \mf{B}) = 0$.</p>
 <h2 id="shannon-quantities">Shannon Quantities</h2>
 <p>It is helpful to connect this all back to the standard language of information theory. Let $\rv{A}, \rv{B}, \rv{C}$ be random variables with joint distribution $p(\rv{A}, \rv{B}, \rv{C})$.</p>
 <p>Mutual information is</p>
@@ -504,7 +523,12 @@ $$</p>
         </li>
         <li><a href="#expectation">Expectation</a>
           <ol>
-            <li><a href="#environments">Environments</a></li>
+            <li><a href="#mutual-information">Mutual Information</a></li>
+            <li><a href="#environments">Environments</a>
+              <ol>
+                <li><a href="#general-case">General Case</a></li>
+              </ol>
+            </li>
           </ol>
         </li>
         <li><a href="#shannon-quantities">Shannon Quantities</a></li>
