@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Redundancy And Copying</h1><p class="article date">June 23, 2021</p></section><article class="article markdown-body"><p>Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is <strong>copied</strong> (or <a href="https://en.wikipedia.org/wiki/No-cloning_theorem"target="_blank">cloned</a>) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is <strong>moved</strong>, on the other hand, when the state of the source is transferred to the target in a way that leaves the source&rsquo;s state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.</p>
+    <h1 class="article title">Redundancy And Copying</h1><p class="article date">June 24, 2021</p></section><article class="article markdown-body"><p>Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is <strong>copied</strong> (or <a href="https://en.wikipedia.org/wiki/No-cloning_theorem"target="_blank">cloned</a>) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is <strong>moved</strong>, on the other hand, when the state of the source is transferred to the target in a way that leaves the source&rsquo;s state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.</p>
 <p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
@@ -305,13 +305,14 @@ $$</p>
 </tbody>
 </table>
 <h2 id="scrambler">Scrambler</h2>
-<p>$A = B = \set{0,\dots,k-1}$ where $k$ is odd.</p>
+<p>$A = B = \set{0,\dots,k-1}$ are integer sets where $k$ is odd.</p>
 <p>$$<br>
 \t_1(a,b) = \Big(a+b \pmod{k},\ b-a \pmod{k}\Big)<br>
 $$</p>
 <p>$$<br>
 \t_{-1}(a,b) = \Big(\frac{1}{2}(a-b) \pmod{k},\ \frac{1}{2}(a+b) \pmod{k}\Big)<br>
 $$</p>
+<p>(Addition and subtraction here mean integer arithmetic, rather than boolean operations.)</p>
 <p>For example when $k=3$, the I/O table is</p>
 <table>
 <thead>
@@ -693,9 +694,9 @@ Thus $\I(\mf{A}, \mf{B} \mid J) = \I(\mf{A}, \mf{B} \mid \t_1(J)) = 0$.</p>
 <h2 id="copying-vs-redundancy">Copying vs redundancy</h2>
 <p>In general, I define the <strong>redundancy</strong> between $\A$ and $\fB$ due to domain restriction $J\subseteq\O$ as</p>
 <p>$$<br>
-\rho \df \I(\mf{A}, \mf{B} \mid \t_\Dt(J))\,,<br>
+\rho \df \I(\mf{A}, \mf{B} \mid J)\,,<br>
 $$</p>
-<p>(rho for &ldquo;redundancy&rdquo;) and the <strong>change in redundancy</strong> due to domain restriction $J \subseteq \O$ as</p>
+<p>(rho for &ldquo;redundancy&rdquo;) and the <strong>change in redundancy</strong> due to domain restriction $J \subseteq \O$ over time period $\Dt$ as</p>
 <p>$$<br>
 \D\rho = \I(\mf{A}, \mf{B} \mid \t_\Dt(J)) - \I(\mf{A}, \mf{B} \mid J)\,.<br>
 $$</p>
@@ -715,7 +716,7 @@ $$</p>
 \I(\A\otimes\mf{B}, \t_\Dt(J)) = \I(\A, \t_\Dt(J)) + \I(\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B} \mid \t_\Dt(J)) - \I(\A, \mf{B})<br>
 $$</p>
 <p>(see <a href="https://danabo.github.io/blog/posts/physical-information/#general-case">Physical Information#general-case</a>)</p>
-<p>we see that for $\H(\A \mid \t_\Dt(J)) + \H(\fB \mid \t_\Dt(J)) &gt; \H(\A\otimes\fB \mid \t_\Dt(J))$ then $\I(\A,\fB \mid \t_\Dt(J))$ must be positive. Thus, for system A to have a large causal effect on both system A and system B (in the future), there needs to be redundancy between A and B. We also see that  $\I(\A, \mf{B} \mid \t_\Dt(J))$ is bounded above by $\I(\A\otimes\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B})$. This puts a limit on how much information redundancy there can be, and thus how much information can be copied.</p>
+<p>we see that for $\H(\A \mid \t_\Dt(J)) + \H(\fB \mid \t_\Dt(J)) &gt; \H(\A\otimes\fB \mid \t_\Dt(J))$ to be the case then $\I(\A,\fB \mid \t_\Dt(J))$ must be non-zero. Thus, for system A to have a large causal effect on both system A and system B (in the future), there needs to be redundancy between A and B. We also see that  $\I(\A, \mf{B} \mid \t_\Dt(J))$ is bounded above by $\I(\A\otimes\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B})$. This puts a limit on how much information redundancy there can be, and thus how much information can be copied.</p>
 <h2 id="scrambler-revisited">Scrambler revisited</h2>
 <p>Given system A and its environment, with respective state spaces $\A, \cA$, and respective intervention sets $J^\dg \in \cA$ (varying system A) and $J \in \A$ (varying the environment),<br>
 is there any necessary relationship between $\I(\A, \cA \mid \t_\Dt(J))$ and $\I(\A, \cA \mid \t_\Dt(J^\dg))$? That is to say, if system A copies its information to the environment, then can the environment also copy its information to system A?</p>
@@ -795,10 +796,10 @@ $\fB\dom{\t_1(b\up{0})} = \set{\set{00},\set{12},\set{21}}$<br>
 $\I(\A, \fB \mid b\up{0})) = 0$<br>
 $\I(\A,\fB\mid \t_1(b\up{0})) = \lg(3) = h(b\up{0})$<br>
 $\H(\A \mid \t_1(b\up{0})) = \H(\fB \mid \t_1(b\up{0})) = \lg(3)$</p>
-<p>So $\I(\A,\fB\mid \t_1(a\up{0})) = h(a\up{0})$ and $\I(\A,\fB\mid \t_1(b\up{0})) = h(b\up{0})$ which are their respective maximum values.</p>
+<p>So $\I(\A,\fB\mid \t_1(a\up{0})) = h(a\up{0})$ and $\I(\A,\fB\mid \t_1(b\up{0})) = h(b\up{0})$ which are their respective maximum values (because $\I(\A,\fB) = 0$ and $\I(\A\otimes\fB, R) = h(R)$ for any $R\subseteq\O$).</p>
 <h1 id="is-redundancy-fictitious">Is Redundancy Fictitious?</h1>
 <p>The appearance of copied state is due to the representation of systems that we use. Notice that my proposed definition of copying and redundancy each rely on state partitions to be provided. If we just had a universe consisting of state space $\O$ and bijective time-evolution $\t_\Dt$, without any systems defined within the universe, there would not be any apparent copying or redundancy.</p>
-<p>Take the simple copier again. I defined the state space as $\O = \set{00,01,10,11}$. The representation of theses states as binary strings begs the copying interpretation. What if instead I defined it like this:</p>
+<p>Take the simple copier again. I defined the state space as $\O = \set{00,01,10,11}$. The representation of theses states as binary strings begs the copying interpretation. What if instead I stripped away the extraneous representation of these states so that they became featureless objects? Like this:</p>
 <p>$$<br>
 \O = \set{\o_1, \o_2, \o_3, \o_4}<br>
 $$</p>
@@ -807,8 +808,8 @@ $\o_1 \mapsto \o_1$<br>
 $\o_2 \mapsto \o_3$<br>
 $\o_3 \mapsto \o_4$<br>
 $\o_4 \mapsto \o_2$</p>
-<p>Now all that is apparent here are the cycles $\o_1 \to \o_1$ and $\o_2 \to \o_3 \to \o_4 \to \o_1$.</p>
-<p>There are two trivial systems for this universe.</p>
+<p>Now the possible states in $\O$ don&rsquo;t have any inherent interpretation, representation, or meaning. Their only feature is that they can be distinguished, i.e. they have identity. Combined with the time-evolution function $\t_1$, the only structure that is apparent here are the cycles $\o_1 \to \o_1$ and $\o_2 \to \o_3 \to \o_4 \to \o_1$.</p>
+<p>We can go ahead and define whatever systems we like (having arbitrary state spaces). However, there are two trivial systems for this toy universe.</p>
 <p>System T, whose states are the cycles:</p>
 <p>$$<br>
 \mf{T} = \set{\set{\o_1}, \set{\o_2, \o_3, \o_4}}\,.<br>

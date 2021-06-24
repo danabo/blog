@@ -5,7 +5,7 @@
     <description>Recent content in Posts on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Wed, 23 Jun 2021 21:19:06 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 24 Jun 2021 00:23:25 -0500</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +13,7 @@
     <item>
       <title>Redundancy And Copying</title>
       <link>https://danabo.github.io/blog/posts/redundancy-and-copying/</link>
-      <pubDate>Wed, 23 Jun 2021 21:19:06 -0500</pubDate>
+      <pubDate>Thu, 24 Jun 2021 00:23:25 -0500</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/redundancy-and-copying/</guid>
       <description>&lt;p&gt;Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is &lt;strong&gt;copied&lt;/strong&gt; (or &lt;a href=&#34;https://en.wikipedia.org/wiki/No-cloning_theorem&#34;target=&#34;_blank&#34;&gt;cloned&lt;/a&gt;) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is &lt;strong&gt;moved&lt;/strong&gt;, on the other hand, when the state of the source is transferred to the target in a way that leaves the source&amp;rsquo;s state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.&lt;/p&gt;
@@ -315,13 +315,14 @@ $$&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h2 id=&#34;scrambler&#34;&gt;Scrambler&lt;/h2&gt;
-&lt;p&gt;$A = B = \set{0,\dots,k-1}$ where $k$ is odd.&lt;/p&gt;
+&lt;p&gt;$A = B = \set{0,\dots,k-1}$ are integer sets where $k$ is odd.&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \t_1(a,b) = \Big(a+b \pmod{k},\ b-a \pmod{k}\Big)&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \t_{-1}(a,b) = \Big(\frac{1}{2}(a-b) \pmod{k},\ \frac{1}{2}(a+b) \pmod{k}\Big)&lt;br&gt;
 $$&lt;/p&gt;
+&lt;p&gt;(Addition and subtraction here mean integer arithmetic, rather than boolean operations.)&lt;/p&gt;
 &lt;p&gt;For example when $k=3$, the I/O table is&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -703,9 +704,9 @@ Thus $\I(\mf{A}, \mf{B} \mid J) = \I(\mf{A}, \mf{B} \mid \t_1(J)) = 0$.&lt;/p&gt
 &lt;h2 id=&#34;copying-vs-redundancy&#34;&gt;Copying vs redundancy&lt;/h2&gt;
 &lt;p&gt;In general, I define the &lt;strong&gt;redundancy&lt;/strong&gt; between $\A$ and $\fB$ due to domain restriction $J\subseteq\O$ as&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
-\rho \df \I(\mf{A}, \mf{B} \mid \t_\Dt(J))\,,&lt;br&gt;
+\rho \df \I(\mf{A}, \mf{B} \mid J)\,,&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;(rho for &amp;ldquo;redundancy&amp;rdquo;) and the &lt;strong&gt;change in redundancy&lt;/strong&gt; due to domain restriction $J \subseteq \O$ as&lt;/p&gt;
+&lt;p&gt;(rho for &amp;ldquo;redundancy&amp;rdquo;) and the &lt;strong&gt;change in redundancy&lt;/strong&gt; due to domain restriction $J \subseteq \O$ over time period $\Dt$ as&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \D\rho = \I(\mf{A}, \mf{B} \mid \t_\Dt(J)) - \I(\mf{A}, \mf{B} \mid J)\,.&lt;br&gt;
 $$&lt;/p&gt;
@@ -725,7 +726,7 @@ $$&lt;/p&gt;
 \I(\A\otimes\mf{B}, \t_\Dt(J)) = \I(\A, \t_\Dt(J)) + \I(\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B} \mid \t_\Dt(J)) - \I(\A, \mf{B})&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;(see &lt;a href=&#34;https://danabo.github.io/blog/posts/physical-information/#general-case&#34;&gt;Physical Information#general-case&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;we see that for $\H(\A \mid \t_\Dt(J)) + \H(\fB \mid \t_\Dt(J)) &amp;gt; \H(\A\otimes\fB \mid \t_\Dt(J))$ then $\I(\A,\fB \mid \t_\Dt(J))$ must be positive. Thus, for system A to have a large causal effect on both system A and system B (in the future), there needs to be redundancy between A and B. We also see that  $\I(\A, \mf{B} \mid \t_\Dt(J))$ is bounded above by $\I(\A\otimes\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B})$. This puts a limit on how much information redundancy there can be, and thus how much information can be copied.&lt;/p&gt;
+&lt;p&gt;we see that for $\H(\A \mid \t_\Dt(J)) + \H(\fB \mid \t_\Dt(J)) &amp;gt; \H(\A\otimes\fB \mid \t_\Dt(J))$ to be the case then $\I(\A,\fB \mid \t_\Dt(J))$ must be non-zero. Thus, for system A to have a large causal effect on both system A and system B (in the future), there needs to be redundancy between A and B. We also see that  $\I(\A, \mf{B} \mid \t_\Dt(J))$ is bounded above by $\I(\A\otimes\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B})$. This puts a limit on how much information redundancy there can be, and thus how much information can be copied.&lt;/p&gt;
 &lt;h2 id=&#34;scrambler-revisited&#34;&gt;Scrambler revisited&lt;/h2&gt;
 &lt;p&gt;Given system A and its environment, with respective state spaces $\A, \cA$, and respective intervention sets $J^\dg \in \cA$ (varying system A) and $J \in \A$ (varying the environment),&lt;br&gt;
 is there any necessary relationship between $\I(\A, \cA \mid \t_\Dt(J))$ and $\I(\A, \cA \mid \t_\Dt(J^\dg))$? That is to say, if system A copies its information to the environment, then can the environment also copy its information to system A?&lt;/p&gt;
@@ -805,10 +806,10 @@ $\fB\dom{\t_1(b\up{0})} = \set{\set{00},\set{12},\set{21}}$&lt;br&gt;
 $\I(\A, \fB \mid b\up{0})) = 0$&lt;br&gt;
 $\I(\A,\fB\mid \t_1(b\up{0})) = \lg(3) = h(b\up{0})$&lt;br&gt;
 $\H(\A \mid \t_1(b\up{0})) = \H(\fB \mid \t_1(b\up{0})) = \lg(3)$&lt;/p&gt;
-&lt;p&gt;So $\I(\A,\fB\mid \t_1(a\up{0})) = h(a\up{0})$ and $\I(\A,\fB\mid \t_1(b\up{0})) = h(b\up{0})$ which are their respective maximum values.&lt;/p&gt;
+&lt;p&gt;So $\I(\A,\fB\mid \t_1(a\up{0})) = h(a\up{0})$ and $\I(\A,\fB\mid \t_1(b\up{0})) = h(b\up{0})$ which are their respective maximum values (because $\I(\A,\fB) = 0$ and $\I(\A\otimes\fB, R) = h(R)$ for any $R\subseteq\O$).&lt;/p&gt;
 &lt;h1 id=&#34;is-redundancy-fictitious&#34;&gt;Is Redundancy Fictitious?&lt;/h1&gt;
 &lt;p&gt;The appearance of copied state is due to the representation of systems that we use. Notice that my proposed definition of copying and redundancy each rely on state partitions to be provided. If we just had a universe consisting of state space $\O$ and bijective time-evolution $\t_\Dt$, without any systems defined within the universe, there would not be any apparent copying or redundancy.&lt;/p&gt;
-&lt;p&gt;Take the simple copier again. I defined the state space as $\O = \set{00,01,10,11}$. The representation of theses states as binary strings begs the copying interpretation. What if instead I defined it like this:&lt;/p&gt;
+&lt;p&gt;Take the simple copier again. I defined the state space as $\O = \set{00,01,10,11}$. The representation of theses states as binary strings begs the copying interpretation. What if instead I stripped away the extraneous representation of these states so that they became featureless objects? Like this:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \O = \set{\o_1, \o_2, \o_3, \o_4}&lt;br&gt;
 $$&lt;/p&gt;
@@ -817,8 +818,8 @@ $\o_1 \mapsto \o_1$&lt;br&gt;
 $\o_2 \mapsto \o_3$&lt;br&gt;
 $\o_3 \mapsto \o_4$&lt;br&gt;
 $\o_4 \mapsto \o_2$&lt;/p&gt;
-&lt;p&gt;Now all that is apparent here are the cycles $\o_1 \to \o_1$ and $\o_2 \to \o_3 \to \o_4 \to \o_1$.&lt;/p&gt;
-&lt;p&gt;There are two trivial systems for this universe.&lt;/p&gt;
+&lt;p&gt;Now the possible states in $\O$ don&amp;rsquo;t have any inherent interpretation, representation, or meaning. Their only feature is that they can be distinguished, i.e. they have identity. Combined with the time-evolution function $\t_1$, the only structure that is apparent here are the cycles $\o_1 \to \o_1$ and $\o_2 \to \o_3 \to \o_4 \to \o_1$.&lt;/p&gt;
+&lt;p&gt;We can go ahead and define whatever systems we like (having arbitrary state spaces). However, there are two trivial systems for this toy universe.&lt;/p&gt;
 &lt;p&gt;System T, whose states are the cycles:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \mf{T} = \set{\set{\o_1}, \set{\o_2, \o_3, \o_4}}\,.&lt;br&gt;
