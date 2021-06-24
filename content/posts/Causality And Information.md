@@ -1,6 +1,6 @@
 ---
 date: 2021-05-23
-lastmod: '2021-05-24T11:54:38-05:00'
+lastmod: '2021-06-23T21:11:55-05:00'
 tags:
 - information
 - physics
@@ -447,6 +447,21 @@ These can be used to address questions such as,
 - The more info the env. has about sys. A's future, the more effect the env. has on sys. A's future? Use $h(a \\mid R) = i(a, R^\\dg) + i(R, R^\\dg\\mid a)$, where $i(a, R^\\dg)$ is the info the env. has about sys. A's state $a$, and $h(a \\mid R)$ is the effect of the env. on sys A's state $a$ (remember that $R = \\t\_\\Dt(a')$ is the effect of the intervention set $a'$ that varies the environment while keeping sys. A fixed).
 - The more effect sys. A has on the environment's future, the less effect sys. A has on its own future? Use $h(a^\\dg\\mid R^\\dg) = \\e\_\\o(R^\\dg) - h(a\\mid R^\\dg) + i(a,a^\\dg\\mid R^\\dg)$, where $h(a^\\dg\\mid R^\\dg)$ is the effect of sys. A on env. state $a^\\dg$, and $h(a\\mid R^\\dg)$ is the effect of sys. A on sys. A state $a$.
 - The more effect the env. has on sys. A's future, the less effect sys. A has on its own future? Use $h(a \\mid R) = h(a) - h(a \\mid R^\\dg) - i(R,R^\\dg\\mid a)$, where $h(a \\mid R)$ is the effect of the env. on sys. A's state $a$, and $h(a \\mid R^\\dg)$ is the effect of sys. A on sys. A's state $a$.
+
+## Information-about entails effect-on
+Let $a\\up{t}\\in\\A$ be the state of system A, and ${a^\\dg}\\up{t}\\in\\cA$ be the state of the environment.
+${a^\\dg}\\up{t} =J$ is also an intervention set varying system A while keeping the environment fixed.
+
+For any system B with state space $\\fB$, we have the identity,
+$$
+\\H(\\fB \\mid \\t\_\\Dt({a^\\dg}\\up{t})) = \\I(\\fB, \\t\_\\Dt(a\\up{t})) + \\I(\\t\_\\Dt(a\\up{t}), \\t\_\\Dt({a^\\dg}\\up{t}) \\mid \\fB)\\,.
+$$
+
+All of these terms are non-zero. This tells us that the average information system A has about system B's state, $\\I(\\fB, \\t\_\\Dt(a\\up{t}))$, is lower bounded by the average effect of system A on system B, $\\H(\\fB \\mid \\t\_\\Dt({a^\\dg}\\up{t}))$.
+
+That is to say, in order for system A to have information about system B's state in the future, system A must effect system B's state in the future. We can infer that the information system A has about system B is exactly whatever system A causally determines in system B's state, minus some potential lost information, $\\I(\\t\_\\Dt(a\\up{t}), \\t\_\\Dt({a^\\dg}\\up{t}) \\mid \\fB)$.
+
+This is a fairly absurd conclusion, given that everyday life depends greatly on the fact that we can know a lot about the world around us without causally determining much at all about the world. I discuss this a bit further in {{< locallink "Redundancy And Copying" "the-problem-of-assumptions-in-intelligence" >}}.
 
 ## Asymmetric Causality
 

@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-05-21T20:58:47-05:00'
+lastmod: '2021-06-23T21:11:55-05:00'
 tags:
 - physics
 - information
@@ -385,8 +385,7 @@ $$
 Plugging in, we get $\\lg\\par{\\frac{\\mu(\\mf{B})}{\\mu(\\hat{\\mf{B}}\\dom{R})}} = \\lg\\par{\\frac{\\mu(\\O)}{\\mu(b)\\frac{\\mu(R)}{\\mu(b\\cap R)}}} = i(b, R)$.
 
 
-
----
+### Mutual Information
 
 In the more general case $\\mf{B}$ and $\\mf{B}\\dom{R}$ are not uniform partitions. We will need some kind of averaging operation over $i(b,R)$ for $b\\in\\mf{B}$ that reduces to our special cases above, and zeros out all the $i(b,R) = -\\infty$ terms where $b\\cap R = \\es$. Taking the expectation w.r.t. $\\mu(\\cdot \\mid R)$ fulfills both requirements.
 
@@ -544,6 +543,35 @@ A tricky case to be aware of is when $\\I(\\A, \\t\_\\Dt(a\\up{t})) = 0$ and $\\
 ![](</Pasted image 20210514160232.png> "$R=a^\dg\in\cA$. Then $\I(\cA,R) = h(\O\tr R)$ and $\I(\A,R) = 0$, $\I(\A,\cA \mid R) = 0$.")
 ![](</Pasted image 20210514160247.png> "$\I(\A,R)$ and $\I(\cA,R)$ are both non-zero, and $\I(\A,\cA \mid R) = 0$, meaning $\A$ and $\cA$ are still orthogonal when restricted to the domain $R$.")
 ![](</Pasted image 20210514160256.png> "$\I(\A,R) = 0$ and $\I(\cA,R) = 0$, since restricting either partition to the domain $R$ still tells you nothing about the other partition. However, $\I(\A,\cA \mid R) = h(\O\tr R)$, meaning $\A$ and $\cA$ restricted to the domain $R$ are maximally redundant, i.e. given $R$ and some $a\in\mf{A}$, you can uniquely determine $a^\dg\in\mf{A}$, and vice versa.")
+
+#### General Case
+
+For arbitrary systems with state spaces $\\A$ and $\\mf{B}$, we have
+
+$$
+\\I(\\A\\otimes\\mf{B}, R) = \\I(\\A, R) + \\I(\\mf{B}, R) + \\I(\\A, \\mf{B} \\mid R) - \\I(\\A, \\mf{B})
+$$
+
+Using the identity $\\I(\\A\\otimes\\mf{B}, R) = h(R) - \\H(R \\mid \\A\\otimes\\mf{B})$, where $h(R) = h(\\O\\tr R)$ and
+
+$$
+\\begin{aligned}
+\\H(R \\mid \\A\\otimes\\mf{B}) &= \\expt{z\\dom{R} \\in (\\A\\otimes\\mf{B})\\dom{R}}{h(R \\mid z)} \\\\
+    &= \\sum\_{z \\in \\A\\otimes\\mf{B}} \\frac{\\mu(z\\cap R)}{\\mu(R)}\\lgfr{\\mu(z)}{\\mu(R \\cap z)}\\,,
+\\end{aligned}
+$$
+
+(for discrete $\\A\\otimes\\mf{B}$)
+
+we can write the above identity in terms of $h(R)$:
+
+$$
+h(R) = \\H(R \\mid \\A\\otimes\\mf{B}) + \\I(\\A, R) + \\I(\\mf{B}, R) + \\I(\\A, \\mf{B} \\mid R) - \\I(\\A, \\mf{B})\\,.
+$$
+
+When all $z \\in \\A\\otimes\\mf{B}$ are either contained in $R$ or outside of $R$ (i.e. $z \\cap R = \\es$ or $R$), then $\\H(R \\mid \\A\\otimes\\mf{B}) = 0$.
+
+When $\\A$ and $\\mf{B}$ are orthogonal, then $\\I(\\A, \\mf{B}) = 0$.
 
 ## Shannon Quantities
 
