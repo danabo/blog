@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Redundancy And Copying&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Redundancy And Copying" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Redundancy And Copying</h1><p class="article date">June 23, 2021</p></section><article class="article markdown-body"><p>Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is <strong>copied</strong> (or <a href="https://en.wikipedia.org/wiki/No-cloning_theorem"target="_blank">cloned</a>) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is <strong>moved</strong>, on the other hand, when the state of the source is transferred to the target in a way that leaves the source&rsquo;s state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\n}{\bar}<br>
+\newcommand{\xor}{\oplus}<br>
+\newcommand{\es}{\emptyset}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\b}{\beta}<br>
+\newcommand{\s}{\sigma}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\D}{\Delta}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\m}{\times}<br>
+\newcommand{\N}{\mb{N}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\I}{\mb{I}}<br>
+\newcommand{\H}{\mb{H}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\Env}{\mf{E}}<br>
+\newcommand{\expt}[2]{\mb{E}_{#1}\left[#2\right]}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\par}[1]{\left(#1\right)}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\dom}[1]{_{\mid #1}}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\M}{\mc{M}}<br>
+\newcommand{\up}[1]{^{(#1)}}<br>
+\newcommand{\Dt}{{\Delta t}}<br>
+\newcommand{\tr}{\rightarrowtail}<br>
+\newcommand{\tx}{\prec}<br>
+\newcommand{\qed}{\ \ \blacksquare}<br>
+\newcommand{\c}{\overline}<br>
+\newcommand{\A}{\mf{A}}<br>
+\newcommand{\cA}{\c{\mf{A}}}<br>
+\newcommand{\fB}{\mf{B}}<br>
+\newcommand{\dg}{\dagger}<br>
+\newcommand{\do}[2]{\underset{#1\leadsto #2}{\mathrm{do}}}<br>
+\newcommand{\lgfr}[2]{\lg\par{\frac{#1}{#2}}}<br>
+\newcommand{\sys}[2]{\left[#2\right]_{#1}}<br>
+$$</p>
+<p>In <a href="https://danabo.github.io/blog/posts/physical-information/">Physical Information</a>, I defined conservation of information as the property that given some set $R \subseteq \O$, the time-evolved set $\t_\Dt(R)$ is fully determined, and given $\t_\Dt(R)$, the original set $R$ is fully determined. This is only true for all $R$ if $\t_\Dt$ is a bijection. All of our theories of physics have bijective time-evolution, and so it would be reasonable to assume that information is conserved in our universe. That is to say, information is never lost through time-evolution.</p>
+<p>The redundancy between two systems with state spaces $\mf{A}$ and $\mf{B}$ (as partitions of $\O$) is quantified by their mutual information</p>
+<p>$$\I(\mf{A}, \mf{B}) = \mb{E}_{a\in\mf{A}, b\in\mf{B}}\Big[i(a, b)\Big]\,,$$</p>
+<p>where $i(a,b) = \lgfr{\mu(a\cap b)\mu(\O)}{\mu(a)\mu(b)}$ is the pointwise mutual information between $a$ and $b$ as calculated with the provided measure $\mu$ (see <a href="https://danabo.github.io/blog/posts/physical-information/#mutual-information">Physical Information#mutual-information</a> for details), and $\O = \bigcup\mf{A} = \bigcup\mf{B}$ is the domain. Their mutual information $\I(\mf{A}, \mf{B})$ is 0 when $\mf{A}$ and $\mf{B}$ are orthogonal. Since in my formulation, the state spaces of systems don&rsquo;t change over time, i.e. $\mf{A}, \mf{B}$ are fixed through time, then redundancy between systems does not change. If two systems are defined to be orthogonal, they remain orthogonal.</p>
+<p>Given the constant redundancy between systems through time, it is surprising that information redundancy appears to change over time in our universe. Furthermore, you might naively conclude that redundancy cannot change over time in a universe that conserves information. How can changing information redundancy coexist with conservation of information?</p>
+<p>It is interesting to note that in quantum physics information copying is not possible (see the <a href="https://en.wikipedia.org/wiki/No-cloning_theorem"target="_blank">no-cloning theorem</a>), i.e. quantum information can only be moved around but not duplicated. If our universe is fundamentally quantum and information cannot be copied, then again, why does information appear to be copied everywhere? The answer lies in the distinction between quantum information, which cannot be copied, and classical information, which can be (this is out of scope for this post, but I might delve into quantum information theory in future posts).</p>
+<h1 id="intuition-pumps">Intuition Pumps</h1>
+<p>Information can be copied under bijective time evolution if we restrict ourselves to a subset of the state space. That is to say, some initial states of the universe appear to time-evolve into redundant states, while other initial states, by necessity do not (for time-evolution to be bijective). Let&rsquo;s get a feel for how information copying under bijective time-evolution works by looking at a few toy universes in which information gets copied between systems over time.</p>
+<p>For simplicity, I&rsquo;ll work with binary systems (two-state systems). We can create bigger systems by grouping many binary systems together into super-systems (each binary system is a sub-system). That is to say, the state spaces of these super-systems are binary tuples.</p>
+<p>Formally, let $\B = \set{0,1}$ be the binary alphabet.<br>
+When I define system A to have the state space $A = \B^k$, then a state of system A is $a \in A$ where $a$ is a binary tuple. For example, $a = 001010\dots0$.<br>
+When I define the state spaces for a few systems, say $A = \B^n,\ B=\B^m,\ C=\B^p$, then the state space of the universe is the Cartesian product, $\O = A\times B\times C$, and the state of the universe is the state tuple $\o = (a,b,c) \in \O$, which can also regarded as one big binary tuple of length $n+m+p$.</p>
+<p>Regarding time-evolution, here I&rsquo;ll work in discrete time, i.e. $t \in \mb{Z}$.<br>
+Then the family of bijective time-evolution functions on $\O$ form the discrete group, $(\set{\t_\Dt\mid t\in\mb{Z}},\circ)$, where $\t_1$ is the group generator, i.e.</p>
+<p>$$<br>
+\t_t = \begin{cases}<br>
+\underbrace{\t_1\circ\dots\circ\t_1}_{t\ \mathrm{times}} &amp; t &gt; 0 \\<br>
+\o\mapsto\o &amp; t = 0 \\<br>
+\underbrace{\t^{-1}_1\circ\dots\circ\t^{-1}_1}_{t\ \mathrm{times}} &amp; t &lt; 0<br>
+\end{cases}<br>
+$$</p>
+<p>Thus, it&rsquo;s sufficient to define $\t_1$ in order to specify the entire family $\set{\t_\Dt\mid t\in\mb{Z}}$.</p>
+<p>Let&rsquo;s define some notation that will make it easy to define time-evolution functions.<br>
+For binary values $\alpha,\beta\in\B$,</p>
+<ul>
+<li>$\alpha\ \beta \in \B^2$ is tuple concatenation</li>
+<li>$\n{\beta}$ is the NOT operation</li>
+<li>$\alpha\cdot \beta$ is the AND operation</li>
+<li>$\alpha + \beta$ is the OR operation</li>
+<li>$\alpha \xor \beta$ is the XOR operation</li>
+</ul>
+<p>For binary $k$-tuples $a, b \in \B^k$,</p>
+<ul>
+<li>$a_1$ is the first bit</li>
+<li>$a_k$ is the last bit</li>
+<li>$a_{i:j}$ is the slice $a_i\ a_{i+1}\ \dots\ a_{j-1}\ a_j$</li>
+<li>$a_{i:j}\ b_{k:\ell}$ is tuple concatenation</li>
+</ul>
+<h2 id="simple-copier---style-1">Simple Copier - style 1</h2>
+<p>Let&rsquo;s take a look at the simplest possible copier, where the state one one system is copied to the state of another system in one time-step. There are actually two different copiers of this size. I&rsquo;ll give them both.</p>
+<p>We have two systems, A and B, with state spaces<br>
+$A = \B$<br>
+$B = \B$</p>
+<p>The one-step time-evolution function is defined as</p>
+<p>$$<br>
+\begin{aligned}<br>
+\t_1(a, b) &amp;= \begin{cases}(a,a) &amp; b = 0 \\ (\n{a}, a) &amp; b = 1\end{cases} \\<br>
+&amp;= (a \xor b,\ a)<br>
+\end{aligned}<br>
+$$</p>
+<p>If $b=0$ initially, then $\t_1$ copies A&rsquo;s state to B&rsquo;s state. If $b=1$ initially, then $\t_1$ also copies A&rsquo;s state to B&rsquo;s state and additionally flips A&rsquo;s state.</p>
+<p>To sanity check that this is indeed a bijection, here is its inverse:</p>
+<p>$$<br>
+\t_{-1}(a, b) = (b,\ a\xor b)<br>
+$$</p>
+<p>And here is the full I/O table for this function</p>
+<p>$(0,0)\mapsto(0,0)$<br>
+$(0,1)\mapsto(1,0)$<br>
+$(1,0)\mapsto(1,1)$<br>
+$(1,1)\mapsto(0,1)$</p>
+<p>Bijective time-evolution on finite state spaces necessarily creates cycles. Here are the cycles for $\t_1$:<br>
+$(0,0) \to (0,0)$<br>
+$(0,1) \to (1,0) \to (1,1) \to (0,1)$</p>
+<h2 id="simple-copier---style-2">Simple Copier - style 2</h2>
+<p>This is another simplest copier that is almost the same as the first, save one difference.</p>
+<p>$A = \B$<br>
+$B = \B$</p>
+<p>$$<br>
+\t_1(a, b) = (a,\ a\xor b)<br>
+$$</p>
+<p>$$<br>
+\t_{-1}(a, b) = (a,\ a\xor b)<br>
+$$</p>
+<p>(This function is it&rsquo;s own inverse.)</p>
+<p>The full I/O table for this function:</p>
+<p>$(0,0)\mapsto(0,0)$<br>
+$(0,1)\mapsto(0,1)$<br>
+$(1,0)\mapsto(1,1)$<br>
+$(1,1)\mapsto(1,0)$</p>
+<p>Bijective time-evolution on finite state spaces necessarily creates cycles. Here are the cycles for $\t_1$:<br>
+$(0,0) \to (0,0)$<br>
+$(0,1) \to (0,1)$<br>
+$(1,0) \to (1,1) \to (1,0)$</p>
+<h2 id="repeating-copier">Repeating Copier</h2>
+<p>This universe operates on the same principle as our simplest copier, but scaled up. Now system A is a $k$-tuple of binary states, and the second system is called E (for environment), which is an $m$-tuple presumed to be much bigger than A, i.e. $m &raquo; k$. System A will continuously duplicate its state into the environment until the environment &ldquo;fills up&rdquo;.</p>
+<p>Define this universe:</p>
+<p>$A  = \B^k$<br>
+$E = \B^m$</p>
+<p>$$<br>
+\t_1(a,e) = ((a_{k}\xor e_{m})\ a_{1:k-1},\ a_{k}\ e_{1:m-1})<br>
+$$</p>
+<p>$$<br>
+\t_{-1}(a,e) = (a_{2:k}\ e_1,\ e_{2:m}\ (a_1\xor e_1))<br>
+$$</p>
+<p>Here&rsquo;s an example of a time evolution, where $k=4$ and $m=8$, and the initial state of the universe is $(a,\ e) = (1011,\ 00000000)$:</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1011</td>
+<td>00000000</td>
+</tr>
+<tr>
+<td>1101</td>
+<td>10000000</td>
+</tr>
+<tr>
+<td>1110</td>
+<td>11000000</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>01100000</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>10110000</td>
+</tr>
+<tr>
+<td>1101</td>
+<td>11011000</td>
+</tr>
+<tr>
+<td>1110</td>
+<td>11101100</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>01110110</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>10111011</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>11011101</td>
+</tr>
+<tr>
+<td>0010</td>
+<td>11101110</td>
+</tr>
+<tr>
+<td>0001</td>
+<td>01110111</td>
+</tr>
+<tr>
+<td>0000</td>
+<td>10111011</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>00111011</td>
+</tr>
+<tr>
+<td>1100</td>
+<td>00011101</td>
+</tr>
+<tr>
+<td>1110</td>
+<td>00001110</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>00000111</td>
+</tr>
+<tr>
+<td>0011</td>
+<td>10000011</td>
+</tr>
+</tbody>
+</table>
+<p>As we can see, system A keeps copying its state into system E so long as the last bit of E&rsquo;s state remains zero. When that ceases to be true, system A&rsquo;s state is corrupted, and this time-evolution is no longer performing a copy operation, but a move operation, which is destructive.</p>
+<p>If the environment is initialized to be &ldquo;empty&rdquo;, i.e. contain all zeros, and $m$ is incredibly large, then system A will copy itself for <em>virtually</em> forever. We do not know whether our own universe has boundaries beyond what we can observe. Though empty space does appear to be empty, we do not know if it may fill up on long enough time scales, or if everything will continue to spread out forever. That is the difference between a finite and infinite $m$ in this example. (Though technically $m$ cannot be infinite here because then there would not be a last bit. I define some infinite environments below which fix this issue.)</p>
+<h2 id="mover">Mover</h2>
+<p>In contrast to copiers, movers do not preserve the state of system A. Here, we have two systems which swap their respective states over time.</p>
+<p>$A = B = \B^k$</p>
+<p>$$<br>
+\t_1(a, b) = (a_{2:k}\ b_1,\ b_{2:k}\ a_1)<br>
+$$</p>
+<p>$$<br>
+\t_{-1}(a,b) = (b_k\ a_{1:k-1},\ a_k\ b_{1:k-1})<br>
+$$</p>
+<p>Example:</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0000</td>
+<td>1011</td>
+</tr>
+<tr>
+<td>0001</td>
+<td>0110</td>
+</tr>
+<tr>
+<td>0010</td>
+<td>1100</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>0110</td>
+<td>0001</td>
+</tr>
+<tr>
+<td>1100</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>0101</td>
+</tr>
+<tr>
+<td>0000</td>
+<td>1011</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scrambler">Scrambler</h2>
+<p>$A = B = \set{0,\dots,k-1}$ where $k$ is odd.</p>
+<p>$$<br>
+\t_1(a,b) = \Big(a+b \pmod{k},\ b-a \pmod{k}\Big)<br>
+$$</p>
+<p>$$<br>
+\t_{-1}(a,b) = \Big(\frac{1}{2}(a-b) \pmod{k},\ \frac{1}{2}(a+b) \pmod{k}\Big)<br>
+$$</p>
+<p>For example when $k=3$, the I/O table is</p>
+<table>
+<thead>
+<tr>
+<th>$(a,b)$</th>
+<th>$\t_1(a,b)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$(0,0)$</td>
+<td>$(0,0)$</td>
+</tr>
+<tr>
+<td>$(0,1)$</td>
+<td>$(1,1)$</td>
+</tr>
+<tr>
+<td>$(0,2)$</td>
+<td>$(2,2)$</td>
+</tr>
+<tr>
+<td>$(1,0)$</td>
+<td>$(1,2)$</td>
+</tr>
+<tr>
+<td>$(1,1)$</td>
+<td>$(2,0)$</td>
+</tr>
+<tr>
+<td>$(1,2)$</td>
+<td>$(0,1)$</td>
+</tr>
+<tr>
+<td>$(2,0)$</td>
+<td>$(2,1)$</td>
+</tr>
+<tr>
+<td>$(2,1)$</td>
+<td>$(0,2)$</td>
+</tr>
+<tr>
+<td>$(2,2)$</td>
+<td>$(1,0)$</td>
+</tr>
+</tbody>
+</table>
+<p>We will see later why I call this a scrambler.</p>
+<h2 id="infinite-repeating-copier---style-1">Infinite repeating copier - style 1</h2>
+<p>Here is an example of a copier with an infinite environment. I define a third system, X, which stores a &ldquo;control bit&rdquo;. When the state of X is 0, forward time-evolution performs copy operations. Otherwise, something else happens. This control bit is needed to maintain $\t_1$ as a bijection.</p>
+<p>$X = \B$<br>
+$A  = \B^k$<br>
+$E = \B^\infty$</p>
+<p>$$<br>
+\begin{aligned}<br>
+\t_1(x, a, e) &amp;= \begin{cases}<br>
+(0,\ a_{k}\ a_{1:k-1},\ a_k\ e) &amp; x = 0 \\<br>
+(0,\ a,\ e) &amp; x = 1 \and a_1 \neq e_1 \\<br>
+(1,\ a_{2:k}\ a_1,\ e_{2:\infty})  &amp; x = 1 \and a_1 = e_1<br>
+\end{cases}<br>
+\end{aligned}<br>
+$$</p>
+<p>$$<br>
+\begin{aligned}<br>
+\t_{-1}(x, a, e) &amp;= \begin{cases}<br>
+(0,\ a_{2:k}\ a_1,\ e_{2:\infty}) &amp; x = 0  \and a_1 = e_1 \\<br>
+(1,\ a,\ e) &amp; x = 0 \and a_1 \neq e_1 \\<br>
+(1,\ a_{k}\ a_{1:k-1},\ a_k\ e)  &amp; x = 1<br>
+\end{cases}<br>
+\end{aligned}<br>
+$$</p>
+<p>We can see that in reverse time, the universe performs copy operations when the state of X is one. Thus in forward time, when $x=1$, an &ldquo;uncopy&rdquo; operation is performed. This can be thought of as reversing a copy operation, but if there was no previous copy and systems A and E just happen to be redundant in the right way, then this time-evolution is simply making A and E less redundant.</p>
+<p>Examples:</p>
+<table>
+<thead>
+<tr>
+<th>X</th>
+<th>A</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1011</td>
+<td>0000000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1101</td>
+<td>1000000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1110</td>
+<td>1100000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0111</td>
+<td>0110000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1011</td>
+<td>1011000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1101</td>
+<td>1101100…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1110</td>
+<td>1110110…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0111</td>
+<td>0111011…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1011</td>
+<td>1011101…</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>X</th>
+<th>A</th>
+<th>E</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1011</td>
+<td>1011000…</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0111</td>
+<td>0110000…</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1110</td>
+<td>1100000…</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1101</td>
+<td>1000000…</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1011</td>
+<td>0000000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1011</td>
+<td>0000000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1101</td>
+<td>1000000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1110</td>
+<td>1100000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0111</td>
+<td>0110000…</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1011</td>
+<td>1011000…</td>
+</tr>
+</tbody>
+</table>
+<p>To recap:<br>
+X is a switch that determines the &ldquo;direction&rdquo; of this system.<br>
+$x=0$ means copy A to E<br>
+$x=1$ means &ldquo;undo&rdquo; the copy from A to E<br>
+If $x=1$ and $a_1\neq e_1$, then an undo copy cannot be performed, and the state of X is flipped (the operating mode is changed from uncopy to copy).</p>
+<p>The point of having two modes of operation is so that any combined state of A and E has a history that produces it, i.e. that $\t_1$ is surjective. If A and E are redundant in the right way, then their immediate history is a sequence of copy steps. However, if they are not redundant (in the right way), then their history is a sequence of uncopy steps which just happened to culminate with the current states.</p>
+<h2 id="infinite-repeating-copier---style-2">Infinite repeating copier - style 2</h2>
+<p>In this universe, the environment is infinite from the left and the right, i.e. states are $e_{-\infty:\infty} \in E$. I&rsquo;ll break up the environment into two halves, $E_+$ containing indices $1$ to $\infty$, and $E_-$ containing indices $-\infty$ to $0$.</p>
+<p>$A  = \B^k$<br>
+$E_+ = \B^\infty$<br>
+$E_- = \B^\infty$</p>
+<p>$$<br>
+\t_1(e_{-\infty:0}, a, e_{1:\infty}) = (e_{-\infty:-1},\ (e_0\xor a_k)\ a_{1:k-1},\ a_k\ e_{1:\infty})<br>
+$$</p>
+<p>$$<br>
+\t_{-1}(e_{-\infty:0}, a, e_{1:\infty}) = (e_{-\infty:0}\ (e_1\xor a_1),\ a_{2:k}\ e_1,\ e_{2:\infty})<br>
+$$</p>
+<p>This time-evolution passes the left-side environment through A and copies A into the right-side environment. So long as the left-side environment&rsquo;s last bit is always zero, system A&rsquo;s state is preserved. Otherwise, system A is corrupted.</p>
+<p>Examples:</p>
+<table>
+<thead>
+<tr>
+<th>$E_-$</th>
+<th>$A$</th>
+<th>$E_+$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>…0000000</td>
+<td>1011</td>
+<td>0000000…</td>
+</tr>
+<tr>
+<td>…0000000</td>
+<td>1101</td>
+<td>1000000…</td>
+</tr>
+<tr>
+<td>…0000000</td>
+<td>1110</td>
+<td>1100000…</td>
+</tr>
+<tr>
+<td>…0000000</td>
+<td>0111</td>
+<td>0110000…</td>
+</tr>
+<tr>
+<td>…0000000</td>
+<td>1011</td>
+<td>1011000…</td>
+</tr>
+<tr>
+<td>…0000000</td>
+<td>1101</td>
+<td>1101100…</td>
+</tr>
+<tr>
+<td>…0000000</td>
+<td>1110</td>
+<td>1110110…</td>
+</tr>
+<tr>
+<td>…0000000</td>
+<td>0111</td>
+<td>0111011…</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>$E_-$</th>
+<th>$A$</th>
+<th>$E_+$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>…1110111</td>
+<td>1011</td>
+<td>0000000…</td>
+</tr>
+<tr>
+<td>…1111011</td>
+<td>0101</td>
+<td>1000000…</td>
+</tr>
+<tr>
+<td>…1111101</td>
+<td>0010</td>
+<td>1100000…</td>
+</tr>
+<tr>
+<td>…1111110</td>
+<td>1001</td>
+<td>0110000…</td>
+</tr>
+<tr>
+<td>…1111111</td>
+<td>1100</td>
+<td>1011000…</td>
+</tr>
+<tr>
+<td>…1111111</td>
+<td>1110</td>
+<td>0101100…</td>
+</tr>
+<tr>
+<td>…1111111</td>
+<td>1111</td>
+<td>0010110…</td>
+</tr>
+<tr>
+<td>…1111111</td>
+<td>0111</td>
+<td>1001011…</td>
+</tr>
+</tbody>
+</table>
+<h1 id="definition-of-copying">Definition of copying</h1>
+<p>In all of the &ldquo;copier&rdquo; examples above, what about their time evolution makes them copiers? What exactly do we mean when we say that they copy the information contained in system A to system E?</p>
+<p>Ultimately, when information has been copied from A to E, then we can look at the state of E to gain information about the state of A. That implies the state spaces of A and E have become redundant (given that they were not to begin with). To understand how these systems can change in redundancy over time without actually altering definitions of their state spaces over time, let&rsquo;s go through the simple copier example again.</p>
+<h2 id="simple-copier-revisited">Simple copier revisited</h2>
+<p>Recall that $\t_1$ is fully specified by this list of mappings:<br>
+$00\mapsto00$<br>
+$01\mapsto10$<br>
+$10\mapsto11$<br>
+$11\mapsto01$</p>
+<p>I&rsquo;m using binary strings in place of explicit tuples of digits for visual simplicity. I&rsquo;ll also start working in the partition-as-state-space framework (see <a href="https://danabo.github.io/blog/posts/physical-information/#information-theory-of-systems">Physical Information#information-theory-of-systems</a>).</p>
+<p>Let $\O = \set{00,01,10,11}$ be the universe&rsquo;s state space.<br>
+Let $\mf{A} = \set{\set{00, 01}, \set{10,11}}$ be the state space of system A. So A&rsquo;s state is the first bit.<br>
+Let $\mf{B} = \set{\set{00, 10}, \set{01, 11}}$ be the state space of system B. So B&rsquo;s state is the second bit.<br>
+Any state $a\in\mf{A}$ is the set of all states in $\O$ for which system A is in the same state $a$, and likewise for $b\in\mf{B}$.</p>
+<p>Notice that A and B are orthogonal, i.e.</p>
+<p>$$<br>
+\begin{aligned}<br>
+\I(\mf{A}, \mf{B}) &amp;= \sum_{a\in\mf{A}}\sum_{b\in\mf{B}} \frac{\abs{a\cap b}}{\abs{\O}}i(a, b) \\<br>
+&amp;= \sum_{a\in\mf{A}}\sum_{b\in\mf{B}} \frac{\abs{a\cap b}}{\abs{\O}}\lgfr{\abs{a\cap b}\abs{\O}}{\abs{a}\abs{b}} \\<br>
+&amp;= \sum_{a\in\mf{A}}\sum_{b\in\mf{B}} \frac{1}{4}\lgfr{1\cdot 4}{2\cdot 2} \\<br>
+&amp;= 0\,,<br>
+\end{aligned}<br>
+$$</p>
+<p>where $\O = \bigcup\mf{A} = \bigcup\mf{B}$.</p>
+<p>(Here I am using the counting measure, $\mu(R) = \abs{R}$ for $R\subseteq\O$).</p>
+<p>This is a way of quantifying how decoupled the two systems are, where 0 is maximum decoupling, meaning that A can be in any state and B can be in any state.</p>
+<p>I believe that what intuitively makes this universe a copier is that if we vary A&rsquo;s initial state, then the state of both A and B vary together later in time. To see what I mean, choose the intervention set $J = \set{00, 10}$, which varies A&rsquo;s state while keeping B&rsquo;s state at zero (this is just a state of B). The effect set one step into the future is $\t_1(J) = \set{00, 11}$. In our representation of A&rsquo;s state as the first bit and B&rsquo;s state as the second bit, all the outcomes in the effect set are ones where A and B have equal states, i.e. $00$ and $11$.</p>
+<p>Consider the state spaces of A and B restricted to the sets $J$ and $\t_1(J)$:<br>
+$\mf{A}\dom{J} = \set{\set{00}, \set{10}},\ \mf{B}\dom{J} = \set{\set{00, 10}, \set{}}$.<br>
+$\mf{A}\dom{\t_1(J)} = \mf{B}\dom{\t_1(J)} = \set{\set{00}, \set{11}}$.</p>
+<p>(For any partition $\mf{P}$ and set $R$, the notation $\mf{P}\dom{R} \df \set{p \cap R \mid p \in \mf{P}}$ is the sub-partition restricted to the domain $R$.)</p>
+<p>How redundant are these state spaces? It is straight forward to calculate:<br>
+$\I(\mf{A}\dom{J}, \mf{B}\dom{J}) = \I(\mf{A}, \mf{B} \mid J) = 0$.<br>
+$\I(\mf{A}\dom{\t_1(J)}, \mf{B}\dom{\t_1(J)}) = \I(\mf{A}, \mf{B} \mid \t_1(J)) = \H(\mf{A}\dom{\t_1(J)}) = 1$.</p>
+<p>($\I(\mf{A}, \mf{B} \mid R) = \I(\mf{A}\dom{R}, \mf{B}\dom{R})$ because $\O$ in $\I(\cdot, \cdot)$ is determined by the arguments, i.e. $\O = \bigcup\mf{A}\dom{R} = \bigcup\mf{B}\dom{R} = R$.)</p>
+<p>An example of calculating conditional mutual information:</p>
+<p>$$<br>
+\begin{aligned}<br>
+\I(\mf{A}, \mf{B} \mid J) &amp;= \sum_{a\in\mf{A}}\sum_{b\in\mf{B}} \frac{\abs{a\cap b\cap J}}{\abs{J}}i(a, b \mid J) \\<br>
+&amp;= \sum_{a\in\mf{A}}\sum_{b\in\mf{B}} \frac{\abs{a\cap b\cap J}}{\abs{J}}\lgfr{\abs{a\cap b\cap J}\abs{J}}{\abs{a\cap J}\abs{b\cap J}} \\<br>
+&amp;= \frac{1}{2}\lgfr{1\cdot 2}{1\cdot 2} +  \frac{1}{2}\lgfr{1\cdot 2}{1\cdot 2} + 0 + 0 \\<br>
+&amp;= 0\,.<br>
+\end{aligned}<br>
+$$</p>
+<p>We can see that the redundancy has increased from time 0 to time 1.<br>
+At time 0, system B can only be in the state $\set{00, 10}$, while system A can be in either state $\set{00}$ or $\set{10}$. In this sense, A&rsquo;s state is independent of B.<br>
+Meanwhile, at time 1, if A is in state $\set{00}$ then B must be in state $\set{00}$, and if A is in state $\set{11}$ then B must be in state $\set{11}$. This is maximal redundancy. Hence, system A&rsquo;s state is duplicated in system B.</p>
+<p>$\t_1$ copies the state of A to B, but information is conserved overall. This apparent contradiction is explained by the assumption that $\O$ is restricted to $J$. Though $\t_1$ is bijective on $\O$, the image $\t_1(J)$ does not equal $J$.</p>
+<h3 id="uncopying">Uncopying</h3>
+<p>Because $\t_1$ is cyclic, the universe must eventually return to its initial state. That means any copying done will eventually be undone. We can see this if we compute two-step time-evolution:</p>
+<p>$J = \set{00, 10}$ as before.<br>
+$\t_1(J) = \set{00, 11}$<br>
+$\t_2(J) = \set{00, 01}$<br>
+==&gt; $\mf{A}\dom{\t_2(J)} = \set{\set{00, 01}, \set{}},\ \mf{B}\dom{\t_2(J)} = \set{\set{00}, \set{01}}$<br>
+$\I(\mf{A}\dom{\t_2(R)}, \mf{B}\dom{\t_2(R)}) = \I(\mf{A}, \mf{B} \mid \t_2(R)) = 0$</p>
+<p>So $\I(\mf{A}, \mf{B} \mid \t_2(R)) - \I(\mf{A}, \mf{B} \mid \t_1(R)) = -1$.<br>
+Time-step 1 to 2 &ldquo;uncopies&rdquo;.</p>
+<h3 id="relativity-of-redundancy">Relativity of redundancy</h3>
+<p>The analysis above uses the intervention set $J$ that varies system A. What if we use the intervention set that varies system B?</p>
+<p>Let $J = \set{00, 01}$, which varies system B while holding system A fixed. This intervention set gives us the causal effect of system B from system A&rsquo;s perspective. Then we have<br>
+$\t_1(J) = \set{00, 10}$.<br>
+$\mf{A}\dom{J} = \set{\set{00, 01}, \set{}},\ \mf{B}\dom{J} = \set{\set{00}, \set{01}}$.<br>
+$\mf{A}\dom{\t_1(J)} = \set{\set{00}, \set{10}}$.<br>
+$\mf{B}\dom{\t_1(J)} = \set{\set{00, 10}, \set{}}$.<br>
+Thus $\I(\mf{A}, \mf{B} \mid J) = \I(\mf{A}, \mf{B} \mid \t_1(J)) = 0$.</p>
+<p>Now it appears that the redundancy between A and B doesn&rsquo;t change over time! In fact, from A&rsquo;s perspective, information is being moved from A to B (but not duplicated), as evidenced by $\I(\mf{B}, \t_1(J)) = 1$, which is maximal.</p>
+<p>So from A&rsquo;s perspective information is being moved to B (while also moving B to A), and simultaneously from B&rsquo;s perspective, information is being copied to B (destroying B&rsquo;s initial state). How peculiar.</p>
+<h2 id="copying-vs-redundancy">Copying vs redundancy</h2>
+<p>In general, I define the <strong>redundancy</strong> between $\A$ and $\fB$ due to domain restriction $J\subseteq\O$ as</p>
+<p>$$<br>
+\rho \df \I(\mf{A}, \mf{B} \mid \t_\Dt(J))\,,<br>
+$$</p>
+<p>(rho for &ldquo;redundancy&rdquo;) and the <strong>change in redundancy</strong> due to domain restriction $J \subseteq \O$ as</p>
+<p>$$<br>
+\D\rho = \I(\mf{A}, \mf{B} \mid \t_\Dt(J)) - \I(\mf{A}, \mf{B} \mid J)\,.<br>
+$$</p>
+<p>If $\D\rho &gt; 0$ then redundancy between systems A and B has increased in the time interval $\Dt$. Likewise, if $\D\rho &lt; 0$ then redundancy has decreased, and if $\D\rho = 0$ there is no change in redundancy.</p>
+<p>For arbitrary systems A and B, I say that information has been copied from system A to system B in the time interval $\Dt$ when system A (in the past) causally effects both system A in the future and system B in the future. Formally, let $J$ be an intervention set varying the state of system A while holding system A&rsquo;s environment fixed, i.e. $J \in \cA$ where $\cA$ is a partition complement of A. Then system A has copied some of its information to system B iff</p>
+<p>$$<br>
+\H(\A \mid \t_\Dt(J)) &gt; 0\quad\mathrm{and}\quad\H(\fB \mid \t_\Dt(J)) &gt; 0\,.<br>
+$$</p>
+<p>Recall from <a href="https://danabo.github.io/blog/posts/causality-and-information/#effect-on">Causality And Information#effect-on</a>, that $\H(\A \mid \t_\Dt(J))$ is the quantity of causal effect that system A has on system A in the future, and $\H(\fB \mid \t_\Dt(J))$ is the quantity of causal effect that system A has on system B in the future (assuming that $J$ varies system A).</p>
+<p>Using the identities</p>
+<p>$$<br>
+\H(\A\otimes\fB \mid \t_\Dt(J)) = \H(\A \mid \t_\Dt(J)) + \H(\fB \mid \t_\Dt(J)) - \I(\A,\fB \mid \t_\Dt(J))<br>
+$$</p>
+<p>(This is just one way of defining conditional mutual information, e.g. <a href="https://en.wikipedia.org/wiki/Conditional_mutual_information#Some_identities"target="_blank">Wikipedia</a>.)</p>
+<p>and</p>
+<p>$$<br>
+\I(\A\otimes\mf{B}, \t_\Dt(J)) = \I(\A, \t_\Dt(J)) + \I(\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B} \mid \t_\Dt(J)) - \I(\A, \mf{B})<br>
+$$</p>
+<p>(see <a href="https://danabo.github.io/blog/posts/physical-information/#general-case">Physical Information#general-case</a>)</p>
+<p>we see that for $\H(\A \mid \t_\Dt(J)) + \H(\fB \mid \t_\Dt(J)) &gt; \H(\A\otimes\fB \mid \t_\Dt(J))$ then $\I(\A,\fB \mid \t_\Dt(J))$ must be positive. Thus, for system A to have a large causal effect on both system A and system B (in the future), there needs to be redundancy between A and B. We also see that  $\I(\A, \mf{B} \mid \t_\Dt(J))$ is bounded above by $\I(\A\otimes\mf{B}, \t_\Dt(J)) + \I(\A, \mf{B})$. This puts a limit on how much information redundancy there can be, and thus how much information can be copied.</p>
+<h2 id="scrambler-revisited">Scrambler revisited</h2>
+<p>Given system A and its environment, with respective state spaces $\A, \cA$, and respective intervention sets $J^\dg \in \cA$ (varying system A) and $J \in \A$ (varying the environment),<br>
+is there any necessary relationship between $\I(\A, \cA \mid \t_\Dt(J))$ and $\I(\A, \cA \mid \t_\Dt(J^\dg))$? That is to say, if system A copies its information to the environment, then can the environment also copy its information to system A?</p>
+<p>It would be easy to think the answer is no. Copying requires duplication. If system A&rsquo;s state is copied to the environment, then its own state should remain in tact (otherwise this is merely information moving). For the environment to copy information to A, the state of A would need to be overwritten. Here is the apparent contradiction.</p>
+<p>I&rsquo;ll now construct a setup where a system and its environment simultaneously copy their entire states onto each other without contradiction, i.e. $\I(\A, \cA \mid \t_\Dt(J)) = h(J)$ and $\I(\A, \cA \mid \t_\Dt(J^\dg)) = h(J^\dg)$ are both at their maximums.</p>
+<p>Let&rsquo;s consider the smallest scrambler (<a href="#scrambler">#Scrambler</a>) where $k=3$:</p>
+<p>$A = B = \set{0,1,2}$</p>
+<p>$$<br>
+\t_1(a,b) = \Big(a+b \pmod{3},\ b-a \pmod{3}\Big)<br>
+$$</p>
+<p>The I/O table is</p>
+<table>
+<thead>
+<tr>
+<th>$ab$</th>
+<th>$\t_1(ab)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$00$</td>
+<td>$00$</td>
+</tr>
+<tr>
+<td>$01$</td>
+<td>$11$</td>
+</tr>
+<tr>
+<td>$02$</td>
+<td>$22$</td>
+</tr>
+<tr>
+<td>$10$</td>
+<td>$12$</td>
+</tr>
+<tr>
+<td>$11$</td>
+<td>$20$</td>
+</tr>
+<tr>
+<td>$12$</td>
+<td>$01$</td>
+</tr>
+<tr>
+<td>$20$</td>
+<td>$21$</td>
+</tr>
+<tr>
+<td>$21$</td>
+<td>$02$</td>
+</tr>
+<tr>
+<td>$22$</td>
+<td>$10$</td>
+</tr>
+</tbody>
+</table>
+<p>Using the partition formulation of systems A and B:<br>
+$\A = \set{a\up{0},a\up{1},a\up{2}} = \set{\set{00,01,02},\set{10,11,12},\set{20,21,22}}$<br>
+$\fB = \set{b\up{0},b\up{1},b\up{2}} = \set{\set{00,10,20},\set{01,11,21},\set{02,12,22}}$</p>
+<p>I will show that $\I(\A, \fB \mid \t(a\up{0}))$ and $\I(\A, \fB \mid \t(b\up{0}))$ are simultaneously at their maximum values. This suggests that, counterintuitively, information can be simultaneously copied from A to B, and from B to A.</p>
+<p>$a\up{0} = \set{00,01,02}$<br>
+$b\up{0} = \set{00,10,20}$<br>
+$\t_1(a\up{0}) = \set{00, 11, 22}$<br>
+$\t_1(b\up{0}) = \set{00, 12, 21}$</p>
+<p>$\A\dom{a\up{0}} = \set{\set{00,01,02},\set{}}$<br>
+$\fB\dom{a\up{0}} = \set{\set{00},\set{01},\set{02}}$<br>
+$\A\dom{\t_1(a\up{0})} = \set{\set{00},\set{11},\set{22}}$<br>
+$\fB\dom{\t_1(a\up{0})} = \set{\set{00},\set{11},\set{22}}$<br>
+$\I(\A, \fB \mid a\up{0})) = 0$<br>
+$\I(\A,\fB\mid \t_1(a\up{0})) = \lgfr{1\cdot 3}{1\cdot 1} = \lg(3) = h(a\up{0})$<br>
+$\H(\A \mid \t_1(a\up{0})) = \H(\fB \mid \t_1(a\up{0})) = \lg(a\up{0})$</p>
+<p>$\A\dom{b\up{0}} = \set{\set{00},\set{10},\set{20}}$<br>
+$\fB\dom{b\up{0}} = \set{\set{00,10,20},\set{}}$<br>
+$\A\dom{\t_1(b\up{0})} = \set{\set{00},\set{12},\set{21}}$<br>
+$\fB\dom{\t_1(b\up{0})} = \set{\set{00},\set{12},\set{21}}$<br>
+$\I(\A, \fB \mid b\up{0})) = 0$<br>
+$\I(\A,\fB\mid \t_1(b\up{0})) = \lg(3) = h(b\up{0})$<br>
+$\H(\A \mid \t_1(b\up{0})) = \H(\fB \mid \t_1(b\up{0})) = \lg(3)$</p>
+<p>So $\I(\A,\fB\mid \t_1(a\up{0})) = h(a\up{0})$ and $\I(\A,\fB\mid \t_1(b\up{0})) = h(b\up{0})$ which are their respective maximum values.</p>
+<h1 id="is-redundancy-fictitious">Is Redundancy Fictitious?</h1>
+<p>The appearance of copied state is due to the representation of systems that we use. Notice that my proposed definition of copying and redundancy each rely on state partitions to be provided. If we just had a universe consisting of state space $\O$ and bijective time-evolution $\t_\Dt$, without any systems defined within the universe, there would not be any apparent copying or redundancy.</p>
+<p>Take the simple copier again. I defined the state space as $\O = \set{00,01,10,11}$. The representation of theses states as binary strings begs the copying interpretation. What if instead I defined it like this:</p>
+<p>$$<br>
+\O = \set{\o_1, \o_2, \o_3, \o_4}<br>
+$$</p>
+<p>where $\t_1$ has the following I/O table:<br>
+$\o_1 \mapsto \o_1$<br>
+$\o_2 \mapsto \o_3$<br>
+$\o_3 \mapsto \o_4$<br>
+$\o_4 \mapsto \o_2$</p>
+<p>Now all that is apparent here are the cycles $\o_1 \to \o_1$ and $\o_2 \to \o_3 \to \o_4 \to \o_1$.</p>
+<p>There are two trivial systems for this universe.</p>
+<p>System T, whose states are the cycles:</p>
+<p>$$<br>
+\mf{T} = \set{\set{\o_1}, \set{\o_2, \o_3, \o_4}}\,.<br>
+$$</p>
+<p>System O, whose states are all singleton:</p>
+<p>$$<br>
+\mf{O} = \set{\set{\o_1}, \set{\o_2}, \set{\o_3}, \set{\o_4}}\,.<br>
+$$</p>
+<p>Both these systems' states never change through time, i.e. $\t_1(\set{\o_1}) = \set{\o_1}$ and $\t_1(\set{\o_2, \o_3, \o_4}) = \set{\o_2, \o_3, \o_4}$, and obviously $\t_1(\mf{O}) = \mf{O}$.</p>
+<p>It is easy to show that using any of the sets in $\mf{T}$ or $\mf{O}$ as intervention sets $J$ results in no change in redundancy over time, i.e. $\I(\mf{T}, \mf{O} \mid J) = \I(\mf{T}, \mf{O} \mid \t_\Dt(J))$ for all $\Dt$.</p>
+<p>For any universe defined by $\O$ and $\t_\Dt$, there is always a trivial system $\mf{T}$ whose states (equivalence classes) consist of the cycles on $\O$ under time evolution, and a trivial system consisting of the singleton partition $\mf{O}$ on $\O$. Both systems are always static through time, and their redundancy doesn&rsquo;t change over time. Thus, for any universe, there is always a definition of two systems s.t. copying is not taking place and redundancy is not appearing over time.</p>
+<p>Clearly, redundancy and copying are relative phenomena - specifically relative to a particular system in the universe. This begs the question: Is the delineation between systems is objective or arbitrary. That is to say, what makes system A have the particular state space $\A$, what makes system B have the particular state space $\fB$, etc. ?  See <a href="" class="broken">Preferred Representation Problem</a>.</p>
+<p>The observation of redundancy between two systems A and B implies any of</p>
+<ol>
+<li>$\I(\A, \fB) &gt; 0$, i.e. your working definition of the systems in the universe contains redundancy.</li>
+<li>$\I(\A, \fB \mid J) &gt; 0$, i.e. you are restricting the state space of the universe, i.e. making assumptions about what states the universe cannot be in.</li>
+</ol>
+<p>The observation that redundancy in the universe increases over time implies any of</p>
+<ol>
+<li>$\A\up{t+\Dt} \neq \A\up{t}$ or $\fB\up{t+\Dt} \neq \fB\up{t}$, i.e. your definition of the state spaces of systems A and B is changing over time.</li>
+<li>$\I(\A, \fB \mid \t_\Dt(J)) &gt; 0$ you are restricting the state space of the universe (making assumptions), and the time evolution of that restricted domain is causing redundancy to change over time.</li>
+</ol>
+<h1 id="the-problem-of-assumptions-in-intelligence">The Problem Of Assumptions In Intelligence</h1>
+<p>Why does our universe appear to have redundancy?</p>
+<p>Given that information copying and redundancy appear all around us, we must conclude that our brains operate on a state space with which there is naturally a lot of redundancy between systems (as we delineate them).</p>
+<p>It is important to draw a distinction between physical information that systems have (<a href="https://danabo.github.io/blog/posts/physical-information/#systems-have-information">Physical Information#systems-have-information</a>) and the conscious perception of information in intelligent and sentient systems. The former depends on the objective existence of both a universe state space $\O$ and the state space of that system, e.g. $\mf{A}$. The latter may be entirely independent of the former, i.e. an intelligent system might be aware of very different information than the system physically has. For an intelligent system to know what information it physically has would require it to have meta-information about itself, i.e. information about its own state space and state.</p>
+<p>The problem of assumptions is to explain what assumptions intelligent life make about their surroundings, and whether those assumptions are arbitrary or can be derived from some principles or evolutionary history of life on Earth. The answer to this question should also tell us what assumptions (or inductive biases or priors, to use machine learning terminology) to build into artificial intelligence in order for it to be general purpose, at least to the extent that humans are.</p>
+<h2 id="alternative-framing">Alternative framing</h2>
+<p>Another way of framing the problem of assumptions:</p>
+<p>Let $a\up{t} \in \A$ be a state of system A. Then if system A has the information $\O\tr a\up{t}$, it has information about its own future and the future of some other system B, quantified by $\I(\A, \t_\Dt(a\up{t}))$ and $\I(\fB, \t_\Dt(a\up{t}))$. Furthermore, if $\I(\mf{A}, \mf{B} \mid \t_\Dt(a\up{t})) &gt; 0$, then system A &ldquo;knows&rdquo; that system A and B will be redundant in the future, given the information $\O\tr\t_\Dt(a\up{t})$. However, when that future time arrives, system A no longer has the information $\O\tr\t_\Dt(a\up{t})$, but instead has the information $\O\tr\t_\Dt(a\up{t+\Dt})$. Note that necessarily $a\up{t}\neq a\up{t+\Dt}$ in order for $\I(\mf{A}, \mf{B} \mid \t_\Dt(a\up{t})) &gt; 0$ to hold. So although there would be redundancy between systems A and B knowing $\O\tr\t_\Dt(a\up{t})$, system A no longer has that information and the appearance of redundancy is lost when time $t+\Dt$ arrives.</p>
+<p>For redundancy to exist in the present moment, rather than the past or the future, there needs to be such an additional assumption, i.e. an a priori narrowing down of $\O$ to some smaller domain that makes otherwise orthogonal systems redundant. This assumption is not physical, as I&rsquo;ve defined physical information. Yet all living things make such assumptions in their operation. See <a href="" class="broken">The Origin Of Assumptions In Living Systems</a>.</p>
+<p>In <a href="https://danabo.github.io/blog/posts/causality-and-information/#information-about-entails-effect-on">Causality And Information#information-about-entails-effect-on</a>, I concluded that the only way for a system to have information about another system&rsquo;s future is for the former system to causally determine the latter system. However, that is clearly not true in our universe. You can look at a map and drive on a sequence of streets you&rsquo;ve never been on before, and yet you knew those streets would be there and where they would lead. You did not cause the streets to be as they were. You were able to have information about the streets because the map and the streets (as systems) have redundant information. In general, all life depends on information redundancy and environment prediction to survive and propagate. Life itself is a product of information redundancy - i.e. living organisms are self-replicators, and DNA stores the information that gets copied when an organism reproduces.</p>
+<p>Perhaps the redundancies we perceive might offer clues as to the restricted state spaces human brains consciously operate under (i.e. assumptions our brains make).</p>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/information/>information</a><a class="tag" href=https://danabo.github.io/blog/tags/physics/>physics</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#intuition-pumps">Intuition Pumps</a>
+      <ol>
+        <li><a href="#simple-copier---style-1">Simple Copier - style 1</a></li>
+        <li><a href="#simple-copier---style-2">Simple Copier - style 2</a></li>
+        <li><a href="#repeating-copier">Repeating Copier</a></li>
+        <li><a href="#mover">Mover</a></li>
+        <li><a href="#scrambler">Scrambler</a></li>
+        <li><a href="#infinite-repeating-copier---style-1">Infinite repeating copier - style 1</a></li>
+        <li><a href="#infinite-repeating-copier---style-2">Infinite repeating copier - style 2</a></li>
+      </ol>
+    </li>
+    <li><a href="#definition-of-copying">Definition of copying</a>
+      <ol>
+        <li><a href="#simple-copier-revisited">Simple copier revisited</a>
+          <ol>
+            <li><a href="#uncopying">Uncopying</a></li>
+            <li><a href="#relativity-of-redundancy">Relativity of redundancy</a></li>
+          </ol>
+        </li>
+        <li><a href="#copying-vs-redundancy">Copying vs redundancy</a></li>
+        <li><a href="#scrambler-revisited">Scrambler revisited</a></li>
+      </ol>
+    </li>
+    <li><a href="#is-redundancy-fictitious">Is Redundancy Fictitious?</a></li>
+    <li><a href="#the-problem-of-assumptions-in-intelligence">The Problem Of Assumptions In Intelligence</a>
+      <ol>
+        <li><a href="#alternative-framing">Alternative framing</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/causality-and-information/"><span class="iconfont icon-article"></span>Causality And Information</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>
