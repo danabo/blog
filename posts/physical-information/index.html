@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021<span class="lastmod"> • edited June 23, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Physical Information</h1><p class="article date">May 14, 2021<span class="lastmod"> • edited August 31, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -64,7 +64,7 @@
 \require{cancel}<br>
 $$</p>
 <p>$\newcommand{\sys}[2]{\left[#2\right]_{#1}}$</p>
-<p>I will apply to abstract physics the same information algebra I introduced in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/#defining-information">Bayesian information theory#defining-information</a> and further developed in <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>. <em>Bayesian</em> information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has <em>agenty</em> attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.</p>
+<p>I will apply to abstract physics the same information algebra I introduced in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/#defining-information">Bayesian information theory#defining-information</a> and further developed in <a href="https://danabo.github.io/blog/posts/information-algebra/">Information Algebra</a>. <em>Bayesian</em> information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (regardless of whether or not it has <em>agenty</em> attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.</p>
 <h1 id="information-preliminaries">Information Preliminaries</h1>
 <p>For sets $\O$ and $A \subseteq \O$,</p>
 <p>$$<br>
@@ -99,7 +99,7 @@ $$</p>
 
   <img src="https://danabo.github.io/blog/Pasted%20image%2020210514153113.png" alt="">
 <br>
-As a corollary, the universe has the information $\O\tr\set{\o\up{t}}$ at time $t$. The universe can be viewed as the <em>supersystem</em> with state space $\mf{O} = \set{\set{\o} \mid \o\in\O}$, the singleton partition. In this sense, the universe has total information, corresponding to narrowing down to a single state.</p>
+As a corollary, the universe has the information $\O\tr\set{\o\up{t}}$ at time $t$. The universe can be viewed as the <em>supersystem</em> with state space $\mf{O} = \set{\set{\o} \mid \o\in\O}$, the partition of singletons. In this sense, the universe has total information, corresponding to narrowing down to a single state.</p>
 <p>This definition of what it means for a system to have information will allow us to talk about what information the system has about itself and other systems at various times, as well as the information the system gains or losses about them as time evolves.</p>
 <h2 id="interactions">Interactions</h2>
 <p>If $a\up{t}$ is the state of system A at time $t$, then $\t_{\Dt}(a\up{t})$ is NOT the time-evolution of system A&rsquo;s state. A&rsquo;s state at time $t+\Dt$ is $a\up{t+\Dt}=\sys{\mf{A}}{\o\up{t+\Dt}}$ where $\o\up{t+\Dt} = \t_\Dt(\o\up{t})$. If $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt}$, then system A <strong>interacted</strong> with another system (or the environment) in the time interval $(t, t+\Dt)$. Note that by necessity, $\o\up{t+\Dt} \in \t_{\Dt}(a\up{t})\cap a\up{t+\Dt}$.</p>
@@ -107,7 +107,7 @@ As a corollary, the universe has the information $\O\tr\set{\o\up{t}}$ at time $
 
   <img src="https://danabo.github.io/blog/Pasted%20image%2020210514153146.png" alt="">
 <br>
-Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just about time $t$, but about all other points in time. Specifically, at time $t$, system A has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. It is important to distinguish between the time when a system has information and the time it has information about. So at time $t+\Dt$, system A has information $\O\tr \t_{-\Dt}(a\up{t+\Dt})$ about time $t$.</p>
+Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just about time $t$, but about all other times. Specifically, at time $t$, system A has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. It is important to distinguish between the time when a system has information and the time it has information about. So at time $t+\Dt$, system A has information $\O\tr \t_{-\Dt}(a\up{t+\Dt})$ about time $t$.</p>
 <p>If $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt}$, then system A does not have complete information about its own future state, which is the necessary result of interaction. Furthermore, $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt} \iff \t_{-\Dt}(a\up{t+\Dt}) \neq a\up{t}$, and so after system A interacted, it has forgotten information about its previous state at time $t$. That is to say, interaction causes a system to lose information about its past.</p>
 <p>
 

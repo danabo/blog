@@ -5,7 +5,7 @@
     <description>Recent content in information on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Thu, 24 Jun 2021 00:23:25 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 24 Jun 2021 14:27:52 -0500</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/tags/information/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +13,7 @@
     <item>
       <title>Redundancy And Copying</title>
       <link>https://danabo.github.io/blog/posts/redundancy-and-copying/</link>
-      <pubDate>Thu, 24 Jun 2021 00:23:25 -0500</pubDate>
+      <pubDate>Thu, 24 Jun 2021 14:27:52 -0500</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/redundancy-and-copying/</guid>
       <description>&lt;p&gt;Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is &lt;strong&gt;copied&lt;/strong&gt; (or &lt;a href=&#34;https://en.wikipedia.org/wiki/No-cloning_theorem&#34;target=&#34;_blank&#34;&gt;cloned&lt;/a&gt;) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is &lt;strong&gt;moved&lt;/strong&gt;, on the other hand, when the state of the source is transferred to the target in a way that leaves the source&amp;rsquo;s state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.&lt;/p&gt;
@@ -1341,7 +1341,7 @@ $$&lt;/p&gt;
 \require{cancel}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;$\newcommand{\sys}[2]{\left[#2\right]_{#1}}$&lt;/p&gt;
-&lt;p&gt;I will apply to abstract physics the same information algebra I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/#defining-information&#34;&gt;Bayesian information theory#defining-information&lt;/a&gt; and further developed in &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;. &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
+&lt;p&gt;I will apply to abstract physics the same information algebra I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/#defining-information&#34;&gt;Bayesian information theory#defining-information&lt;/a&gt; and further developed in &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;. &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (regardless of whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
 &lt;h1 id=&#34;information-preliminaries&#34;&gt;Information Preliminaries&lt;/h1&gt;
 &lt;p&gt;For sets $\O$ and $A \subseteq \O$,&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -1376,7 +1376,7 @@ $$&lt;/p&gt;
 
   &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153113.png&#34; alt=&#34;&#34;&gt;
 &lt;br&gt;
-As a corollary, the universe has the information $\O\tr\set{\o\up{t}}$ at time $t$. The universe can be viewed as the &lt;em&gt;supersystem&lt;/em&gt; with state space $\mf{O} = \set{\set{\o} \mid \o\in\O}$, the singleton partition. In this sense, the universe has total information, corresponding to narrowing down to a single state.&lt;/p&gt;
+As a corollary, the universe has the information $\O\tr\set{\o\up{t}}$ at time $t$. The universe can be viewed as the &lt;em&gt;supersystem&lt;/em&gt; with state space $\mf{O} = \set{\set{\o} \mid \o\in\O}$, the partition of singletons. In this sense, the universe has total information, corresponding to narrowing down to a single state.&lt;/p&gt;
 &lt;p&gt;This definition of what it means for a system to have information will allow us to talk about what information the system has about itself and other systems at various times, as well as the information the system gains or losses about them as time evolves.&lt;/p&gt;
 &lt;h2 id=&#34;interactions&#34;&gt;Interactions&lt;/h2&gt;
 &lt;p&gt;If $a\up{t}$ is the state of system A at time $t$, then $\t_{\Dt}(a\up{t})$ is NOT the time-evolution of system A&amp;rsquo;s state. A&amp;rsquo;s state at time $t+\Dt$ is $a\up{t+\Dt}=\sys{\mf{A}}{\o\up{t+\Dt}}$ where $\o\up{t+\Dt} = \t_\Dt(\o\up{t})$. If $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt}$, then system A &lt;strong&gt;interacted&lt;/strong&gt; with another system (or the environment) in the time interval $(t, t+\Dt)$. Note that by necessity, $\o\up{t+\Dt} \in \t_{\Dt}(a\up{t})\cap a\up{t+\Dt}$.&lt;/p&gt;
@@ -1384,7 +1384,7 @@ As a corollary, the universe has the information $\O\tr\set{\o\up{t}}$ at time $
 
   &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210514153146.png&#34; alt=&#34;&#34;&gt;
 &lt;br&gt;
-Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just about time $t$, but about all other points in time. Specifically, at time $t$, system A has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. It is important to distinguish between the time when a system has information and the time it has information about. So at time $t+\Dt$, system A has information $\O\tr \t_{-\Dt}(a\up{t+\Dt})$ about time $t$.&lt;/p&gt;
+Then what is $\t_{\Dt}(a\up{t})$? At time $t$, system A has information not just about time $t$, but about all other times. Specifically, at time $t$, system A has the information $\O\tr \t_{\Dt}(a\up{t})$ about time $t+\Dt$. It is important to distinguish between the time when a system has information and the time it has information about. So at time $t+\Dt$, system A has information $\O\tr \t_{-\Dt}(a\up{t+\Dt})$ about time $t$.&lt;/p&gt;
 &lt;p&gt;If $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt}$, then system A does not have complete information about its own future state, which is the necessary result of interaction. Furthermore, $\t_{\Dt}(a\up{t}) \neq a\up{t+\Dt} \iff \t_{-\Dt}(a\up{t+\Dt}) \neq a\up{t}$, and so after system A interacted, it has forgotten information about its previous state at time $t$. That is to say, interaction causes a system to lose information about its past.&lt;/p&gt;
 &lt;p&gt;
 
