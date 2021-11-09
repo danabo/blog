@@ -13,6 +13,14 @@ while getopts 'fc' flag; do
   esac
 done
 
+
+# https://unix.stackexchange.com/a/228333
+if [[ -z "$BLOG_SOURCE" ]]; then
+    echo "Must provide BLOG_SOURCE in environment" 1>&2
+    exit 1
+fi
+
+
 if [ "`git status -s`" ]
 then
     if [ "$f_flag" == "true" ]
