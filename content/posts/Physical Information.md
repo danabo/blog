@@ -1,6 +1,6 @@
 ---
 date: 2021-05-14
-lastmod: '2021-06-23T21:11:55-05:00'
+lastmod: '2021-08-31T11:53:33-05:00'
 tags:
 - physics
 - information
@@ -71,7 +71,7 @@ $\\newcommand{\\sys}\[2\]{\\left\[#2\\right\]\_{#1}}$
 
 
 
-I will apply to abstract physics the same information algebra I introduced in {{< locallink "Bayesian information theory" "defining-information" >}} and further developed in {{< locallink "Information Algebra" >}}. *Bayesian* information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (whether or not it has *agenty* attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.
+I will apply to abstract physics the same information algebra I introduced in {{< locallink "Bayesian information theory" "defining-information" >}} and further developed in {{< locallink "Information Algebra" >}}. *Bayesian* information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (regardless of whether or not it has *agenty* attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.
 
 # Information Preliminaries
 
@@ -126,7 +126,7 @@ Suppose the universe is in state $\\o\\up{t}\\in\\O$ at time $t$. Then system A,
 System A has the information $\\O \\tr a\\up{t}$, which reads "$\\O$ is narrowed down to $a\\up{t}$." System A possesses this information in a purely physical sense. System A need not have awareness or understanding that it posses information, or even the capacity for awareness or understanding of anything. Merely as a physical description, I define any system with state space $\\mf{A}$ to have the information $\\O \\tr \\sys{\\mf{A}}{\\o\\up{t}}$ at time $t$.
 
 ![](</Pasted image 20210514153113.png>)
-As a corollary, the universe has the information $\\O\\tr\\set{\\o\\up{t}}$ at time $t$. The universe can be viewed as the *supersystem* with state space $\\mf{O} = \\set{\\set{\\o} \\mid \\o\\in\\O}$, the singleton partition. In this sense, the universe has total information, corresponding to narrowing down to a single state.
+As a corollary, the universe has the information $\\O\\tr\\set{\\o\\up{t}}$ at time $t$. The universe can be viewed as the *supersystem* with state space $\\mf{O} = \\set{\\set{\\o} \\mid \\o\\in\\O}$, the partition of singletons. In this sense, the universe has total information, corresponding to narrowing down to a single state.
 
  This definition of what it means for a system to have information will allow us to talk about what information the system has about itself and other systems at various times, as well as the information the system gains or losses about them as time evolves.
 
@@ -135,7 +135,7 @@ As a corollary, the universe has the information $\\O\\tr\\set{\\o\\up{t}}$ at t
 If $a\\up{t}$ is the state of system A at time $t$, then $\\t\_{\\Dt}(a\\up{t})$ is NOT the time-evolution of system A's state. A's state at time $t+\\Dt$ is $a\\up{t+\\Dt}=\\sys{\\mf{A}}{\\o\\up{t+\\Dt}}$ where $\\o\\up{t+\\Dt} = \\t\_\\Dt(\\o\\up{t})$. If $\\t\_{\\Dt}(a\\up{t}) \\neq a\\up{t+\\Dt}$, then system A **interacted** with another system (or the environment) in the time interval $(t, t+\\Dt)$. Note that by necessity, $\\o\\up{t+\\Dt} \\in \\t\_{\\Dt}(a\\up{t})\\cap a\\up{t+\\Dt}$.
 
 ![](</Pasted image 20210514153146.png>)
-Then what is $\\t\_{\\Dt}(a\\up{t})$? At time $t$, system A has information not just about time $t$, but about all other points in time. Specifically, at time $t$, system A has the information $\\O\\tr \\t\_{\\Dt}(a\\up{t})$ about time $t+\\Dt$. It is important to distinguish between the time when a system has information and the time it has information about. So at time $t+\\Dt$, system A has information $\\O\\tr \\t\_{-\\Dt}(a\\up{t+\\Dt})$ about time $t$.
+Then what is $\\t\_{\\Dt}(a\\up{t})$? At time $t$, system A has information not just about time $t$, but about all other times. Specifically, at time $t$, system A has the information $\\O\\tr \\t\_{\\Dt}(a\\up{t})$ about time $t+\\Dt$. It is important to distinguish between the time when a system has information and the time it has information about. So at time $t+\\Dt$, system A has information $\\O\\tr \\t\_{-\\Dt}(a\\up{t+\\Dt})$ about time $t$.
 
 If $\\t\_{\\Dt}(a\\up{t}) \\neq a\\up{t+\\Dt}$, then system A does not have complete information about its own future state, which is the necessary result of interaction. Furthermore, $\\t\_{\\Dt}(a\\up{t}) \\neq a\\up{t+\\Dt} \\iff \\t\_{-\\Dt}(a\\up{t+\\Dt}) \\neq a\\up{t}$, and so after system A interacted, it has forgotten information about its previous state at time $t$. That is to say, interaction causes a system to lose information about its past.
 

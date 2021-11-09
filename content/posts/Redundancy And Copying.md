@@ -1,11 +1,13 @@
 ---
 date: 23-06-2021
-lastmod: '2021-06-24T00:23:25-05:00'
+lastmod: '2021-06-24T14:27:52-05:00'
 tags:
 - information
 - physics
 title: Redundancy And Copying
 ---
+
+
 
 
 
