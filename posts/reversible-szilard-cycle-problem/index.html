@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Is The Szilard Cycle Reversible?&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Is The Szilard Cycle Reversible?" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Is The Szilard Cycle Reversible?</h1><p class="article date">February 9, 2022</p></section><article class="article markdown-body"><p>$$<br>
+\newcommand{\D}{\Delta}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\par}[1]{\left(#1\right)}<br>
+$$</p>
+<p>This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level <a href="#overview">#Overview</a> of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to <a href="#part-i-uncopying">#Part I Uncopying</a> if you&rsquo;d rather jump right in. The question is stated at the bottom: <a href="#question">#Question</a>.</p>
+<h1 id="overview">Overview</h1>
+<p><a href="https://en.wikipedia.org/wiki/Landauer%27s_principle"target="_blank">Landauer&rsquo;s principle</a> is the conjecture that erasing physically stored data costs a minimum amount of energy, proportional to the number of bits being erased. <em>Erasure</em> here means subjecting the data storage medium (a physical system) to some process that maps all of its possible memory states to one single known state. For example, an array of computer bits might be mapped to the &ldquo;all zero&rdquo; state, 0000000&hellip; This process is performing a many-to-one mapping, i.e. many different physical states of the data storage medium have trajectories under this process that result in the same end state.</p>
+<p>The known laws of physics obey time-symmetry, meaning that trajectories starting in different states don&rsquo;t collide, i.e. given any current state, you can in principle determine what states the system occupied on any past or future time - at least given complete state information. To have a many-to-one process, the &ldquo;which state&rdquo; information being lost must actually have been moved somewhere else. In practice, when computer memory is reset, the information it had stored is dispersed into the environment. Landauer&rsquo;s principle states that this dispersion necessarily accompanies a minimum amount of energy dispersion, which is the energy required to reset the bits. This dispersion is practically irreversible.</p>
+<p>In general, thermodynamically irreversable processes, i.e. entropy increasing processes, have this same sort of many-to-one mapping that results in information loss (which is really information leakage).</p>
+<p>This made me wonder whether it is possible to erase redundantly stored data without a thermodynamic cost. C. H. Bennett in his article, <a href="https://link.springer.com/article/10.1007/BF02084158"target="_blank"><em>The thermodynamics of computation - a review</em></a> (<a href="https://www.cc.gatech.edu/computing/nano/documents/Bennett%20-%20The%20Thermodynamics%20Of%20Computation.pdf"target="_blank">alt link</a>), discusses situations when data redundancy can and cannot be reduced &ldquo;for free&rdquo;, as in, without an energy cost. He uses a toy system, called the <a href="https://en.wikipedia.org/wiki/Entropy_in_thermodynamics_and_information_theory#Szilard%27s_engine"target="_blank">Szilard engine</a>, to construct an example where memory can be erased for free (no energy cost in the ideal limit). The Szilard engine runs repetitive cycles, just as the Carnot engine (a canonical thermodynamics example) runs repetitions of the <a href="https://en.wikipedia.org/wiki/Carnot_cycle"target="_blank">Carnot cycle</a>. So from here on I&rsquo;ll refer to the Szilard cycle as the process being carried out in the Szilard engine.</p>
+<p>The Szilard cycle extracts heat from a one-particle gas to do work on a piston. To do this, a bit of physical memory is used to store the outcome of a measurement. This thought experiment is useful for drilling down into some of the connections between thermodynamics reversibility and information.</p>
+<p>In his article, Bennett shows that the process which performs the measurement and stores the outcome in a physical bit is, on its own, reversible. If that process is a copy operation, then its reverse is an <em>uncopy</em> operation, which puts the bit back in its known default state without energy cost (in the ideal setting). However, we cannot extract work from the one-particle gas if we uncopy the bit. The end of a full Szilard cycle results in the physical bit being cleared in the thermodynamically wasteful way that costs energy (at least as much energy as was extracted from the gas). Thus, we cannot extract free work from this gas, and the 2nd law of thermodynamics holds. It is only the memory erasing step which is irreversible (different from uncopying which is reversible).</p>
+<p>However, I don&rsquo;t see why the last step of the Szilard cycle cannot perform a different sort of uncopy process - one that is different from the copy process which wrote the bit, so that the work done by the gas is not undone. This appears to be a possibility because the information extracted from the gas into the bit is never lost during the Szilard cycle (see <a href="#part-ii-information-is-never-lost">#Part II Information Is Never Lost</a>), and so in principle, there is still redundant information between the gas and bit. Then for what reason can&rsquo;t an uncopy be performed?</p>
+<p>This post lays out the technical setup for my question in <a href="#part-i-uncopying">#Part I Uncopying</a> and <a href="#part-ii-information-is-never-lost">#Part II Information Is Never Lost</a>. At the bottom I am able to pose this <a href="#question">#Question</a> rigorously. I don&rsquo;t think I&rsquo;ve discovered a loop hole in the 2nd law. I fully expect that reversing the Szilard cycle is impossible, but I don&rsquo;t understand why. I would love for someone to provide me an answer. I would find that very insightful and use it improve my understanding of thermodynamics.</p>
+<h1 id="part-i-uncopying">Part I: Uncopying</h1>
+<p>The following images are taken from C. H. Bennett&rsquo;s article, <a href="https://link.springer.com/article/10.1007/BF02084158"target="_blank"><em>The thermodynamics of computation - a review</em></a>, section 5.</p>
+<h2 id="szilard-cycle">Szilard cycle</h2>
+<p>
+
+  <figure>
+    
+    <img src="https://danabo.github.io/blog/Pasted%20image%2020220207112905.png" alt="">
+    <figcaption>Szilard cycle</figcaption>
+  </figure>
+</p>
+<p>The Szilard cycle depicted above extracts kinetic energy (KE) from a particle in a box (which you could think of as a gas containing one particle) with unknown position and velocity, all the while without changing the size of the box on net (the start and end of the process have the same sized box).</p>
+<p>The steps of the Szilard cycle are:</p>
+<p>(a)<br>
+The particle is initially somewhere in the box. The box has a piston on each end (a movable wall with resistance).</p>
+<p>(b)<br>
+A barrier is placed that divides the box into two sections. We don&rsquo;t know which section the particle occupies.</p>
+<p>(c)<br>
+A measurement is taken which determines which section the particle is in. The measurement outcome is stored in a bit of physical memory depicted on the right. That bit is initialized in a known &ldquo;standard&rdquo; state S (what I previously called the default state). The measurement puts the bit into the left (L) or right (R) states, depending on which side of the box the particle occupies (from our perspective we don&rsquo;t know which state the bit is in).</p>
+<p>(d)<br>
+The which-side information, stored in our bit, is used to determine which piston to push towards the middle. If we push the piston into the particle we will transfer KE to it, thus costing us energy. We want to push the piston through a vacuum (the side without the particle), which is an energy-free operation (in the ideal limit). Then the barrier is removed. Whenever the particle collides with the piston, the piston will be pushed outwards toward the end of the box, but its resistance will cause the particle to lose some KE. The resistance is due to the piston being connected to something we care about transforming, e.g. like moving a mass up against gravity. In general, we say the piston is performing work, which is a useful application of energy.</p>
+<p>(e)<br>
+The piston is pushed all the way to the end of the box until it cannot move any further, which is its initial state in step (a). The box is now returned to its initial state, and the particle is missing some KE which we converted into useful work. However, the bit of memory we used to store the which-side measurement still has that piece of information stored in it. The final step is to put the bit into the standard state S (erasure), bringing us to (f) and completing the cycle.</p>
+<p>The memory erasure from step (e) to (f) is an irreversible process, since the information contained therein is effectively lost. <a href="https://en.wikipedia.org/wiki/Landauer%27s_principle"target="_blank">Landauer&rsquo;s principle</a> states that this irreversible erasure costs a minimum amount of energy, compensating for the apparent reduction in overall entropy of the particle-box system, thus preserving the 2nd law of thermodynamics, which states that the entropy of a system cannot be reduced for free.</p>
+<h2 id="gas-thermodynamics">Gas Thermodynamics</h2>
+<p>In classical thermodynamics, the change in entropy of a gas (with N particles) in a box, due to some process acting on the gas, is</p>
+<p>$$<br>
+\D S = c_v\ln\frac{T_f}{T_i} + R\ln\frac{V_f}{V_i}<br>
+$$</p>
+<p>where $c_v$ and $R$ are constants which depend on the kind of gas, $T_i$ and $T_f$ are respectively the initial and final temperature of the gas, and $V_i$ and $V_f$ are respectively the initial and final volumes of the gas (volumes of the box). Note that temperature and volume are equilibrium macrostates of the gas. They are not well defined when the gas is in a transitionary state, e.g. if it has uneven temperature or is not uniformly distributed across all of the free space in the box. Then the change in entropy of the gas is only well defined if the process starts and ends in equilibrium states where $T_i,T_f,V_i$ and $V_f$ are all well defined.</p>
+<p>In some sense a one-particle gas is always in equlibrium. Its temperature is just the particle&rsquo;s KE (temperature is defined as average KE across all the particles) and its volume is just the volume of space the particle can access.</p>
+<p>In the Szilard cycle, $V_i=V_f$, and $T_f = T_i - E$ where $E\geq0$ is the KE that was extracted from the particle. Then the change in entropy from start to end of the cycle is proportional to $\ln\frac{T_f}{T_i}=\lg\par{1-\frac{E}{T_i}} \leq 0$. The 2nd law of thermodynamics states that total entropy cannot decrease. Since we reduced the entropy of the gas, the entropy of some other system involved in the process must have gone up by at least the same amount. The entropy of the physical bit of memory is what must have increased.</p>
+<p>Before the memory bit is erased, we can still reverse the process and move the entropy of the bit back into the gas (see <a href="#uncopying">#Uncopying</a>). After the bit is erased, the entropy of the bit is moved into the environment, dispersed as heat energy. This is analogous to compressing an N particle gas to half of its volume, which heats up the gas enough to make the total change in entropy nonnegative, and then allowing the gas to cool down to its initial temperature by leaking heat into the environment. The gas compression and heating is reversible (an <a href="https://en.wikipedia.org/wiki/Isentropic_process"target="_blank">isentropic process</a>; <a href="https://www.youtube.com/watch?v=dQeCEqkE9eE"target="_blank">animation</a>). What is irreversible is the loss of heat energy to the environment, just like our loss of our bit of information to the environment, which also implies a necessary loss of energy to the environment by Landauer&rsquo;s principle.</p>
+<h2 id="uncopying">Uncopying</h2>
+<p>To serve as an intuition pump for how uncopying would work physically, Bennett uses a <a href="https://en.wikipedia.org/wiki/Single_domain_%28magnetic%29"target="_blank">&ldquo;one-domain ferromagnet&rdquo;</a>, which is a fancy way of saying an object with an intrinsic magnetic field (as opposed to electromagnet that requires an electric current) which is &ldquo;simple&rdquo; in its shape, specifically the magnetic field can be described by a single direction - an arrow oriented in space. I&rsquo;ll refer to this object as simply &ldquo;a magnet&rdquo;.</p>
+<p>Bennett supposes that absent any external magnetic fields, the magent&rsquo;s field direction is stable, as in it is stuck in the up or down position. This can be represented by a potential field as a function of the magent&rsquo;s angle of rotation:</p>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220207114500.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220207114500.png" 
+         alt="Potential energy as a function of rotation angle. By default we assume there are two potential wells, centered around the up and down orientations. Getting over the diving hump requires some minimum amount of energy to be put into the magnet, in the form of angular momentum." width="250"/></a></span><span class="caption">
+            <p>Potential energy as a function of rotation angle. By default we assume there are two potential wells, centered around the up and down orientations. Getting over the diving hump requires some minimum amount of energy to be put into the magnet, in the form of angular momentum.</p>
+        </span>
+</span>
+<p>This magnet is our bit of physical memory. The magnet&rsquo;s orientation stores a bit when it is in the up/down state, and is indeterminate when it has a sideways orientation.</p>
+<p>There is a simple process for copying the state of one magnetic bit onto another. In the figure below we have three magnets at play: the reference bit, the movable bit, and the data bit. The reference bit&rsquo;s state is known to us, and defines what we consider to be the default (i.e. cleared, reset, erased) state of the bit we want to write to. The data bit contains information we want to copy to the movable bit.</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020220207114316.png" alt="">
+<br>
+The movable bit starts at the top nearby the reference bit. We require that the reference and movable bits start in the same orientation (otherwise we cannot perform this process &ldquo;for free&rdquo;). The diagram to the right depicts the region of state space (i.e. phase space) to which we know the movable bit occupies. Call this the state region of the movable bit (i.e. phase region).</p>
+<p>We then push the movable bit downward through a sideways oriented magnetic field which has the effect of canceling out the magnetic field of the reference bit, causing the two potential wells to merge into one well. This transition from two to one well is smooth as the movable bit moves through the sideways magnetic field. As it moves further down towards the data bit, the single well morphs smoothly into two wells again.</p>
+<p>Notice that during the transition the potential field from two to one wells, the field is is lopsided and asymmetric:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220207120258.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220207120258.png" width="75"/></a></span>
+</span><br>
+Likewise as the movable bit approaches the data bit, the potential field becomes lopsided again, which is how the movable bit &ldquo;knows&rdquo; which of the two wells to fall into as they emerge. The orientation of the data bit determines to which direction the movable bit will fall. Thus when the movable bit is close to the data bit, they are aligned and the copy is complete.</p>
+<p>This copy process is entirely reversible. Its reverse process is called an &ldquo;uncopy&rdquo;, where the data bit (whose orientation is unknown to us) becomes the reference bit, and the reference bit (in the known default state) becomes the data bit.</p>
+<p>Without the reference bit, the transition from two and one potential wells is symmetric, and the state region &ldquo;spills over&rdquo; the hump (timeline C below), causing our uncertainty about the magnet&rsquo;s orientation to increase (corresponding to an entropy increase). This is an irreversible process.</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020220209144607.png" alt="">
+<br>
+Also, if there reference bit and movable bits begin in opposite orientations, then as the potential field becomes lopsided, it will raise up the potential well the movable bit is occupying which is opposite the one the reference bit is occupying. Lifting up a potential field under an object implies transfer of energy to that object (as potential energy). That is to say, we spend energy moving the movable bit through the sideways magnetic field. On the other hand, when the movable bit is in the &ldquo;correct&rdquo; well to start with, the bottom of that well remains at the same potential level through out the copy process, just moving sideways to the center and then to which ever well the data bit occupies.</p>
+<p>To perform the which-side measurement in the Szilard cycle, Bennett supposes the particle is charged so that the which-side information is naturally converted into magnetic orientation information. That is to say, the particle in a partition box is used as the data bit for our copy process. That copy process can be reversed with the uncopy process where the particle-box system becomes the reference bit. Note that the particle-box system is unaltered by the copy and uncopy operations.</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020220209145122.png" alt="">
+</p>
+<h1 id="part-ii-information-is-never-lost">Part II: Information Is Never Lost</h1>
+<p>(The following images and videos I made with <a href="https://www.wolfram.com/mathematica/"target="_blank">Mathematica</a> and <a href="https://slides.google.com"target="_blank">Google Slides</a>.)</p>
+<p>The Szilard cycle is a deterministic process when modeled with classical mechanics (point particles following internal trajectories and colliding with rigid objects). Non-determinism enters the picture because we do not know the particle&rsquo;s initial state. We can represent our uncertainty with the set of all initial states in which we think the particle might be, called a state region (usually &ldquo;phase&rdquo; region).</p>
+<p>This is the partitioned box and its particle as depicted by Bennett in <a href="#szilard-cycle">#Szilard cycle</a>:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220209152732.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220209152732.png" width="400"/></a></span>
+</span><br>
+This is the same partitioned box with color-coded spatial regions which the particle could potentially be initialized to. Red is the left side and blue is the right side.<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220209152749.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220209152749.png" width="400"/></a></span>
+</span></p>
+<p>Here the which-side information is depicted with color: Initial states on the left are colored red and initial states on the right are colored blue.</p>
+<p>To be more precise, we should plot phase space (state space), which for a single particle has two dimensions: position and velocity. We can then show all initial states the particle could occupy, colored-coded as &ldquo;left&rdquo; and &ldquo;right&rdquo;:<br>
+
+
+  <figure>
+    
+    <img src="https://danabo.github.io/blog/Pasted%20image%2020220209152858.png" alt="">
+    <figcaption>Phase space plot of the initial state regions, separating out positive (rightward) and negative (leftward) velocities onto the positive and negative sides of the velocity axis (vertical). This depicted state region implies we know the particle&#39;s velocity magnitude is within a certain range.</figcaption>
+  </figure>
+</p>
+<p>For simplicity, I will model the piston pushing phase (d) from the Szilard cycle as a single continuous process. That is to say, instead of having the particle bounce off the piston many times, moving it slightly in discrete jumps, I will model the collision of the particle with the piston as fully inelastic, i.e. the particle and piston stick together and move together until the piston has reached the end of the box, at which point the particle bounces off. The particle gradually loses KE and slows down as it moves with the piston.</p>
+<p>For example, the trajectory of a particle initialized on the right side with a rightward facing velocity:<br>
+<video controls autoplay loop src="../../Szilard_cycle_particle_right.mp4" caption="" width="100%"></video><br>
+The trajectory of a particle initialized on the right side with a leftward facing velocity:<br>
+<video controls autoplay loop src="../../Szilard_cycle_particle_left.mp4" caption="" width="100%"></video></p>
+<p>To show how the initial state regions (left and right sides) evolve over time, I uniformly sampled an ensemble of initial particle states and animated their trajectories over time:<br>
+<video controls autoplay loop src="../../Szilard_cycle_ensemble.mp4" caption="" width="100%"></video><br>
+It is clear from this animation that none of the trajectories overlap at any point. That means, in principle, one could determine which side the particle started in at any point in time if they could measure which color region the particle is currently in. The red and blue regions become more mixed over time, but they are always disjoint.</p>
+<p>Here at a later point in time the red and blue regions are still interlaced in a striped pattern:<br>
+<span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220209114223.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220209114223.png" width="300"/></a></span>
+</span></p>
+<h1 id="question">Question</h1>
+<p>Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (f) of the Szilard cycle to induce a reference magnetic field for an uncopy process? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle. It is not obvious to me that this uncopying would result in an increase in entropy anywhere else. Then it would appear total entropy decreased, violating the 2nd law.</p>
+<p>Much more plausible is that the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the &ldquo;gas&rdquo; to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.</p>
+<p>We could tackle this question by asking instead, is it possible to perform an observation on the particle such that only its &ldquo;color&rdquo; (which side it came from) is recorded in one bit of memory? If so, then the reverse of this process is the uncopy operation we are seeking. We already know that we could measure the particle&rsquo;s position and velocity precisely (assuming a classical particle) using, say, a camera. The &ldquo;camera process&rdquo; would write many bits to memory (including a lot more than the particle&rsquo;s state). Note that we would need to take two pictures in quick succession to capture the particles velocity. To reverse THAT process, we would need to feed as input ALL of the bits of information the camera would output in the forward direction. Without that input information, we cannot uncopy just a single bit, even if its a subset of the information.</p>
+<p>Thus, the question becomes, can we create a process that converts only the particle&rsquo;s &ldquo;color&rdquo; information into magnetic polarity for use in an uncopy process? If no such process exists, how would we prove it?</p>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/physics/>physics</a><a class="tag" href=https://danabo.github.io/blog/tags/information/>information</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#part-i-uncopying">Part I: Uncopying</a>
+      <ol>
+        <li><a href="#szilard-cycle">Szilard cycle</a></li>
+        <li><a href="#gas-thermodynamics">Gas Thermodynamics</a></li>
+        <li><a href="#uncopying">Uncopying</a></li>
+      </ol>
+    </li>
+    <li><a href="#part-ii-information-is-never-lost">Part II: Information Is Never Lost</a></li>
+    <li><a href="#question">Question</a></li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/redundancy-and-copying/"><span class="iconfont icon-article"></span>Redundancy And Copying</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>

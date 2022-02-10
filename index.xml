@@ -5,15 +5,144 @@
     <description>Recent content on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Thu, 24 Jun 2021 14:27:52 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Is The Szilard Cycle Reversible?</title>
+      <link>https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/</link>
+      <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\D}{\Delta}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level &lt;a href=&#34;#overview&#34;&gt;#Overview&lt;/a&gt; of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to &lt;a href=&#34;#part-i-uncopying&#34;&gt;#Part I Uncopying&lt;/a&gt; if you&amp;rsquo;d rather jump right in. The question is stated at the bottom: &lt;a href=&#34;#question&#34;&gt;#Question&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Landauer%27s_principle&#34;target=&#34;_blank&#34;&gt;Landauer&amp;rsquo;s principle&lt;/a&gt; is the conjecture that erasing physically stored data costs a minimum amount of energy, proportional to the number of bits being erased. &lt;em&gt;Erasure&lt;/em&gt; here means subjecting the data storage medium (a physical system) to some process that maps all of its possible memory states to one single known state. For example, an array of computer bits might be mapped to the &amp;ldquo;all zero&amp;rdquo; state, 0000000&amp;hellip; This process is performing a many-to-one mapping, i.e. many different physical states of the data storage medium have trajectories under this process that result in the same end state.&lt;/p&gt;
+&lt;p&gt;The known laws of physics obey time-symmetry, meaning that trajectories starting in different states don&amp;rsquo;t collide, i.e. given any current state, you can in principle determine what states the system occupied on any past or future time - at least given complete state information. To have a many-to-one process, the &amp;ldquo;which state&amp;rdquo; information being lost must actually have been moved somewhere else. In practice, when computer memory is reset, the information it had stored is dispersed into the environment. Landauer&amp;rsquo;s principle states that this dispersion necessarily accompanies a minimum amount of energy dispersion, which is the energy required to reset the bits. This dispersion is practically irreversible.&lt;/p&gt;
+&lt;p&gt;In general, thermodynamically irreversable processes, i.e. entropy increasing processes, have this same sort of many-to-one mapping that results in information loss (which is really information leakage).&lt;/p&gt;
+&lt;p&gt;This made me wonder whether it is possible to erase redundantly stored data without a thermodynamic cost. C. H. Bennett in his article, &lt;a href=&#34;https://link.springer.com/article/10.1007/BF02084158&#34;target=&#34;_blank&#34;&gt;&lt;em&gt;The thermodynamics of computation - a review&lt;/em&gt;&lt;/a&gt; (&lt;a href=&#34;https://www.cc.gatech.edu/computing/nano/documents/Bennett%20-%20The%20Thermodynamics%20Of%20Computation.pdf&#34;target=&#34;_blank&#34;&gt;alt link&lt;/a&gt;), discusses situations when data redundancy can and cannot be reduced &amp;ldquo;for free&amp;rdquo;, as in, without an energy cost. He uses a toy system, called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Entropy_in_thermodynamics_and_information_theory#Szilard%27s_engine&#34;target=&#34;_blank&#34;&gt;Szilard engine&lt;/a&gt;, to construct an example where memory can be erased for free (no energy cost in the ideal limit). The Szilard engine runs repetitive cycles, just as the Carnot engine (a canonical thermodynamics example) runs repetitions of the &lt;a href=&#34;https://en.wikipedia.org/wiki/Carnot_cycle&#34;target=&#34;_blank&#34;&gt;Carnot cycle&lt;/a&gt;. So from here on I&amp;rsquo;ll refer to the Szilard cycle as the process being carried out in the Szilard engine.&lt;/p&gt;
+&lt;p&gt;The Szilard cycle extracts heat from a one-particle gas to do work on a piston. To do this, a bit of physical memory is used to store the outcome of a measurement. This thought experiment is useful for drilling down into some of the connections between thermodynamics reversibility and information.&lt;/p&gt;
+&lt;p&gt;In his article, Bennett shows that the process which performs the measurement and stores the outcome in a physical bit is, on its own, reversible. If that process is a copy operation, then its reverse is an &lt;em&gt;uncopy&lt;/em&gt; operation, which puts the bit back in its known default state without energy cost (in the ideal setting). However, we cannot extract work from the one-particle gas if we uncopy the bit. The end of a full Szilard cycle results in the physical bit being cleared in the thermodynamically wasteful way that costs energy (at least as much energy as was extracted from the gas). Thus, we cannot extract free work from this gas, and the 2nd law of thermodynamics holds. It is only the memory erasing step which is irreversible (different from uncopying which is reversible).&lt;/p&gt;
+&lt;p&gt;However, I don&amp;rsquo;t see why the last step of the Szilard cycle cannot perform a different sort of uncopy process - one that is different from the copy process which wrote the bit, so that the work done by the gas is not undone. This appears to be a possibility because the information extracted from the gas into the bit is never lost during the Szilard cycle (see &lt;a href=&#34;#part-ii-information-is-never-lost&#34;&gt;#Part II Information Is Never Lost&lt;/a&gt;), and so in principle, there is still redundant information between the gas and bit. Then for what reason can&amp;rsquo;t an uncopy be performed?&lt;/p&gt;
+&lt;p&gt;This post lays out the technical setup for my question in &lt;a href=&#34;#part-i-uncopying&#34;&gt;#Part I Uncopying&lt;/a&gt; and &lt;a href=&#34;#part-ii-information-is-never-lost&#34;&gt;#Part II Information Is Never Lost&lt;/a&gt;. At the bottom I am able to pose this &lt;a href=&#34;#question&#34;&gt;#Question&lt;/a&gt; rigorously. I don&amp;rsquo;t think I&amp;rsquo;ve discovered a loop hole in the 2nd law. I fully expect that reversing the Szilard cycle is impossible, but I don&amp;rsquo;t understand why. I would love for someone to provide me an answer. I would find that very insightful and use it improve my understanding of thermodynamics.&lt;/p&gt;
+&lt;h1 id=&#34;part-i-uncopying&#34;&gt;Part I: Uncopying&lt;/h1&gt;
+&lt;p&gt;The following images are taken from C. H. Bennett&amp;rsquo;s article, &lt;a href=&#34;https://link.springer.com/article/10.1007/BF02084158&#34;target=&#34;_blank&#34;&gt;&lt;em&gt;The thermodynamics of computation - a review&lt;/em&gt;&lt;/a&gt;, section 5.&lt;/p&gt;
+&lt;h2 id=&#34;szilard-cycle&#34;&gt;Szilard cycle&lt;/h2&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220207112905.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Szilard cycle&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;The Szilard cycle depicted above extracts kinetic energy (KE) from a particle in a box (which you could think of as a gas containing one particle) with unknown position and velocity, all the while without changing the size of the box on net (the start and end of the process have the same sized box).&lt;/p&gt;
+&lt;p&gt;The steps of the Szilard cycle are:&lt;/p&gt;
+&lt;p&gt;(a)&lt;br&gt;
+The particle is initially somewhere in the box. The box has a piston on each end (a movable wall with resistance).&lt;/p&gt;
+&lt;p&gt;(b)&lt;br&gt;
+A barrier is placed that divides the box into two sections. We don&amp;rsquo;t know which section the particle occupies.&lt;/p&gt;
+&lt;p&gt;(c)&lt;br&gt;
+A measurement is taken which determines which section the particle is in. The measurement outcome is stored in a bit of physical memory depicted on the right. That bit is initialized in a known &amp;ldquo;standard&amp;rdquo; state S (what I previously called the default state). The measurement puts the bit into the left (L) or right (R) states, depending on which side of the box the particle occupies (from our perspective we don&amp;rsquo;t know which state the bit is in).&lt;/p&gt;
+&lt;p&gt;(d)&lt;br&gt;
+The which-side information, stored in our bit, is used to determine which piston to push towards the middle. If we push the piston into the particle we will transfer KE to it, thus costing us energy. We want to push the piston through a vacuum (the side without the particle), which is an energy-free operation (in the ideal limit). Then the barrier is removed. Whenever the particle collides with the piston, the piston will be pushed outwards toward the end of the box, but its resistance will cause the particle to lose some KE. The resistance is due to the piston being connected to something we care about transforming, e.g. like moving a mass up against gravity. In general, we say the piston is performing work, which is a useful application of energy.&lt;/p&gt;
+&lt;p&gt;(e)&lt;br&gt;
+The piston is pushed all the way to the end of the box until it cannot move any further, which is its initial state in step (a). The box is now returned to its initial state, and the particle is missing some KE which we converted into useful work. However, the bit of memory we used to store the which-side measurement still has that piece of information stored in it. The final step is to put the bit into the standard state S (erasure), bringing us to (f) and completing the cycle.&lt;/p&gt;
+&lt;p&gt;The memory erasure from step (e) to (f) is an irreversible process, since the information contained therein is effectively lost. &lt;a href=&#34;https://en.wikipedia.org/wiki/Landauer%27s_principle&#34;target=&#34;_blank&#34;&gt;Landauer&amp;rsquo;s principle&lt;/a&gt; states that this irreversible erasure costs a minimum amount of energy, compensating for the apparent reduction in overall entropy of the particle-box system, thus preserving the 2nd law of thermodynamics, which states that the entropy of a system cannot be reduced for free.&lt;/p&gt;
+&lt;h2 id=&#34;gas-thermodynamics&#34;&gt;Gas Thermodynamics&lt;/h2&gt;
+&lt;p&gt;In classical thermodynamics, the change in entropy of a gas (with N particles) in a box, due to some process acting on the gas, is&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\D S = c_v\ln\frac{T_f}{T_i} + R\ln\frac{V_f}{V_i}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $c_v$ and $R$ are constants which depend on the kind of gas, $T_i$ and $T_f$ are respectively the initial and final temperature of the gas, and $V_i$ and $V_f$ are respectively the initial and final volumes of the gas (volumes of the box). Note that temperature and volume are equilibrium macrostates of the gas. They are not well defined when the gas is in a transitionary state, e.g. if it has uneven temperature or is not uniformly distributed across all of the free space in the box. Then the change in entropy of the gas is only well defined if the process starts and ends in equilibrium states where $T_i,T_f,V_i$ and $V_f$ are all well defined.&lt;/p&gt;
+&lt;p&gt;In some sense a one-particle gas is always in equlibrium. Its temperature is just the particle&amp;rsquo;s KE (temperature is defined as average KE across all the particles) and its volume is just the volume of space the particle can access.&lt;/p&gt;
+&lt;p&gt;In the Szilard cycle, $V_i=V_f$, and $T_f = T_i - E$ where $E\geq0$ is the KE that was extracted from the particle. Then the change in entropy from start to end of the cycle is proportional to $\ln\frac{T_f}{T_i}=\lg\par{1-\frac{E}{T_i}} \leq 0$. The 2nd law of thermodynamics states that total entropy cannot decrease. Since we reduced the entropy of the gas, the entropy of some other system involved in the process must have gone up by at least the same amount. The entropy of the physical bit of memory is what must have increased.&lt;/p&gt;
+&lt;p&gt;Before the memory bit is erased, we can still reverse the process and move the entropy of the bit back into the gas (see &lt;a href=&#34;#uncopying&#34;&gt;#Uncopying&lt;/a&gt;). After the bit is erased, the entropy of the bit is moved into the environment, dispersed as heat energy. This is analogous to compressing an N particle gas to half of its volume, which heats up the gas enough to make the total change in entropy nonnegative, and then allowing the gas to cool down to its initial temperature by leaking heat into the environment. The gas compression and heating is reversible (an &lt;a href=&#34;https://en.wikipedia.org/wiki/Isentropic_process&#34;target=&#34;_blank&#34;&gt;isentropic process&lt;/a&gt;; &lt;a href=&#34;https://www.youtube.com/watch?v=dQeCEqkE9eE&#34;target=&#34;_blank&#34;&gt;animation&lt;/a&gt;). What is irreversible is the loss of heat energy to the environment, just like our loss of our bit of information to the environment, which also implies a necessary loss of energy to the environment by Landauer&amp;rsquo;s principle.&lt;/p&gt;
+&lt;h2 id=&#34;uncopying&#34;&gt;Uncopying&lt;/h2&gt;
+&lt;p&gt;To serve as an intuition pump for how uncopying would work physically, Bennett uses a &lt;a href=&#34;https://en.wikipedia.org/wiki/Single_domain_%28magnetic%29&#34;target=&#34;_blank&#34;&gt;&amp;ldquo;one-domain ferromagnet&amp;rdquo;&lt;/a&gt;, which is a fancy way of saying an object with an intrinsic magnetic field (as opposed to electromagnet that requires an electric current) which is &amp;ldquo;simple&amp;rdquo; in its shape, specifically the magnetic field can be described by a single direction - an arrow oriented in space. I&amp;rsquo;ll refer to this object as simply &amp;ldquo;a magnet&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Bennett supposes that absent any external magnetic fields, the magent&amp;rsquo;s field direction is stable, as in it is stuck in the up or down position. This can be represented by a potential field as a function of the magent&amp;rsquo;s angle of rotation:&lt;/p&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220207114500.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220207114500.png&#34; 
+         alt=&#34;Potential energy as a function of rotation angle. By default we assume there are two potential wells, centered around the up and down orientations. Getting over the diving hump requires some minimum amount of energy to be put into the magnet, in the form of angular momentum.&#34; width=&#34;250&#34;/&gt;&lt;/a&gt;&lt;/span&gt;&lt;span class=&#34;caption&#34;&gt;
+            &lt;p&gt;Potential energy as a function of rotation angle. By default we assume there are two potential wells, centered around the up and down orientations. Getting over the diving hump requires some minimum amount of energy to be put into the magnet, in the form of angular momentum.&lt;/p&gt;
+        &lt;/span&gt;
+&lt;/span&gt;
+&lt;p&gt;This magnet is our bit of physical memory. The magnet&amp;rsquo;s orientation stores a bit when it is in the up/down state, and is indeterminate when it has a sideways orientation.&lt;/p&gt;
+&lt;p&gt;There is a simple process for copying the state of one magnetic bit onto another. In the figure below we have three magnets at play: the reference bit, the movable bit, and the data bit. The reference bit&amp;rsquo;s state is known to us, and defines what we consider to be the default (i.e. cleared, reset, erased) state of the bit we want to write to. The data bit contains information we want to copy to the movable bit.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220207114316.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+The movable bit starts at the top nearby the reference bit. We require that the reference and movable bits start in the same orientation (otherwise we cannot perform this process &amp;ldquo;for free&amp;rdquo;). The diagram to the right depicts the region of state space (i.e. phase space) to which we know the movable bit occupies. Call this the state region of the movable bit (i.e. phase region).&lt;/p&gt;
+&lt;p&gt;We then push the movable bit downward through a sideways oriented magnetic field which has the effect of canceling out the magnetic field of the reference bit, causing the two potential wells to merge into one well. This transition from two to one well is smooth as the movable bit moves through the sideways magnetic field. As it moves further down towards the data bit, the single well morphs smoothly into two wells again.&lt;/p&gt;
+&lt;p&gt;Notice that during the transition the potential field from two to one wells, the field is is lopsided and asymmetric:&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220207120258.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220207120258.png&#34; width=&#34;75&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+Likewise as the movable bit approaches the data bit, the potential field becomes lopsided again, which is how the movable bit &amp;ldquo;knows&amp;rdquo; which of the two wells to fall into as they emerge. The orientation of the data bit determines to which direction the movable bit will fall. Thus when the movable bit is close to the data bit, they are aligned and the copy is complete.&lt;/p&gt;
+&lt;p&gt;This copy process is entirely reversible. Its reverse process is called an &amp;ldquo;uncopy&amp;rdquo;, where the data bit (whose orientation is unknown to us) becomes the reference bit, and the reference bit (in the known default state) becomes the data bit.&lt;/p&gt;
+&lt;p&gt;Without the reference bit, the transition from two and one potential wells is symmetric, and the state region &amp;ldquo;spills over&amp;rdquo; the hump (timeline C below), causing our uncertainty about the magnet&amp;rsquo;s orientation to increase (corresponding to an entropy increase). This is an irreversible process.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220209144607.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+Also, if there reference bit and movable bits begin in opposite orientations, then as the potential field becomes lopsided, it will raise up the potential well the movable bit is occupying which is opposite the one the reference bit is occupying. Lifting up a potential field under an object implies transfer of energy to that object (as potential energy). That is to say, we spend energy moving the movable bit through the sideways magnetic field. On the other hand, when the movable bit is in the &amp;ldquo;correct&amp;rdquo; well to start with, the bottom of that well remains at the same potential level through out the copy process, just moving sideways to the center and then to which ever well the data bit occupies.&lt;/p&gt;
+&lt;p&gt;To perform the which-side measurement in the Szilard cycle, Bennett supposes the particle is charged so that the which-side information is naturally converted into magnetic orientation information. That is to say, the particle in a partition box is used as the data bit for our copy process. That copy process can be reversed with the uncopy process where the particle-box system becomes the reference bit. Note that the particle-box system is unaltered by the copy and uncopy operations.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220209145122.png&#34; alt=&#34;&#34;&gt;
+&lt;/p&gt;
+&lt;h1 id=&#34;part-ii-information-is-never-lost&#34;&gt;Part II: Information Is Never Lost&lt;/h1&gt;
+&lt;p&gt;(The following images and videos I made with &lt;a href=&#34;https://www.wolfram.com/mathematica/&#34;target=&#34;_blank&#34;&gt;Mathematica&lt;/a&gt; and &lt;a href=&#34;https://slides.google.com&#34;target=&#34;_blank&#34;&gt;Google Slides&lt;/a&gt;.)&lt;/p&gt;
+&lt;p&gt;The Szilard cycle is a deterministic process when modeled with classical mechanics (point particles following internal trajectories and colliding with rigid objects). Non-determinism enters the picture because we do not know the particle&amp;rsquo;s initial state. We can represent our uncertainty with the set of all initial states in which we think the particle might be, called a state region (usually &amp;ldquo;phase&amp;rdquo; region).&lt;/p&gt;
+&lt;p&gt;This is the partitioned box and its particle as depicted by Bennett in &lt;a href=&#34;#szilard-cycle&#34;&gt;#Szilard cycle&lt;/a&gt;:&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209152732.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209152732.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+This is the same partitioned box with color-coded spatial regions which the particle could potentially be initialized to. Red is the left side and blue is the right side.&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209152749.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209152749.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Here the which-side information is depicted with color: Initial states on the left are colored red and initial states on the right are colored blue.&lt;/p&gt;
+&lt;p&gt;To be more precise, we should plot phase space (state space), which for a single particle has two dimensions: position and velocity. We can then show all initial states the particle could occupy, colored-coded as &amp;ldquo;left&amp;rdquo; and &amp;ldquo;right&amp;rdquo;:&lt;br&gt;
+
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220209152858.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Phase space plot of the initial state regions, separating out positive (rightward) and negative (leftward) velocities onto the positive and negative sides of the velocity axis (vertical). This depicted state region implies we know the particle&amp;#39;s velocity magnitude is within a certain range.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;For simplicity, I will model the piston pushing phase (d) from the Szilard cycle as a single continuous process. That is to say, instead of having the particle bounce off the piston many times, moving it slightly in discrete jumps, I will model the collision of the particle with the piston as fully inelastic, i.e. the particle and piston stick together and move together until the piston has reached the end of the box, at which point the particle bounces off. The particle gradually loses KE and slows down as it moves with the piston.&lt;/p&gt;
+&lt;p&gt;For example, the trajectory of a particle initialized on the right side with a rightward facing velocity:&lt;br&gt;
+&lt;video controls autoplay loop src=&#34;../../Szilard_cycle_particle_right.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;br&gt;
+The trajectory of a particle initialized on the right side with a leftward facing velocity:&lt;br&gt;
+&lt;video controls autoplay loop src=&#34;../../Szilard_cycle_particle_left.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;/p&gt;
+&lt;p&gt;To show how the initial state regions (left and right sides) evolve over time, I uniformly sampled an ensemble of initial particle states and animated their trajectories over time:&lt;br&gt;
+&lt;video controls autoplay loop src=&#34;../../Szilard_cycle_ensemble.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;br&gt;
+It is clear from this animation that none of the trajectories overlap at any point. That means, in principle, one could determine which side the particle started in at any point in time if they could measure which color region the particle is currently in. The red and blue regions become more mixed over time, but they are always disjoint.&lt;/p&gt;
+&lt;p&gt;Here at a later point in time the red and blue regions are still interlaced in a striped pattern:&lt;br&gt;
+&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209114223.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209114223.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;question&#34;&gt;Question&lt;/h1&gt;
+&lt;p&gt;Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (f) of the Szilard cycle to induce a reference magnetic field for an uncopy process? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle. It is not obvious to me that this uncopying would result in an increase in entropy anywhere else. Then it would appear total entropy decreased, violating the 2nd law.&lt;/p&gt;
+&lt;p&gt;Much more plausible is that the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the &amp;ldquo;gas&amp;rdquo; to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.&lt;/p&gt;
+&lt;p&gt;We could tackle this question by asking instead, is it possible to perform an observation on the particle such that only its &amp;ldquo;color&amp;rdquo; (which side it came from) is recorded in one bit of memory? If so, then the reverse of this process is the uncopy operation we are seeking. We already know that we could measure the particle&amp;rsquo;s position and velocity precisely (assuming a classical particle) using, say, a camera. The &amp;ldquo;camera process&amp;rdquo; would write many bits to memory (including a lot more than the particle&amp;rsquo;s state). Note that we would need to take two pictures in quick succession to capture the particles velocity. To reverse THAT process, we would need to feed as input ALL of the bits of information the camera would output in the forward direction. Without that input information, we cannot uncopy just a single bit, even if its a subset of the information.&lt;/p&gt;
+&lt;p&gt;Thus, the question becomes, can we create a process that converts only the particle&amp;rsquo;s &amp;ldquo;color&amp;rdquo; information into magnetic polarity for use in an uncopy process? If no such process exists, how would we prove it?&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Redundancy And Copying</title>
       <link>https://danabo.github.io/blog/posts/redundancy-and-copying/</link>
-      <pubDate>Thu, 24 Jun 2021 14:27:52 -0500</pubDate>
+      <pubDate>Thu, 24 Jun 2021 12:27:52 -0700</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/redundancy-and-copying/</guid>
       <description>&lt;p&gt;Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is &lt;strong&gt;copied&lt;/strong&gt; (or &lt;a href=&#34;https://en.wikipedia.org/wiki/No-cloning_theorem&#34;target=&#34;_blank&#34;&gt;cloned&lt;/a&gt;) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is &lt;strong&gt;moved&lt;/strong&gt;, on the other hand, when the state of the source is transferred to the target in a way that leaves the source&amp;rsquo;s state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.&lt;/p&gt;
@@ -3531,284 +3660,6 @@ $$&lt;/p&gt;
 &lt;h1 id=&#34;the-bayesian-axiom&#34;&gt;The Bayesian Axiom&lt;/h1&gt;
 &lt;p&gt;This epistemological debate is still raging. The efficacy of classical reasoning has been argued about for the last two and a half millennia. Bayesian reasoning is a more modern invention that, depending on how you count it, has been going on for 100 to 300 years (early 20th century Bayesians to Thomas Bayes). The frontier of contemporary inquery is the complex: from brains to human societies to high-dimensional physical systems, the neat and orderly unique-determination of classical reasoning is hard to come by. For this reason, Bayesian reasoning is gaining traction and is posturing to topple classical reasoning as the common-sense epistemological default.&lt;/p&gt;
 &lt;p&gt;Given the unsettled nature of these questions, it is my opinion that the &amp;ldquo;state-counts as knowledge&amp;rdquo; premise be taken as the &amp;ldquo;Bayesian axiom&amp;rdquo;. This neatly delineates classical and Bayesian epistemology down to one difference: Bayesian epistemology is classical epistemology plus an additional axiom. Some may accept this axiom and other&amp;rsquo;s may reject it, leading to different kinds of reasoning and knowledge. I don&amp;rsquo;t know if we will ever be able to determine that this axiom should or should not be used. In that case, like &lt;a href=&#34;https://en.wikipedia.org/wiki/Parallel_postulate&#34;target=&#34;_blank&#34;&gt;Euclid&amp;rsquo;s fifth axiom&lt;/a&gt;, &amp;ldquo;flat&amp;rdquo; and &amp;ldquo;curved&amp;rdquo; rationality shall forever remain parallel self-consistent options.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Variational Solomonoff Induction</title>
-      <link>https://danabo.github.io/blog/posts/variational-solomonoff-induction/</link>
-      <pubDate>Thu, 18 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/variational-solomonoff-induction/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
-\newcommand{\mb}{\mathbb}&lt;br&gt;
-\newcommand{\mc}{\mathcal}&lt;br&gt;
-\newcommand{\E}{\mb{E}}&lt;br&gt;
-\newcommand{\B}{\mb{B}}&lt;br&gt;
-\newcommand{\R}{\mb{R}}&lt;br&gt;
-\newcommand{\kl}[2]{D_{KL}\left(#1\ \| \ #2\right)}&lt;br&gt;
-\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }&lt;br&gt;
-\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }&lt;br&gt;
-\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
-\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
-\newcommand{\ve}{\varepsilon}&lt;br&gt;
-\newcommand{\t}{\theta}&lt;br&gt;
-\newcommand{\T}{\Theta}&lt;br&gt;
-\newcommand{\o}{\omega}&lt;br&gt;
-\newcommand{\O}{\Omega}&lt;br&gt;
-\newcommand{\sm}{\mathrm{softmax}}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;The &lt;a href=&#34;https://en.wikipedia.org/wiki/Free_energy_principle&#34;target=&#34;_blank&#34;&gt;free energy principle&lt;/a&gt; is a &lt;a href=&#34;https://en.wikipedia.org/wiki/Variational_Bayesian_methods&#34;target=&#34;_blank&#34;&gt;variational Bayesian method&lt;/a&gt; for approximating posteriors. Can free energy minimization combined with program synthesis methods from machine learning tractably approximate &lt;a href=&#34;https://en.wikipedia.org/wiki/Solomonoff%27s_theory_of_inductive_inference&#34;target=&#34;_blank&#34;&gt;Solomonoff induction&lt;/a&gt; (i.e. universal inference)? In these notes, I explore what the combination of these ideas looks like.&lt;/p&gt;
-&lt;h1 id=&#34;machine-learning&#34;&gt;Machine learning&lt;/h1&gt;
-&lt;p&gt;I want to make an important clarification about &amp;ldquo;Bayesian machine learning&amp;rdquo;. First, I&amp;rsquo;ll briefly define some &amp;ldquo;modes&amp;rdquo; of machine learning.&lt;/p&gt;
-&lt;p&gt;In parametric machine learning, we have a function $f_\t$ parametrized by $\t\in\T$. Let $q_\t(D)$ be a probability distribution on datasets $D$ defined in terms of $f_\t$. For supervised learning, $q_\t(D) = \prod_{(x,y)\in D} Pr(y; f_\t(x))$ is the product of probabilities of each target $y$ given distribution parameters $f_\t(x)$, e.g. $f_\t(x)$ returns the mean and variance of a Gaussian over $y$. For unsupervised learning, $f_\t(x)$ might return a real number which serves as the log-probability of each $x \in D$. In general $f_\t$ can be any kind of parametric ML model, but these days it is likely to be a neural network.&lt;/p&gt;
-&lt;p&gt;Typical usage &amp;ldquo;modes&amp;rdquo; of $q_\t$ in machine learning:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;MLE&lt;/strong&gt; (&lt;a href=&#34;https://en.wikipedia.org/wiki/Maximum_likelihood_estimation&#34;target=&#34;_blank&#34;&gt;maximum likelihood&lt;/a&gt;): Training produces hypothesis with highest data likelihood.
-&lt;ul&gt;
-&lt;li&gt;$\t\in\T$ is a hypothesis.&lt;/li&gt;
-&lt;li&gt;$\t^* = \argmax{\t}\log q_\t(D)$ for dataset $D$.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MAP&lt;/strong&gt; (&lt;a href=&#34;https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation&#34;target=&#34;_blank&#34;&gt;maximum a posteriori&lt;/a&gt;): Training produces model with highest posterior probability.
-&lt;ul&gt;
-&lt;li&gt;$\t\in\T$ is a hypothesis.&lt;/li&gt;
-&lt;li&gt;$\t^* = \argmax{\t}\left[\log q_\t(D) + \log p(\t)\right]$ for dataset $D$ and prior $p(\t)$.&lt;/li&gt;
-&lt;li&gt;$\log p(\t)$ can be viewed as a &lt;a href=&#34;https://en.wikipedia.org/wiki/Regularization_%28mathematics%29&#34;target=&#34;_blank&#34;&gt;regularizer&lt;/a&gt;. MAP is just MLE plus regularization - the most typical form of parametric machine learning.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Bayesian Inference&lt;/strong&gt;: Prior over the parameter induces a posterior over parameters given data.
-&lt;ul&gt;
-&lt;li&gt;$\t\in\T$ is a hypothesis.&lt;/li&gt;
-&lt;li&gt;$p(\t \mid D) = \frac{q_\t(D) p(\t)}{\int_\T q_\t(D) p(\t) d\t}$ is the exact posterior on hypotheses $\T$ given dataset $D$.&lt;/li&gt;
-&lt;li&gt;Unlike in MLE and MAP, there is no notion of optimal parameter $\t^*$. Instead we have much more information: $p(\t \mid D)$ &amp;ldquo;scores&amp;rdquo; every parameter in $\T$, and all the scores taken together constitute our information.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Variational Bayes&lt;/strong&gt; (free energy minimization): training produces a (approximate) posterior distribution over hypotheses.
-&lt;ul&gt;
-&lt;li&gt;$z \in \mc{Z}$ is a hypothesis.&lt;/li&gt;
-&lt;li&gt;$\tilde{\t} = \argmin{\t}\kl{q_\t(z)}{p(z \mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.&lt;/li&gt;
-&lt;li&gt;$\t^* = \argmin{\t}\kl{q_\t(z)}{p(z)} - \E_{z\sim q_\t(z)}\left[\lg p(D \mid z)\right]$ is the approximation. This is what we find through optimization.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The variational Bayes &amp;ldquo;usage mode&amp;rdquo; is clearly different from the others. MLE and MAP are fitting $f_\t$ to the data, i.e. finding a single $\t^*\in\T$ that maximizes the probability of the data under $q_\t$. Bayesian inference is finding a distribution $p(\t \mid D)$ on $\T$ which represents the model&amp;rsquo;s beliefs about various parameters $\t\in\T$ being likely or unlikely as explanations of the data. This is not the same as fitting $f_\t$ to data, since we are not choosing any particular parameter in $\T$. Variational Bayes uses $q_{\t^*}$ as an approximation of $p(\t \mid D)$, where $\t^*\in\T$ is the optimal parameter of distribution $q_\t(z)$ and $z\in\mc{Z}$ is a hypothesis.&lt;/p&gt;
-&lt;p&gt;In the first three modes, $\T$ are hypotheses and we are either selecting one or finding a distribution over them. In the variational Bayes mode, $\T$ are not hypotheses. Instead we introduce $\mc{Z}$ as the hypothesis space and $\T$ is the parameter space for the approximate posterior $q_\t(z)$ on $\mc{Z}$, i.e. $q_\t(z)$ approximates $p(z\mid D)$. We don&amp;rsquo;t have $\mc{Z}$ in the first three modes, and we are interested in $p(\t \mid D)$ rather than $p(z \mid D)$. Also in the first three modes, $q_\t(D)$ is a distribution on what is observed, datasets $D$, rather than over latent $\mc{Z}$.&lt;/p&gt;
-&lt;h2 id=&#34;what-is-bayesian-machine-learning&#34;&gt;What is Bayesian machine learning?&lt;/h2&gt;
-&lt;p&gt;Conventionally, a Bayesian model has a prior probability distribution over it&amp;rsquo;s parameters, and inference involves finding posterior distributions. This corresponds to the Bayesian inference mode above. Out of the four modes, MLE is definitively non-Bayesian. MAP might be called semi-Bayesian, simply because there is a prior on parameters $p(\t)$, but only the argmax of the posterior is being found, rather than a full posterior. The variational Bayes mode is where things get wonky. There are two models: $q_\t(z)$ and $p(z, D)$. The first is parametrized and is optimized greedily with something like gradient descent, as in the MLE or MAP cases. The second is Bayesian.&lt;/p&gt;
-&lt;p&gt;Is variational Bayes a Bayesian ML method? In one sense yes, in another sense no. It&amp;rsquo;s efficacy depends on $q_\t(z)$ being a good approximation of the posterior $p(z \mid D)$, and whether $q_\t(z)$ is a good approximation depends on the efficacy of the chosen machine learning method (e.g. neural networks trained with gradient descent). I&amp;rsquo;d expect $q_\t(z)$ to be a non-Bayesian model (If it were Bayesian, how then do you tractably approximate it? That is the very thing we are trying to do with $p(z, D)$.) So then the efficacy of variational Bayes comes down to the properties of non-Bayesian machine learning. If at the end of the day, point-estimates of parameters are always doing the heavy lifting (i.e. generalizing well), why be Bayesian in the first place?&lt;/p&gt;
-&lt;h1 id=&#34;solomonoff-induction&#34;&gt;Solomonoff induction&lt;/h1&gt;
-&lt;p&gt;I learned about this topic from &lt;a href=&#34;https://www.springer.com/gp/book/9781489984456&#34;target=&#34;_blank&#34;&gt;An Introduction to Kolmogorov Complexity and Its Applications&lt;/a&gt; and &lt;a href=&#34;http://www.hutter1.net/ai/uaibook.htm&#34;target=&#34;_blank&#34;&gt;Universal Artificial Intelligence&lt;/a&gt;. I recommend both books as references.&lt;/p&gt;
-&lt;p&gt;There are different formulations of Solomonoff induction, each utilizing a hypothesis space containing all programs - but different kinds of programs for each formulation. I outline three of them: &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt;, &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt;, &lt;a href=&#34;#version-3&#34;&gt;#Version 3&lt;/a&gt;. Only an understanding of &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt; is needed for the subsequent sections.&lt;/p&gt;
-&lt;h2 id=&#34;notation&#34;&gt;Notation&lt;/h2&gt;
-&lt;p&gt;Let $\B = \{0,1\}$ be the binary alphabet, $\B^n$ be the set of all length-$n$ binary strings, and $\B^\infty$ be the set of all infinite binary strings.&lt;/p&gt;
-&lt;p&gt;Let $\B^* = \B^0 \times \B^1 \times \B^2 \times \B^3 \times\ldots$ be the set of all finite binary strings of any length.&lt;br&gt;
-$\epsilon$ is the empty string, i.e. $\B^0 = \{\epsilon\}$.&lt;/p&gt;
-&lt;p&gt;Let $x \sqsubseteq y$ denote that binary string $x$ is a prefix of (or equal to) binary string $y$.&lt;br&gt;
-Let $x`y$ denote the string concatenation of $x$ and $y$.&lt;br&gt;
-Let $x_{a:b}$ denote the slice of $x$ from position $a$ to $b$ (inclusive).&lt;br&gt;
-Let $x_{&amp;lt;n} = x_{1:n-1}$ denote the prefix of $x$ up to $n-1$.&lt;br&gt;
-Let $x_{&amp;gt;n} = x_{n+1:\infty}$ denote the &amp;ldquo;tail&amp;rdquo; of $x$ starting from $n+1$.&lt;/p&gt;
-&lt;h2 id=&#34;version-1&#34;&gt;Version 1&lt;/h2&gt;
-&lt;p&gt;Let $U$ be a universal machine, i.e. if $z\in\B^*$ is a program then $U(z) \in \B^*$ is some binary string, or $U(z)$ is undefined because $U$ does not halt on $z$. We do not give program $z$ input, but $z$ can include &amp;ldquo;data&amp;rdquo;, in the sense that it&amp;rsquo;s program specifies a binary string that gets loaded into memory when the program starts.&lt;/p&gt;
-&lt;p&gt;Let $p(z)$  be a prior on finite binary strings.&lt;br&gt;
-Then for observation $x \in \B^*$,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$p(x \mid z) = \begin{cases}1 &amp;amp; x \sqsubseteq U(z) \\ 0 &amp;amp; \mathrm{otherwise}\end{cases}$&lt;/li&gt;
-&lt;li&gt;$p(z, x) = p(x \mid z)p(z) = \begin{cases}p(z) &amp;amp; x \sqsubseteq U(z) \\ 0 &amp;amp; \mathrm{otherwise}\end{cases}$&lt;/li&gt;
-&lt;li&gt;$p(x) = \sum_{z\in\B^*} p(x,z) = \sum_{z \in \B^*;\ x \sqsubseteq U(z)} p(z)$&lt;/li&gt;
-&lt;li&gt;$p(z \mid x) = p(z, x)/p(x) = \begin{cases}p(z)/p(x) &amp;amp; x \sqsubseteq U(z) \\ 0 &amp;amp; \mathrm{otherwise}\end{cases}$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;$p(x)$ is the data probability.&lt;br&gt;
-$p(z)$ is the prior.&lt;br&gt;
-$p(z\mid x)$ is the posterior.&lt;/p&gt;
-&lt;p&gt;If we observe $x \in \B^*$, we may ask for the probability of subsequently observing some $y\in\B^*$:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(y \mid x) &amp;amp;= \frac{1}{p(x)}\sum_{z\in\B^*}p(x`y,z) \\&lt;br&gt;
-&amp;amp;= \frac{1}{p(x)}\sum_{z \in \B^*;\ x`y \sqsubseteq U(z)} p(z) \\&lt;br&gt;
-&amp;amp;= \sum_{z \in \B^*;\ x`y \sqsubseteq U(z)} p(z \mid x)\,.&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;What prior $p(z)$ should we choose? Solomonoff recommends&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(z) = 2^{-\ell(z)}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $\ell(z)$ is the length of program $z$. This has the effect of putting more prior probability on short programs, essentially encoding a preference for &amp;ldquo;simple&amp;rdquo; explanations of the data. This prior also has the benefit that it is fast to calculate $p(z)$ for any $z$. In general, choice of prior is a matter of taste, and should depend on practical considerations like tractability and regularizations such as &amp;ldquo;simplicity&amp;rdquo;.&lt;/p&gt;
-&lt;h2 id=&#34;version-2&#34;&gt;Version 2&lt;/h2&gt;
-&lt;p&gt;Let $\mu$ be a probability measure on $\B^\infty$, meaning $\mu$ maps (measurable) subsets of $\B^\infty$ to probabilities. $\mu$ can be specified by defining it&amp;rsquo;s value on the &lt;strong&gt;cylinder sets&lt;/strong&gt; $\Gamma_x = \set{\o \in \B^\infty \mid x \sqsubset \o}$ for every $x\in\B^*$, i.e. the set of all infinite binary strings starting with $x$. I&amp;rsquo;ll let $\mu(x)$ be a shorthand denoting $\mu(\Gamma_x)$. Then $\mu(x)$ is the probability of finite string $x$. For any such measure $\mu$, it must be the case that&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mu(x) = \mu(x`0) + \mu(x`1)\,,&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;and&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mu(x) \geq \mu(x`y)\,,&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;for all $x,y\in\B^*$.&lt;/p&gt;
-&lt;p&gt;$\mu$ is a &lt;strong&gt;semimeasure&lt;/strong&gt; iff it satisfies&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mu(x) \geq \mu(x`0) + \mu(x`1)&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;for all $x \in \B^*$. That is to say, if $\mu$ is a semimeasure then probabilities may sum to less than one (this is like supposing that some probability goes missing).&lt;/p&gt;
-&lt;p&gt;The following are equivalent:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$\mu$ is &lt;strong&gt;computable&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;There exists some program which computes the probability $\mu(x)$ for all inputs $x$.&lt;/li&gt;
-&lt;li&gt;There exists some program which outputs $x$ with probability $\mu(x)$ (for all $x$) when given uniform random input bits.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;$\mu$ is &lt;strong&gt;semicomputable&lt;/strong&gt; (a.k.a. enumerable) if there exists some program which approximates the probability $\mu(x)$ (for all $x$) by outputting a sequence of rational numbers $\set{\hat{p}_n}$ approaching $\mu(x)$, but where it is impossible to determine how close the sequence is to $\mu(x)$ at any point in time. That is to say, you cannot know the error sequence $\varepsilon_n = \abs{\mu(x) - \hat{p}_n}$, but you know that $\varepsilon_n \to 0$ as $n\to\infty$. In contrast, if $\mu$ is computable then there exists a program that outputs both the sequence of rationals $\set{\hat{p}_n}$ AND the errors $\set{\varepsilon_n}$ (computability implies there exists a program that takes a desired error $\varepsilon&amp;gt;0$ as input and outputs in finite time (i.e. halts) the corresponding approximation $\hat{p}$ s.t. $\varepsilon&amp;gt;\abs{\mu(x)-\hat{p}}$).&lt;/p&gt;
-&lt;p&gt;Let $\mc{M}$ be the set of all semicomputable semimeasures on infinite binary sequences. Let $p(\mu)$ be a prior on $\mc{M}$.&lt;/p&gt;
-&lt;p&gt;Then for observation $x \in \B^*$,&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$p(x \mid \mu) = \mu(x)$&lt;/li&gt;
-&lt;li&gt;$p(x, \mu) = p(x \mid \mu)p(\mu) = p(\mu)\mu(x)$&lt;/li&gt;
-&lt;li&gt;$p(x) = \sum_{\mu \in \mc{M}} p(x \mid \mu) = \sum_{\mu \in \mc{M}} p(\mu)\mu(x)$&lt;/li&gt;
-&lt;li&gt;$p(\mu \mid x) = p(\mu)\frac{\mu(x)}{p(x)}$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;$p(x)$ is the data probability.&lt;br&gt;
-$p(\mu)$ is the prior.&lt;br&gt;
-$p(\mu\mid x)$ is the posterior.&lt;/p&gt;
-&lt;p&gt;If we observe $x \in \B^*$, we may ask for the probability of subsequently observing some $y\in\B^*$:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(y \mid x) &amp;amp;= \sum_{\mu \in \mc{M}} p(y,\mu\mid x) \\&lt;br&gt;
-&amp;amp;= \sum_{\mu \in \mc{M}} p(\mu\mid x)\mu(y \mid x) \\&lt;br&gt;
-&amp;amp;= \sum_{\mu \in \mc{M}}p(\mu)\frac{\mu(x)}{p(x)}\mu(y\mid x)\,.&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;$\mc{M}$ is all semicomputable semimeasures, rather than all computable measures, because the former is a decidable set while the latter is not, i.e. in practice the former set of hypotheses can be feasibly enumerated by enumerating all programs, while the latter cannot be. If we required only measures, then we could not decide which programs produced proper measures (if the program doesn&amp;rsquo;t halt on $x$, that is like saying the probability that would have gone to strings starting with $x$ &amp;ldquo;disappears&amp;rdquo;). Allowing non-halting programs means we don&amp;rsquo;t have to filter out programs which don&amp;rsquo;t halt. Similar issue for computable vs semicomputable.&lt;/p&gt;
-&lt;p&gt;Versions 1 and 2 are equivalent. That is to say, we can get the same data distribution $p(x)$ for the right choice of prior in each version.&lt;/p&gt;
-&lt;p&gt;A typical choice of the prior in this version is&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(\mu) = 2^{-K(\mu)}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $K(\mu)$ is the &lt;a href=&#34;https://www.math.wisc.edu/~jmiller/Notes/contrasting.pdf&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;prefix-free Kolmogorov complexity&lt;/strong&gt;&lt;/a&gt; of $\mu$, i.e. the length of the shortest program that (semi)computes $\mu$ (given a space of prefix-free programs, i.e. program strings contain their own length information).&lt;/p&gt;
-&lt;h2 id=&#34;version-3&#34;&gt;Version 3&lt;/h2&gt;
-&lt;p&gt;As you might guess, this will also turn out to be (sorta) equivalent to the first two versions. This is like version 2, except instead of considering a hypothesis to be a program that samples data sequences given uniform random input bits, a hypothesis is such a program packaged together with a particular infinite input sequence. Thus, hypotheses are in a sense infinite programs.&lt;/p&gt;
-&lt;p&gt;Let $U$ be a &lt;strong&gt;universal monotone machine&lt;/strong&gt;. That means $U$ can execute infinitely long programs in a streaming fashion by producing partial outputs as the program is read. Let $z \in \B^\infty$. Then for every finite prefix $z_{1:n}$, we get a partial output $U(z_{1:n}) = \o_{1:m} \in \B^m$. We require that $U(z_{1:n}) \sqsubseteq U(z_{1:n&#39;})$ for $n \leq n&#39;$. The output of $z$ is infinite if $m\to\infty$ as $n\to\infty$, is finite if $m &amp;lt; \infty$ for all $n$, or is undefined if $U$ does not halt on any $z_{1:n}$.&lt;/p&gt;
-&lt;p&gt;Let $\tilde{z}$ be a program that samples from $\mu$ from version 2, i.e. $\tilde{z}$ takes uniform random bits as input and outputs some $x_{1:m}$ with probability $\mu(x_{1:m})$. Then we can produce an infinite &amp;ldquo;version 3&amp;rdquo; program by appending an infinitely long uniform random sequence $u$, i.e. $z = \tilde{z}`u$ where $U(\tilde{z}) = \epsilon$ (empty string, i.e. executing $\tilde{z}$ outputs nothing), and $U(\tilde{z}`u_{1:n&#39;})$ outputs some prefix of $x$ (if we let $x$ be infinite) by running $\tilde{z}$ on input $u_{1:n&#39;}$.&lt;/p&gt;
-&lt;p&gt;If we feed uniform random bits into $U$, then $U$ itself samples from a distribution over infinite data sequences. The induced distribution is $p(x_{1:m})$ which is a Solomonoff distribution that we can use for universal inference. This is equivalent to putting a uniform prior on the infinite programs $\B^\infty$, i.e.&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(z_{1:n}) = 2^{-n}\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;For partial observation $x_{1:m} \in \B^*$ (the remaining part of $x$ is the unobserved future),&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(x_{1:m}) = \sum_{\zeta\in\Phi(x_{1:m})} 2^{-\ell(\zeta)}\,,&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$\ell(\zeta)$ is the length of finite string $\zeta$.&lt;/li&gt;
-&lt;li&gt;$\Phi(x_{1:m})$ is a prefix-free set of all finite sequences $\zeta$ which output at least $x_{1:m}$ when fed into $U$ (i.e. for all $z_{1:n} \in \B^*$ if $x_{1:m} \sqsubseteq U(z_{1:n})$ then $z_{1:n} \in \bigcup_{\zeta\in\Phi(x_{1:m})} \Gamma_\zeta$).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;To calculate $p(x_{1:m})$, we ostensibly want to sum up the prior probabilities of all programs which output at least $x_{1:m}$, but remember that our programs are infinitely long, and the prior probability of any infinite program is 0 (because $2^{-n}\to 0$ as $n\to\infty$). The sum above performs a &lt;a href=&#34;https://en.wikipedia.org/wiki/Lebesgue_integration&#34;target=&#34;_blank&#34;&gt;Lebesgue integral&lt;/a&gt; over the infinite programs $\B^\infty$ by dividing them into &amp;ldquo;intervals&amp;rdquo; (i.e. sets of programs sharing the same prefix - geometrically an interval if you consider an infinite binary sequence to be a real number between 0 and 1) and summing up the lengths (prior probabilities) of the intervals. The function $\Phi$ is a convenient construction for producing this set of intervals for us. Finding $\Phi(x_{1:m})$ is complex, and not especially important to go into.&lt;/p&gt;
-&lt;p&gt;The joint distribution is&lt;/p&gt;
-&lt;p&gt;$$p(x_{1:m}, z_{1:n}) = \sum_{\zeta\in\Phi(x);\ z_{1:n}\sqsubseteq\zeta} 2^{-\ell(\zeta)}\,.$$&lt;/p&gt;
-&lt;p&gt;From here, we can straightforwardly compute the probability of the data under partial hypothesis $z_{1:n}$:&lt;/p&gt;
-&lt;p&gt;$$p(x_{1:m} \mid z_{1:n}) =p(x_{1:m}, z_{1:n})/p(z_{1:n}) = \sum_{\zeta\in\Phi(x);\ z_{1:n}\sqsubseteq\zeta} 2^{n-\ell(\zeta)}\,.$$&lt;/p&gt;
-&lt;p&gt;And finally the data posterior of the future slice $x_{m:s}$ given $x_{&amp;lt;m}$ (for $m&amp;lt;s$):&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(x_{m:s}\mid x_{&amp;lt;m}) = \frac{1}{p(x_{&amp;lt;m})}\sum_{\zeta\in\Phi(x_{1:s})} 2^{-\ell(\zeta)}\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;h1 id=&#34;variational-solomonoff-induction&#34;&gt;Variational Solomonoff induction&lt;/h1&gt;
-&lt;p&gt;Suppose we observe finite sequence $x_{1:t} \in \B^*$ and we want to find the posterior $p(h \mid x_{1:t})$. Usually this is intractable to calculate, and in the case of Solomonoff induction, the posterior is not even computable. We can get around this limitation by approximating the posterior with a parametrized distribution $q_\t(h)$ over hypotheses $h\in\mc{H}$. For now I will be agnostic as to what kind of hypothesis space $\mc{H}$ is, and it can be any of the hypothesis spaces discussed above: &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt;, &lt;a href=&#34;#version-2&#34;&gt;#Version 2&lt;/a&gt;, &lt;a href=&#34;#version-3&#34;&gt;#Version 3&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;In this case, let&amp;rsquo;s find $\t^*\in\T$ that minimizes the KL-divergence $\kl{q_\t(h)}{p(h\mid x_{1:t})}$ so that $q_\t(h)$ is as close as possible to $p(h\mid x_{1:t})$. Note that $q_\t(h)$ does not depend on $x_{1:t}$ because we find $\t^*$ after $x_{1:t}$ is already observed ($x_{1:t}$ is like a constant w.r.t. this optimization), whereas the joint distribution $p(h, x)$ is defined up front before any data is observed.&lt;/p&gt;
-&lt;p&gt;However, if $p(h \mid x_{1:t})$ is intractable to calculate, then so is $\kl{q_\t(h)}{p(h\mid x_{1:t})}$. With a few tricks, we can find an alternative optimization target that is tractable. Rewriting the KL-divergence:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-&amp;amp;\kl{q_\t(h)}{p(h\mid x_{1:t})} \\&lt;br&gt;
-&amp;amp;\quad= \E_{h \sim q_\t}\left[\lg\left(\frac{q_\t(h)}{p(h\mid x_{1:t})}\right)\right] \\&lt;br&gt;
-&amp;amp;\quad= \E_{h \sim q_\t}\left[\lg\left(\frac{q_\t(h)}{p(h)}\right)-\lg p(x_{1:t} \mid h) + \lg p(x_{1:t})\right] \\&lt;br&gt;
-&amp;amp;\quad= \kl{q_\t(h)}{p(h)} - \E_{h\sim q_\t}\left[\lg p(x_{1:t} \mid h)\right] - \lg \frac{1}{p(x_{1:t})} \\&lt;br&gt;
-&amp;amp;\quad= \mc{F}[q_\t] - \lg \frac{1}{p(x_{1:t})} \,.&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $\mc{F}[q_\t]$ is defined as&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-\mc{F}[q_\t] &amp;amp;= \kl{q_\t(h)}{p(h)} - \E_{h\sim q_\t}\left[\lg p(x_{1:t} \mid h)\right] \\&lt;br&gt;
-&amp;amp;= \E_{h \sim q_\t}\left[\lg\left(\frac{q_\t(h)}{p(h)}\right)-\lg p(x_{1:t} \mid h)\right] \\&lt;br&gt;
-&amp;amp;= \E_{h \sim q_\t}\left[\lg\left(\frac{q_\t(h)}{p(h,x_{1:t})}\right)\right]\,.&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;$\mc{F}[q_\t]$ is called the &lt;strong&gt;variational free energy&lt;/strong&gt;. It depends explicitly on choice of parameter $\t$, but also keep in mind it depends implicitly on the observation $x_{1:t}$ and distribution $p(h, x_{1:t})$.&lt;/p&gt;
-&lt;p&gt;Because $\lg \frac{1}{p(x_{1:t})}$ (called the &lt;strong&gt;surprise&lt;/strong&gt; of $x_{1:t}$) is positive and constant (because observation $x_{1:t}$ is constant), then minimizing $\mc{F}[q_\t]$ to $\lg \frac{1}{p(x_{1:t})}$ guarantees that $\kl{q_\t(h)}{p(h\mid x_{1:t})}$ is 0 (KL-divergence cannot be negative), which in turn guarantees that $q_\t(h)$ and $p(h\mid x_{1:t})$ are equal distributions on $\mc{H}$. If our optimization process does not fully minimize $\mc{F}[q_\t]$, then $q_\t(h)$ will approximate $p(h\mid x_{1:t})$ with some amount of error.&lt;/p&gt;
-&lt;p&gt;The optimization procedure we want to perform is&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-&amp;amp;\argmin{\t\in\T} \mc{F}[q_\t] \\&lt;br&gt;
-=\ &amp;amp; \argmin{\t\in\T} \E_{h \sim q_\t}\left[\lg\left(\frac{q_\t(h)}{p(h,x_{1:t})}\right)\right] \\&lt;br&gt;
-=\ &amp;amp; \argmax{\t\in\T}\set{ \E_{h \sim q_\t}\left[R(h)\right] + \mb{H}_{h \sim q_\t}[q_\t(h)]}&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;This now has the form of a one-timestep reinforcement learning objective, where $R(h) = \lg p(h,x_{1:t})$ is the reward for &amp;ldquo;action&amp;rdquo; $h$, and $\mb{H}_{h \sim q_\t}[q_\t(h)]$ is the entropy of $q_\t(h)$. Here $q_\t(h)$ is called the &lt;strong&gt;policy&lt;/strong&gt;, i.e. the distribution actions are sampled from. Maximizing this objective jointly maximizes expected reward under the policy and entropy of the policy. An entropy term is typically added to RL objectives as a regularizer to encourage exploration (higher entropy policy means more random actions), but in this case the entropy term comes included.&lt;/p&gt;
-&lt;p&gt;We can use standard &lt;a href=&#34;https://lilianweng.github.io/lil-log/2018/04/08/policy-gradient-algorithms.html&#34;target=&#34;_blank&#34;&gt;policy gradient methods&lt;/a&gt; (e.g. &lt;a href=&#34;https://deepmind.com/research/publications/impala-scalable-distributed-deep-rl-importance-weighted-actor-learner-architectures&#34;target=&#34;_blank&#34;&gt;IMPALA&lt;/a&gt;) to maximize the above RL objective (equivalent to minimizing free energy), so long as $q_\t(h)$ is fast to sample from, and the reward $R(h) = \lg p(h,x_{1:t})$ is fast to compute. We can control both.&lt;/p&gt;
-&lt;h1 id=&#34;tractability&#34;&gt;Tractability&lt;/h1&gt;
-&lt;p&gt;Tractability depends on our choice of $\mc{H}$ and prior $p(h)$. What operations do we want to be tractable? Typically we want:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;To approximate hypothesis posteriors: $q_{\t^*}(h) \approx p(h \mid x_{1:t})$.&lt;/li&gt;
-&lt;li&gt;To approximate predictive data distributions (data posterior): $p(x_{&amp;gt;t} \mid x_{1:t})$.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;hypothesis-posterior&#34;&gt;Hypothesis posterior&lt;/h2&gt;
-&lt;p&gt;The approximation $q_{\t^*}(h)$ allows us to do this. The tractability of finding a good parameter $\t^*$ for $q$ using policy gradient methods will require that the reward $R(h) = \lg p(h,x_{1:t})$ is fast to calculate.&lt;/p&gt;
-&lt;p&gt;We can write the reward as the sum of two terms:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\lg p(h,x_{1:t}) = \lg p(h) + \lg p(x_{1:t} \mid h)\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Then we need fast calculation of prior probabilities $p(h)$, and data probabilities under hypotheses, $p(x_{1:t} \mid h)$.&lt;/p&gt;
-&lt;h2 id=&#34;data-posterior&#34;&gt;Data posterior&lt;/h2&gt;
-&lt;p&gt;We want to approximate $p(y \mid x)$, i.e. the probability of observing string $y$ after observing $x$. This is similar to the problem of calculating $p(x)$, the data probability.&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(x) = \E_{h\sim p(h)} [p(x\mid h)]\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;If it were fast to compute $p(x\mid h)$ for a given $h$, and fast to sample from the prior $p(h)$, then we can approximate the data probability with Monte Carlo sampling:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(x) \approx \hat{p}(x) = \sum_{h \in H^{(k)}} p(x\mid h)&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $H^{(k)} = \set{h_1, h_2, \ldots, h_k} \sim p(h)$ is an i.i.d. sample from $p(h)$ of size $k$.&lt;/p&gt;
-&lt;p&gt;In the same way, we can approximate the data posterior using the identity&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(y \mid x) = \E_{h\sim p(h \mid x)} [p(y\mid x, h)]\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;The Monte Carlo approximation is:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(y\mid x) \approx \hat{p}(y\mid x) = \sum_{h \in H^{(k)}} p(y\mid x, h)&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $H^{(k)} = \set{h_1, h_2, \ldots, h_k} \sim q_{\t^*}(h)$ is an i.i.d. sample drawn from the optimized approximate posterior $q_{\t^*}(h)$. So approximating the data posterior requires approximating the hypothesis posterior.&lt;/p&gt;
-&lt;p&gt;$p(y\mid x, h)$ is the conditional data distribution under hypothesis $h$. If $h$ is a probability measure, then $p(x \mid h) = h(x)$ and $p(y\mid x, h) = h(y\mid x)$.&lt;/p&gt;
-&lt;p&gt;For approximating the data distribution, we need fast sampling from hypothesis priors $p(h)$ and fast data-under-hypothesis probabilities $p(x \mid h)$.&lt;/p&gt;
-&lt;p&gt;For approximating the data posterior, we need fast approximate posteriors $q_{\t^*}(h)$, and we need hypothesis data-conditionalization $p(y\mid x, h)$ to be fast.&lt;/p&gt;
-&lt;h2 id=&#34;generalization&#34;&gt;Generalization&lt;/h2&gt;
-&lt;p&gt;Speed is necessary but not sufficient for tractability. The approximations we find need to be good ones. Choosing an appropriate model $q$, which is a distribution over programs, is within the realm of program synthesis and machine learning. These days, program synthesis is done with neural language models on code tokens.&lt;/p&gt;
-&lt;p&gt;Can neural networks approximate the true posterior $p(h \mid x)$? This is a generalization problem. The optimized generative model on programs, $q_{\t^*}(h)$, will have been trained on finitely many programs. Whether $q_{\t^*}(h&#39;) \approx p(h&#39; \mid x)$ for some program $h&#39;$ unseen during training will depend entirely on the generalization properties of the particular program synthesizer that is used in $q_\t$.&lt;/p&gt;
-&lt;p&gt;The difficulty of applying machine learning to program synthesis is dealing with reward sparsity and generalizing highly non-smooth functions. To maximize reward $R(h) = \lg p(h,x_{1:t})$, the model $q$ needs to upweight programs $h$ that jointly have a high prior $p(h)$ and high likelihood $p(x_{1:t} \mid h)$. If the prior $p(h)$ is simple, perhaps $q$ can learn that function. On the other hand, if this prior encodes information about how long $h$ runs for (as I discuss in the &lt;a href=&#34;https://danabo.github.io/blog/posts/variational-solomonoff-induction/#prior&#34;&gt;Variational Solomonoff Induction#prior&lt;/a&gt; section), the prior is then not even computable. Same for $p(x_{1:t} \mid h)$. Without actually running $h$ on $x_{1:t}$, determining the output will not be possible in general. For $q$ to predict these things based on $h$&amp;rsquo;s code but without running $h$ is in general impossible. The function $p(h \mid x_{1:t})$ (as a function of $h$) highly chaotic, and we cannot expect $q$ to generalize in any strong sense. Innovations in program synthesis are still needed to do even somewhat well.&lt;/p&gt;
-&lt;p&gt;As a reinforcement learning problem, maximizing this reward suffers from sparsity issues. Most programs will be trivial, in the sense that they just output constant values, or nothing. I expect that Solomonoff induction doesn&amp;rsquo;t start to become effective until you get to programs of moderate length that exhibit interesting behavior. In the context of this reinforcement learning problem, that means the policy $q$ needs to find moderately long programs with moderately high reward. When training first starts, it can take an excessive amount of episodes before any non-trivial reward is discovered. This can make reinforcement learning intractable. Innovations are needed here too.&lt;/p&gt;
-&lt;h1 id=&#34;choices&#34;&gt;Choices&lt;/h1&gt;
-&lt;p&gt;To summarize the requirements we found above:&lt;br&gt;
-Is there a choice of $\mc{H}$ and $p(x,h)$ s.t.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Prior $p(h)$ is fast to calculate and sample from.&lt;/li&gt;
-&lt;li&gt;Approximate hypothesis posterior $q_{\t^*}(h)$ is fast to sample from.&lt;/li&gt;
-&lt;li&gt;Hypothesis data-probability $p(x\mid h)$ is fast to calculate.&lt;/li&gt;
-&lt;li&gt;Hypothesis data-conditionalization $p(y\mid x, h)$ is fast to calculate.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;program-space&#34;&gt;Program space&lt;/h2&gt;
-&lt;p&gt;Hypotheses can be deterministic or stochastic. Deterministic hypotheses would be represented by deterministic programs. Stochastic hypotheses can either be represented by stochastic programs (output is non-deterministic) or by deterministic programs that output probabilities. I think we should choose the latter.&lt;/p&gt;
-&lt;p&gt;If our hypotheses are deterministic, then we get Solomonoff induction &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt;. Conditionalization is easy because $p(y \mid x, h) = p(y`x \mid h) = 1$ if $h$ outputs $x$ and $0$ otherwise. However, the vast majority of programs will not output $x$, so the reward $R(h) = \lg p(h,x)$ will be very sparse. That is to say, the reward will be $-\infty$ most of the time (in practice you would clip and scale the reward to something reasonable). This is bad for policy gradient methods and will result in high gradient variance (learning will be extremely slow).&lt;/p&gt;
-&lt;p&gt;We should use stochastic hypotheses. If we use non-deterministic programs, conditionalization is hard. Thus we should use programs that output their probabilities.&lt;/p&gt;
-&lt;p&gt;The choice of $\mc{H}$ is equivalent to choosing a programming language plus syntax rules so that only valid programs can be constructed. In this case, we want to restrict ourselves to programs that will obey the properties of probability measures $\mu$ on infinite sequences: $\mu(x) = \mu(x`0) + \mu(x`1)$ and  $\mu(x) \geq \mu(x`y)$.&lt;/p&gt;
-&lt;p&gt;To ensure this, I propose that programs $h$ take the form of auto-regressive language models. That is to say these programs read in a sequence of input tokens and for each token output a vector of real numbers with the same length as the token space. Passing that vector through a softmax induces a probability distribution over the next input token. The programs maintain their own internal state. A language should be chosen such that all generated programs can be guaranteed to take this form.&lt;/p&gt;
-&lt;p&gt;If the program has output probabilities $\hat{p}_1, \ldots, \hat{p}_t$ for input $x_{1:t}$ but does not halt to produce $\hat{p}_{t+1}$, then the probability $\mu_h(x_{1:n})$ for $n&amp;gt;t$ is undefined, and the induced measure $\mu_h$ becomes a semimeasure.&lt;/p&gt;
-&lt;h2 id=&#34;prior&#34;&gt;Prior&lt;/h2&gt;
-&lt;p&gt;Weighting by program length suffices as a prior:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(h) = 2^{-\ell(h)}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;One difficulty in working with programs is long-running execution. This can make computing data probabilities take a long time. One remedy is to down-weight long-running programs in the prior. &lt;a href=&#34;http://www.scholarpedia.org/article/Universal_search&#34;target=&#34;_blank&#34;&gt;Levin search&lt;/a&gt; is an alternative to Solomonoff induction where the prior is weighted solely by runtime. We can mix both kinds of priors.&lt;/p&gt;
-&lt;p&gt;This is straightforward in Solomonoff induction &lt;a href=&#34;#version-1&#34;&gt;#Version 1&lt;/a&gt; where each program takes no input and outputs a deterministic string. Let $p(h) = 2^{-\ell(h)} / f(\tau(h))$ where $\tau(h)$ is the total runtime of $h$, and $f$ is an increasing function that goes to infinity. For example, if $f(t) = 2^{t}$, then we have prior $2^{-\ell(h)-\tau(h)}$. If you wanted to compute $p(x)$ within some precision $\ve &amp;gt; 0$, you can enumerate all programs $h\in\mc{H}$ by length and run them in parallel (called dovetailing). For each program, stop execution when $2^{-\ell(h)-\tau(h)} &amp;lt; \ve$. Shorter programs will be given more runtime over longer programs. (Thank you Lance Roy for the helpful discussion about this.)&lt;/p&gt;
-&lt;p&gt;However, if we are using the programs I previously suggested that output data probabilities, then these programs may be fast on some inputs and slow on others. I don&amp;rsquo;t have a solution, but a reasonable suggestion is to do some kind of heuristic analysis of the programs on some sample inputs and assign a slowness penalty in the prior.&lt;/p&gt;
-&lt;h1 id=&#34;lifelong-learning&#34;&gt;Lifelong learning&lt;/h1&gt;
-&lt;p&gt;Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it&amp;rsquo;s future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).&lt;/p&gt;
-&lt;p&gt;In the variational setup outlined above, we converted the problem of Bayesian inference into a reinforcement learning problem. At time $t$, data $x_{1:t}$ is observed, and a policy $q_{\t^*}$ on programs is trained using policy gradient methods. However, every $t$ requires its own $q_{\t_t^*}$, thus we would need to perform RL training at every timestep. One way to speed this up is to reuse policies from previous timesteps. That is to say, at time $t+1$ perform $\argmax{\t\in\T}\set{ \E_{h \sim q_\t}\left[R(h)\right] + \mb{H}_{h \sim q_\t}[q_\t(h)]}$ using Monte Carlo gradient descent starting from the previous parameter $\t_t^*$. This can be considered fine-tuning. However, this may fail to work if the posterior changes drastically between timesteps.&lt;/p&gt;
 </description>
     </item>
     
