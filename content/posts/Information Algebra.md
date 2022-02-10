@@ -1,10 +1,14 @@
 ---
 date: 2021-05-05
-lastmod: '2021-05-07T09:40:09-07:00'
+lastmod: '2022-02-09T16:33:46-08:00'
 tags:
 - information
 title: Information Algebra
 ---
+
+
+I further expand on the ideas I introduced in {{< locallink "Bayesian information theory" >}}. <!--more-->
+
 
 $$
 \\newcommand{\\0}{\\mathrm{false}}
@@ -63,8 +67,6 @@ $$
 
 
 
-
-This is a review of the ideas I introduced in {{< locallink "Bayesian information theory" >}}.
 
 We have a set of possibilities $\\O$, and there is a *true* but unknown possibility $\\o^\*\\in\\O$. I define information as a tuple of the form $(\\O,R)$ where $R\\subseteq \\O$, which asserts that $\\o^\*\\in R$. I notate these information tuples with arrows:
 

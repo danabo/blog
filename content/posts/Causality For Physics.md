@@ -1,10 +1,14 @@
 ---
 date: 2021-04-20
-lastmod: '2021-05-19T15:34:39-07:00'
+lastmod: '2022-02-09T16:34:27-08:00'
 tags:
 - physics
 title: Causality For Physics
 ---
+
+The definition of causality within physics is not a settled matter, perhaps surprisingly. My understanding is that this question is studied more by philosophers than physicists, as the field of physics tends to avoid interpretational problems. That is to say, theories like relativity or quantum mechanics are mathematically well defined and make predictions, so that's all there is to it, right? I'm not a physicist, so I will proceed to ask such questions. <!--more-->
+
+I suspect that causality and information are intimately related. To initiate my pursuit to understand physical information, I am starting by trying to understand the role causality plays in physics. The [SEP](https://plato.stanford.edu/entries/causation-physics) outlines some of the conversation and ideas around causality and physics. I haven't read these ideas yet, but I want to take my own tabula rasa stab at the problem before reading about what other people have tried. I am familiar with Judea Pearl's notion of causality in machine learning and statistics, which I will attempt to apply to physics below.
 
 $$
 \\newcommand{\\0}{\\mathrm{false}}
@@ -60,11 +64,6 @@ $$
 $$
 
 
-
-
-The definition of causality within physics is not a settled matter, perhaps surprisingly. My understanding is that this question is studied more by philosophers than physicists, as the field of physics tends to avoid interpretational problems. That is to say, theories like relativity or quantum mechanics are mathematically well defined and make predictions, so that's all there is to it, right? I'm not a physicist, so I will proceed to ask such questions.
-
-I suspect that causality and information are intimately related. To initiate my pursuit to understand physical information, I am starting by trying to understand the role causality plays in physics. The [SEP](https://plato.stanford.edu/entries/causation-physics) outlines some of the conversation and ideas around causality and physics. I haven't read these ideas yet, but I want to take my own tabula rasa stab at the problem before reading about what other people have tried. I am familiar with Judea Pearl's notion of causality in machine learning and statistics, which I will attempt to apply to physics below.
 
 # Causal Models
 First, I'll outline Pearl's framework for causality. I used [Causality](http://bayes.cs.ucla.edu/BOOK-2K/) (Pearl) and [Elements of Causal Inference](https://mitpress.mit.edu/books/elements-causal-inference) (Peters, Janzing, Schölkopf) to learn about this topic.

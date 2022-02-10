@@ -1,12 +1,13 @@
 ---
 date: 2021-05-14
-lastmod: '2021-08-31T09:53:33-07:00'
+lastmod: '2022-02-09T16:33:21-08:00'
 tags:
 - physics
 - information
 title: Physical Information
 ---
 
+I will apply to abstract physics the same information algebra I introduced in {{< locallink "Bayesian information theory" "defining-information" >}} and further developed in {{< locallink "Information Algebra" >}}. *Bayesian* information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (regardless of whether or not it has *agenty* attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective. <!--more-->
 
 $$
 \\newcommand{\\0}{\\mathrm{false}}
@@ -70,8 +71,6 @@ $\\newcommand{\\sys}\[2\]{\\left\[#2\\right\]\_{#1}}$
 
 
 
-
-I will apply to abstract physics the same information algebra I introduced in {{< locallink "Bayesian information theory" "defining-information" >}} and further developed in {{< locallink "Information Algebra" >}}. *Bayesian* information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (regardless of whether or not it has *agenty* attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.
 
 # Information Preliminaries
 

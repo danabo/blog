@@ -1,11 +1,13 @@
 ---
 date: 2022-02-09
-lastmod: '2022-02-09T16:28:44-08:00'
+lastmod: '2022-02-09T16:33:54-08:00'
 tags:
 - physics
 - information
 title: Is The Szilard Cycle Reversible?
 ---
+
+This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level [#Overview](#overview) of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to [#Part I Uncopying](#part-i-uncopying) if you'd rather jump right in. The question is stated at the bottom: [#Question](#question).  <!--more-->
 
 $$
 \\newcommand{\\D}{\\Delta}
@@ -14,8 +16,6 @@ $$
 $$
 
 
-
-This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level [#Overview](#overview) of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to [#Part I Uncopying](#part-i-uncopying) if you'd rather jump right in. The question is stated at the bottom: [#Question](#question).
 
 # Overview
 

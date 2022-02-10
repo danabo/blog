@@ -1,6 +1,6 @@
 ---
-date: 23-06-2021
-lastmod: '2021-06-24T12:27:52-07:00'
+date: 2021-06-23
+lastmod: '2022-02-09T16:37:51-08:00'
 tags:
 - information
 - physics
@@ -14,7 +14,7 @@ title: Redundancy And Copying
 
 
 
-Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is **copied** (or [cloned](https://en.wikipedia.org/wiki/No-cloning_theorem)) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is **moved**, on the other hand, when the state of the source is transferred to the target in a way that leaves the source's state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.
+Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is **copied** (or [cloned](https://en.wikipedia.org/wiki/No-cloning_theorem)) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is **moved**, on the other hand, when the state of the source is transferred to the target in a way that leaves the source's state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems. <!--more-->
 
 $$
 \\newcommand{\\0}{\\mathrm{false}}
