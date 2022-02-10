@@ -1,6 +1,6 @@
 ---
 date: 2022-02-09
-lastmod: '2022-02-09T22:26:58-08:00'
+lastmod: '2022-02-09T22:46:28-08:00'
 tags:
 - physics
 - information
@@ -104,10 +104,10 @@ Likewise as the movable bit approaches the data bit, the potential field becomes
 
 This copy process is entirely reversible. Its reverse process is called an "uncopy", where the data bit (whose orientation is unknown to us) becomes the reference bit, and the reference bit (in the known default state) becomes the data bit.
 
-Without the reference bit, the transition from two and one potential wells is symmetric, and the state region "spills over" the hump (timeline C below), causing our uncertainty about the magnet's orientation to increase (corresponding to an entropy increase). This is an irreversible process.
+Without the reference bit, the transition from two to one potential wells is symmetric, and the state region "spills over" the hump (timeline C below), causing our uncertainty about the magnet's orientation to increase (corresponding to an entropy increase). This is an irreversible process.
 
 ![](</Pasted image 20220209144607.png>)
-Also, if there reference bit and movable bits begin in opposite orientations, then as the potential field becomes lopsided, it will raise up the potential well the movable bit is occupying which is opposite the one the reference bit is occupying. Lifting up a potential field under an object implies transfer of energy to that object (as potential energy). That is to say, we spend energy moving the movable bit through the sideways magnetic field. On the other hand, when the movable bit is in the "correct" well to start with, the bottom of that well remains at the same potential level through out the copy process, just moving sideways to the center and then to which ever well the data bit occupies.
+Also, if the reference bit and movable bits start out with opposite orientations, then as the potential field becomes lopsided, it will raise up the potential well the movable bit is occupying (which is opposite the one the reference bit is occupying). Lifting up a potential field under an object implies transfer of energy to that object (as potential energy). That is to say, we spend energy moving the movable bit through the sideways magnetic field. On the other hand, when the movable bit is in the "correct" well to start with, the bottom of that well remains at the same potential level through out the copy process, just moving sideways to the center and then to which ever well the data bit occupies.
 
 
 To perform the which-side measurement in the Szilard cycle, Bennett supposes the particle is charged so that the which-side information is naturally converted into magnetic orientation information. That is to say, the particle in a partition box is used as the data bit for our copy process. That copy process can be reversed with the uncopy process where the particle-box system becomes the reference bit. Note that the particle-box system is unaltered by the copy and uncopy operations.
