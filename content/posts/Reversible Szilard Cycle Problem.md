@@ -1,6 +1,6 @@
 ---
 date: 2022-02-09
-lastmod: '2022-02-09T16:33:54-08:00'
+lastmod: '2022-02-09T22:26:58-08:00'
 tags:
 - physics
 - information
@@ -34,7 +34,7 @@ In his article, Bennett shows that the process which performs the measurement an
 
 However, I don't see why the last step of the Szilard cycle cannot perform a different sort of uncopy process - one that is different from the copy process which wrote the bit, so that the work done by the gas is not undone. This appears to be a possibility because the information extracted from the gas into the bit is never lost during the Szilard cycle (see [#Part II Information Is Never Lost](#part-ii-information-is-never-lost)), and so in principle, there is still redundant information between the gas and bit. Then for what reason can't an uncopy be performed?
 
-This post lays out the technical setup for my question in [#Part I Uncopying](#part-i-uncopying) and [#Part II Information Is Never Lost](#part-ii-information-is-never-lost). At the bottom I am able to pose this [#Question](#question) rigorously. I don't think I've discovered a loop hole in the 2nd law. I fully expect that reversing the Szilard cycle is impossible, but I don't understand why. I would love for someone to provide me an answer. I would find that very insightful and use it improve my understanding of thermodynamics.
+This post lays out the technical setup for my question in [#Part I Uncopying](#part-i-uncopying) and [#Part II Information Is Never Lost](#part-ii-information-is-never-lost). At the bottom I am able to pose this [#Question](#question) rigorously. I don't think I've discovered a loophole in the 2nd law. I fully expect that reversing the Szilard cycle is impossible, but I don't understand why. I would love for someone to provide me an answer. I would find that very insightful and use it to improve my understanding of thermodynamics.
 
 # Part I: Uncopying
 
@@ -75,9 +75,9 @@ $$
 
 where $c\_v$ and $R$ are constants which depend on the kind of gas, $T\_i$ and $T\_f$ are respectively the initial and final temperature of the gas, and $V\_i$ and $V\_f$ are respectively the initial and final volumes of the gas (volumes of the box). Note that temperature and volume are equilibrium macrostates of the gas. They are not well defined when the gas is in a transitionary state, e.g. if it has uneven temperature or is not uniformly distributed across all of the free space in the box. Then the change in entropy of the gas is only well defined if the process starts and ends in equilibrium states where $T\_i,T\_f,V\_i$ and $V\_f$ are all well defined.
 
-In some sense a one-particle gas is always in equlibrium. Its temperature is just the particle's KE (temperature is defined as average KE across all the particles) and its volume is just the volume of space the particle can access.
+In some sense a one-particle gas is always in equlibrium. Its temperature is just the particle's KE times a constant, (temperature is defined as being proportional to the average KE across all the particles) and its volume is just the volume of space the particle can access.
 
-In the Szilard cycle, $V\_i=V\_f$, and $T\_f = T\_i - E$ where $E\\geq0$ is the KE that was extracted from the particle. Then the change in entropy from start to end of the cycle is proportional to $\\ln\\frac{T\_f}{T\_i}=\\lg\\par{1-\\frac{E}{T\_i}} \\leq 0$. The 2nd law of thermodynamics states that total entropy cannot decrease. Since we reduced the entropy of the gas, the entropy of some other system involved in the process must have gone up by at least the same amount. The entropy of the physical bit of memory is what must have increased.
+In the Szilard cycle, $V\_i=V\_f$, and $T\_f = T\_i - \\frac{2}{3k}E$ where $E\\geq0$ is the KE that was extracted from the particle and $k$ is the [Boltzmann constant](https://en.wikipedia.org/wiki/Boltzmann_constant). Then the change in entropy from start to end of the cycle is proportional to $\\ln\\frac{T\_f}{T\_i}=\\lg\\par{1-\\frac{2E}{3kT\_i}} \\leq 0$. The 2nd law of thermodynamics states that total entropy cannot decrease. Since we reduced the entropy of the gas, the entropy of some other system involved in the process must have gone up by at least the same amount. The entropy of the physical bit of memory is what must have increased.
 
 Before the memory bit is erased, we can still reverse the process and move the entropy of the bit back into the gas (see [#Uncopying](#uncopying)). After the bit is erased, the entropy of the bit is moved into the environment, dispersed as heat energy. This is analogous to compressing an N particle gas to half of its volume, which heats up the gas enough to make the total change in entropy nonnegative, and then allowing the gas to cool down to its initial temperature by leaking heat into the environment. The gas compression and heating is reversible (an [isentropic process](https://en.wikipedia.org/wiki/Isentropic_process); [animation](https://www.youtube.com/watch?v=dQeCEqkE9eE)). What is irreversible is the loss of heat energy to the environment, just like our loss of our bit of information to the environment, which also implies a necessary loss of energy to the environment by Landauer's principle.
 
