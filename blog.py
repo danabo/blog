@@ -212,19 +212,25 @@ class SimpleParser(object):
         print(m.groups())
       it.next(len(m.group(0)))
       url = f'</{m.group(1)}>'
-      if m.group(3):
-        # Image size
-        # it.replace(f'![]({url} ={m.group(3)})')
-
-        # Hugo hack
+      if os.path.splitext(m.group(1))[-1] == '.mp4':  # video
         caption = m.group(5) or m.group(6) or ''
-        it.replace(f'{{{{< figure src="../../{m.group(1)}" width="{m.group(3)}" caption="{caption}" >}}}}')
-      elif m.group(5) or m.group(6):
-        # Image caption
-        caption = m.group(5) or m.group(6)
-        it.replace(f'![]({url} "{caption}")')
-      else:
-        it.replace(f'![]({url})')
+        it.replace(f'<video controls autoplay loop src="../../{m.group(1)}" caption="{caption}" width="100%"></video>')
+        # it.replace(f'{{{{< video autoplay="true" loop="true" src="../../{m.group(1)}" caption="{caption}" >}}}}')
+      else:  # image
+        if m.group(3):
+          # Image size
+          # it.replace(f'![]({url} ={m.group(3)})')
+
+          # Hugo hack
+          caption = m.group(5) or m.group(6) or ''
+          it.replace(f'{{{{< figure src="../../{m.group(1)}" width="{m.group(3)}" caption="{caption}" >}}}}')
+
+        elif m.group(5) or m.group(6):
+          # Image caption
+          caption = m.group(5) or m.group(6)
+          it.replace(f'![]({url} "{caption}")')
+        else:
+          it.replace(f'![]({url})')
       self.images.append(m.group(1))  # Extract local file name.
       return
 
