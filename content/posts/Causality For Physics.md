@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2021-05-19T17:34:39-05:00'
+lastmod: '2021-05-19T15:34:39-07:00'
 tags:
 - physics
 title: Causality For Physics

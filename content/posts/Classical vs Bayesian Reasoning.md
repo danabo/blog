@@ -1,6 +1,6 @@
 ---
 date: 2021-02-24
-lastmod: '2021-04-12T11:55:57-05:00'
+lastmod: '2021-04-12T09:55:57-07:00'
 tags:
 - epistemology
 title: Classical vs Bayesian Reasoning

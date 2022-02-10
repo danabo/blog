@@ -1,6 +1,6 @@
 ---
 date: 2021-05-05
-lastmod: '2021-05-07T11:40:09-05:00'
+lastmod: '2021-05-07T09:40:09-07:00'
 tags:
 - information
 title: Information Algebra

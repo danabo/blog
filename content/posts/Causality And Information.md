@@ -1,6 +1,6 @@
 ---
 date: 2021-05-23
-lastmod: '2021-06-23T21:11:55-05:00'
+lastmod: '2021-06-23T19:11:55-07:00'
 tags:
 - information
 - physics

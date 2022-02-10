@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2021-04-28T12:12:33-05:00'
+lastmod: '2021-04-28T10:12:33-07:00'
 tags:
 - epistemology
 - information
