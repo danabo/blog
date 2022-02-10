@@ -15,12 +15,12 @@
       <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
+      <description>&lt;p&gt;This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level &lt;a href=&#34;#overview&#34;&gt;#Overview&lt;/a&gt; of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to &lt;a href=&#34;#part-i-uncopying&#34;&gt;#Part I Uncopying&lt;/a&gt; if you&amp;rsquo;d rather jump right in. The question is stated at the bottom: &lt;a href=&#34;#question&#34;&gt;#Question&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
 \newcommand{\D}{\Delta}&lt;br&gt;
 \newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
 \newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level &lt;a href=&#34;#overview&#34;&gt;#Overview&lt;/a&gt; of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to &lt;a href=&#34;#part-i-uncopying&#34;&gt;#Part I Uncopying&lt;/a&gt; if you&amp;rsquo;d rather jump right in. The question is stated at the bottom: &lt;a href=&#34;#question&#34;&gt;#Question&lt;/a&gt;.&lt;/p&gt;
 &lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Landauer%27s_principle&#34;target=&#34;_blank&#34;&gt;Landauer&amp;rsquo;s principle&lt;/a&gt; is the conjecture that erasing physically stored data costs a minimum amount of energy, proportional to the number of bits being erased. &lt;em&gt;Erasure&lt;/em&gt; here means subjecting the data storage medium (a physical system) to some process that maps all of its possible memory states to one single known state. For example, an array of computer bits might be mapped to the &amp;ldquo;all zero&amp;rdquo; state, 0000000&amp;hellip; This process is performing a many-to-one mapping, i.e. many different physical states of the data storage medium have trajectories under this process that result in the same end state.&lt;/p&gt;
 &lt;p&gt;The known laws of physics obey time-symmetry, meaning that trajectories starting in different states don&amp;rsquo;t collide, i.e. given any current state, you can in principle determine what states the system occupied on any past or future time - at least given complete state information. To have a many-to-one process, the &amp;ldquo;which state&amp;rdquo; information being lost must actually have been moved somewhere else. In practice, when computer memory is reset, the information it had stored is dispersed into the environment. Landauer&amp;rsquo;s principle states that this dispersion necessarily accompanies a minimum amount of energy dispersion, which is the energy required to reset the bits. This dispersion is practically irreversible.&lt;/p&gt;
@@ -134,14 +134,13 @@ It is clear from this animation that none of the trajectories overlap at any poi
 &lt;p&gt;Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (f) of the Szilard cycle to induce a reference magnetic field for an uncopy process? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle. It is not obvious to me that this uncopying would result in an increase in entropy anywhere else. Then it would appear total entropy decreased, violating the 2nd law.&lt;/p&gt;
 &lt;p&gt;Much more plausible is that the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the &amp;ldquo;gas&amp;rdquo; to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.&lt;/p&gt;
 &lt;p&gt;We could tackle this question by asking instead, is it possible to perform an observation on the particle such that only its &amp;ldquo;color&amp;rdquo; (which side it came from) is recorded in one bit of memory? If so, then the reverse of this process is the uncopy operation we are seeking. We already know that we could measure the particle&amp;rsquo;s position and velocity precisely (assuming a classical particle) using, say, a camera. The &amp;ldquo;camera process&amp;rdquo; would write many bits to memory (including a lot more than the particle&amp;rsquo;s state). Note that we would need to take two pictures in quick succession to capture the particles velocity. To reverse THAT process, we would need to feed as input ALL of the bits of information the camera would output in the forward direction. Without that input information, we cannot uncopy just a single bit, even if its a subset of the information.&lt;/p&gt;
-&lt;p&gt;Thus, the question becomes, can we create a process that converts only the particle&amp;rsquo;s &amp;ldquo;color&amp;rdquo; information into magnetic polarity for use in an uncopy process? If no such process exists, how would we prove it?&lt;/p&gt;
-</description>
+&lt;p&gt;Thus, the question becomes, can we create a process that converts only the particle&amp;rsquo;s &amp;ldquo;color&amp;rdquo; information into magnetic polarity for use in an uncopy process? If no such process exists, how would we prove it?&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Redundancy And Copying</title>
       <link>https://danabo.github.io/blog/posts/redundancy-and-copying/</link>
-      <pubDate>Thu, 24 Jun 2021 12:27:52 -0700</pubDate>
+      <pubDate>Wed, 23 Jun 2021 00:00:00 +0000</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/redundancy-and-copying/</guid>
       <description>&lt;p&gt;Information in our universe can be copied, as evidenced by the ubiquitous copying of computer memory, books and paper everywhere, and our ability to non-destructively see and hear everything around us. Information is &lt;strong&gt;copied&lt;/strong&gt; (or &lt;a href=&#34;https://en.wikipedia.org/wiki/No-cloning_theorem&#34;target=&#34;_blank&#34;&gt;cloned&lt;/a&gt;) when the state of one system, the target, becomes correlated with the state of another system, the source, without destructively altering the state of the source. Information is &lt;strong&gt;moved&lt;/strong&gt;, on the other hand, when the state of the source is transferred to the target in a way that leaves the source&amp;rsquo;s state erased or overwritten with something else. In general, information copying between two systems is a special case of increasing information redundancy between two systems.&lt;/p&gt;
@@ -980,8 +979,7 @@ $$&lt;/p&gt;
 &lt;p&gt;Let $a\up{t} \in \A$ be a state of system A. Then if system A has the information $\O\tr a\up{t}$, it has information about its own future and the future of some other system B, quantified by $\I(\A, \t_\Dt(a\up{t}))$ and $\I(\fB, \t_\Dt(a\up{t}))$. Furthermore, if $\I(\mf{A}, \mf{B} \mid \t_\Dt(a\up{t})) &amp;gt; 0$, then system A &amp;ldquo;knows&amp;rdquo; that system A and B will be redundant in the future, given the information $\O\tr\t_\Dt(a\up{t})$. However, when that future time arrives, system A no longer has the information $\O\tr\t_\Dt(a\up{t})$, but instead has the information $\O\tr\t_\Dt(a\up{t+\Dt})$. Note that necessarily $a\up{t}\neq a\up{t+\Dt}$ in order for $\I(\mf{A}, \mf{B} \mid \t_\Dt(a\up{t})) &amp;gt; 0$ to hold. So although there would be redundancy between systems A and B knowing $\O\tr\t_\Dt(a\up{t})$, system A no longer has that information and the appearance of redundancy is lost when time $t+\Dt$ arrives.&lt;/p&gt;
 &lt;p&gt;For redundancy to exist in the present moment, rather than the past or the future, there needs to be such an additional assumption, i.e. an a priori narrowing down of $\O$ to some smaller domain that makes otherwise orthogonal systems redundant. This assumption is not physical, as I&amp;rsquo;ve defined physical information. Yet all living things make such assumptions in their operation. See &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;The Origin Of Assumptions In Living Systems&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/causality-and-information/#information-about-entails-effect-on&#34;&gt;Causality And Information#information-about-entails-effect-on&lt;/a&gt;, I concluded that the only way for a system to have information about another system&amp;rsquo;s future is for the former system to causally determine the latter system. However, that is clearly not true in our universe. You can look at a map and drive on a sequence of streets you&amp;rsquo;ve never been on before, and yet you knew those streets would be there and where they would lead. You did not cause the streets to be as they were. You were able to have information about the streets because the map and the streets (as systems) have redundant information. In general, all life depends on information redundancy and environment prediction to survive and propagate. Life itself is a product of information redundancy - i.e. living organisms are self-replicators, and DNA stores the information that gets copied when an organism reproduces.&lt;/p&gt;
-&lt;p&gt;Perhaps the redundancies we perceive might offer clues as to the restricted state spaces human brains consciously operate under (i.e. assumptions our brains make).&lt;/p&gt;
-</description>
+&lt;p&gt;Perhaps the redundancies we perceive might offer clues as to the restricted state spaces human brains consciously operate under (i.e. assumptions our brains make).&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1411,7 +1409,8 @@ $$&lt;/p&gt;
       <pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/physical-information/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
+      <description>&lt;p&gt;I will apply to abstract physics the same information algebra I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/#defining-information&#34;&gt;Bayesian information theory#defining-information&lt;/a&gt; and further developed in &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;. &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (regardless of whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
 \newcommand{\0}{\mathrm{false}}&lt;br&gt;
 \newcommand{\1}{\mathrm{true}}&lt;br&gt;
 \newcommand{\mb}{\mathbb}&lt;br&gt;
@@ -1469,7 +1468,6 @@ $$&lt;/p&gt;
 \require{cancel}&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;$\newcommand{\sys}[2]{\left[#2\right]_{#1}}$&lt;/p&gt;
-&lt;p&gt;I will apply to abstract physics the same information algebra I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/#defining-information&#34;&gt;Bayesian information theory#defining-information&lt;/a&gt; and further developed in &lt;a href=&#34;https://danabo.github.io/blog/posts/information-algebra/&#34;&gt;Information Algebra&lt;/a&gt;. &lt;em&gt;Bayesian&lt;/em&gt; information is just information from the perspective of an agent that may have or not have particular information. Below, I will introduce the notion of a physical system having or not having information about itself or other systems (regardless of whether or not it has &lt;em&gt;agenty&lt;/em&gt; attributes), and the same information algebra will apply. The only difference is a shift from the 1st person to 3rd person perspective.&lt;/p&gt;
 &lt;h1 id=&#34;information-preliminaries&#34;&gt;Information Preliminaries&lt;/h1&gt;
 &lt;p&gt;For sets $\O$ and $A \subseteq \O$,&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -1902,8 +1900,7 @@ $$&lt;/p&gt;
 &lt;p&gt;and&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 I((\rv{A}, \rv{B}), \rv{C}=c) = I(\rv{A}, \rv{C}=c) + I(\rv{B}, \rv{C}=c) - I(\rv{A}, \rv{B}, \rv{C}=c)\,.&lt;br&gt;
-$$&lt;/p&gt;
-</description>
+$$&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1912,7 +1909,8 @@ $$&lt;/p&gt;
       <pubDate>Wed, 05 May 2021 00:00:00 +0000</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/information-algebra/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
+      <description>&lt;p&gt;I further expand on the ideas I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
 \newcommand{\0}{\mathrm{false}}&lt;br&gt;
 \newcommand{\1}{\mathrm{true}}&lt;br&gt;
 \newcommand{\mb}{\mathbb}&lt;br&gt;
@@ -1966,7 +1964,6 @@ $$&lt;/p&gt;
 \newcommand{\V}[1]{\begin{pmatrix}#1\end{pmatrix}}&lt;br&gt;
 \require{cancel}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;This is a review of the ideas I introduced in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;We have a set of possibilities $\O$, and there is a &lt;em&gt;true&lt;/em&gt; but unknown possibility $\o^*\in\O$. I define information as a tuple of the form $(\O,R)$ where $R\subseteq \O$, which asserts that $\o^*\in R$. I notate these information tuples with arrows:&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \O\tr R \df (\O, R)\,,&lt;br&gt;
@@ -2125,8 +2122,7 @@ $h(\tra{\O}{A}) - h(\mi{\O}{A}{R}{A\dom{R}}) = h(\tra{R}{A\dom{R}})$&lt;br&gt;
 $h(\mi{\O}{A}{R}{A\dom{R}}) + h(\tra{R}{A\dom{R}}) = h(\tra{\O}{A})$&lt;br&gt;
 $h(\mi{\O}{A}{R}{A\dom{R}}) + h(A \tr A\dom{R}) = h(\O\tr R)$&lt;/p&gt;
 &lt;p&gt;$h(\mi{\O}{A}{R}{A\dom{R}}) + h(R\tr A\dom{R}) + h(A \tr A\dom{R}) = h(\O\tr A\dom{R})$&lt;br&gt;
-$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$&lt;/p&gt;
-</description>
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -2135,7 +2131,9 @@ $h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})
       <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/causality-for-physics/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
+      <description>&lt;p&gt;The definition of causality within physics is not a settled matter, perhaps surprisingly. My understanding is that this question is studied more by philosophers than physicists, as the field of physics tends to avoid interpretational problems. That is to say, theories like relativity or quantum mechanics are mathematically well defined and make predictions, so that&amp;rsquo;s all there is to it, right? I&amp;rsquo;m not a physicist, so I will proceed to ask such questions.&lt;/p&gt;
+&lt;p&gt;I suspect that causality and information are intimately related. To initiate my pursuit to understand physical information, I am starting by trying to understand the role causality plays in physics. The &lt;a href=&#34;https://plato.stanford.edu/entries/causation-physics&#34;target=&#34;_blank&#34;&gt;SEP&lt;/a&gt; outlines some of the conversation and ideas around causality and physics. I haven&amp;rsquo;t read these ideas yet, but I want to take my own tabula rasa stab at the problem before reading about what other people have tried. I am familiar with Judea Pearl&amp;rsquo;s notion of causality in machine learning and statistics, which I will attempt to apply to physics below.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
 \newcommand{\0}{\mathrm{false}}&lt;br&gt;
 \newcommand{\1}{\mathrm{true}}&lt;br&gt;
 \newcommand{\mb}{\mathbb}&lt;br&gt;
@@ -2187,8 +2185,6 @@ $h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})
 \newcommand{\Mid}{\,\middle|\,}&lt;br&gt;
 \newcommand{\qed}{\ \ \blacksquare}&lt;br&gt;
 $$&lt;/p&gt;
-&lt;p&gt;The definition of causality within physics is not a settled matter, perhaps surprisingly. My understanding is that this question is studied more by philosophers than physicists, as the field of physics tends to avoid interpretational problems. That is to say, theories like relativity or quantum mechanics are mathematically well defined and make predictions, so that&amp;rsquo;s all there is to it, right? I&amp;rsquo;m not a physicist, so I will proceed to ask such questions.&lt;/p&gt;
-&lt;p&gt;I suspect that causality and information are intimately related. To initiate my pursuit to understand physical information, I am starting by trying to understand the role causality plays in physics. The &lt;a href=&#34;https://plato.stanford.edu/entries/causation-physics&#34;target=&#34;_blank&#34;&gt;SEP&lt;/a&gt; outlines some of the conversation and ideas around causality and physics. I haven&amp;rsquo;t read these ideas yet, but I want to take my own tabula rasa stab at the problem before reading about what other people have tried. I am familiar with Judea Pearl&amp;rsquo;s notion of causality in machine learning and statistics, which I will attempt to apply to physics below.&lt;/p&gt;
 &lt;h1 id=&#34;causal-models&#34;&gt;Causal Models&lt;/h1&gt;
 &lt;p&gt;First, I&amp;rsquo;ll outline Pearl&amp;rsquo;s framework for causality. I used &lt;a href=&#34;http://bayes.cs.ucla.edu/BOOK-2K/&#34;target=&#34;_blank&#34;&gt;Causality&lt;/a&gt; (Pearl) and &lt;a href=&#34;https://mitpress.mit.edu/books/elements-causal-inference&#34;target=&#34;_blank&#34;&gt;Elements of Causal Inference&lt;/a&gt; (Peters, Janzing, Schölkopf) to learn about this topic.&lt;/p&gt;
 &lt;p&gt;Pearl assumes the world (or some part of it) can be represented by graph, where nodes represent potential observations, and their directed edges represent causal links. For example (from Pearl):&lt;/p&gt;
@@ -2463,8 +2459,7 @@ $$&lt;/p&gt;
 &lt;p&gt;The generalized formulation of physics, using state space $\O$ and time-evolution function $\t_{\D t}$, is compatible with classical physics and special relativity (for arbitrary choice of Lorentz frame). Is it compatible with quantum mechanics, general relativity, and beyond?&lt;/p&gt;
 &lt;p&gt;It is compatible with QM if we are time-evolving quantum state and disregarding measurement. If we wanted to model stochastic measurement outcomes, or stochastic interactions in general, then we could do that using a non-deterministic time-evolution function, i.e. $\t_{\D t}$ is not a proper function and assigns more than one output to a given input. Alternatively, the state $\O$ could contain algorithmically random data which serves as a source of random inputs for $\t_{\D t}$.&lt;/p&gt;
 &lt;p&gt;For special relativity, simultaneity is relative, but consistently holding to an arbitrary choice of Lorentz frame will work. Then, there is a $\t_{\D t}$ for every Lorentz frame, and one can transform between these time-evolution functions via Lorentz boosts.&lt;/p&gt;
-&lt;p&gt;For general relativity, I am not personally clear on whether there exist global reference frames where there is a single simultaneous state of the universe, even if what is regarded as simultaneous is arbitrarily chosen. In that case, my formulation may break down. However, there should still be a causal DAG. Is it possible to topologically sort that DAG and then organize it into something like time slices? Each such slice would then correspond to a state in $\O$.&lt;/p&gt;
-</description>
+&lt;p&gt;For general relativity, I am not personally clear on whether there exist global reference frames where there is a single simultaneous state of the universe, even if what is regarded as simultaneous is arbitrarily chosen. In that case, my formulation may break down. However, there should still be a causal DAG. Is it possible to topologically sort that DAG and then organize it into something like time slices? Each such slice would then correspond to a state in $\O$.&lt;/p&gt;</description>
     </item>
     
     <item>

@@ -6,7 +6,8 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Information Algebra</h1><p class="article date">May 5, 2021<span class="lastmod"> • edited May 7, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Information Algebra</h1><p class="article date">May 5, 2021<span class="lastmod"> • edited February 9, 2022</span></p></section><article class="article markdown-body"><p>I further expand on the ideas I introduced in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a>.</p>
+<p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -60,7 +61,6 @@
 \newcommand{\V}[1]{\begin{pmatrix}#1\end{pmatrix}}<br>
 \require{cancel}<br>
 $$</p>
-<p>This is a review of the ideas I introduced in <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a>.</p>
 <p>We have a set of possibilities $\O$, and there is a <em>true</em> but unknown possibility $\o^*\in\O$. I define information as a tuple of the form $(\O,R)$ where $R\subseteq \O$, which asserts that $\o^*\in R$. I notate these information tuples with arrows:</p>
 <p>$$<br>
 \O\tr R \df (\O, R)\,,<br>
@@ -219,8 +219,7 @@ $h(\tra{\O}{A}) - h(\mi{\O}{A}{R}{A\dom{R}}) = h(\tra{R}{A\dom{R}})$<br>
 $h(\mi{\O}{A}{R}{A\dom{R}}) + h(\tra{R}{A\dom{R}}) = h(\tra{\O}{A})$<br>
 $h(\mi{\O}{A}{R}{A\dom{R}}) + h(A \tr A\dom{R}) = h(\O\tr R)$</p>
 <p>$h(\mi{\O}{A}{R}{A\dom{R}}) + h(R\tr A\dom{R}) + h(A \tr A\dom{R}) = h(\O\tr A\dom{R})$<br>
-$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$</p>
-</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/information/>information</a></section>
+$h(\mi{\O}{A}{R}{A\dom{R}}) + h(\O\tr R) + h(R \tr A\dom{R}) = h(\O\tr A\dom{R})$</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/information/>information</a></section>
 </div><nav id="TableOfContents">
   <ol>
     <li><a href="#mutual-information">Mutual Information</a>
