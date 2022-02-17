@@ -1,9 +1,10 @@
 ---
 date: 2022-02-09
-lastmod: '2022-02-09T22:46:28-08:00'
+lastmod: '2022-02-16T13:20:26-08:00'
 tags:
 - physics
 - information
+- thermodynamics
 title: Is The Szilard Cycle Reversible?
 ---
 
@@ -63,7 +64,10 @@ The which-side information, stored in our bit, is used to determine which piston
 (e) 
 The piston is pushed all the way to the end of the box until it cannot move any further, which is its initial state in step (a). The box is now returned to its initial state, and the particle is missing some KE which we converted into useful work. However, the bit of memory we used to store the which-side measurement still has that piece of information stored in it. The final step is to put the bit into the standard state S (erasure), bringing us to (f) and completing the cycle.
 
-The memory erasure from step (e) to (f) is an irreversible process, since the information contained therein is effectively lost. [Landauer's principle](https://en.wikipedia.org/wiki/Landauer%27s_principle) states that this irreversible erasure costs a minimum amount of energy, compensating for the apparent reduction in overall entropy of the particle-box system, thus preserving the 2nd law of thermodynamics, which states that the entropy of a system cannot be reduced for free.
+(f)
+The physical memory is cleared (put back into the standard state S), and the cycle is complete. The only difference between (a) and (f) is the net KE extracted from the particle.
+
+The Szilard cycle steps (a) through (e) are all reversible processes. That is to say, those steps can be undone without any energy cost. However, the memory erasure from step (e) to (f) is an irreversible process, since the information contained in the external memory is effectively lost when it is cleared. [Landauer's principle](https://en.wikipedia.org/wiki/Landauer%27s_principle) states that this irreversible erasure costs a minimum amount of energy, compensating for the apparent reduction in overall entropy of the particle-box system, thus preserving the 2nd law of thermodynamics, which states that the entropy of a system cannot be reduced for free. Step (f) makes the whole Szilard cycle irreversible.
 
 ## Gas Thermodynamics
 
@@ -83,7 +87,7 @@ Before the memory bit is erased, we can still reverse the process and move the e
 
 ## Uncopying
 
-To serve as an intuition pump for how uncopying would work physically, Bennett uses a ["one-domain ferromagnet"](https://en.wikipedia.org/wiki/Single_domain_(magnetic)), which is a fancy way of saying an object with an intrinsic magnetic field (as opposed to electromagnet that requires an electric current) which is "simple" in its shape, specifically the magnetic field can be described by a single direction - an arrow oriented in space. I'll refer to this object as simply "a magnet".
+To serve as an intuition pump for how uncopying would work physically, Bennett uses a ["one-domain ferromagnet"](https://en.wikipedia.org/wiki/Single_domain_(magnetic)), which is a fancy way of saying an object with an intrinsic magnetic field (as opposed to electromagnet that requires an electric current) which is "simple" in its shape, specifically the magnetic field can be described by a single direction - an arrow oriented in space. I'll refer to this object simply as "a magnet".
 
 Bennett supposes that absent any external magnetic fields, the magent's field direction is stable, as in it is stuck in the up or down position. This can be represented by a potential field as a function of the magent's angle of rotation:
 
@@ -121,12 +125,16 @@ The Szilard cycle is a deterministic process when modeled with classical mechani
 
 This is the partitioned box and its particle as depicted by Bennett in [#Szilard cycle](#szilard-cycle):
 {{< figure src="../../Pasted image 20220209152732.png" width="400" caption="" >}}
-This is the same partitioned box with color-coded spatial regions which the particle could potentially be initialized to. Red is the left side and blue is the right side.
+This is the same partitioned box with color-coded spatial regions which the particle could potentially be initialized to. Red is the left side and blue is the right side. Note that this depicts 2D space (as opposed to 2D state space below).
 {{< figure src="../../Pasted image 20220209152749.png" width="400" caption="" >}}
 
 Here the which-side information is depicted with color: Initial states on the left are colored red and initial states on the right are colored blue.
 
-To be more precise, we should plot phase space (state space), which for a single particle has two dimensions: position and velocity. We can then show all initial states the particle could occupy, colored-coded as "left" and "right":
+However, this visualization leaves out a part of the state space: velocity. To be more precise, we should plot state space (phase space) which includes a velocity dimension for every position dimension. We would need a 4D plot for a particle in two spatial dimensions, and that is hard to visualize. For simplicity, let's work with a particle confined to a single spatial dimension, giving us a 2D state space plot.
+
+
+
+Here is shown all initial states (position and velocity) the particle could occupy. States are colored red or blue for the left and right sides of the box respectively.
 ![](</Pasted image 20220209152858.png> "Phase space plot of the initial state regions, separating out positive (rightward) and negative (leftward) velocities onto the positive and negative sides of the velocity axis (vertical). This depicted state region implies we know the particle's velocity magnitude is within a certain range.")
 
 
@@ -146,9 +154,14 @@ Here at a later point in time the red and blue regions are still interlaced in a
 
 # Question
 
-Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (f) of the Szilard cycle to induce a reference magnetic field for an uncopy process? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle. It is not obvious to me that this uncopying would result in an increase in entropy anywhere else. Then it would appear total entropy decreased, violating the 2nd law.
+Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (e) of the [#Szilard cycle](#szilard-cycle) to induce a reference magnetic field for an [uncopy process](#uncopying)? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle.
 
-Much more plausible is that the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the "gas" to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.
+
+
+The specific modification to the Szilard cycle I'm proposing is this: Step (f) irreversibly resets the memory bit, costing some minimum amount of energy. Instead, consider an alternative step (f') where the external memory is reset back to the standard (default) state S via an uncopy process - the reversal of the copy process. As we saw above, this can be done without energy cost. The Szilard cycle with step (f') replacing step (f) would be reversible throughout, seemingly violating the 2nd law because total entropy would have decreased (it is not obvious to me that this uncopying would result in an increase in entropy anywhere else).
+
+{{< figure src="../../Pasted image 20220210064848.png" width="300" caption="" >}}
+It is safe to assume the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the "gas" to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.
 
 We could tackle this question by asking instead, is it possible to perform an observation on the particle such that only its "color" (which side it came from) is recorded in one bit of memory? If so, then the reverse of this process is the uncopy operation we are seeking. We already know that we could measure the particle's position and velocity precisely (assuming a classical particle) using, say, a camera. The "camera process" would write many bits to memory (including a lot more than the particle's state). Note that we would need to take two pictures in quick succession to capture the particles velocity. To reverse THAT process, we would need to feed as input ALL of the bits of information the camera would output in the forward direction. Without that input information, we cannot uncopy just a single bit, even if its a subset of the information.
 
