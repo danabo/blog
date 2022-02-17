@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Szilard Cycle Particle-Piston Interaction Model&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Szilard Cycle Particle-Piston Interaction Model" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Szilard Cycle Particle-Piston Interaction Model</h1><p class="article date">February 17, 2022</p></section><article class="article markdown-body"><p>Admittedly my first-pass interaction model in <a href="https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/#part-ii-information-is-never-lost">Reversible Szilard Cycle Problem#part-ii-information-is-never-lost</a> is not physically realistic. By interaction model, I mean how the particle and piston interact over time. Here I explore some alternative interaction models that try to be more realistic. My main question is whether which-side information is still preserved.</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\ms}{\mathscr}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\es}{\emptyset}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\D}{\Delta}<br>
+\newcommand{\d}{\delta}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\L}{\Lambda}<br>
+\newcommand{\G}{\Gamma}<br>
+\newcommand{\g}{\gamma}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\m}{\times}<br>
+\newcommand{\N}{\mb{N}}<br>
+\newcommand{\I}{\mb{I}}<br>
+\newcommand{\H}{\mc{H}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\s}{\sigma}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\par}[1]{\left(#1\right)}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\dom}[1]{_{\mid #1}}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\M}{\mc{M}}<br>
+\newcommand{\up}[1]{^{(#1)}}<br>
+\newcommand{\Dt}{{\Delta t}}<br>
+\newcommand{\tr}{\rightarrowtail}<br>
+\newcommand{\qed}{\ \ \blacksquare}<br>
+\newcommand{\c}{\overline}<br>
+\newcommand{\dg}{\dagger}<br>
+\newcommand{\dd}{\mathrm{d}}<br>
+\newcommand{\pd}{\partial}<br>
+$$</p>
+<p>The physically realistic thing to do would be to make the piston an inertial body, meaning that it has its own momentum. If the particle is doing work on the piston by pushing it, then the piston must be climbing a potential gradient. Then, as an inertial body, the piston should fall back down the gradient when not being pushed.</p>
+<p>I also tried settling this matter by going to the source: <a href="http://fab.cba.mit.edu/classes/863.18/notes/computation/Szilard-1929.pdf"target="_blank">Szilard&rsquo;s original paper</a>. Szilard specifies that the piston is forcibly moved by an operator. This can be modeled as a wall that moves in a predefined way, regardless of its interaction with the particle. That is certainly easier to model on a computer.</p>
+<p>Szilard specifies that the expansion is <a href="https://en.wikipedia.org/wiki/Isothermal_process"target="_blank">isothermal</a>, which means the particle regains lost KE (on average) by interacting with oscillating particles in the walls of the container. However, I am modeling the expansion as <a href="https://en.wikipedia.org/wiki/Isentropic_process"target="_blank">isentropic</a> to avoid the issue of environmental noise (see <a href="https://danabo.github.io/blog/posts/why-doesnt-uncopying-defeat-the-2nd-law/#defining-environmental-noise">Why Doesn&#39;t Uncopying Defeat The 2nd Law#defining-environmental-noise</a>). That means the particle does not exchange KE with the walls of the container, and so the particle loses net KE over time.</p>
+<h1 id="inertial-piston-model">Inertial Piston Model</h1>
+<p>Like last time I am modeling this in one spatial dimension. The piston and particle each have one position coordinate. The container has a length, with &ldquo;caps&rdquo; on each end.</p>
+<p>If the piston is pushing a mass $M$ up against gravity, then the potential field has a constant slope $g$. Then the motion of the piston is described by $M \ddot{x}=-g$, which gives us a parabola (think ball thrown in the air).</p>
+<p>The particle experiences no forces, except for elastic collisions with the walls of the container and the piston. We can use the <a href="https://en.wikipedia.org/wiki/Elastic_collision#One-dimensional_Newtonian"target="_blank">1D elastic collision formula</a>:</p>
+<p>$$<br>
+\pmatrix{u_f\\v_f}=\frac{1}{M+m}\pmatrix{M-m &amp; 2m \\ 2M &amp; m-M}\pmatrix{u_i\\v_i}<br>
+$$</p>
+<p>where $M$ is the mass of the piston (i.e. the mass it is pushing), $m$ is the mass of the particle, $v_i,v_f$ are the initial and final velocities of the particle before and after the collision, and $u_i,u_f$ are the initial and final velocities of the piston before and after collision.</p>
+<p>When the particle collides with a fixed wall, its velocity sign changes, i.e. $v_f = -v_i$.</p>
+<p>To have the particle push the piston slowly over the course of many back-and-forth bounces, the piston&rsquo;s mass should be greater than the particle&rsquo;s, and the particle&rsquo;s velocity should be greater than piston.</p>
+<p>For example, here is a simulation with the following settings<br>
+piston: (mass) $M=1$ and (initial velocity) $u_0 = 0$<br>
+particle: (mass) $m = 1/10$ and (initial velocity) $v_0=5$<br>
+
+
+  <figure>
+    
+    <img src="https://danabo.github.io/blog/Pasted%20image%2020220215093814.png" alt="">
+    <figcaption>Blue is the particle&#39;s trajectory, and orange is the piston&#39;s trajectory. The particle bounces off both the piston and the fixed wall at position -1. The behavior of the combined system is locally chaotic, and globally seems to oscillate.</figcaption>
+  </figure>
+</p>
+<p>With a much lower particle mass and much higher initial particle velocity, we see less chaotic behavior and a more stable oscillation:<br>
+piston: (mass) $M=1$ and (initial velocity) $u_0 = 0$<br>
+particle: (mass) $m = 1/100$ and (initial velocity) $v_0=20$<br>
+
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020220215093846.png" alt="">
+</p>
+<p>To avoid this sort of oscillation, I should have the piston mass decrease as it is pushed up, corresponding to <a href="https://en.wikipedia.org/wiki/Isentropic_process"target="_blank">adiabatic (isentropic) expansion</a>, where the entropy of the gas remains fixed as it expands. The gas does not absorb thermal energy from its container, and so it cools as it transfers KE to the piston. In order to maintain approximate equilibrium through out the change (making it a <a href="https://en.wikipedia.org/wiki/Quasistatic_process"target="_blank">quasistatic process</a>), the piston mass is slowly decreased so that the gas pressure and piston force opposing it always in balance.</p>
+<p>I tried running the same simulation where the piston mass is the following function of the container length: $M(L)=M_0\cdot\par{\frac{L_0}{L}}^\gamma$ where $\gamma=1$. I got this formula from the <a href="https://en.wikipedia.org/wiki/Isentropic_process#Table_of_isentropic_relations_for_an_ideal_gas"target="_blank">ideal gas isentropic relation</a> between pressure and volume: $\frac{P_f}{P_i}=\par{\frac{V_i}{V_f}}^\gamma$. Pressure of a single particle applied to a point (end of the 1D container) is just its force, and the volume of the 1D container is its length. This resulted in very similar looking particle-piston trajectories as before, with oscillatory behavior. I suspect I would need to have the piston mass decrease as it is pushed up the potential slope, but not increase as it falls down the potential slope.</p>
+<p>At any rate, a quick workaround is to fix the piston in place once it reaches its maximally expanded position. Like this:</p>
+<p>
+
+  <img src="https://danabo.github.io/blog/Pasted%20image%2020220215103320.png" alt="">
+<br>
+Like in <a href="https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/#part-ii-information-is-never-lost">Reversible Szilard Cycle Problem#part-ii-information-is-never-lost</a>, I sampled a thousand initial particle states on each side of the container - left side as red and right side as blue.</p>
+<p><video controls autoplay loop src="../../szilard_inertial_piston.mp4" caption="" width="100%"></video><br>
+It seems that this too results in disjoint state regions, and so the which-side information is again preserved. What&rsquo;s also apparent is that the state regions are shrinking. <a href="https://en.wikipedia.org/wiki/Liouville%27s_theorem_%28Hamiltonian%29"target="_blank">Liouville&rsquo;s theorem</a> guarantees that state volume will be conserved in a closed system. However, here there is energy being lost to the piston. If we plotted the joint state space of the particle and piston we would see that the total state region does not shrink.</p>
+<p>Since the particle&rsquo;s state region is shrinking, that implies there is state uncertainty being moved into the piston dimension. What does that imply about the reversibility of this process? A process is thermodynamically reversible if both the system undergoing the process and its environment can be reset to their joint initial state. If uncertainty is transferred from the particle to the piston (piston&rsquo;s state region has increased in volume), is that reversible? Since all of the transferred uncertainty is accumulating in a single degree of freedom (the total energy absorbed from the particle), it should be possible in principle to transfer that uncertainty back to the particle. It is only when uncertainty becomes spread out among many degrees of freedom (like heat transfer from many particles to many particles) that this transfer becomes irreversible (why? - An exercise left to the reader).</p>
+<h1 id="controlled-piston-model">Controlled Piston Model</h1>
+<h2 id="particles-colliding-with-moving-walls">Particles colliding with moving walls</h2>
+<p>When you forcibly move a wall into particles, you transfer KE to them. This is why compressing a gas adds heat energy (average KE) to the gas.<br>
+The time reversal of this process is forcibly expanding a gas by pulling the wall away from the particles. This must result in KE extraction from the particles.</p>
+<p>We see this bear out in the low-level Newtonian mechanics of collision with the formula $v_f = 2u-v_i$, where $v_i$ is the incoming (initial) velocity of the particle before wall collision, $v_f$ is the outgoing (final) velocity of the particle after wall collision, and $u$ is the fixed velocity of the wall.</p>
+<p>This formula can be derived from the <a href="https://en.wikipedia.org/wiki/Elastic_collision#One-dimensional_Newtonian"target="_blank">one-dimensional elastic collision formula</a> (see <a href="#inertial-piston-model">#Inertial Piston Model</a>) by taking the mass of the wall to infinity (<a href="https://www.physicsforums.com/threads/elastic-collision-against-a-moving-wall.236652/#post-2347189"target="_blank">reference</a>):</p>
+<p>Taking the limit as $m_u \to \infty$, we get</p>
+<p>$$<br>
+\lim_{M\to\infty}\frac{1}{M+m}\pmatrix{M-m &amp; 2m \\ 2M &amp; m-M} = \pmatrix{1 &amp; 0 \\ 2 &amp; -1}<br>
+$$</p>
+<p>giving us<br>
+$$<br>
+\pmatrix{u_f\\v_f}=\pmatrix{1 &amp; 0 \\ 2 &amp; -1}\pmatrix{u_i\\v_i} = \pmatrix{u_i\\2u_i-v_i}<br>
+$$</p>
+<p>where $u=u_i=u_v$.</p>
+<h2 id="simulation">Simulation</h2>
+<p>In this simulation the piston has infinite mass and moves along a predefined path, representing an external operator controlling the movement of the piston. The particle collides elastically with the piston using the formula $v_f = 2u-v_i$, where $u$ is the velocity of the piston. If the piston is moving away from the particle (in the same direction as $v_i$), we see that $\abs{v_f}&lt;\abs{v_i}$ and so the particle loses KE.</p>
+<p>
+
+  <figure>
+    
+    <img src="https://danabo.github.io/blog/Pasted%20image%2020220217150254.png" alt="">
+    <figcaption>An example particle trajectory (blue) with a piston (orange) moving along a predefined path. When the particle collides with the moving piston it loses KE.</figcaption>
+  </figure>
+</p>
+<p>Here I sample an ensemble of initial particles. The blue particles bounce off the blue piston and the red particles bounce off the red piston. Since the blue and red pistons follow the same path for all particles (of the same color), I can visualize the pistons superimposed on the ensemble. Since the piston&rsquo;s predefined movement depends on which side (which color) the particle is on, this controll &ldquo;program&rdquo; requires the which-side bit stored in memory.<br>
+<video controls autoplay loop src="../../szilard_piston_fixed_movement.mp4" caption="" width="100%"></video><br>
+Clearly the state regions overlap over time, and so the which-side information is no longer present in the particle system at the end of the piston expansion.</p>
+<p>Question: Why do some interaction models preserve which-side information, while other interaction models do not?</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/physics/>physics</a><a class="tag" href=https://danabo.github.io/blog/tags/information/>information</a><a class="tag" href=https://danabo.github.io/blog/tags/thermodynamics/>thermodynamics</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#inertial-piston-model">Inertial Piston Model</a></li>
+    <li><a href="#controlled-piston-model">Controlled Piston Model</a>
+      <ol>
+        <li><a href="#particles-colliding-with-moving-walls">Particles colliding with moving walls</a></li>
+        <li><a href="#simulation">Simulation</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/why-doesnt-uncopying-defeat-the-2nd-law/"><span class="iconfont icon-article"></span>Why Doesn't Uncopying Defeat The 2nd Law</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>

@@ -5,10 +5,376 @@
     <description>Recent content in information on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Wed, 09 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Feb 2022 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/tags/information/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Szilard Cycle Particle-Piston Interaction Model</title>
+      <link>https://danabo.github.io/blog/posts/szilard-cycle-particle-piston-interaction-model/</link>
+      <pubDate>Thu, 17 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/szilard-cycle-particle-piston-interaction-model/</guid>
+      <description>&lt;p&gt;Admittedly my first-pass interaction model in &lt;a href=&#34;https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/#part-ii-information-is-never-lost&#34;&gt;Reversible Szilard Cycle Problem#part-ii-information-is-never-lost&lt;/a&gt; is not physically realistic. By interaction model, I mean how the particle and piston interact over time. Here I explore some alternative interaction models that try to be more realistic. My main question is whether which-side information is still preserved.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\newcommand{\0}{\mathrm{false}}&lt;br&gt;
+\newcommand{\1}{\mathrm{true}}&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\mf}{\mathfrak}&lt;br&gt;
+\newcommand{\ms}{\mathscr}&lt;br&gt;
+\newcommand{\and}{\wedge}&lt;br&gt;
+\newcommand{\or}{\vee}&lt;br&gt;
+\newcommand{\es}{\emptyset}&lt;br&gt;
+\newcommand{\a}{\alpha}&lt;br&gt;
+\newcommand{\t}{\tau}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\D}{\Delta}&lt;br&gt;
+\newcommand{\d}{\delta}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\x}{\xi}&lt;br&gt;
+\newcommand{\z}{\zeta}&lt;br&gt;
+\newcommand{\fa}{\forall}&lt;br&gt;
+\newcommand{\ex}{\exists}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\Y}{\mc{Y}}&lt;br&gt;
+\newcommand{\Z}{\mc{Z}}&lt;br&gt;
+\newcommand{\P}{\Psi}&lt;br&gt;
+\newcommand{\y}{\psi}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\l}{\lambda}&lt;br&gt;
+\newcommand{\L}{\Lambda}&lt;br&gt;
+\newcommand{\G}{\Gamma}&lt;br&gt;
+\newcommand{\g}{\gamma}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\m}{\times}&lt;br&gt;
+\newcommand{\N}{\mb{N}}&lt;br&gt;
+\newcommand{\I}{\mb{I}}&lt;br&gt;
+\newcommand{\H}{\mc{H}}&lt;br&gt;
+\newcommand{\R}{\mb{R}}&lt;br&gt;
+\newcommand{\s}{\sigma}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
+\newcommand{\dom}[1]{_{\mid #1}}&lt;br&gt;
+\newcommand{\df}{\overset{\mathrm{def}}{=}}&lt;br&gt;
+\newcommand{\M}{\mc{M}}&lt;br&gt;
+\newcommand{\up}[1]{^{(#1)}}&lt;br&gt;
+\newcommand{\Dt}{{\Delta t}}&lt;br&gt;
+\newcommand{\tr}{\rightarrowtail}&lt;br&gt;
+\newcommand{\qed}{\ \ \blacksquare}&lt;br&gt;
+\newcommand{\c}{\overline}&lt;br&gt;
+\newcommand{\dg}{\dagger}&lt;br&gt;
+\newcommand{\dd}{\mathrm{d}}&lt;br&gt;
+\newcommand{\pd}{\partial}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;The physically realistic thing to do would be to make the piston an inertial body, meaning that it has its own momentum. If the particle is doing work on the piston by pushing it, then the piston must be climbing a potential gradient. Then, as an inertial body, the piston should fall back down the gradient when not being pushed.&lt;/p&gt;
+&lt;p&gt;I also tried settling this matter by going to the source: &lt;a href=&#34;http://fab.cba.mit.edu/classes/863.18/notes/computation/Szilard-1929.pdf&#34;target=&#34;_blank&#34;&gt;Szilard&amp;rsquo;s original paper&lt;/a&gt;. Szilard specifies that the piston is forcibly moved by an operator. This can be modeled as a wall that moves in a predefined way, regardless of its interaction with the particle. That is certainly easier to model on a computer.&lt;/p&gt;
+&lt;p&gt;Szilard specifies that the expansion is &lt;a href=&#34;https://en.wikipedia.org/wiki/Isothermal_process&#34;target=&#34;_blank&#34;&gt;isothermal&lt;/a&gt;, which means the particle regains lost KE (on average) by interacting with oscillating particles in the walls of the container. However, I am modeling the expansion as &lt;a href=&#34;https://en.wikipedia.org/wiki/Isentropic_process&#34;target=&#34;_blank&#34;&gt;isentropic&lt;/a&gt; to avoid the issue of environmental noise (see &lt;a href=&#34;https://danabo.github.io/blog/posts/why-doesnt-uncopying-defeat-the-2nd-law/#defining-environmental-noise&#34;&gt;Why Doesn&amp;#39;t Uncopying Defeat The 2nd Law#defining-environmental-noise&lt;/a&gt;). That means the particle does not exchange KE with the walls of the container, and so the particle loses net KE over time.&lt;/p&gt;
+&lt;h1 id=&#34;inertial-piston-model&#34;&gt;Inertial Piston Model&lt;/h1&gt;
+&lt;p&gt;Like last time I am modeling this in one spatial dimension. The piston and particle each have one position coordinate. The container has a length, with &amp;ldquo;caps&amp;rdquo; on each end.&lt;/p&gt;
+&lt;p&gt;If the piston is pushing a mass $M$ up against gravity, then the potential field has a constant slope $g$. Then the motion of the piston is described by $M \ddot{x}=-g$, which gives us a parabola (think ball thrown in the air).&lt;/p&gt;
+&lt;p&gt;The particle experiences no forces, except for elastic collisions with the walls of the container and the piston. We can use the &lt;a href=&#34;https://en.wikipedia.org/wiki/Elastic_collision#One-dimensional_Newtonian&#34;target=&#34;_blank&#34;&gt;1D elastic collision formula&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\pmatrix{u_f\\v_f}=\frac{1}{M+m}\pmatrix{M-m &amp;amp; 2m \\ 2M &amp;amp; m-M}\pmatrix{u_i\\v_i}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $M$ is the mass of the piston (i.e. the mass it is pushing), $m$ is the mass of the particle, $v_i,v_f$ are the initial and final velocities of the particle before and after the collision, and $u_i,u_f$ are the initial and final velocities of the piston before and after collision.&lt;/p&gt;
+&lt;p&gt;When the particle collides with a fixed wall, its velocity sign changes, i.e. $v_f = -v_i$.&lt;/p&gt;
+&lt;p&gt;To have the particle push the piston slowly over the course of many back-and-forth bounces, the piston&amp;rsquo;s mass should be greater than the particle&amp;rsquo;s, and the particle&amp;rsquo;s velocity should be greater than piston.&lt;/p&gt;
+&lt;p&gt;For example, here is a simulation with the following settings&lt;br&gt;
+piston: (mass) $M=1$ and (initial velocity) $u_0 = 0$&lt;br&gt;
+particle: (mass) $m = 1/10$ and (initial velocity) $v_0=5$&lt;br&gt;
+
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220215093814.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Blue is the particle&amp;#39;s trajectory, and orange is the piston&amp;#39;s trajectory. The particle bounces off both the piston and the fixed wall at position -1. The behavior of the combined system is locally chaotic, and globally seems to oscillate.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;With a much lower particle mass and much higher initial particle velocity, we see less chaotic behavior and a more stable oscillation:&lt;br&gt;
+piston: (mass) $M=1$ and (initial velocity) $u_0 = 0$&lt;br&gt;
+particle: (mass) $m = 1/100$ and (initial velocity) $v_0=20$&lt;br&gt;
+
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220215093846.png&#34; alt=&#34;&#34;&gt;
+&lt;/p&gt;
+&lt;p&gt;To avoid this sort of oscillation, I should have the piston mass decrease as it is pushed up, corresponding to &lt;a href=&#34;https://en.wikipedia.org/wiki/Isentropic_process&#34;target=&#34;_blank&#34;&gt;adiabatic (isentropic) expansion&lt;/a&gt;, where the entropy of the gas remains fixed as it expands. The gas does not absorb thermal energy from its container, and so it cools as it transfers KE to the piston. In order to maintain approximate equilibrium through out the change (making it a &lt;a href=&#34;https://en.wikipedia.org/wiki/Quasistatic_process&#34;target=&#34;_blank&#34;&gt;quasistatic process&lt;/a&gt;), the piston mass is slowly decreased so that the gas pressure and piston force opposing it always in balance.&lt;/p&gt;
+&lt;p&gt;I tried running the same simulation where the piston mass is the following function of the container length: $M(L)=M_0\cdot\par{\frac{L_0}{L}}^\gamma$ where $\gamma=1$. I got this formula from the &lt;a href=&#34;https://en.wikipedia.org/wiki/Isentropic_process#Table_of_isentropic_relations_for_an_ideal_gas&#34;target=&#34;_blank&#34;&gt;ideal gas isentropic relation&lt;/a&gt; between pressure and volume: $\frac{P_f}{P_i}=\par{\frac{V_i}{V_f}}^\gamma$. Pressure of a single particle applied to a point (end of the 1D container) is just its force, and the volume of the 1D container is its length. This resulted in very similar looking particle-piston trajectories as before, with oscillatory behavior. I suspect I would need to have the piston mass decrease as it is pushed up the potential slope, but not increase as it falls down the potential slope.&lt;/p&gt;
+&lt;p&gt;At any rate, a quick workaround is to fix the piston in place once it reaches its maximally expanded position. Like this:&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220215103320.png&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+Like in &lt;a href=&#34;https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/#part-ii-information-is-never-lost&#34;&gt;Reversible Szilard Cycle Problem#part-ii-information-is-never-lost&lt;/a&gt;, I sampled a thousand initial particle states on each side of the container - left side as red and right side as blue.&lt;/p&gt;
+&lt;p&gt;&lt;video controls autoplay loop src=&#34;../../szilard_inertial_piston.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;br&gt;
+It seems that this too results in disjoint state regions, and so the which-side information is again preserved. What&amp;rsquo;s also apparent is that the state regions are shrinking. &lt;a href=&#34;https://en.wikipedia.org/wiki/Liouville%27s_theorem_%28Hamiltonian%29&#34;target=&#34;_blank&#34;&gt;Liouville&amp;rsquo;s theorem&lt;/a&gt; guarantees that state volume will be conserved in a closed system. However, here there is energy being lost to the piston. If we plotted the joint state space of the particle and piston we would see that the total state region does not shrink.&lt;/p&gt;
+&lt;p&gt;Since the particle&amp;rsquo;s state region is shrinking, that implies there is state uncertainty being moved into the piston dimension. What does that imply about the reversibility of this process? A process is thermodynamically reversible if both the system undergoing the process and its environment can be reset to their joint initial state. If uncertainty is transferred from the particle to the piston (piston&amp;rsquo;s state region has increased in volume), is that reversible? Since all of the transferred uncertainty is accumulating in a single degree of freedom (the total energy absorbed from the particle), it should be possible in principle to transfer that uncertainty back to the particle. It is only when uncertainty becomes spread out among many degrees of freedom (like heat transfer from many particles to many particles) that this transfer becomes irreversible (why? - An exercise left to the reader).&lt;/p&gt;
+&lt;h1 id=&#34;controlled-piston-model&#34;&gt;Controlled Piston Model&lt;/h1&gt;
+&lt;h2 id=&#34;particles-colliding-with-moving-walls&#34;&gt;Particles colliding with moving walls&lt;/h2&gt;
+&lt;p&gt;When you forcibly move a wall into particles, you transfer KE to them. This is why compressing a gas adds heat energy (average KE) to the gas.&lt;br&gt;
+The time reversal of this process is forcibly expanding a gas by pulling the wall away from the particles. This must result in KE extraction from the particles.&lt;/p&gt;
+&lt;p&gt;We see this bear out in the low-level Newtonian mechanics of collision with the formula $v_f = 2u-v_i$, where $v_i$ is the incoming (initial) velocity of the particle before wall collision, $v_f$ is the outgoing (final) velocity of the particle after wall collision, and $u$ is the fixed velocity of the wall.&lt;/p&gt;
+&lt;p&gt;This formula can be derived from the &lt;a href=&#34;https://en.wikipedia.org/wiki/Elastic_collision#One-dimensional_Newtonian&#34;target=&#34;_blank&#34;&gt;one-dimensional elastic collision formula&lt;/a&gt; (see &lt;a href=&#34;#inertial-piston-model&#34;&gt;#Inertial Piston Model&lt;/a&gt;) by taking the mass of the wall to infinity (&lt;a href=&#34;https://www.physicsforums.com/threads/elastic-collision-against-a-moving-wall.236652/#post-2347189&#34;target=&#34;_blank&#34;&gt;reference&lt;/a&gt;):&lt;/p&gt;
+&lt;p&gt;Taking the limit as $m_u \to \infty$, we get&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\lim_{M\to\infty}\frac{1}{M+m}\pmatrix{M-m &amp;amp; 2m \\ 2M &amp;amp; m-M} = \pmatrix{1 &amp;amp; 0 \\ 2 &amp;amp; -1}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;giving us&lt;br&gt;
+$$&lt;br&gt;
+\pmatrix{u_f\\v_f}=\pmatrix{1 &amp;amp; 0 \\ 2 &amp;amp; -1}\pmatrix{u_i\\v_i} = \pmatrix{u_i\\2u_i-v_i}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;where $u=u_i=u_v$.&lt;/p&gt;
+&lt;h2 id=&#34;simulation&#34;&gt;Simulation&lt;/h2&gt;
+&lt;p&gt;In this simulation the piston has infinite mass and moves along a predefined path, representing an external operator controlling the movement of the piston. The particle collides elastically with the piston using the formula $v_f = 2u-v_i$, where $u$ is the velocity of the piston. If the piston is moving away from the particle (in the same direction as $v_i$), we see that $\abs{v_f}&amp;lt;\abs{v_i}$ and so the particle loses KE.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220217150254.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;An example particle trajectory (blue) with a piston (orange) moving along a predefined path. When the particle collides with the moving piston it loses KE.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Here I sample an ensemble of initial particles. The blue particles bounce off the blue piston and the red particles bounce off the red piston. Since the blue and red pistons follow the same path for all particles (of the same color), I can visualize the pistons superimposed on the ensemble. Since the piston&amp;rsquo;s predefined movement depends on which side (which color) the particle is on, this controll &amp;ldquo;program&amp;rdquo; requires the which-side bit stored in memory.&lt;br&gt;
+&lt;video controls autoplay loop src=&#34;../../szilard_piston_fixed_movement.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;br&gt;
+Clearly the state regions overlap over time, and so the which-side information is no longer present in the particle system at the end of the piston expansion.&lt;/p&gt;
+&lt;p&gt;Question: Why do some interaction models preserve which-side information, while other interaction models do not?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Why Doesn&#39;t Uncopying Defeat The 2nd Law</title>
+      <link>https://danabo.github.io/blog/posts/why-doesnt-uncopying-defeat-the-2nd-law/</link>
+      <pubDate>Thu, 17 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/why-doesnt-uncopying-defeat-the-2nd-law/</guid>
+      <description>&lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/&#34;&gt;Reversible Szilard Cycle Problem&lt;/a&gt; I pondered whether uncopying a bit of information at the end of the Szilard cycle makes the full cycle reversible, apparently getting around the 2nd law. This &amp;ldquo;loophole&amp;rdquo; is more much pervasive to thermodynamics than the Szilard engine. I will go through its generalization in &lt;a href=&#34;#maxwell%27s-superdemon&#34;&gt;#Maxwell&amp;rsquo;s Superdemon&lt;/a&gt;. I assume the 2nd law holds, so in &lt;a href=&#34;#slaying-the-superdemon&#34;&gt;#Slaying The Superdemon&lt;/a&gt; I consider some possible reasons why this loophole doesn&amp;rsquo;t work.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\newcommand{\0}{\mathrm{false}}&lt;br&gt;
+\newcommand{\1}{\mathrm{true}}&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\mf}{\mathfrak}&lt;br&gt;
+\newcommand{\ms}{\mathscr}&lt;br&gt;
+\newcommand{\and}{\wedge}&lt;br&gt;
+\newcommand{\or}{\vee}&lt;br&gt;
+\newcommand{\es}{\emptyset}&lt;br&gt;
+\newcommand{\a}{\alpha}&lt;br&gt;
+\newcommand{\t}{\tau}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\D}{\Delta}&lt;br&gt;
+\newcommand{\d}{\delta}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\x}{\xi}&lt;br&gt;
+\newcommand{\z}{\zeta}&lt;br&gt;
+\newcommand{\fa}{\forall}&lt;br&gt;
+\newcommand{\ex}{\exists}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\Y}{\mc{Y}}&lt;br&gt;
+\newcommand{\Z}{\mc{Z}}&lt;br&gt;
+\newcommand{\P}{\Psi}&lt;br&gt;
+\newcommand{\y}{\psi}&lt;br&gt;
+\newcommand{\p}{\phi}&lt;br&gt;
+\newcommand{\l}{\lambda}&lt;br&gt;
+\newcommand{\L}{\Lambda}&lt;br&gt;
+\newcommand{\G}{\Gamma}&lt;br&gt;
+\newcommand{\g}{\gamma}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\m}{\times}&lt;br&gt;
+\newcommand{\N}{\mb{N}}&lt;br&gt;
+\newcommand{\I}{\mb{I}}&lt;br&gt;
+\newcommand{\H}{\mc{H}}&lt;br&gt;
+\newcommand{\R}{\mb{R}}&lt;br&gt;
+\newcommand{\s}{\sigma}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
+\newcommand{\dom}[1]{_{\mid #1}}&lt;br&gt;
+\newcommand{\df}{\overset{\mathrm{def}}{=}}&lt;br&gt;
+\newcommand{\M}{\mc{M}}&lt;br&gt;
+\newcommand{\up}[1]{^{(#1)}}&lt;br&gt;
+\newcommand{\Dt}{{\Delta t}}&lt;br&gt;
+\newcommand{\tr}{\rightarrowtail}&lt;br&gt;
+\newcommand{\qed}{\ \ \blacksquare}&lt;br&gt;
+\newcommand{\c}{\overline}&lt;br&gt;
+\newcommand{\dg}{\dagger}&lt;br&gt;
+\newcommand{\dd}{\mathrm{d}}&lt;br&gt;
+\newcommand{\pd}{\partial}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;Note: I will use the term &amp;ldquo;system&amp;rdquo; to refer to a state space, and &amp;ldquo;process&amp;rdquo; to refer to a particular time-evolution (i.e. propagator) that state undergoes. In other words, a system undergoes a process.&lt;/p&gt;
+&lt;h1 id=&#34;maxwells-superdemon&#34;&gt;Maxwell&amp;rsquo;s Superdemon&lt;/h1&gt;
+&lt;h2 id=&#34;the-reversibility-game&#34;&gt;The Reversibility Game&lt;/h2&gt;
+&lt;p&gt;We can treat the general reversibility question in thermodynamics as a game. Player 1 provides a process to be reversed, and the goal for player 2 is to reverse the process back to its initial state without any net change to the environment. Player 2 is allowed to interact with and modify the system in question in any way they wish. Though this seems like it gives player 2 too much power (making this a rather easy game), player 2&amp;rsquo;s task should be impossible for a certain class of processes by the 2nd law of thermodynamics.&lt;/p&gt;
+&lt;p&gt;To analyze this game formally, we need to make the game and its rules well defined. Though we can use classical mechanics to describe processes to be reversed, the question remains: what kinds of actions can player 2 take on any given process represented in classical mechanics?&lt;/p&gt;
+&lt;p&gt;An answer I&amp;rsquo;ve been toying with is motivated by the idea that interactions between any two systems are ultimately mediated by force fields (e.g. gravity and the EM field). So classical mechanics already comes packaged with a general purpose interaction formalism: the potential field.&lt;/p&gt;
+&lt;p&gt;If we wanted to keep the space of possible player 2 actions as broad as possible, we could specify that player 2 can arbitrarily manipulate a (time-dependent) external potential field that the process exists on top of (one which the components of the system interact with). &amp;ldquo;Time-dependent&amp;rdquo; means the state of the potential field may be a function of some absolute time (player 2 decides how it changes and when). &amp;ldquo;External&amp;rdquo; means it is not considered part of the system in question, but is generated by an external source. In this external potential field, player 2 can manifest walls and potential slopes that push/pull parts of the system around. By looking at the total change in the system&amp;rsquo;s energy, we can infer how much energy player 2 had to have spent to get there.&lt;/p&gt;
+&lt;p&gt;The full action space of player 2 is then the choice of any potential field that is a function of time (may change over time any way player 2 wishes) overlaid on top of the system. This &amp;ldquo;interaction via potential field&amp;rdquo; framework allows for a very general class of interventions on physical systems, though it may be too general. As we shall see, some field manipulations player 2 can make may not be realistically achievable. However, I would not expect the validity of the 2nd law to hinge on the mere intractability of engineering what is needed to instantiate some potential field. Instead I would expect there to be some fundamental reason the specific fields needed to violate the 2nd law in some instance of this game are impossible to realize.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll make heavy use of external potential fields that contain &amp;ldquo;walls&amp;rdquo;, which are steep potential hills. So when I talk about a gas in a box, the gas particles make up the system and the walls of the box make up the environment of the gas. Those walls are potential hills in the external potential field. Player 2 is allowed to manipulate that external potential anyway they please, e.g. by modifying, adding and removing walls, among other manipulations.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/gas_container_potential.jpg&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Steep potential hills make up the walls of the box holding a gas.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/potential_wall.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;An idealized wall is an infinitely steep and infinitely high potential hill (depicted on the right). This can be constructed by taking the limit of a finite hill (left) as its height goes to infinity and its depth goes to zero.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;measurement&#34;&gt;Measurement&lt;/h3&gt;
+&lt;p&gt;I&amp;rsquo;ve specified how player 2 can affect the target system in this game, but we also need to specify how player 2 can be effected by the system.&lt;/p&gt;
+&lt;p&gt;Player 2 acts like the environment of the system by manipulating the external potential field the system lies over. But the system may also produce its own potential field(s) which affect the environment. In this way the system may leak information about its state into the environment (any environment state whose trajectory depends in part on the system&amp;rsquo;s state will gain information about the system).&lt;/p&gt;
+&lt;p&gt;Below I will consider cases when player 2 does not have complete information about the system or the environment. In those situations, player 2 is allowed to perform measurements on the system to gain information. A measurement apparatus is a system within the environment whose state evolution depends on the system&amp;rsquo;s state evolution.&lt;/p&gt;
+&lt;p&gt;Using the data (un)copying process from &lt;a href=&#34;https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/#uncopying&#34;&gt;Reversible Szilard Cycle Problem#uncopying&lt;/a&gt; as an intuition pump, we can suppose that the target system&amp;rsquo;s state determines some potential field which the measurement apparatus sits upon. As the system&amp;rsquo;s state changes over time, that potential field changes over time, which may guide the measurement apparatus&amp;rsquo;s state.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/potential_field_measurement.jpg&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;The measurement apparatus state has a degree of freedom $x$, which is guided by the potential. The potential is produced by the system being measured (the target system). Whether $x$ is guided into the left or right potential well depends on how the potential changes over time, which is determined by how the state of the target system  changes over time.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;In this way, any potential fields the target system emits can be used to perform measurements on the target system, which amounts to correlating environment state with the state of the target system.&lt;/p&gt;
+&lt;h2 id=&#34;example-free-expansion&#34;&gt;Example: Free Expansion&lt;/h2&gt;
+&lt;p&gt;A canonical example of an irreversible process is the free expansion of a gas, a.k.a. &lt;a href=&#34;https://en.wikipedia.org/wiki/Joule_expansion&#34;target=&#34;_blank&#34;&gt;Joule expansion&lt;/a&gt;. This is where a gas is allowed to expand into a larger region of space unimpeded. The gas does no work in the process (e.g. does not push a piston), and so its thermodynamic potential to do work is lost.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220217152946.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;\&amp;#34;A free expansion of a gas can be achieved by moving the piston out faster than the fastest molecules in the gas.\&amp;#34; Source: [Wikipedia](https://upload.wikimedia.org/wikipedia/commons/5/5e/Before_during_after_sudden_expansion.jpg).&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;A summary of the free expansion process:&lt;br&gt;
+(a) There is a gas in a box at equilibrium.&lt;br&gt;
+(b) The box is made rapidly larger so that the gas expands into the resulting vacuum (e.g. by removing a barrier to a larger container, or by moving a piston).&lt;br&gt;
+(c) The gas returns to equilibrium in the larger container.&lt;/p&gt;
+&lt;p&gt;We can represent the state of an N-particle gas with the vectors $\vec{x},\vec{v}$ of the combined positions and velocities of the particles respectively (in one, two or three spatial dimensions). The process (how this state changes over time) is fully determined by a Lagrangian (or Hamiltonian), which describe the total energy of the system (kinetic and potential). Specifically, the Lagrangian/Hamiltonian is the difference/sum of the total kinetic energy $V(\vec{x},\vec{v})$ and total potential energy $U(\vec{x},\vec{v})$ of the system, as functions of its state. There may also be an external potential term $U_\text{ext}$ which is a function of the system state and some environment state. The external potential defines the interaction between the system and the environment (e.g. collisions with container walls). Player 2 interacts with the system by modifying $U_\text{ext}$ over time.&lt;/p&gt;
+&lt;p&gt;From the given Lagrangian/Hamiltonian, we can derive the &lt;em&gt;propagator&lt;/em&gt;, $\t_\Dt$, for the time interval $\Dt$. This $\t_\Dt$ is a function that propagates state through time, i.e. $\vec{x}_{t+\Dt},\vec{v}_{t+\Dt}=\t_\Dt(\vec{x}_t,\vec{v}_t)$ where $\vec{x}_t,\vec{v}_t$ is the state of the gas at time $t$, and $\vec{x}_{t+\Dt},\vec{v}_{t+\Dt}$ is the state of the gas at time $t+\Dt$. This relationship holds for all $t\in\R$ and for all $\Dt\in\R$ (including negative intervals).&lt;/p&gt;
+&lt;p&gt;Note that I assume the system and its environment are time-independent, meaning that $V$, $U$ and $U_\text{ext}$ are not functions of some absolute time variable $t$. That makes the Lagrangian/Hamiltonian time-independent, and thus the propagator time-independent (it only depends on state and time interval). However, player 2 may modify $U_\text{ext}$ to be time-dependent, which results in a time-dependent propagator, i.e. $\t_\Dt$ becomes a function of the state at time $t=0$ only.&lt;/p&gt;
+&lt;p&gt;If the gas starts at state $\vec{x}_0,\vec{v}_0$ at time $t=0$, then the entire trajectory of the gas through time is given by $\t_t(\vec{x}_0,\vec{v}_0)$ for all $t \in\R$.&lt;/p&gt;
+&lt;p&gt;Suppose player 1 provides a freely expanding gas as the process that player 2 is tasked with reversing. Specifically, the gas starts in state $\vec{x}_0,\vec{v}_0$, occupying the small container. By time $T$, the gas occupies the large container represented by the state $\vec{x}_T,\vec{v}_T=\t_T(\vec{x}_0,\vec{v}_0)$. How does player 2 intervene on this gas starting at state $\vec{x}_T,\vec{v}_T$ to return it to state $\vec{x}_0,\vec{v}_0$ at some later time?&lt;/p&gt;
+&lt;p&gt;Physics obeys time-reversal symmetry, meaning that time-inverted trajectories are physically valid. That is to say, the system traveling in reverse (but forward in time) along its historical trajectory is a valid process for it to undergo. We need only negate the velocities at some moment in time to put the system on its time-reversed trajectory. To be specific, if player 2 could somehow make it so that $\vec{v}_{T+\e}=-\vec{v}_{T}$ and $\vec{x}_{T+\e}=\vec{x}_T$ for some time-interval $\e&amp;gt;0$, then $\vec{x}_{T+\e+t},\vec{v}_{T+\e+t}=\vec{x}_{T-t},\vec{v}_{T-t}$ for all $t\geq0$. That means $\vec{x}_{2T+\e},\vec{v}_{2T+\e}=\vec{x}_{0},\vec{v}_{0}$ at which point the system is returned to its initial state.&lt;/p&gt;
+&lt;p&gt;Player 2 can achieve this with micro-walls, i.e. very small, localized walls in the potential field. As I mentioned, a wall is essentially a very steep (or infinitely steep) hill in the external potential field. Walls deflect particles (are repulsive). A micro-wall takes up very little space.&lt;br&gt;
+
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/microwall.jpg&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;A micro-wall is a spatially small (localized) wall in the potential field.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Assuming player 2 can create and remove these micro-walls for free (when there is no active collision between them and the particles), then player 2 can manifest these micro-walls just during the time interval from $T$ to $T+\e$. If a micro-wall is placed in front of every particle in just the right orientation, then each particle will be deflected in the opposite direction, i.e. its velocity will be negated.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../gas_reversal_1.jpg&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../gas_reversal_1.jpg&#34; 
+         alt=&#34;State of the gas at time $T$. Blue lines are walls (steep thin hills) in the external potential. Orange lines are velocity vectors of the particles.&#34; width=&#34;308&#34;/&gt;&lt;/a&gt;&lt;/span&gt;&lt;span class=&#34;caption&#34;&gt;
+            &lt;p&gt;State of the gas at time $T$. Blue lines are walls (steep thin hills) in the external potential. Orange lines are velocity vectors of the particles.&lt;/p&gt;
+        &lt;/span&gt;
+&lt;/span&gt; &lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../gas_reversal_2.jpg&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../gas_reversal_2.jpg&#34; 
+         alt=&#34;Microwalls placed between time $T$ and $T&amp;#43;\e$. Gas particles are about to collide with their respective microwalls.&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;&lt;span class=&#34;caption&#34;&gt;
+            &lt;p&gt;Microwalls placed between time $T$ and $T+\e$. Gas particles are about to collide with their respective microwalls.&lt;/p&gt;
+        &lt;/span&gt;
+&lt;/span&gt; &lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../gas_reversal_3.jpg&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../gas_reversal_3.jpg&#34; 
+         alt=&#34;State of the gas at time $T&amp;#43;\e$. Microwalls are removed.&#34; width=&#34;310&#34;/&gt;&lt;/a&gt;&lt;/span&gt;&lt;span class=&#34;caption&#34;&gt;
+            &lt;p&gt;State of the gas at time $T+\e$. Microwalls are removed.&lt;/p&gt;
+        &lt;/span&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Since the microwalls are present between the absolute times $T$ and $T+\e$, the external potential $U_\text{ext}$ becomes time-dependent.&lt;/p&gt;
+&lt;p&gt;Note that I assume that manipulations of the potential field which do not lift or lower matter, or change the gradient (slope) of the field under matter (changing the force felt by the matter, and thus changing the system&amp;rsquo;s total energy), cost no energy to perform (this is an idealization). So the manifestation and dissolution of walls and other shapes in the potential landscape can be done for free so long as there is not matter directly on top of these shapes as they are modified.&lt;/p&gt;
+&lt;h2 id=&#34;the-role-of-uncertainty&#34;&gt;The Role of Uncertainty&lt;/h2&gt;
+&lt;p&gt;The above example demonstrates that player 2 can reverse an isolated process given perfect knowledge of its state. Let&amp;rsquo;s see what happens if player 2 lacks state information.&lt;/p&gt;
+&lt;p&gt;Suppose that player 2 does not know the initial state of the gas, but only that the gas starts off inside the smaller container (and maybe that its at equilibrium at a certain temperature). Player 2 will have to look at the state of the gas (perform a measurement) at time $T$ in order to pull the same trick as before. But like with the Szilard engine, whether player 2 can do this reversal for free hinges on whether the gas measurement can be reset for free (remember that reversal requires the environment, i.e. physical memory, to be reset as well).&lt;/p&gt;
+&lt;p&gt;Note that player 2&amp;rsquo;s state uncertainty is propagated down to any device player 2 employs. For example, if player 2 builds a device that creates the micro-walls needed in the external potential to reverse the gas, how does this device know the correct placement and orientation of the micro-walls? No matter what, the way in which the external potential changes over time needs to be a function of the state of the gas, i.e. is conditional on the gas. For the external potential to be conditioned on the state of the system, some environment state needs to become correlated with the state of the system in the way described earlier: &lt;a href=&#34;#measurement&#34;&gt;#Measurement&lt;/a&gt;. This is how the intervention on the system needed to reverse it depends, fundamentally at a physical level, on information about the system&amp;rsquo;s state.&lt;/p&gt;
+&lt;p&gt;Since the gas evolved deterministically according to the propagator $\t_\Dt$ (for every $\Dt\in\R$), its state information (positions and velocities of the particles) is preserved through time. Suppose the state of the gas can be recorded with a special camera (an infinite resolution camera). One photo captures the positions of all the particles, and two rapidly sequential photos to capture their velocities. As discussed, player 2 can use this information to reverse the free expansion of the gas.&lt;/p&gt;
+&lt;p&gt;But player 2 might be able to do more than that. Suppose player 2 takes two rapidly sequential photos at time $T$, and stores these photos in some physical medium. Since player 2 knows the dynamics of the system (i.e. knows $\t_\Dt$), then in principle player 2 can predict what the photos taken at time $T+\e$ would look like. We might suppose player 2 can even apply $\t_{\e}$ to the photos, replacing them in memory with the output of $\t_{\e}$. This should be in principle a reversible process since $\t_{\e}$ is a bijection (no information is lost by applying this function). If we suppose that the process of taking these photos is reversible and costs no energy (like the copy process from the Szilard engine discussion), then player 2 can apply the reverse of the camera process, i.e. the &amp;ldquo;uncamera&amp;rdquo; process, to the time $T+\e$ photos in memory at time $T+\e$, which would reset the state of the photo storage to its default state at no energy cost. Player 2 is performing an uncopy.&lt;/p&gt;
+&lt;h2 id=&#34;the-general-uncopy-loophole&#34;&gt;The General Uncopy Loophole&lt;/h2&gt;
+&lt;p&gt;Classical mechanics allows us to consider an arbitrary system described with &lt;a href=&#34;https://en.wikipedia.org/wiki/Generalized_coordinates&#34;target=&#34;_blank&#34;&gt;generalized coordinates&lt;/a&gt;, $\vec{q}$ and $\dot{\vec{q}}$, a vector of parameters and their time-derivatives, which fully specifies the state of the system. These parameters can be positions in some reference frame, but can represent other degrees of freedom such as rotations or distances between parts within the system. As before, a Lagrangian (or Hamiltonian) is provided that fully determines the trajectory the system takes through time given any initial state.&lt;/p&gt;
+&lt;p&gt;Let $\t_\Dt$ be the propagator induced by the given Lagrangian/Hamiltonian and let $\vec{q}_t,\dot{\vec{q}}_t = \t_t(\vec{q}_0,\dot{\vec{q}}_0)$ for some initial state $\vec{q}_0,\dot{\vec{q}}_0$.  Assuming player 2&amp;rsquo;s potential field interacts with every degree of freedom in $\vec{q}$, then player 2 can construct generalized micro-walls in the potential field that has the effect of negating all of the velocity coordinates so that $\dot{\vec{q}}_{T+\e}=\dot{\vec{q}}_T$ for some time $T$. Then the system will proceed to run in reverse until it returns to its initial state $\t_t(\vec{q}_0,\dot{\vec{q}}_0)$.&lt;/p&gt;
+&lt;p&gt;For a system with initial state unknown to player 2, this is the general reversal procedure:&lt;/p&gt;
+&lt;p&gt;(a) The system progresses from time 0 to time $T$ (player 2 does not yet intervene).&lt;/p&gt;
+&lt;p&gt;(b) At time $T$, player 2 takes two &amp;ldquo;pictures&amp;rdquo; of the states $\vec{q}_T$ and $\vec{q}_{T+\d}$ (for very small $\d&amp;gt;0$) in quick succession. These state pictures are saved to physical memory (initial in a known default state).&lt;/p&gt;
+&lt;p&gt;(c) Player 2 transforms its saved pictures by applying $\t_\e$ (using their own computational or simulation apparatus), resulting in pictures of the states $\vec{q}_{T+\e}$ and $\vec{q}_{T+\e+\d}$ in memory, all done in the time span between $T$ and $T+\e$.&lt;/p&gt;
+&lt;p&gt;(d) Player 2 performs the reverse of the camera process which takes the state $\vec{q}_{T+\e}$ of the gas and its duplicated representation in memory and results in the memory being returned to its default state. Same is done for the second picture of $\vec{q}_{T+\e+\d}$ a moment later.&lt;/p&gt;
+&lt;p&gt;(e) Player 2 waits another time interval of $T$ for the system to return to its initial state.&lt;/p&gt;
+&lt;p&gt;Call this procedure the &lt;em&gt;uncopy loophole&lt;/em&gt;. A loophole in physics is a potential way around some proposed &lt;a href=&#34;https://en.wikipedia.org/wiki/No-go_theorem&#34;target=&#34;_blank&#34;&gt;no-go theorem&lt;/a&gt; (a theorem that says you can&amp;rsquo;t do something). A famous example are the &lt;a href=&#34;https://en.wikipedia.org/wiki/Loopholes_in_Bell_tests&#34;target=&#34;_blank&#34;&gt;loopholes in Bell&amp;rsquo;s theorem&lt;/a&gt;. All these loopholes (except &lt;a href=&#34;https://en.wikipedia.org/wiki/Loopholes_in_Bell_tests#Superdeterminism_loopholehttps://en.wikipedia.org/wiki/Loopholes_in_Bell_tests#Superdeterminism_loophole&#34;target=&#34;_blank&#34;&gt;superdeterminism&lt;/a&gt;) have been &lt;em&gt;closed&lt;/em&gt;, meaning its been shown that these tricks don&amp;rsquo;t invalidate Bell&amp;rsquo;s theorem (in this case experimentally, but theoretical proof could also be sufficient).&lt;/p&gt;
+&lt;p&gt;Some other entropy increasing processes which could be reversed in this way (if the loophole can&amp;rsquo;t be closed) include the &lt;a href=&#34;https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_%28Physical_and_Theoretical_Chemistry%29/Thermodynamics/Ideal_Systems/Thermodynamics_of_Mixing&#34;target=&#34;_blank&#34;&gt;mixing of two kinds of gases&lt;/a&gt; and &lt;a href=&#34;https://en.wikipedia.org/wiki/Thermal_equilibrium&#34;target=&#34;_blank&#34;&gt;heat diffusion&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;superdemons&#34;&gt;Superdemons&lt;/h3&gt;
+&lt;p&gt;What I&amp;rsquo;ve constructed is a much more beefed up version of &lt;a href=&#34;https://en.wikipedia.org/wiki/Maxwell%27s_demon&#34;target=&#34;_blank&#34;&gt;Maxwell&amp;rsquo;s demon&lt;/a&gt;. While pondering the recently formulated laws of thermodynamics, Maxwell (of &lt;a href=&#34;https://en.wikipedia.org/wiki/Maxwell%27s_equations&#34;target=&#34;_blank&#34;&gt;Maxwell&amp;rsquo;s equations&lt;/a&gt; fame) conceived of a thought experiment where a tiny &amp;ldquo;demon&amp;rdquo; selectively allows particles through a partition in a box containing a gas - specifically allowing high velocity particles through and blocking low velocity particles from passing through. As time passes, one side will be increasingly hotter than the other side. If the demon can carry out this discrimination without energy cost (or low energy cost), then the diffusion of heat between two gasses (one initially hot and one initially cold) can be reversed without energy cost, seemingly violating the 2nd law.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220216190805.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;\&amp;#34;Schematic figure of Maxwell&amp;#39;s demon thought experiment\&amp;#34;. Source: [Wikipedia](https://en.wikipedia.org/wiki/Maxwell%27s_demon#/media/File:Maxwell&amp;#39;s_demon.svg)&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;I want a term for a very powerful player 2 that can perform any of the potential field manipulations allowed for by the game specified above, such as micro-walls (for negating velocity). Let&amp;rsquo;s call this a &lt;em&gt;superdemon&lt;/em&gt;. Think of a superdemon as a maximally adversarial Maxwellian demon which, welding an arbitrarily manipulable potential field, will pull any trick it can to reverse any process you give it without energy cost to itself.&lt;/p&gt;
+&lt;h1 id=&#34;slaying-the-superdemon&#34;&gt;Slaying The Superdemon&lt;/h1&gt;
+&lt;p&gt;How can the uncopy loophole be closed? What prevents it from being carried out in practice?&lt;/p&gt;
+&lt;p&gt;One possible reason is that copy and uncopy are processes that take time. For chaotic and fast moving systems like gasses, the target data to be copied/uncopied is nonstationary, and changing quickly at that. On the other hand, is this even a problem in practice? There are experimental &lt;a href=&#34;https://en.wikipedia.org/wiki/Femto-photography&#34;target=&#34;_blank&#34;&gt;femtosecond cameras&lt;/a&gt; that capture images within the span of one ten-trillionths of a second ($10^{-13}$ s). Presumably that is fast enough to accurately capture the state of a room temperature gas (including velocities).&lt;/p&gt;
+&lt;h2 id=&#34;copying-takes-time&#34;&gt;Copying Takes Time&lt;/h2&gt;
+&lt;p&gt;In theory, the time duration of the copy and uncopy processes can be made as short as desired. The question remains - however brief the process is, because the state being copied is changing quickly, can the copy process have infinite fidelity (copy at infinite resolution)? I am not currently sure what the answer is, assuming there is no environmental noise.&lt;/p&gt;
+&lt;p&gt;The processes thermodynamics is concerned about, where the question of irreversibility comes up, are likely all chaotic. For a gas, even slight changes to their state at time $t$ will result in a very large change in future states over long time spans. Then it also is the case that the smallest of errors in the reversal of a gas&amp;rsquo;s trajectory would result in the gas&amp;rsquo;s state not being reversed. That is to say, if the micro-walls created by a superdemon are even slightly off in their position and orientation, so that the velocity vectors are not perfectly negated, then the gas will not return to its initial state. That means a superdemon with finite copy and uncopy precision will likely not be able to reverse the free expansion of a gas (or the mixing of two gasses, or the diffusion of heat), because so many particle collisions have to happen exactly right for all the particles in the gas to return to their smaller container. (or for two gasses to be become unmixed, etc.)&lt;/p&gt;
+&lt;p&gt;This brings me to the more pervading reason the uncopy loophole won&amp;rsquo;t work: environmental noise.&lt;/p&gt;
+&lt;h2 id=&#34;environment-noise&#34;&gt;Environment noise&lt;/h2&gt;
+&lt;p&gt;Environmental noise makes carrying out the uncopy loophole intractable. Why?&lt;/p&gt;
+&lt;p&gt;A more realistic model of a gas includes the interaction between the gas particles and the particles of its container. This interaction makes the future states of the gas dependent, in part, on the state of those container particles, i.e. environment state. For a superdemon to reverse the trajectory of a gas, it would need to also reverse the trajectories of all the particles in its container as well. Now we&amp;rsquo;ve expanded the scope of what needs to be reversed to include the immediate environment the system interacts with. But that immediate environment also interacts with things beyond it. In practice no system is perfectly isolated. There is endless chain of systems interacting with systems so that one can never take into account enough state to perfectly reverse a gas (or any other chaotic system).&lt;/p&gt;
+&lt;p&gt;Supposing the superdemon has perfect information about the state of the entire universe, but cannot alter the trajectory of the environment outside the system, can the superdemon reverse a chaotic system like a gas? Maybe it is possible to determine an intricate sequence of interventions on the system that guide it back to its reversed state given the forward-trajectory of the environment on which it depends.&lt;/p&gt;
+&lt;p&gt;Now consider what happens when the superdemon does not know the state of the entire universe. The superdemon either has to measure that unknown state (by interacting), which consumes physical memory storage, or has to perform an intervention on the system that does not depend on that unknown state.&lt;/p&gt;
+&lt;p&gt;If we limit the power of the superdemon to potential field manipulations that are finite (either finite in energy changes or finite in the spatial region of the change), then the superdemon cannot use the uncopy trick to reset its physical memory. That physical memory is itself interacting with more of the environment with unknown state, and the superdemon would need to take that unknown state into account to uncopy the memory, and we have an infinite regress.&lt;/p&gt;
+&lt;h3 id=&#34;defining-environmental-noise&#34;&gt;Defining Environmental Noise&lt;/h3&gt;
+&lt;p&gt;I define environment noise as environmental uncertainty - i.e. environment state that is unknown (i.e. unknown to player 2) - represented as a state region (the set of possible states it could take on).&lt;/p&gt;
+&lt;p&gt;If the system in question starts off in a known state, as it interacts with the part of the environment which is uncertain, the system&amp;rsquo;s state will also become uncertain over time. One could think of the system&amp;rsquo;s time-evolution as being nondeterministic, in the sense that the system&amp;rsquo;s future state is a function of both the system&amp;rsquo;s current state and environmental state which is literally not determined in the model (it takes on a set of possibilities).&lt;/p&gt;
+&lt;p&gt;Some example forms that environmental noise takes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Thermal motion of wall particles.&lt;/li&gt;
+&lt;li&gt;Irregular shape of containing walls.&lt;/li&gt;
+&lt;li&gt;Measurement error (includes time uncertainty).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;thermal-noise&#34;&gt;Thermal Noise&lt;/h3&gt;
+&lt;p&gt;We could model the thermal activity of a container in the following way:&lt;br&gt;
+Instead of fixed walls, we divide the container walls up into small slices. Each slice is given mass and placed on the end of a spring. A collision between this &amp;ldquo;springed wall-slice&amp;rdquo; slice and a particle disturbs the spring and the springed wall-slice will oscillate. To model the wall having thermal noise, initialize the springed wall-slices with some KE. The average KE across all the slices is the temperature of the wall.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;img src=&#34;https://danabo.github.io/blog/wall_springs.jpg&#34; alt=&#34;&#34;&gt;
+&lt;br&gt;
+We can model thermal diffusion in the wall by connecting the wall-slices to their neighbors with springs as well. To simulate the container being connected to an infinite heat reservoir, we could suppose the springed wall-slices are themselves connected by springs to more masses on springs, going on forever. (or just a very large but finite number of masses on springs). Alternatively we could have &amp;ldquo;injection sites&amp;rdquo; in the wall slices where we add or subtract KE as a function of the average KE across all the slices.&lt;/p&gt;
+&lt;p&gt;When gas particles collide with the springed wall-slices, they exchange KE depending on their respective velocities. The the return velocity of the particle after the collision depends on the incoming velocity of the wall-slice - something that is unknown to us. This is how the gas&amp;rsquo;s trajectory becomes more uncertain due to this thermal noise as time progresses.&lt;/p&gt;
+&lt;h3 id=&#34;wall-irregularity&#34;&gt;Wall Irregularity&lt;/h3&gt;
+&lt;p&gt;Shape uncertainty has a similar effect as thermal uncertainty. I want to note the difference between an irregular wall shape and an unknown wall shape.&lt;/p&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/irregular_walls.png&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Set of irregularly shaped walls.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;In principle if we knew the exact shape of the container of a gas, no matter how irregular, we could model the time-evolution of the gas (also in known state) deterministically. Then if the gas undergoes free expansion, a superdemon can reverse that process as described above.&lt;/p&gt;
+&lt;p&gt;However, if we model the wall as a set of possible walls (each with some irregularity in shape), then the trajectory of the gas is non-deterministic (literally, depends partly on non-determined state), since it depends on the unknown orientation of the local region of the wall at collisions.&lt;/p&gt;
+&lt;p&gt;This is an example of Bayesian uncertainty, where what we are uncertain about is not changing, but fixed for all time - i.e. we are not sampling a different wall on each interaction. This gives us the ability to, in principle, gain information, i.e. narrow down possibilities via observation, direct or indirect, about which wall is the case.&lt;/p&gt;
+&lt;h3 id=&#34;measurement-error&#34;&gt;Measurement Error&lt;/h3&gt;
+&lt;p&gt;Finally the nail in the coffin for the uncopy loophole: measurement error is inevitable and results in effectively finite measurement precision.&lt;/p&gt;
+&lt;p&gt;Measurement error is another form of environmental noise - specifically due to our uncertainty about the state of the measurement apparatus (or the state of physical memory).&lt;/p&gt;
+&lt;p&gt;Returning to the model of generalized measurement, the physical memory itself would realistically have thermal noise or other state uncertainty. If we are storing analog data like the image taken by a camera, the thermal noise in the storage medium creates a precision limit.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Is The Szilard Cycle Reversible?</title>
@@ -54,7 +420,9 @@ A measurement is taken which determines which section the particle is in. The me
 The which-side information, stored in our bit, is used to determine which piston to push towards the middle. If we push the piston into the particle we will transfer KE to it, thus costing us energy. We want to push the piston through a vacuum (the side without the particle), which is an energy-free operation (in the ideal limit). Then the barrier is removed. Whenever the particle collides with the piston, the piston will be pushed outwards toward the end of the box, but its resistance will cause the particle to lose some KE. The resistance is due to the piston being connected to something we care about transforming, e.g. like moving a mass up against gravity. In general, we say the piston is performing work, which is a useful application of energy.&lt;/p&gt;
 &lt;p&gt;(e)&lt;br&gt;
 The piston is pushed all the way to the end of the box until it cannot move any further, which is its initial state in step (a). The box is now returned to its initial state, and the particle is missing some KE which we converted into useful work. However, the bit of memory we used to store the which-side measurement still has that piece of information stored in it. The final step is to put the bit into the standard state S (erasure), bringing us to (f) and completing the cycle.&lt;/p&gt;
-&lt;p&gt;The memory erasure from step (e) to (f) is an irreversible process, since the information contained therein is effectively lost. &lt;a href=&#34;https://en.wikipedia.org/wiki/Landauer%27s_principle&#34;target=&#34;_blank&#34;&gt;Landauer&amp;rsquo;s principle&lt;/a&gt; states that this irreversible erasure costs a minimum amount of energy, compensating for the apparent reduction in overall entropy of the particle-box system, thus preserving the 2nd law of thermodynamics, which states that the entropy of a system cannot be reduced for free.&lt;/p&gt;
+&lt;p&gt;(f)&lt;br&gt;
+The physical memory is cleared (put back into the standard state S), and the cycle is complete. The only difference between (a) and (f) is the net KE extracted from the particle.&lt;/p&gt;
+&lt;p&gt;The Szilard cycle steps (a) through (e) are all reversible processes. That is to say, those steps can be undone without any energy cost. However, the memory erasure from step (e) to (f) is an irreversible process, since the information contained in the external memory is effectively lost when it is cleared. &lt;a href=&#34;https://en.wikipedia.org/wiki/Landauer%27s_principle&#34;target=&#34;_blank&#34;&gt;Landauer&amp;rsquo;s principle&lt;/a&gt; states that this irreversible erasure costs a minimum amount of energy, compensating for the apparent reduction in overall entropy of the particle-box system, thus preserving the 2nd law of thermodynamics, which states that the entropy of a system cannot be reduced for free. Step (f) makes the whole Szilard cycle irreversible.&lt;/p&gt;
 &lt;h2 id=&#34;gas-thermodynamics&#34;&gt;Gas Thermodynamics&lt;/h2&gt;
 &lt;p&gt;In classical thermodynamics, the change in entropy of a gas (with N particles) in a box, due to some process acting on the gas, is&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -65,7 +433,7 @@ $$&lt;/p&gt;
 &lt;p&gt;In the Szilard cycle, $V_i=V_f$, and $T_f = T_i - \frac{2}{3k}E$ where $E\geq0$ is the KE that was extracted from the particle and $k$ is the &lt;a href=&#34;https://en.wikipedia.org/wiki/Boltzmann_constant&#34;target=&#34;_blank&#34;&gt;Boltzmann constant&lt;/a&gt;. Then the change in entropy from start to end of the cycle is proportional to $\ln\frac{T_f}{T_i}=\lg\par{1-\frac{2E}{3kT_i}} \leq 0$. The 2nd law of thermodynamics states that total entropy cannot decrease. Since we reduced the entropy of the gas, the entropy of some other system involved in the process must have gone up by at least the same amount. The entropy of the physical bit of memory is what must have increased.&lt;/p&gt;
 &lt;p&gt;Before the memory bit is erased, we can still reverse the process and move the entropy of the bit back into the gas (see &lt;a href=&#34;#uncopying&#34;&gt;#Uncopying&lt;/a&gt;). After the bit is erased, the entropy of the bit is moved into the environment, dispersed as heat energy. This is analogous to compressing an N particle gas to half of its volume, which heats up the gas enough to make the total change in entropy nonnegative, and then allowing the gas to cool down to its initial temperature by leaking heat into the environment. The gas compression and heating is reversible (an &lt;a href=&#34;https://en.wikipedia.org/wiki/Isentropic_process&#34;target=&#34;_blank&#34;&gt;isentropic process&lt;/a&gt;; &lt;a href=&#34;https://www.youtube.com/watch?v=dQeCEqkE9eE&#34;target=&#34;_blank&#34;&gt;animation&lt;/a&gt;). What is irreversible is the loss of heat energy to the environment, just like our loss of our bit of information to the environment, which also implies a necessary loss of energy to the environment by Landauer&amp;rsquo;s principle.&lt;/p&gt;
 &lt;h2 id=&#34;uncopying&#34;&gt;Uncopying&lt;/h2&gt;
-&lt;p&gt;To serve as an intuition pump for how uncopying would work physically, Bennett uses a &lt;a href=&#34;https://en.wikipedia.org/wiki/Single_domain_%28magnetic%29&#34;target=&#34;_blank&#34;&gt;&amp;ldquo;one-domain ferromagnet&amp;rdquo;&lt;/a&gt;, which is a fancy way of saying an object with an intrinsic magnetic field (as opposed to electromagnet that requires an electric current) which is &amp;ldquo;simple&amp;rdquo; in its shape, specifically the magnetic field can be described by a single direction - an arrow oriented in space. I&amp;rsquo;ll refer to this object as simply &amp;ldquo;a magnet&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;To serve as an intuition pump for how uncopying would work physically, Bennett uses a &lt;a href=&#34;https://en.wikipedia.org/wiki/Single_domain_%28magnetic%29&#34;target=&#34;_blank&#34;&gt;&amp;ldquo;one-domain ferromagnet&amp;rdquo;&lt;/a&gt;, which is a fancy way of saying an object with an intrinsic magnetic field (as opposed to electromagnet that requires an electric current) which is &amp;ldquo;simple&amp;rdquo; in its shape, specifically the magnetic field can be described by a single direction - an arrow oriented in space. I&amp;rsquo;ll refer to this object simply as &amp;ldquo;a magnet&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;Bennett supposes that absent any external magnetic fields, the magent&amp;rsquo;s field direction is stable, as in it is stuck in the up or down position. This can be represented by a potential field as a function of the magent&amp;rsquo;s angle of rotation:&lt;/p&gt;
 &lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220207114500.png&#34; 
         target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220207114500.png&#34; 
@@ -105,12 +473,13 @@ Also, if the reference bit and movable bits start out with opposite orientations
 &lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209152732.png&#34; 
         target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209152732.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;br&gt;
-This is the same partitioned box with color-coded spatial regions which the particle could potentially be initialized to. Red is the left side and blue is the right side.&lt;br&gt;
+This is the same partitioned box with color-coded spatial regions which the particle could potentially be initialized to. Red is the left side and blue is the right side. Note that this depicts 2D space (as opposed to 2D state space below).&lt;br&gt;
 &lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209152749.png&#34; 
         target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209152749.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;Here the which-side information is depicted with color: Initial states on the left are colored red and initial states on the right are colored blue.&lt;/p&gt;
-&lt;p&gt;To be more precise, we should plot phase space (state space), which for a single particle has two dimensions: position and velocity. We can then show all initial states the particle could occupy, colored-coded as &amp;ldquo;left&amp;rdquo; and &amp;ldquo;right&amp;rdquo;:&lt;br&gt;
+&lt;p&gt;However, this visualization leaves out a part of the state space: velocity. To be more precise, we should plot state space (phase space) which includes a velocity dimension for every position dimension. We would need a 4D plot for a particle in two spatial dimensions, and that is hard to visualize. For simplicity, let&amp;rsquo;s work with a particle confined to a single spatial dimension, giving us a 2D state space plot.&lt;/p&gt;
+&lt;p&gt;Here is shown all initial states (position and velocity) the particle could occupy. States are colored red or blue for the left and right sides of the box respectively.&lt;br&gt;
 
 
   &lt;figure&gt;
@@ -132,8 +501,12 @@ It is clear from this animation that none of the trajectories overlap at any poi
         target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209114223.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;question&#34;&gt;Question&lt;/h1&gt;
-&lt;p&gt;Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (f) of the Szilard cycle to induce a reference magnetic field for an uncopy process? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle. It is not obvious to me that this uncopying would result in an increase in entropy anywhere else. Then it would appear total entropy decreased, violating the 2nd law.&lt;/p&gt;
-&lt;p&gt;Much more plausible is that the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the &amp;ldquo;gas&amp;rdquo; to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.&lt;/p&gt;
+&lt;p&gt;Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (e) of the &lt;a href=&#34;#szilard-cycle&#34;&gt;#Szilard cycle&lt;/a&gt; to induce a reference magnetic field for an &lt;a href=&#34;#uncopying&#34;&gt;uncopy process&lt;/a&gt;? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle.&lt;/p&gt;
+&lt;p&gt;The specific modification to the Szilard cycle I&amp;rsquo;m proposing is this: Step (f) irreversibly resets the memory bit, costing some minimum amount of energy. Instead, consider an alternative step (f&#39;) where the external memory is reset back to the standard (default) state S via an uncopy process - the reversal of the copy process. As we saw above, this can be done without energy cost. The Szilard cycle with step (f&#39;) replacing step (f) would be reversible throughout, seemingly violating the 2nd law because total entropy would have decreased (it is not obvious to me that this uncopying would result in an increase in entropy anywhere else).&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220210064848.png&#34; 
+        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220210064848.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;br&gt;
+It is safe to assume the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the &amp;ldquo;gas&amp;rdquo; to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.&lt;/p&gt;
 &lt;p&gt;We could tackle this question by asking instead, is it possible to perform an observation on the particle such that only its &amp;ldquo;color&amp;rdquo; (which side it came from) is recorded in one bit of memory? If so, then the reverse of this process is the uncopy operation we are seeking. We already know that we could measure the particle&amp;rsquo;s position and velocity precisely (assuming a classical particle) using, say, a camera. The &amp;ldquo;camera process&amp;rdquo; would write many bits to memory (including a lot more than the particle&amp;rsquo;s state). Note that we would need to take two pictures in quick succession to capture the particles velocity. To reverse THAT process, we would need to feed as input ALL of the bits of information the camera would output in the forward direction. Without that input information, we cannot uncopy just a single bit, even if its a subset of the information.&lt;/p&gt;
 &lt;p&gt;Thus, the question becomes, can we create a process that converts only the particle&amp;rsquo;s &amp;ldquo;color&amp;rdquo; information into magnetic polarity for use in an uncopy process? If no such process exists, how would we prove it?&lt;/p&gt;</description>
     </item>
@@ -3116,545 +3489,6 @@ $$&lt;/p&gt;
 \limsup_{n\to\infty} \lg\par{\frac{1}{p(\o_{1:n})}} - \lg\par{\frac{1}{\nu(\o_{1:n})}} \,,&lt;br&gt;
 $$&lt;/p&gt;
 &lt;p&gt;which is a constant cost in compression length, and becomes negligible in the long run as $n\to\infty$, i.e. the compression rate using $p$ and $\nu$ is the same. So using a mixture to compress $\o$ may incur additional cost (extra bits) initially, in the long run it is no worse than using the &amp;ldquo;true&amp;rdquo; hypothesis $\nu$ (there may be more than one &amp;ldquo;true&amp;rdquo; hypothesis in $\M$). A good strategy is then to make $\M$ as large as possible. This is the premise behind Solomonoff induction, where $\M$ is the set of all semicomputable semimeasures.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Deconstructing Bayesian Inference</title>
-      <link>https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/</link>
-      <pubDate>Wed, 31 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
-\newcommand{\0}{\mathrm{false}}&lt;br&gt;
-\newcommand{\1}{\mathrm{true}}&lt;br&gt;
-\newcommand{\mb}{\mathbb}&lt;br&gt;
-\newcommand{\mc}{\mathcal}&lt;br&gt;
-\newcommand{\and}{\wedge}&lt;br&gt;
-\newcommand{\or}{\vee}&lt;br&gt;
-\newcommand{\a}{\alpha}&lt;br&gt;
-\newcommand{\t}{\theta}&lt;br&gt;
-\newcommand{\T}{\Theta}&lt;br&gt;
-\newcommand{\o}{\omega}&lt;br&gt;
-\newcommand{\O}{\Omega}&lt;br&gt;
-\newcommand{\x}{\xi}&lt;br&gt;
-\newcommand{\z}{\zeta}&lt;br&gt;
-\newcommand{\l}{\lambda}&lt;br&gt;
-\newcommand{\fa}{\forall}&lt;br&gt;
-\newcommand{\ex}{\exists}&lt;br&gt;
-\newcommand{\X}{\mc{X}}&lt;br&gt;
-\newcommand{\Y}{\mc{Y}}&lt;br&gt;
-\newcommand{\Z}{\mc{Z}}&lt;br&gt;
-\newcommand{\H}{\mc{H}}&lt;br&gt;
-\newcommand{\P}{\mc{P}}&lt;br&gt;
-\newcommand{\y}{\psi}&lt;br&gt;
-\newcommand{\p}{\phi}&lt;br&gt;
-\newcommand{\B}{\mb{B}}&lt;br&gt;
-\newcommand{\m}{\times}&lt;br&gt;
-\newcommand{\E}{\mb{E}}&lt;br&gt;
-\newcommand{\e}{\varepsilon}&lt;br&gt;
-\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
-\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
-\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
-\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;h1 id=&#34;constructing-bayesian-inference&#34;&gt;Constructing Bayesian Inference&lt;/h1&gt;
-&lt;p&gt;Before deconstructing Bayesian inference, I will present the general definition. At any point, feel free to look at the &lt;a href=&#34;#use-cases&#34;&gt;#Use Cases&lt;/a&gt; section for examples of Bayesian inference to use as intuition pumps.&lt;/p&gt;
-&lt;p&gt;An &amp;ldquo;agent&amp;rdquo; here refers to a physical entity that tries to predict the future. An agent can be a robot or a biological organism. Either way, the agent receives a stream of sensory data over the course of its life. The agent&amp;rsquo;s goal is to predict the future of this stream, in some capacity. Predictions about high-level objects and states of the world are made indirectly by predicting their effect on the sensory stream. That is to say, all prediction can be rolled into predicting the sensory stream. Though the agent may also act to influence the future of its sensory stream, for simplicity, I will consider only prediction and not actions.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s work in discrete time.&lt;br&gt;
-Let $\X$ be the set of possible observations at each time-step.&lt;br&gt;
-The agent&amp;rsquo;s sensory stream is a sequence $(x_1, x_2, x_3, \dots) \in \X^\infty$. I&amp;rsquo;m assuming the sensory stream is infinite, i.e. the agent lives forever. This is not a reasonable assumption but it&amp;rsquo;s workable. The alternative (assuming the stream is finite) is more complicated because it requires the agent to predict the end time of its own stream (presumably when it will die).&lt;/p&gt;
-&lt;p&gt;Let $\o\in\X^\infty$.&lt;br&gt;
-$\o_i$ denotes the $i$-th binary value in $\o$.&lt;br&gt;
-$\o_{(i_1,i_2,\dots)}$ denotes the sub-sequence of $\o$ indexed by the sequence $(i_1,i_2,\dots)$.&lt;br&gt;
-$\o_{i:j} = \o_{(i,i+1,\dots,j-1,j)}$ denotes the slice of $\o$ starting from $i$ and ending at $j$ (inclusive).&lt;br&gt;
-$\o_{&amp;lt;i} = \o_{1:i-1}$ denotes the slice up to position $i-1$.&lt;br&gt;
-$\o_{\leq i} = \o_{1:i}$ includes $i$.&lt;br&gt;
-$\o_{&amp;gt;i} = \o_{i+1:\infty}$ denotes the unbounded slice starting at position $i+1$.&lt;/p&gt;
-&lt;p&gt;Let $\X^* = \X^0 \cup \X^1 \cup \X^2 \cup \X^3 \cup \dots$ be the union of all finite cartesian products of $\X$, i.e. the set of all finite sequences of any length.&lt;br&gt;
-Let $x,y\in\X^*$ be finite sequences.&lt;br&gt;
-Denote $\abs{x}$ as the length of $x$.&lt;br&gt;
-Denote $x`y = (x_1, \dots, x_\abs{x}, y_1, \dots, y_\abs{y})$ as the sequence concatenation of $x$ and $y$.&lt;br&gt;
-Denote $x \sqsubset y$ to mean that $x = y_{1:\abs{x}}$, i.e. $x$ is a prefix of $y$.&lt;/p&gt;
-&lt;h2 id=&#34;defining-a-hypothesis&#34;&gt;Defining A Hypothesis&lt;/h2&gt;
-&lt;p&gt;As the agent gains sensory data, the agent will try to explain that data with various hypotheses. What constitutes a hypothesis is perhaps an open problem in epistemology. I will give the standard idea of &amp;ldquo;hypothesis&amp;rdquo; within Bayesian epistemology.&lt;/p&gt;
-&lt;p&gt;A hypothesis is a &lt;strong&gt;probability measure&lt;/strong&gt;, $\mu$, over all possible sensory streams, $\X^\infty$. That means we can compute the $\mu$-probability of any set of infinite sequences, i.e. $\mu(A)$ for $A \subseteq \X^\infty$. Typically there is a set of hypotheses $\H$ under consideration, i.e. $\H$ is a set of different $\mu$.&lt;/p&gt;
-&lt;p&gt;For any $\o\in\X^\infty$, the prefix $\o_{1:n}$ is a partial sensory sequence. The marginal $\mu$-probability of $\o_{1:n}$ is $\mu(\Gamma_{\o_{1:n}})$ where $\Gamma_{\o_{1:n}} = \set{\z\in\X^\infty \mid \o_{1:n}\sqsubset\z}$ is the set of all infinite sequences starting with $\o_{1:n}$, called a &lt;strong&gt;cylinder set&lt;/strong&gt;. For notational simplicity, I will write  $\mu(x)$ to denote $\mu(\Gamma_{x})$ when $x$ is a finite sequence, so $\mu(\o_{1:n})$ denotes $\mu(\Gamma_{\o_{1:n}})$.&lt;/p&gt;
-&lt;p&gt;The quantity $\mu(\o_n \mid \o_{&amp;lt;n}) = \mu(\o_{1:n})/\mu(\o_{&amp;lt;n}) = \mu(\o_{1:n})/\mu(\o_{1:n-1})$ is the conditional $\mu$-probability of $\o_n$ given $\o_{&amp;lt;n}$ was already observed.&lt;/p&gt;
-&lt;p&gt;$\mu$ defined in this way will guarantee that the following holds:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mu(\o_{&amp;lt;n}) = \int_\X \mu(\o_{&amp;lt;n}`\chi)d\chi\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;(replace integral with sum for countable $\X$.)&lt;/p&gt;
-&lt;p&gt;Note that for most $\o\in\X^\infty$,&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\lim_{n\to\infty} \mu(\o_{1:n}) = 0\,,&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;which is similar to how a probability distribution on the real unit interval may assign 0 probability to any particular real number. Here $\o_{1:n}$ acts like an interval, which has probability mass, and the full sequence $\o$ acts like a single point, which does not have probability mass.&lt;/p&gt;
-&lt;p&gt;A hypothesis $\mu$ ideally represents some primitive way the world might be. We might say a hypothesis probability $\mu(\o_{1:n})$ is &lt;em&gt;objective&lt;/em&gt; in some sense. Hypotheses that assign probabilities to outcomes are supposing the universe has inherent randomness that cannot be known before hand (we could also have deterministic hypotheses that assign probabilities of either 0 or 1).&lt;/p&gt;
-&lt;p&gt;Bayesian inference distinguishes between two kinds of uncertainty: that due to inherent randomness in the universe, and that due to lack of knowledge of the agent. This distinction between kinds of uncertainty may not be precise (and I&amp;rsquo;m not sure I agree that such a distinction should be made), but this is typically how hypothesis probabilities are conceptually distinguished from subjective data probabilities (which I&amp;rsquo;ll get to in a moment).&lt;/p&gt;
-&lt;p&gt;In this framing, the goal of Bayesian inference is to calculate one&amp;rsquo;s certainty (or uncertainty) that each hypothesis being considered explains the observed data. This kind of uncertainty is represented with probabilities just like irreducible uncertainty, but the former is in principle reducible to certainty. As the agent observes data, these probabilities change, and hence the agent&amp;rsquo;s uncertainty about each hypothesis changes over time (potentially approaching certainty).&lt;/p&gt;
-&lt;h2 id=&#34;defining-bayesian-inference&#34;&gt;Defining Bayesian Inference&lt;/h2&gt;
-&lt;p&gt;Let $\X^\infty$ be the set of all possible observations (infinite data sequences).&lt;br&gt;
-Let $\H$ be a set of hypotheses (probability measures on $\X^\infty$).&lt;/p&gt;
-&lt;p&gt;I will induce a joint probability distribution on $\H$ and $\X^\infty$.&lt;br&gt;
-Let $p(\mu)$ be the &lt;strong&gt;prior probability&lt;/strong&gt; of $\mu\in\H$.&lt;br&gt;
-Let $p(\o_{1:n} \mid \mu) = \mu(\o_{1:n})$ be the &lt;strong&gt;data probability&lt;/strong&gt; of $\o_{1:n}$ under hypothesis $\mu$. This is read as, &amp;ldquo;the probability of data $\o_{1:n}$ given hypothesis $\mu$.&amp;rdquo; Here, &amp;ldquo;giving the hypothesis&amp;rdquo; is equivalent to specifying what data distribution should be used to calculate the probability of $\o_{1:n}$.&lt;/p&gt;
-&lt;p&gt;$p(\mu,\o_{1:n}) = p(\mu)p(\o_{1:n} \mid \mu) = p(\mu)\mu(\o_{1:n})$ is the joint probability of $\mu$ and $\o_{1:n}$. From here, we can compute any other quantity of interest.&lt;/p&gt;
-&lt;p&gt;$$p(\o_{1:n}) = \int_\H p(\mu,\o_{1:n})d\mu = \int_\H p(\mu)\mu(\o_{1:n})d\mu$$&lt;/p&gt;
-&lt;p&gt;is called the &lt;strong&gt;subjective (Bayesian) data probability&lt;/strong&gt; of $\o_{1:n}$ (replace integrals with sums if $\H$ is discrete). $p(\o_{1:n})$ does not condition on a hypothesis, and is the sum/integral over every hypothesis probability $\mu(\o_{1:n})$ weighted by the prior $p(\mu)$. You can think of $p(\o_{1:n})$ as a weighted-average over hypothesis probabilities.&lt;/p&gt;
-&lt;p&gt;If a hypothesis probability $\mu(\o_{1:n})$ is &lt;em&gt;objective&lt;/em&gt; in some sense (a hypothesis represents the way the world actually might be), then a prior probability $p(\mu)$ represents the agent&amp;rsquo;s state of certainty/uncertainty about $\mu$ being true (how the world actually is). If the agent knew that $\mu$ was the case, then the agent would just use $\mu$ to predict the future sensory data, where $\mu$-probabilities are due to inherent randomness in the data. However, since the agent has uncertainty about which hypothesis is the case, $p(\o_{1:n})$ represents the agent&amp;rsquo;s total uncertainty about $\o_{1:n}$ occurring, which is a combination of inherent randomness in the data and the agent&amp;rsquo;s lack of knowledge about which hypothesis is true.&lt;/p&gt;
-&lt;p&gt;Another quantity of interest:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(\mu\mid\o_{1:n}) &amp;amp;= p(\mu,\o_{1:n})/p(\o_{1:n}) \\ \\&lt;br&gt;
-&amp;amp;= \frac{p(\mu)p(\o_{1:n}\mid\mu)}{p(\o_{1:n})}\\ \\&lt;br&gt;
-&amp;amp;= p(\mu)\frac{\mu(\o_{1:n})}{p(\o_{1:n})}&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;is called the &lt;strong&gt;hypothesis posterior probability&lt;/strong&gt; (or more commonly, just &amp;ldquo;&lt;strong&gt;posterior&lt;/strong&gt;&amp;quot;) of hypothesis $\mu$ given data $\o_{1:n}$. This quantity represents the agent&amp;rsquo;s certainty/uncertainty about hypothesis $\mu$ after observing $\o_{1:n}$. If we are viewing $p(\mu)$ as a weight, then the weight on $\mu$ updates to $p(\mu\mid\o_{1:n})$ when $\o_{1:n}$ is observed. In this sense, the agent updates its knowledge (confidence) about the hypotheses in $\H$ when data is observed. The last equation is a prescription for an update rule on these uncertainty weights on $\mu$, taking the form $w&#39; = \gamma w$, where $\gamma = \mu(\o_{1:n})/p(\o_{1:n})$ is a multiplicative adjustment on the prior weight $w$.&lt;/p&gt;
-&lt;p&gt;Observing additional data amounts to appending $\o_{n+1:m}$ to $\o_{1:n}$, and the weight on $\mu$ updates again to $p(\mu\mid\o_{1:m})$. This iterative process of observing more data and updating can go on forever, so long as the data space $\X^\infty$ consists of infinite sequences.&lt;/p&gt;
-&lt;p&gt;As a side note, you should recognize $p(\mu\mid\o_{1:n})=p(\o_{1:n}\mid\mu)p(\mu)/p(\o_{1:n})$ as the classic form of &lt;a href=&#34;https://en.wikipedia.org/wiki/Bayes%27_theorem#Statement_of_theorem&#34;target=&#34;_blank&#34;&gt;Bayes rule&lt;/a&gt; (typically used to explain Bayesian inference). Usually, it is written like this: $p(H \mid D) = p(D \mid H)p(H)/p(D)$, where $H$ is a random variable for hypotheses (often parameter $\Theta$ is used in place of $H$), and $D$ is a random variable for datasets. In my opinion this form hides the sequential nature of Bayesian inference and is pedagogically confusing for that reason.&lt;/p&gt;
-&lt;p&gt;In general, the agent wants to predict what sensory data will occur after $\o_{\leq n}$ has been observed. For that, we need the &lt;strong&gt;data posterior probability&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(\o_{&amp;gt;n} \mid \o_{\leq n}) &amp;amp;= \int_\H p(\mu, \o_{&amp;gt;n} \mid \o_{\leq n})d\mu \\&lt;br&gt;
-&amp;amp;= \int_\H p(\o_{&amp;gt;n} \mid \mu, \o_{\leq n})p(\mu\mid\o_{\leq n})d\mu \\&lt;br&gt;
-&amp;amp;= \int_\H p(\mu\mid\o_{\leq n})p(\o_{&amp;gt;n} \mid \o_{\leq n},\mu)d\mu \\&lt;br&gt;
-&amp;amp;= \int_\H p(\mu\mid\o_{\leq n})\mu(\o_{&amp;gt;n} \mid \o_{\leq n})d\mu \\&lt;br&gt;
-&amp;amp;= \int_\H p(\mu)\frac{\mu(\o_{\leq n})}{p(\o_{\leq n})}\mu(\o_{&amp;gt;n} \mid \o_{\leq n})d\mu\,.&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Like the subjective data probability $p(\o_{\leq n})$, the data posterior probability $p(\o_{&amp;gt;n} \mid \o_{\leq n})$ is subjective, in the sense that it reflects the agent&amp;rsquo;s uncertainty about the outcome, as well as any irreducible randomness. These two quantities have the same form: $p(\o_{\leq n})$ averages over $p(\mu)\mu(\o_{\leq n})$, and $p(\o_{&amp;gt;n} \mid \o_{\leq n})$ averages over $p(\mu\mid\o_{\leq n})\mu(\o_{&amp;gt;n} \mid \o_{\leq n})$. Either way, $p(\o_{\leq n})$ and $p(\o_{&amp;gt;n} \mid \o_{\leq n})$ are both weighted averages over all hypothesis probabilities, i.e. the inherent randomness of each hypothesis is weighted by the agent&amp;rsquo;s uncertainty about that hypothesis. The only difference is that the posterior conditions everything on the observed $\o_{\leq n}$.&lt;/p&gt;
-&lt;h1 id=&#34;deconstructing-bayesian-inference&#34;&gt;Deconstructing Bayesian inference&lt;/h1&gt;
-&lt;p&gt;To review, we assumed the agent has a set of hypotheses $\H$, where each hypothesis $\mu\in\H$ is a probability measure on infinite data sequences $\X^\infty$. For partial observation $\o_{1:n}$, each hypothesis assigns probability $\mu(\o_{1:n})$. Putting a prior on $\H$ allows us to compute $p(\o_{1:n})$, which is the &amp;ldquo;average&amp;rdquo; $\mu$-probability of $\o_{1:n}$. The resulting distribution $p$ is called the subjective data distribution.&lt;/p&gt;
-&lt;h2 id=&#34;removing-hypotheses&#34;&gt;Removing hypotheses&lt;/h2&gt;
-&lt;p&gt;Question: What is the difference between a hypothesis $\mu$ and a subjective data distribution $p$? Do we need hypotheses at all?&lt;/p&gt;
-&lt;p&gt;They appear to have the same form: $\mu(\o_{1:n})$ vs $p(\o_{1:n})$. Above I gave a hand-wavy interpretational difference between the two. However, it is the case that hypotheses are not strictly necessary for predicting the continuation of a data sequence (equivalent to the singleton hypothesis space $\H = \set{p}$).&lt;/p&gt;
-&lt;p&gt;The subjective data distribution $p$ can be defined directly by specifying the distribution $p(x_n \mid x_{&amp;lt;n})$ on $x_n\in\X$ for all finite $x_{&amp;lt;n} \in \X^*$. That is because for all $x_{1:n}\in\X$, the probability factorizes: $p(x_{1:n}) = p(x_{n}\mid x_{&amp;lt;n})p(x_{n-1}\mid x_{&amp;lt;n-1})\dots p(x_2\mid x_{&amp;lt;2})p(x_1)$. This amounts to filling in values for each node in a tree. For example, if $\X=\set{0,1}$, then we have a binary tree:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210317161633.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Each node in the tree is assigned a conditional probability distribution, i.e. for each node at position $x_{&amp;lt;n}$ (where $x_{&amp;lt;n} = (x_1, x_2,\dots,x_{n-1})$ encodes a path from the root), the probability $p(\chi \mid \dots)$ is specified for each $\chi\in\X$.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;Each node&amp;rsquo;s distribution, $p(\chi \mid \dots)$, can be chosen independently from every other node (there are no constraints on these conditional distributions). Therefore, since the entire tree uniquely determines $p(x_{&amp;lt;n})$ (by walking down the edges of the tree corresponding to the observed data sequence $x_{&amp;lt;n}$ and multiplying the conditional probabilities at each node in the path, i.e. $p(x_i \mid x_{&amp;lt;i})$ at node $x_{&amp;lt;i}$), a Bayesian agent is free to choose any arbitrary conditional predictions it wants.&lt;/p&gt;
-&lt;p&gt;Clearly, if we are only concerned with data predictions of the form $p(\o_{n:m}\mid \o_{&amp;lt;n})$, then we do not actually need hypotheses at all. Providing a tree specifying the subjective conditional data probabilities is enough to perform Bayesian inference.&lt;/p&gt;
-&lt;p&gt;This reveals something peculiar about Bayesian inference: &lt;strong&gt;A Bayesian agent chooses its predictions for all eventualities beforehand, and never deviates for all time. Furthermore these predictions can be totally arbitrary.&lt;/strong&gt; There does not appear to be any actual learning taking place, since the agent just follows a path down the tree as data comes in and provides predetermined prediction probabilities. In the Bayesian perspective, learning IS narrowing down a pre-defined possibility space with data. If decision making using Bayesian inference is rational, perhaps rationality amounts to consistency, i.e. never deviating from pre-chosen predictions.&lt;/p&gt;
-&lt;p&gt;One might argue that freely choosing a subjective data distribution without defining hypotheses is not Bayesian. My reply is that I&amp;rsquo;ve shifted what we are counting as hypothesis. In this perspective, a hypothesis is a single data sequence continuation. In this sense, all hypotheses are deterministic data sequences (though they may be algorithmically random), and the subjective data distribution is counting up the contributions of all these hypotheses to each finite length prediction. More on this in &lt;a href=&#34;https://danabo.github.io/blog/posts/bayesian-information-theory/&#34;&gt;Bayesian information theory&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;removing-probabilities&#34;&gt;Removing probabilities&lt;/h2&gt;
-&lt;p&gt;We can go a step further and ask, do we need probabilities at all?&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s imagine that the agent has the same predetermined tree as above, except each node is assigned a single prediction instead of a probability distribution over $\X$. Let $x\in\X^*$ and denote $\hat{\x}_x\in\X$ as the prediction given the sequence $x$ is observed. Choosing $\hat{\x}_x$ for each $x$ uniquely defines a tree, where $x = (x_1, x_2, \dots)$ encodes a path from the root to a node, and $\hat{\x}_x$ is the value assigned to that node.&lt;/p&gt;
-&lt;p&gt;Consider an example. Suppose $\X = \set{0,1}$ and that we have the following prediction tree:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210329223311.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;This tree has infinite depth.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;In the figure, each node is assigned a prediction. Without any data, the agent predicts $0$. Given $0$ is observed, the agent predicts $1$. Given $01$ is observed, the agent predicts $0$. And so on.&lt;/p&gt;
-&lt;p&gt;Suppose we observe $010$, which falls in line with all of the agent&amp;rsquo;s predictions up to that point. The prediction given $010$ is $1$. Suppose we observe $0$ next (for a total observation of $0100$). Then the agent&amp;rsquo;s prediction of $1$ is wrong, but that is okay since the agent has sub-tree at $0100$ and can go on making predictions from there.&lt;/p&gt;
-&lt;p&gt;Is this setup technically Bayesian? We could convert this deterministic prediction tree to a subjective data distribution that assigns a probability 0 or 1 to all outcomes. So in this example, $p(x_1=0) = 1$ and $p(x_1=1)=0$, corresponding to a prediction of $0$ given nothing. $p(x_2=0\mid 0)=0$ and $p(x_2=1\mid 0)=1$, and $p(x_3=0\mid 01)=1$ and so on.&lt;/p&gt;
-&lt;p&gt;The problem is that $p$ defined in this way is degenerate. Suppose the agent wrongly predicts the continuation of $010$ to be $1$ when it is actually $0$. Then&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(0101) &amp;amp;= p(x_4=1\mid 010)p(x_3=0\mid 01)p(x_2=1\mid 0)p(x_1=0) \\ &amp;amp;= 1\cdot 1\cdot 1\cdot 1 = 1\,.&lt;br&gt;
-\end{aligned}$$&lt;/p&gt;
-&lt;p&gt;But $p(0100) = p(x_4=0 \mid 010)\dots = 0\cdot 1\cdot 1\cdot 1 = 0$. So from then on, the subjective probability of the data continuing $0100$ is 0, but the conditional probabilities may not be. If $p$ is defined as a measure on $\X^\infty$ instead of indirectly via the conditional probabilities specified in the tree, then $p$ cannot simultaneously have well-defined conditional probabilities and zero probability unconditionally (e.g. $p(x_5=0 \mid 0100) = 1$ while $p(01000) = 0$ and $p(0100) = 0$).&lt;/p&gt;
-&lt;p&gt;We might conclude that this kind of deterministic prediction tree does not formally conform to the definition of Bayesian inference I gave earlier. However, this tree is the limit of the probabilistic prediction tree above as each conditional probability $p(x_i \mid x_{&amp;lt;i})$ goes to 0 or 1. Just as the &lt;a href=&#34;https://en.wikipedia.org/wiki/Dirac_delta_function&#34;target=&#34;_blank&#34;&gt;Dirac delta distribution&lt;/a&gt; is not technically a function, but can be defined as the limit of Gaussian functions as their variance goes to 0, we might be able to do the same with deterministic prediction trees.&lt;/p&gt;
-&lt;p&gt;Note that an agent that makes the same prediction no matter what is observed (a rigid agent) is technically Bayesian, with a subjective data distribution that puts all probability mass on the prediction sequence $\o\in\X^\infty$:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(x_{1:n}) = \begin{cases}1 &amp;amp; x_{1:n} = \o_{1:n} \\ 0 &amp;amp; x_{1:n} \neq \o_{1:n}\end{cases}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Such an agent is not interesting, as it does not even behave as though it learns.&lt;/p&gt;
-&lt;p&gt;We shall see that an agent that does behave as though it learns (conditionally determines its predictions based on past history) need not provide Bayesian probabilities on its predictions for prediction uncertainty to naturally emerge.&lt;/p&gt;
-&lt;h1 id=&#34;reconstructing-bayesian-inference&#34;&gt;Reconstructing Bayesian Inference&lt;/h1&gt;
-&lt;h2 id=&#34;non-determinism&#34;&gt;Non-Determinism&lt;/h2&gt;
-&lt;p&gt;To add clarity to what I want to explain next, let&amp;rsquo;s represent the deterministic prediction tree above as a prediction function $f : \X^* \to \X$, so that $f(x) = \hat{\x}_x$ is the prediction given data sequence $x\in\X^*$. That is to say, $f(x)$ returns the value at node $x$ in the tree. We can think of $f$ as an assignment function of values to nodes.&lt;/p&gt;
-&lt;p&gt;Suppose we want to predict what will happen further out into the future. Specifically, suppose we observe $\o_{&amp;lt;n}\in\X^*$ and we want to predict the outcome $\o_m$ at time $m &amp;gt; n$. We don&amp;rsquo;t have access to the outcome $\o_n$ or anything after it. That is to say, the prediction tree gives the prediction $f(\o_{&amp;lt;n})$ for step $n$, but to predict step $m$ we need $\o_{&amp;lt;m} = \o_{&amp;lt;n}`\o_{n:m-1}$.&lt;/p&gt;
-&lt;p&gt;You might say that the solution is to fill in our missing data with predictions, i.e. choose $\hat{\o}_n=f(\o_{&amp;lt;n})$ as the outcome for step $n$, and $\hat{\o}_{n+1} = f(\o_{&amp;lt;n}`\hat{\o}_n)$ as the outcome for step $n+1$, etc., so that our prediction at step $m$ is $\hat{\o}_m=f(\o_{&amp;lt;n}`\hat{\o}_{n:m-1})$. However, I&amp;rsquo;d argue that this is not actually the agent&amp;rsquo;s prediction as defined by the prediction tree. If the agent instead observed $\o_{n:m-1} \neq \hat{\o}_{n:m-1}$, the agent might predict something different from $\hat{\o}_m$. We could define $\hat{\o}_m$ as the agent&amp;rsquo;s prediction of step $m$ given $\o_{&amp;lt;n}$. By doing so, we&amp;rsquo;d be assigning infinite sequences to each node $x$ in the prediction tree, rather than single outcomes, so that we may query the prediction of arbitrarily many timesteps given ONLY data $x$. We can represent this prediction tree by the function $g:\X^*\to\X^\infty$, which returns an infinite sequence in $\X^\infty$ instead of a single element of $\X$, such that $[g(x_{&amp;lt;n})]_{&amp;lt;n} = x_{&amp;lt;n}$ and $[g(x_{&amp;lt;n})]_n$ is the next-step prediction for $x_{&amp;lt;n}$. The sequence $[g(x_{&amp;lt;n})]_{\geq n}$  is the multi-step prediction for $x_{&amp;lt;n}$. Now it is clear that $[g(\o_{&amp;lt;m})]_m$ and $[g(\o_{&amp;lt;n})]_m$ are potentially different predictions, and we need to distinguish between them.&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210330173612.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;The tree encoded by $g$, where each node is assigned an infinite sequence that begins with the location of the node in the tree. In this example, each sequence is the argmax prediction starting at that node, i.e. assuming every next-step prediction is correct.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;In general, if we ask an agent for some prediction of any time-step, the agent can produce some sort of answer. However, if we wanted to know what answer the agent would produce if all requisite data was available (call this the agent&amp;rsquo;s best prediction), that may not be determinable with the data currently available. We are uncertain about what the agent&amp;rsquo;s best prediction will be (given all requisite data). A truthful agent would be just as uncertain as we are about its own future predictions.&lt;/p&gt;
-&lt;p&gt;Let $\mc{F}_m(\o_{&amp;lt;n}) = \set{f(\o_{&amp;lt;n}`\tilde{\o}_{n:m-1}) \mid \tilde{\o}_{n:m-1}\in\X^{m-n+1}}$ be the set of all predictions the agent could make about step $m$ given data $\o_{&amp;lt;n}$. If this set contains more than one element, then the agent&amp;rsquo;s prediction at $m$ is not uniquely determined by $\o_{&amp;lt;n}$, i.e. non-deterministic.&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210329223333.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;This is the non-deterministic prediction encoded by $\mc{F}_2 : \X^* \to \X$, where the untransformed tree encoded by $f:\X^*\to\X$ is our prediction tree example from above. $\mc{F}_2$ is obtained by superimposing the two sub-trees of $f$ at depth 1, i.e. directly under the root node.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;This understanding of the word &amp;ldquo;non-deterministic&amp;rdquo; is standard in computer science, exemplified by the &lt;a href=&#34;https://en.wikipedia.org/wiki/Nondeterministic_Turing_machine&#34;target=&#34;_blank&#34;&gt;non-deterministic Turing machine&lt;/a&gt;, which defines a set of possible state transitions and tape operations given any state (of both the tape and automata), rather than single one determined uniquely by each state. In general, something is regarded as non-deterministic if it can take on more than one possible value, i.e. it is not determined.&lt;/p&gt;
-&lt;p&gt;I distinguish non-determinism from randomness, the latter of which can be defined as maximal incompressibility (called &lt;a href=&#34;http://www.scholarpedia.org/article/Algorithmic_randomness&#34;target=&#34;_blank&#34;&gt;algorithmic randomness&lt;/a&gt;). Often these two concepts are conflated. Probability distributions can represent both non-determinism (by quantifying relative amounts of possibilities) or degrees of randomness (via Martin-Lof randomness). The key insight is that probability need not represent both at the same time. If Bayesian probability is generally understood as quantifying prediction non-determinism, then we can view the &lt;a href=&#34;https://en.wikipedia.org/wiki/Probability_interpretations&#34;target=&#34;_blank&#34;&gt;Bayesian-frequentist distinction&lt;/a&gt; as stemming from this conceptual decoupling of non-determinism from randomness.&lt;/p&gt;
-&lt;p&gt;I make the same connection between Bayesian uncertainty and non-determinism in &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-perspective&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-perspective&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;the-general-case&#34;&gt;The General Case&lt;/h3&gt;
-&lt;p&gt;We can go a step further. Why are we assuming that a prediction of step $n$ can be made given $\o_{&amp;lt;n}$? Plenty of pertinent information may not be available in the data at all (or the agent does not know how to extract such information from the data, e.g. encrypted information). An honest agent would account for every input needed to make a certain prediction, even inputs that are not available in $\o_{&amp;lt;n}$.&lt;/p&gt;
-&lt;p&gt;In general, we are left with a non-deterministic next-step prediction tree represented by $f : \Z \times \X^* \to \X$ where $\Z$ is an auxiliary input space (input in addition to the observed data stream), which is usually some latent space (set of possible data or world-states not observed). Each node $x$ in the prediction tree is assigned the prediction set $f(\Z, x) = \set{f(z,x) \mid z\in\Z}$. If the prediction set for $x$ is singleton (contains one element), then that prediction is deterministic. $f$ represents a prediction tree where each node is assigned a set of next-step predictions instead of just one.&lt;/p&gt;
-&lt;h2 id=&#34;the-return-of-probability&#34;&gt;The Return Of Probability&lt;/h2&gt;
-&lt;p&gt;In &lt;a href=&#34;https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/#the-bayesian-axiom&#34;&gt;Classical vs Bayesian Reasoning#the-bayesian-axiom&lt;/a&gt;, I introduced the Bayesian axiom - an informal axiom of epistemology - which states that the relative fraction of model (in our case $f$) inputs which produce each output can be regarded as knowledge. In this case, if the agent&amp;rsquo;s prediction $f(\Z, \o_{&amp;lt;n})$ is not uniquely determined, we might want to proceed with our decision making anyway. Supposing we have some normalized measure $\mu$ on $\Z$ (ideally the uniform measure if there is one), then the relative fraction of $\Z$ that produces each prediction $\chi\in\X$ is&lt;/p&gt;
-&lt;p&gt;$$p(\chi \mid x) = \mu\set{f(z,x) \mid z\in\Z \and f(z,x) = \chi}\,.$$&lt;/p&gt;
-&lt;p&gt;Though the agent&amp;rsquo;s prediction is not uniquely determined, we&amp;rsquo;ve quantified the relative number of possible auxiliary inputs to $f$ that give each prediction. These quantities can be used for decision making (e.g. most likely outcome or expected return).&lt;/p&gt;
-&lt;p&gt;We have recovered the probabilistic prediction tree paradigm from earlier without presupposing that predictions should be probabilistic. Though not defined to be probabilistic, an agent&amp;rsquo;s prediction function that requires inputs which are not on hand naturally results in non-determinism. Quantifying that non-determinism using relative sizes of possibility sets naturally results in probabilities.&lt;/p&gt;
-&lt;p&gt;With this perspective in mind, we could interpret any explicitly defined subjective data distribution to be implying the existence of a deterministic prediction function. Bayesian probabilities represent the number of inputs to this prediction function that produce the corresponding outputs. Given $p$, a canonical deterministic prediction function $f$ is the decoder for a compressed representation of the data, with a uniform distribution on the compression.&lt;/p&gt;
-&lt;p&gt;To be more specific, let $p$ be a probability measure on $\X^\infty$. Let $f : \Z^\infty \to \X^\infty$ be an &lt;a href=&#34;https://en.wikipedia.org/wiki/Arithmetic_coding&#34;target=&#34;_blank&#34;&gt;arithmetic decoder&lt;/a&gt; using $p$, i.e. $f$ takes as input an infinite compressed sequence $z_{1:\infty}\in\Z^\infty$ and outputs the decompressed sequence $x_{1:\infty}\in\X^\infty$. For finite inputs and outputs, use the cylinder set $f(\Gamma_{z_{1:n}})$. Putting a uniform probability measure on $\Z^\infty$ results in measure $p$ on $\X^\infty$. Now we can draw a connection between probability in three different contexts:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;Shannon Information&lt;/em&gt;
-&lt;ul&gt;
-&lt;li&gt;If $x_{1:\infty}$ is sampled randomly from $p$, then $z_{1:\infty}$ s.t. $f(z_{1:\infty}) = x_{1:\infty}$ achieves the optimal compression of $x_{1:\infty}$ according to Shannon. That is to say, $\abs{z_{1:n}} = n \approx -\lg p(f(\Gamma_{z_{1:n}}))$, and these quantities converge as $n\to\infty$.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Algorithmic Randomness&lt;/em&gt;
-&lt;ul&gt;
-&lt;li&gt;If input $z_{1:\infty}$ is algorithmically random, then output $f(z_{1:\infty})$ is $p$-random (or $p$-typical, see &lt;a href=&#34;https://en.wikipedia.org/wiki/Algorithmically_random_sequence&#34;target=&#34;_blank&#34;&gt;wiki&lt;/a&gt;). $z_{1:\infty}$ is a shortest algorithmic compression of $f(z_{1:\infty})$.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Non-determinism&lt;/em&gt;
-&lt;ul&gt;
-&lt;li&gt;Our prediction of $x_n$ given $x_{&amp;lt;n}$ depends on the compressed representation of $x_{1:n}$, an input $z_{1:k}$ to $f$ s.t. $f(\Gamma_{z_{1:k}}) = \Gamma_{x_{1:n}}$. Our non-deterministic prediction of $x_{n}$ given $x_{&amp;lt;n}$ is the set $f^{-1}(\Gamma_{x_{1:n}})$, which is all compressions compatible with $x_{1:n}$. This is quantified with the probability $p(x_n \mid x_{&amp;lt;n}) = \lambda(f^{-1}(\Gamma_{x_{1:n}})) / \lambda(f^{-1}(\Gamma_{x_{&amp;lt;n}}))$ where $\lambda$ is the uniform probability measure on $\Z^\infty$.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;use-cases&#34;&gt;Use Cases&lt;/h1&gt;
-&lt;p&gt;This section runs through a few canonical examples of Bayesian inference which can be used as intuition pumps while reading the previous sections.&lt;/p&gt;
-&lt;h2 id=&#34;inferring-bias-on-a-coin&#34;&gt;Inferring bias on a coin&lt;/h2&gt;
-&lt;p&gt;Let $\X = \set{0,1}$ be the outcome of a coin toss, and $\o \in \X^\infty$ be an infinite sequence of coin toss outcomes.&lt;/p&gt;
-&lt;p&gt;Let $\mc{B}_\t$ be the Bernoulli distribution on $\X$ with parameter $\t\in[0,1]$ which is the probability of $1$, so $\mc{B}_\t(1) = \t$ and $\mc{B}_\t(0) = 1-\t$.&lt;/p&gt;
-&lt;p&gt;The hypothesis $\mu_\t$ is the product of Bernoulli distributions:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mu_\t(x_{1:n}) = \prod_{i=1}^n\mc{B}_\t(x_i) = \t^{\sum_i x_i}(1-\t)^{n-\sum_i x_i}\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;The hypothesis set is $\H = \set{\mu_\t}_{\t\in[0,1]}$. These hypotheses are i.i.d. w.r.t. sequence position, i.e. $\mu_\t(x_n \mid x_{&amp;lt;n}) = \mu_\t(x_n)$.&lt;/p&gt;
-&lt;p&gt;Subjective data probability:&lt;br&gt;
-$$&lt;br&gt;
-p(x_{1:n}) = \int_0^1 p(\t)\mu_\t(x_{1:n}) d\t = \int_0^1 p(\t)\t^{\sum_i x_i}(1-\t)^{n-\sum_i x_i} d\t&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Data posterior:&lt;br&gt;
-$$&lt;br&gt;
-p(x_n \mid x_{&amp;lt;n}) = \int_0^1 p(\t\mid x_{&amp;lt;n})\mu_\t(x_n \mid x_{&amp;lt;n})d\t = \int_0^1 p(\t\mid x_{&amp;lt;n})\mc{B}_\t(x_n)d\t&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Hypothesis posterior:&lt;br&gt;
-$$&lt;br&gt;
-p(\t\mid x_{1:n}) = p(\t)\frac{\mu_\t(x_{1:n})}{p(x_{1:n})}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Note that the hypotheses are i.i.d. w.r.t. data position but the subjective data distribution $p$ is not. That is to say, $\mu_\t(x_n \mid x_{&amp;lt;n}) = \mu_\t(x_n)$ but $p(x_n \mid x_{&amp;lt;n}) \neq p(x_n)$.&lt;/p&gt;
-&lt;h2 id=&#34;solomonoff-induction&#34;&gt;Solomonoff Induction&lt;/h2&gt;
-&lt;p&gt;Let&amp;rsquo;s continue the coin tossing example, but instead of coin tossing, suppose any arbitrary process that produces a binary data stream. That is to say, we are allowing dependencies between bits in the data sequence.&lt;/p&gt;
-&lt;p&gt;Bernoulli hypotheses are blind to patterns in the ordering of bits in the data sequence because $\mu_\t(x_{1:n}) = \mu_\t(\mathrm{permute}(x_{1:n}))$ where $\mathrm{permute}(x_{1:n})$ is any permutation (re-ordering) of $x_{1:n}$. For example, we observe a very long sequence of alternating $0$s and $1$s, i.e. $0101010101\dots$, then the Bernoulli hypothesis where $\t=1/2$ will get large posterior weight. This is the hypothesis that the data is totally random (maximum entropy). Clearly, the data is highly patterned and predictable.&lt;/p&gt;
-&lt;p&gt;What hypotheses should we add to $\H$? Is it possible to have a hypothesis for every possible data pattern? Ray Solomonoff&amp;rsquo;s answer is yes, and this is achieved by the hypothesis set containing all semicomputable semimeasures on $\X^\infty$.&lt;/p&gt;
-&lt;p&gt;A probability measure $\mu$ on $\X^\infty$ is &lt;a href=&#34;https://en.wikipedia.org/wiki/Computable_function&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;computable&lt;/strong&gt;&lt;/a&gt; if there exists a program (Turing machine) which outputs the probability $\mu(x_{1:n})$ of any input, $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$), to the requested precision, $\e &amp;gt; 0$, in finite time and then halts. Alternatively, a probability measure is computable if there exists a program that outputs each possible outcome $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$) with probability $\mu(x_{1:n})$, given a stream of uniformly random input bits (i.i.d. Bernoulli(1/2) data).&lt;/p&gt;
-&lt;p&gt;A probability measure $\mu$ on $\X^\infty$ is &lt;a href=&#34;https://en.wikipedia.org/wiki/Semicomputable_function&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;semicomputable&lt;/strong&gt;&lt;/a&gt; if there exists a program (Turing machine) which outputs an infinite monotonic (increasing or decreasing) sequence of rational numbers $(\hat{q}_i)_{i\in\mb{N}}$ s.t. $\hat{q}_i$ converges to $\mu(x_{1:n})$ as $i\to\infty$, for any $x_{1:n} \in \X^n$ (for any $n\in\mb{N}$). All computable measures are semicomputable. A semicomputable measure is not computable if the error $\e_i = \abs{\hat{q}_i - \mu(x_{1:n})}$ at position $i$ in the output sequence cannot be computably determined. If this error could be determined, this program can be converted into the one above that approximates $\mu(x_{1:n})$ to the desired error in finite time. In other words, a semicomputable measure can be approximated to arbitrary accuracy, but you may not be able to determine how close any given approximation is, whereas a computable measure can be arbitrarily approximated with known error.&lt;/p&gt;
-&lt;p&gt;A semimeasure $\mu$ on $\X^\infty$ is like the measure we defined earlier in &lt;a href=&#34;#defining-a-hypothesis&#34;&gt;#Defining A Hypothesis&lt;/a&gt; except for one difference: Rather than strict equality we have&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mu(x_{&amp;lt;n}) \geq \int_\X \mu(x_{&amp;lt;n}`\chi)d\chi\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;For $\X = \set{0,1}$, this property becomes&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Measure: $\mu(x_{&amp;lt;n}) = \mu(x_{&amp;lt;n}`0) + \mu(x_{&amp;lt;n}`1)$&lt;/li&gt;
-&lt;li&gt;Semimeasure: $\mu(x_{&amp;lt;n}) \geq \mu(x_{&amp;lt;n}`0) + \mu(x_{&amp;lt;n}`1)$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Note that $0 \leq \mu(x_{&amp;lt;n}) \leq 1$ still holds. We just allow probabilities to sum to less than 1.&lt;/p&gt;
-&lt;p&gt;The set of all computable measures is conceptually nicer to think about than (and is a subset of) the set of all semicomputable semimeasures, but is not practically useful because it cannot be enumerated by a program, i.e. is &lt;a href=&#34;https://en.wikipedia.org/wiki/Recursively_enumerable_set&#34;target=&#34;_blank&#34;&gt;&lt;strong&gt;computably enumerable&lt;/strong&gt;&lt;/a&gt; (c.e.). To enumerate this set, you&amp;rsquo;d have to determine which programs halt after emitting their approximation of $\mu(x_{1:n})$.&lt;/p&gt;
-&lt;p&gt;The set of all semicomputable semimeasures can be enumerated by a program, by enumerating all programs in lexicographic order, running them all simultaneously (called &lt;a href=&#34;https://en.wikipedia.org/wiki/Dovetailing_%28computer_science%29&#34;target=&#34;_blank&#34;&gt;dovetailing&lt;/a&gt;, see also &lt;a href=&#34;https://en.wikipedia.org/wiki/Recursively_enumerable_set#Examples&#34;target=&#34;_blank&#34;&gt;c.e. set&lt;/a&gt;), and continually filtering out the programs whose output does not compute a valid semimeasure. The virtue of using semimeasures rather than measures is that we don&amp;rsquo;t need to wait for the programs being enumerated to halt. If one is found to violate the semimeasure property (probabilities sum to greater than 1) it is filtered out. Otherwise it remains and we don&amp;rsquo;t have to check that the probabilities it assigns to various outcomes sum to exactly 1 (which would require waiting for it to halt).&lt;/p&gt;
-&lt;p&gt;Let hypothesis set $\H$ be the set of all semicomputable semimeasures. Then the subjective data distribution is also a semicomputable semimeasure:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(x_{1:n}) = \sum_{\mu\in\H} p(\mu)\mu(x_{1:n})\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Solomonoff makes a prescription on what prior to use:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-p(\mu) = 2^{-K(\mu)}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $K(\mu)$ is the &lt;a href=&#34;http://www.scholarpedia.org/article/Algorithmic_complexity#Prefix_complexity&#34;target=&#34;_blank&#34;&gt;prefix-free Kolmogorov complexity&lt;/a&gt; of hypothesis $\mu\in\H$. This prior weights hypotheses inversely by complexity - a sort of Occam&amp;rsquo;s razor.&lt;/p&gt;
-&lt;h2 id=&#34;machine-learning&#34;&gt;Machine Learning&lt;/h2&gt;
-&lt;p&gt;We have a family of functions $\set{h_\t}_{\t\in\T}$ with signature $h_\t : \X \to \Phi$ (for example, $h_\t$ could be a &lt;a href=&#34;https://en.wikipedia.org/wiki/Artificial_neural_network&#34;target=&#34;_blank&#34;&gt;neural network&lt;/a&gt;), where $\Phi$ is the parameter space for a probability distribution $\P$ on the space $\Y$. That is to say, $\P(y \mid h_\t(x))$ is the probability of $y\in\Y$ given $x\in\X$ according to the model $h_\t(x)$. We call $\X$ the input space, and $\Y$ the target (output) space.&lt;/p&gt;
-&lt;p&gt;We observe a data sequence $x_1y_1x_2y_2x_3y_3\dots x_n$ ending in $x_n$. Let $D = x_1y_1x_2y_2x_3y_3\dots x_{n-1}y_{n-1}$ be the training data. $x_n$ is called the test input. The goal is to predict the next element in the sequence, $y_n$.&lt;/p&gt;
-&lt;p&gt;We can take a Bayesian approach by defining the following hypothesis space:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\H = \set{\mu_\t \mid \t\in\T}\,,&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $\mu_\t$ is a probability measure on $\X\times\Y\times\X\times\Y\dots = (\X\times\Y)^\infty$ s.t. for all $\o\in(\X\times\Y)^\infty$ and for all $(x_i,y_i)\in\o$,&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\mu_\t(y_i \mid x_i) = \P(y_i \mid h_\t(x_i))\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;$\mu_\t$ is i.i.d. w.r.t. sequence position, i.e. $\mu_\t(y_i \mid x_i) = \mu_\t(y_i \mid x_1y_1\dots x_i)$. That is to say, all of our hypotheses assume the data is drawn i.i.d. (and so the data sequence $D$ becomes a data&lt;em&gt;set&lt;/em&gt;, in the sense that it is unordered). If we are doing supervised learning, then the marginal probabilities $\mu_\t(x_i)$ should all be uniform (the hypothesis is indifferent to which input $x\in\X$ comes next in the sequence). On the other hand, if we are doing unsupervised or semi-supervised learning, then $\mu_\t(x_i)$ should also depend on the model output $h_\t(x_i)$.&lt;/p&gt;
-&lt;p&gt;Finally, put a prior $p$ on the parameter space $\T$. Then the subjective probability of the test output $y_n$ given test input $x_n$ is the data posterior of $y_n$ given the data sequence $D`x_n = x_1y_1x_2y_2x_3y_3\dots x_n$:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(y_n \mid D`x_ny_n) &amp;amp;= \int_\T p(\t\mid D`x_n)\mu_\t(y_n \mid D`x_n)d\t \\&lt;br&gt;
-&amp;amp;= \int_\T p(\t\mid D`x_n)\mu_\t(y_n \mid x_n)d\t&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where the parameter posterior is&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(\t\mid D`x_n) &amp;amp;= p(\t)\frac{\mu_\t(D`x_n)}{p(D`x_n)}&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;In the supervised case $\mu_\t(x_1) = \mu_\t(x_2) = \dots = \mu_\t(x_n) = \gamma$, and so $\mu_\t(D`x_n) = \gamma\mu_\t(D)$.  Likewise, $p(D`x_n) = \int_\T p(\t)\mu_\t(D`x_n) d\t = \gamma\int_\T p(\t)\mu_\t(D) d\t$, and so the fraction $\mu_\t(D`x_n)/p(D`x_n)$ simplifies to $\mu_\t(D)/p(D)$. Then the parameter posterior reduces to the &lt;a href=&#34;http://mlg.eng.cam.ac.uk/zoubin/bayesian.html&#34;target=&#34;_blank&#34;&gt;classic form&lt;/a&gt;: $p(\t\mid D`x_n) = p(\t\mid D) = p(\t)p(D\mid \t)/p(D)$. where $p(D\mid \t) = \mu_\t(D)$.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Classical vs Bayesian Reasoning</title>
-      <link>https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/</link>
-      <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/classical-vs-bayesian-reasoning/</guid>
-      <description>&lt;p&gt;$$&lt;br&gt;
-\newcommand{\0}{\mathrm{false}}&lt;br&gt;
-\newcommand{\1}{\mathrm{true}}&lt;br&gt;
-\newcommand{\mb}{\mathbb}&lt;br&gt;
-\newcommand{\mc}{\mathcal}&lt;br&gt;
-\newcommand{\and}{\wedge}&lt;br&gt;
-\newcommand{\or}{\vee}&lt;br&gt;
-\newcommand{\a}{\alpha}&lt;br&gt;
-\newcommand{\t}{\theta}&lt;br&gt;
-\newcommand{\T}{\Theta}&lt;br&gt;
-\newcommand{\o}{\omega}&lt;br&gt;
-\newcommand{\O}{\Omega}&lt;br&gt;
-\newcommand{\x}{\xi}&lt;br&gt;
-\newcommand{\fa}{\forall}&lt;br&gt;
-\newcommand{\ex}{\exists}&lt;br&gt;
-\newcommand{\X}{\mc{X}}&lt;br&gt;
-\newcommand{\Y}{\mc{Y}}&lt;br&gt;
-\newcommand{\Z}{\mc{Z}}&lt;br&gt;
-\newcommand{\P}{\Psi}&lt;br&gt;
-\newcommand{\y}{\psi}&lt;br&gt;
-\newcommand{\p}{\phi}&lt;br&gt;
-\newcommand{\B}{\mb{B}}&lt;br&gt;
-\newcommand{\m}{\times}&lt;br&gt;
-\newcommand{\E}{\mc{E}}&lt;br&gt;
-\newcommand{\e}{\varepsilon}&lt;br&gt;
-\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
-\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
-\newcommand{\inv}[1]{{#1}^{-1}}&lt;br&gt;
-\newcommand{\Iff}{\Leftrightarrow}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;My goal is to identify the core conceptual difference between someone who accepts &amp;ldquo;Bayesian reasoning&amp;rdquo; as a valid way to obtain knowledge about the world, vs someone who does not accept Bayesian reasoning, but does accept &amp;ldquo;classical reasoning&amp;rdquo;. By classical reasoning, I am referring to the various forms of boolean logic that have been developed, starting with Aristotelian logic, through propositional logic like that of Frege, and culminating in formal mathematics (e.g. higher order type theory). In such logics, the goal is to uniquely determine the truth values of things (such as theorems and propositions) from givens.&lt;/p&gt;
-&lt;p&gt;My thesis is that the difference between Bayesian and classical reasoners comes down to how they deal with non-determined objects (e.g. if you cannot determine the truth value of something from your givens). The classical reasoner will shrug their shoulders and say &amp;ldquo;the answer cannot be determined, collect more givens or modify your definitions&amp;rdquo;. The Bayesian reasoner will regard the proportion of self-consistent instantiations of unknowns that make the target proposition true as epistemologically salient. That is to say, the Bayesian reasoner continues on without uniquely determined truth values, and the classical reasoner does not.&lt;/p&gt;
-&lt;p&gt;This difference extends beyond epistemology into the realm of machine learning. Classical epistemology is interested in truth (i.e. uniquely determined quantities), whereas Bayesian epistemology is interested in degrees of certainty. In machine learning, the givens and unknowns in question are not boolean valued, but have arbitrary data types (e.g. vectors of reals). The classical learner is interested in what numbers can be uniquely determined from data, and the Bayesian learner is interested in proportions of possibilities that result in each number.&lt;/p&gt;
-&lt;p&gt;This philosophical difference leads to a practical methodological difference. A classical reasoner/learner will define universes such that unknowns can be uniquely determined. Otherwise, the definitions are not useful. A Bayesian reasoner/learner will define universes such that calculating posterior probabilities are tractable. Otherwise, the definitions are not useful.&lt;/p&gt;
-&lt;p&gt;A note on the definition of &lt;strong&gt;model&lt;/strong&gt;. In mathematics, a model is an instantiation of an unspecified object which satisfies given axioms. In machine learning, a model refers to a family of instantiations of free parameters, i.e. a model is the set of definitions which invoke free variables that are to be determined.&lt;/p&gt;
-&lt;h1 id=&#34;propositional-logic&#34;&gt;Propositional logic&lt;/h1&gt;
-&lt;h2 id=&#34;the-math-perspective&#34;&gt;The math perspective&lt;/h2&gt;
-&lt;p&gt;I will be using the example in Russell and Norvig&amp;rsquo;s &lt;a href=&#34;http://aima.cs.berkeley.edu/&#34;target=&#34;_blank&#34;&gt;Artificial Intelligence: A Modern Approach&lt;/a&gt; (3rd edition), chapter 7.&lt;/p&gt;
-&lt;p&gt;We are introduced to &amp;ldquo;wumpus world&amp;rdquo;, a &lt;a href=&#34;http://gridworld.info&#34;target=&#34;_blank&#34;&gt;grid world&lt;/a&gt; containing an enemy called the wumpus, death pits, and gold.&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223110223.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-The relevant rules are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;the agent starts in the bottom left corner&lt;/li&gt;
-&lt;li&gt;the agent can only see what is contained in the cell it currently occupies&lt;/li&gt;
-&lt;li&gt;the agent will detect a &amp;ldquo;breeze&amp;rdquo; if it&amp;rsquo;s cell is adjacent to a pit&lt;/li&gt;
-&lt;li&gt;if the agent moves into a pit, it dies&lt;/li&gt;
-&lt;li&gt;the goal is to get to the gold&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Suppose the agent moves right:&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223110534.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-No breeze is detected in the starting cell [1,1], so the agent knows there is no pit up or to the right. In cell [2,1], there is a breeze, so the agent knows there is a pit above or to the right (or both).&lt;/p&gt;
-&lt;p&gt;Each case can be defined by the following propositions:&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210223110745.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210223110745.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;br&gt;
-We define the following boolean variables:&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210223110852.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210223110852.png&#34; 
-         alt=&#34;$P_{x,y}$ is instantiated as a different variable for each coordinate, i.e. $P_{1,1}, P_{1,2}, P_{2,1},\ldots$ are all different variables.&#34; width=&#34;500&#34;/&gt;&lt;/a&gt;&lt;/span&gt;&lt;span class=&#34;caption&#34;&gt;
-            &lt;p&gt;$P_{x,y}$ is instantiated as a different variable for each coordinate, i.e. $P_{1,1}, P_{1,2}, P_{2,1},\ldots$ are all different variables.&lt;/p&gt;
-        &lt;/span&gt;
-&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;A &lt;strong&gt;model&lt;/strong&gt; (in the math sense) is an instantiation of these variables (in contrast to the machine learning sense where a model is the entire definition of the game and all the variables). There are 4 variables for each coordinate, and 16*4 = 64 variables in total. Thus a model can be viewed as a length 64 boolean vector. Suppose $m$ is such a vector. Then if $\a_1$ is true for $m$, we say that $m$ is a model of $\a_1$.&lt;/p&gt;
-&lt;p&gt;Let $M(\a)$ be the set of all models (i.e. length 64 boolean vectors) satisfying some arbitrary sentence $\a$. Let $\beta$ be another sentence. We say that $\a$ &lt;strong&gt;entails&lt;/strong&gt; $\beta$, notated $\a \models \beta$, iff $M(\a) \subseteq M(\beta)$.&lt;/p&gt;
-&lt;p&gt;Diagrammatically, we can depict the sets $M(\a_1)$ and $M(\a_2)$ (referring to the sentences above), as well as our knowledge base (KB) (i.e. what is given):&lt;br&gt;
-
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223113244.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-In our wumpus world, the &amp;ldquo;sentences&amp;rdquo; above can be formally states as propositions, along with the rules for the game:&lt;br&gt;
-
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223111036.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-We can prove simple things like &amp;ldquo;there is no pit in [1,2]&amp;rdquo; using the rules of logical inference. The following propositions are true in all models where $R_1,\ldots,R_5$ are true:&lt;br&gt;
-
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020210223112618.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-Each $R_i$ is entailed by the proceeding $R_j$ for $j &amp;lt; i$. A sequence of such propositions resulting in a desired proposition is a proof. From $R_{10}$, we can conclude $\neg P_{1,2}$. This sequence of propositions is a proof of $\a_1$ = &amp;ldquo;there is no pit in [1,2]&amp;rdquo;.&lt;/p&gt;
-&lt;p&gt;We can also verify the statement $\a_1$ is true with brute force instead of logical inference: by enumerating all models ($2^{64}$ of them), selecting the models which satisfy $R_1,\ldots,R_5$ (i.e. $M(R_1\and\ldots\and R_5)$), and then checking if $\neg P_{1,2}$ is true in all of them.&lt;/p&gt;
-&lt;p&gt;Notice that we cannot prove $P_{2,2}$ or its negation $\neg P_{2,2}$ given $R_1,\ldots,R_5$. That is because some models of $R_1\and\ldots\and R_5$ are consistent with $P_{2,2}$ while others are consistent with $\neg P_{2,2}$. That is to say, the truth value of variable $P_{2,2}$ is not uniquely determined by the givens $R_1,\ldots,R_5$. Speaking informally, we do not have enough information to know whether there is a pit at [2,2]. Therefore a rational agent would not make decisions based on $P_{2,2}$ being true or false. This is a core tenet of classical logic, whereas we shall see later, a Bayesian reasoner might be able to do more with the same information.&lt;/p&gt;
-&lt;h2 id=&#34;the-machine-learning-perspective&#34;&gt;The machine learning perspective&lt;/h2&gt;
-&lt;p&gt;In machine learning, a &lt;strong&gt;model&lt;/strong&gt; is a function $f : \O \to \X$, where $\O$ is called the state set, and $\X$ is called the observation set. This is different from the math notion of a model we saw above.&lt;/p&gt;
-&lt;p&gt;Typically $\O$ and $\X$ are each the Cartesian products of other primitive types (which are sets, e.g. the reals, the integers, the booleans, etc.). Thus elements of $\O$ and $\X$ are typically tuples. Each element of the tuple is called a dimension. Generally, $\O$ and $\X$ are high-dimensional (elements of $\O$ and $\X$ are very long tuples, possibly infinite).&lt;/p&gt;
-&lt;p&gt;An element $\o \in \O$ is called a state, and is considered to be a possible state of the world, where the world is the model. Often, $\O = \T\m\E$, where $\T$ is called the parameter set, and $\E$ is the noise set (both sets are themselves multi-dimensional). In the typical ML formulation, $\t\in\T$ is explicitly represented but $\e\in\E$ is not, because $\t$ is what is being &amp;ldquo;solved for&amp;rdquo; while $\e$ represents random inputs. In my formulation, I combine both into a single state $\o = (\t,\e)$. If $\o$ is some tuple, then a subtuple of $\o$ is called a substate, so $\t$ and $\e$ are substates of $\o = (\t, \e)$.&lt;/p&gt;
-&lt;p&gt;An element $x \in \X$ is called an observation. Usually we are only given a partial observation. If $\X = T_1 \m T_2 \m T_3 \m \dots$ for primitive types $T_1, T_2, T_3, \ldots$, then a full observation is $x = (t_1, t_2, t_3, \ldots) \in \X$. A partial observation is a subset of elements in the tuple $x$. We denote partial observations with subscripts: $x_{1,5,10}$ is the tuple $(t_1, t_5, t_{10})$. We can also take slices: $x_{a:b} = (t_a, t_{a+1}, \ldots, t_{b-1}, t_b)$ is the slice from index $a$ to $b$. The shorthand $x_{&amp;gt;a}$ is the tuple of all indices larger than $a$, and $x_{&amp;lt;a}$ is the tuple of all indices less than $a$. It is sometimes convenient to think of a partial observation $x_I$ (for index tuple $I$) as a subset of $\X$, i.e. the set of all $x\in\X$ satisfying the partial observation. For example, $x_{1,5,10} = \set{(t_1, t_2, \ldots)\in\X \mid t_1 = x_1 \and t_5 = x_5 \and t_{10} = x_{10}}$. Let $x_{a:b}`x_{x:d} = x_{a:b,c:d}$ denote tuple concatenation.&lt;/p&gt;
-&lt;p&gt;The goal of machine learning is to determine an unobserved partial observation  from an observed partial observation. If the unobserved part is going to be observed in the future, we call this prediction (if it happened in the past, we call this retrodiction). If the unobserved part is atemporal, or never observed, we call this inference. An unobservable partial observation is called latent.&lt;/p&gt;
-&lt;h3 id=&#34;unsupervised-learning&#34;&gt;Unsupervised learning&lt;/h3&gt;
-&lt;p&gt;The observation space is&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\X = \Xi_1\m\Xi_2\m\dots\m\Xi_i\m\dots&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;$\x_i \in \Xi_i$ is called an &lt;em&gt;example&lt;/em&gt; (I am using &amp;ldquo;xi&amp;rdquo;, $\x$, instead of $x$ since $x$ already denotes a full observation).&lt;/p&gt;
-&lt;p&gt;We are given a partial observation $D$, called the dataset:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-D = (\x_1, \x_2,\x_3, \ldots, \x_n)&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Given model $f : \O \to \X$ and dataset $D$ (regarding $D$ as a subset of $\X$), then $\inv{f}(D)$ is the set of all states in $\O$ compatible with $D$.&lt;/p&gt;
-&lt;p&gt;Typically in machine learning, the dataset $D$ does not uniquely determine a state $\o\in\O$. To further narrow down the possibilities, additional constraints are added. Typically, $\O = \T\m\E$, where the $\T$ component of the state tuple is narrowed down further by maximizing the data probability $p_\t(D)$ w.r.t. $\t\in\T$, and $\e \sim p_\t(D)$ is randomly chosen from the distribution. Additionally, the maximization of $p_\t(D)$ may be &amp;ldquo;regularized&amp;rdquo; by jointly minimizing some real-valued function $L(\t)$. Even then, $\t\in\T$ may not be uniquely determined (as is the case in deep learning), and so $\t$ will be arbitrarily chosen from the remaining possibilities.&lt;/p&gt;
-&lt;p&gt;In the case of unsupervised learning, $f$ is called a generative model, and we use it to generate unobserved examples. Assume we&amp;rsquo;ve narrowed down the possibility space $\O$ to one state $\o^*$. We simply looking at&lt;/p&gt;
-&lt;p&gt;$$f(\o^*) = (\x_1, \x_2, \ldots, \x_n, \x_{n+1}, \x_{n+2}, \dots)$$&lt;/p&gt;
-&lt;p&gt;which provides $\x_{n+1}, \x_{n+2}, \dots$ outside of the partial observation $D$. Note that $\o$ typically contains a choice of noise $\e\in\E$, which injects randomness into the generated examples (generative models are normally thought of as probability distributions, and generating examples is a process of sampling from $p_{\t^*}(\x_i)$ for chosen parameter $\t^*$).&lt;/p&gt;
-&lt;p&gt;Because $D$ does not uniquely determine an input $\o$ to $f$ (i.e. $\inv{f}(D)$ is not singleton), but a particular $\o^* \in \inv{f}(D)$ is chosen anyway, this results in some difficulties. Some $\o$ will produce generated examples $\x_{n+1}, \x_{n+2}, \dots$ which &amp;ldquo;look like the examples in $D$&amp;rdquo; where other choices of $\o$ (still compatible with $D$) will not. We say that $f(\o)$ generalizes if it outputs the unobserved partial observation that humans consider to be correct or appropriate (e.g. looks like the data in $D$). This is all very subjective, and it is very difficult to provide appropriate constraints (like the ones I mentioned above) so that for all possible $D$, the resulting $\o_D^*$ generalizes (i.e. many humans agree that $\x_{n+1}, \x_{n+2}, \dots$ &amp;ldquo;look like&amp;rdquo; $D$).&lt;/p&gt;
-&lt;h3 id=&#34;supervised-learning&#34;&gt;Supervised learning&lt;/h3&gt;
-&lt;p&gt;The observation space is&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\X = \Xi_1\m\P_1\m\Xi_2\m\P_2\m\ldots\m\Xi_i\m\P_i\m\ldots&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;$\x_i \in \Xi_i$ is called an &lt;em&gt;input&lt;/em&gt;, and $\y_i\in\P_i$ is the associated &lt;em&gt;target&lt;/em&gt; (or &lt;em&gt;label&lt;/em&gt;) for $\x_i$. (usually the inputs and targets are notated with $x$ and $y$ - but I am using Greek)&lt;/p&gt;
-&lt;p&gt;We are given a partial observation $D$, called the dataset:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-D = (\x_1, \y_1, \x_2, \y_2, \x_3, \y_3, \ldots, \x_n, \y_n)&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Given model $f : \O \to \X$ and dataset $D$ (regarding $D$ as a subset of $\X$), then $\inv{f}(D)$ is the set of all states in $\O$ compatible with $D$.&lt;/p&gt;
-&lt;p&gt;If we are subsequently given a &amp;ldquo;test input&amp;rdquo; $\x_{n+1} \in \Xi_{n+1}$, we want to predict $\y_{n+1} \in \P_{n+1}$. We can do so if $\inv{f}(D`\x_{n+1})$ uniquely determines $\y_{n+1}$, i.e. $D`\x_{n+1}`\y_{n+1} = f(\inv{f}(D`\x_{n+1}))$ (i.e. $\inv{f}(D`\x_{n+1}) = \inv{f}(D`\x_{n+1}`\y_{n+1})$)&lt;/p&gt;
-&lt;h3 id=&#34;boolean-logic&#34;&gt;Boolean logic&lt;/h3&gt;
-&lt;p&gt;The ML model is $f : \O\to\X$ where $\O = \B^{64}$ is the set of all length-64 boolean vectors, corresponding to the values of all the boolean variables $P_{x,y},W_{x,y},B_{x,y},S_{x,y}$ for all 16 grid cells. Any state $\o\in\O$ is a math model in the sense we used above. The observations are what is given, what we wish to know, and potentially everything we can know in principle. We were given the follow propositions (meaning they are observed as true):&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-R_1 &amp;amp;= \neg P_{1,1} \\&lt;br&gt;
-R_2 &amp;amp;= (B_{1,1} \Iff (P_{1,2}\or P_{2,1})) \\&lt;br&gt;
-R_3 &amp;amp;= (B_{2,1} \Iff (P_{1,1}\or P_{2,2}\or P_{3,1})) \\&lt;br&gt;
-R_4 &amp;amp;= \neg B_{1,1} \\&lt;br&gt;
-R_5 &amp;amp;= B_{2,1}&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;We want to know many things: the location of the gold, the wumpus, and all the pits. Under more immediate consideration is whether there are pits in any of the cells [2,1], [2,2], [3,1]. So let&amp;rsquo;s say the propositions of immediate interest are&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-Q_1 &amp;amp;= P_{2,1} \\&lt;br&gt;
-Q_2 &amp;amp;= P_{2,2} \\&lt;br&gt;
-Q_3 &amp;amp;= P_{3,1} \\&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Then the observation set is $\X = \B^8$, and a full observation is the boolean tuple $x = (R_1, R_2, R_3, R_4, R_5, Q_1, Q_2, Q_3)$. (Note that one ML-model&amp;rsquo;s full observation is another ML-model&amp;rsquo;s partial observation. If later on we care about propositions about other cells on the board, we can just augment $\X$ with additional dimensions, thereby updating $f$ to $f&#39;$) We are given the partial observation $x_{1:5} = (\1, \ldots, \1)$, i.e. $R_1=\1,\ \dots,\ R_5=\1$. Can we uniquely determine the remaining parts of $x$?&lt;/p&gt;
-&lt;p&gt;The set of math models (subset of $\O$) consistent with $x_{1:5}$ being true is:&lt;br&gt;
-$$&lt;br&gt;
-\inv{f}(x_{1:5}) = \inv{f}(\set{(\1, \dots, \1)}\m \B^3)\,.&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;Above we proved that $P_{2,1} = \1$, and so $x_6 = Q_1 = \1$ must be the case for all states in $\inv{f}(x_{1:5})$. However, $x_{7:8} = (Q_2, Q_3) = (P_{2,2}, P_{3,1})$ is not uniquely determined in $\inv{f}(x_{1:5})$.&lt;/p&gt;
-&lt;p&gt;Note that&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-R_2 &amp;amp;= (B_{1,1} \Iff (P_{1,2}\or P_{2,1})) \\&lt;br&gt;
-R_3 &amp;amp;= (B_{2,1} \Iff (P_{1,1}\or P_{2,2}\or P_{3,1}))&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;are the rules of the game, i.e. that a breeze must be adjacent to a pit. In the ML framework, including the rules as partial observations means that the ML model $f$ considers possible worlds where the rules of the game are different - in fact $f$ allows for all possible games played on a 4x4 grid with pits, breezes, etc. It is equivalent to bake the rules of the game into $f$ as a domain restriction on $\O$, i.e. define $f&#39;$ whose domain is all states which obey our rules $R_2, R_3$.&lt;/p&gt;
-&lt;p&gt;In the math framework, a theorem is a proposition that is true in all math models. In the ML framework, a theorem is a boolean dimension of $\X$ (output to $f$) which is true for all states (inputs to $f$). For a given boolean output dimension of $f$, that dimension becomes a theorem of $f&#39;$, the domain restriction of $f$ to all inputs where the output dimension is true (if there are no such inputs then this boolean dimension corresponds a paradox, a proposition that is not true in any math model).&lt;/p&gt;
-&lt;p&gt;The general case is $f : \B^a \to \B^b$ where $a,b$ may be finite or infinite cardinalities. Given a partial observation $x_{1:n}$, we can ask whether any dimensions of $x_{&amp;gt;n}$ are also uniquely determined. A proof of $x_i = \1$ is a way of showing that $x_i$ is uniquely determined from $x_{1:n}$ without brute force enumeration of all states (inputs to $f$). If we care about part $\o_{1:m}$ of the input to $f$ as well, then in the ML framework, that equates to passing $\o_{1:m}$ through $f$ to $x_{j_1, \dots, j_m}$ as the identity function, and then trying to uniquely determine that partial observation.&lt;/p&gt;
-&lt;h2 id=&#34;the-bayesian-perspective&#34;&gt;The Bayesian perspective&lt;/h2&gt;
-&lt;p&gt;Continuing with our ML model $f : \O \to \X$ for wumpus world, what should the agent do next? Using non-Bayesian logic, we could not uniquely determine if cells [3,1] or [2,2] contain pits or not. It then seems most reasonable to travel to cell [1,2] to gather more information. Let&amp;rsquo;s suppose we do that, and find [1,2] also contains a breeze (I&amp;rsquo;m disregarding what is depicted in figure 7.2 and making up my own scenario). Then any of cells [1,3], [2,2], and [3,1] may contain pits. There is nowhere else to go without traveling over one of these dangerous cells. What do we do?&lt;/p&gt;
-&lt;p&gt;A Bayesian would suggest counting up and comparing the number of states for which each possible observation is true. Suppose we know there are exactly 3 pits on the board. We&amp;rsquo;ve ruled out [1,1], [1,2], [2,1], and so there are 13 remaining cells that contain the 3 pits.&lt;/p&gt;
-&lt;p&gt;State of knowledge:&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210223212901.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210223212901.png&#34; width=&#34;200&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;br&gt;
-Possible pit configurations of [3,1], [2,2] and [3,1] (1 = pit, 0 = no pit):&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020210223213359.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020210223213359.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;br&gt;
-There are 10 remaining cells not depicted. Any pits not in [3,1], [2,2] and [3,1] will be in the remaining 10. Let&amp;rsquo;s count up the total number of states corresponding to each configuration:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;[1,3]&lt;/th&gt;
-&lt;th&gt;[2,2]&lt;/th&gt;
-&lt;th&gt;[3,1]&lt;/th&gt;
-&lt;th&gt;Count&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;${10 \choose 2} = 45$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;${10 \choose 1} = 10$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;${10 \choose 1} = 10$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;0&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;${10 \choose 1} = 10$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;${10 \choose 0} = 1$&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The total count is 76 states. As fractions (called probabilities), we have&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-p(0,1,0) &amp;amp;= 45/76 \\&lt;br&gt;
-p(1,0,1) &amp;amp;= 10/76 \\&lt;br&gt;
-p(1,1,0) &amp;amp;= 10/76 \\&lt;br&gt;
-p(0,1,1) &amp;amp;= 10/76 \\&lt;br&gt;
-p(1,1,1) &amp;amp;= 1/76&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;The fraction of states where the middle cell [2,2] has a pit is $66/76$. The fraction of states where [3,1] has a pit is $21/76$, and likewise for [1,3]. We say that [2,2] is more likely to have a pit than [1,3] or [3,1]. If the agent is forced to choose one of the three cells to move to, [2,2] is the most dangerous option (highest probability of falling into a pit) and [3,1],[3,1] are equally less-dangerous.&lt;/p&gt;
-&lt;p&gt;The difference between the classical and Bayesian paradigms is now clear. A classical agent does not distinguish between these three options, since none of these cells can be proved to be pit-free (this property is not uniquely determined from the givens). The Bayesian agent doesn&amp;rsquo;t need unique determination to have knowledge about the pit-ness of these cells, and concludes that [2,2] is more likely to have a pit than [3,1] or [1,3].&lt;/p&gt;
-&lt;h2 id=&#34;probability-notation&#34;&gt;Probability notation&lt;/h2&gt;
-&lt;p&gt;$\newcommand{\obs}{\mathrm{Data}}$I&amp;rsquo;m now going to regard logical propositions as functions of state $\o$. For example, $R_1(\o)$ returns true if $\o$ is a math-model of proposition $R_1$, and false otherwise.&lt;/p&gt;
-&lt;p&gt;Let $\obs = R_1\and\dots\and R_5$. Then $\obs(\o)$ is true iff $\o$ is a math-model of our givens $R_1$ through $R_5$. If I write $P_{x,y}$, take that now to be a function of $\o$ as well.&lt;/p&gt;
-&lt;p&gt;Let $p$ be the uniform probability measure on $\O$. Using random variable notation (see &lt;a href=&#34;http://zhat.io/articles/primer-probability-theory#random-variables&#34;target=&#34;_blank&#34;&gt;zhat&lt;/a&gt; for probability theory and &lt;a href=&#34;https://www.lesswrong.com/posts/W8YscokXMiDnLKJ96/bayesian-inference-on-1st-order-logic&#34;target=&#34;_blank&#34;&gt;LW&lt;/a&gt; for conditional probability notation) the fraction of states where the middle cell [2,2] has a pit is $p(P_{2,2}=\1\mid\obs=\1) = 66/76$. The fraction of states where [3,1] and [1,3] have a pit respectively is $p(P_{1,3} = \1\mid\obs=\1) = p(P_{3,1} = \1\mid\obs=\1) = 21/76$.&lt;/p&gt;
-&lt;p&gt;In general for finite state sets $\O$, any ML-model $f : \O\to\X$ can be regarded as a random variable (or a tuple of random variables), i.e. a function from states to observables. I always assume a uniform probability measure, which corresponds to naive counting like in the example above. Let $f_{a:b}$ denote the slice of the tuple-valued random variable $f$ from index $a$ to $b$. Generally we want to determine the probability of some (unobserved) partial observation $x_{n:m}$ given the (observed) partial observation $x^*_{1:n}$:&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\begin{aligned}&lt;br&gt;
-&amp;amp; p(f_{n:m} = x_{n:m} \mid f_{1:n} = x^*_{1:n}) \\&lt;br&gt;
-&amp;amp;\quad= p\set{\o\in\O \mid f(\o) \in x^*_{1:n}`x_{n:m}} / p\set{\o\in\O \mid f(\o) \in x^*_{1:n}} \\&lt;br&gt;
-&amp;amp;\quad= p(\inv{f}(x^*_{1:n}`x_{n:m})) / p(\inv{f}(x^*_{1:n})) \\&lt;br&gt;
-&amp;amp;\quad= \abs{\inv{f}(x^*_{1:n}`x_{n:m})} / \abs{\inv{f}(x^*_{1:n})}&lt;br&gt;
-\end{aligned}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;h2 id=&#34;discussion&#34;&gt;Discussion&lt;/h2&gt;
-&lt;p&gt;In general, the classically rational agent only regards uniquely determined partial observables (output dimensions on it&amp;rsquo;s ML-model $f$) as knowledge, and does not act on undetermined partial observables. In contrast, the Bayesian rational agent takes the relative proportion of possible states that produce each outcome as knowledge.&lt;/p&gt;
-&lt;p&gt;How does the Bayesian agent pull this off? Do these &amp;ldquo;Bayesian&amp;rdquo; probabilities really constitute knowledge? We can turn the question around and ask if uniquely determined observables really constitute knowledge. It is rare for something to be uniquely determined in practice. I suspect that many of the difficulties encountered in applications of statistical inference and machine learning are because of this. A classical reasoner needs to make simplifications and assumptions in service of being able to then uniquely determine something of interest. It seems to me that most of informal rational thought comes down to some version of choosing an ML-model s.t. something of interest can be uniquely determined. Described in this way, classical reasoning sounds biased. On the flip side, in practice Bayesian ML-models requires special simplifications and assumptions to be computationally tractable, so a similar sort of ML-model-choosing bias occurs.&lt;/p&gt;
-&lt;p&gt;Note that the size of $\O$ and the ML-model $f$ determine how many states produce each partial observation. Ostensibly these things are arbitrarily chosen by the agent. The classical reasoner objects that state-counts (probabilities) don&amp;rsquo;t constitute actual knowledge about the world, but are an artifact of the choice of ML-model $f$, and so it is inappropriate to treat these quantities as knowledge. The Bayesian reasoner counters that a classical ML-model (e.g. boolean logic) is also arbitrarily chosen. Unique determination is a property of $f$, not reality, and depends on the arbitrary simplifications and assumptions made by the agent. Thus, the Bayesian reasoner concludes, my approach is no less rational than yours.&lt;/p&gt;
-&lt;p&gt;The classical reasoner would counter that the parts of the ML-model output which are observed can be arbitrarily inspected for &amp;ldquo;goodness of fit&amp;rdquo; to reality. Unique determination is much less fragile (i.e. stable w.r.t. modeling inaccuracies) than state-counts. Unique determination is robust against worst-case modeling errors (though in practice this is clearly not true).&lt;/p&gt;
-&lt;p&gt;Punchline: any representation of the world whose predictions are not uniquely determined by data on hand can be viewed as Bayesian, if we are willing to provide a measure for calculating sizes of sets of model states, and then to use size-of-possibilities as decision making criteria.&lt;/p&gt;
-&lt;h1 id=&#34;the-bayesian-axiom&#34;&gt;The Bayesian Axiom&lt;/h1&gt;
-&lt;p&gt;This epistemological debate is still raging. The efficacy of classical reasoning has been argued about for the last two and a half millennia. Bayesian reasoning is a more modern invention that, depending on how you count it, has been going on for 100 to 300 years (early 20th century Bayesians to Thomas Bayes). The frontier of contemporary inquery is the complex: from brains to human societies to high-dimensional physical systems, the neat and orderly unique-determination of classical reasoning is hard to come by. For this reason, Bayesian reasoning is gaining traction and is posturing to topple classical reasoning as the common-sense epistemological default.&lt;/p&gt;
-&lt;p&gt;Given the unsettled nature of these questions, it is my opinion that the &amp;ldquo;state-counts as knowledge&amp;rdquo; premise be taken as the &amp;ldquo;Bayesian axiom&amp;rdquo;. This neatly delineates classical and Bayesian epistemology down to one difference: Bayesian epistemology is classical epistemology plus an additional axiom. Some may accept this axiom and other&amp;rsquo;s may reject it, leading to different kinds of reasoning and knowledge. I don&amp;rsquo;t know if we will ever be able to determine that this axiom should or should not be used. In that case, like &lt;a href=&#34;https://en.wikipedia.org/wiki/Parallel_postulate&#34;target=&#34;_blank&#34;&gt;Euclid&amp;rsquo;s fifth axiom&lt;/a&gt;, &amp;ldquo;flat&amp;rdquo; and &amp;ldquo;curved&amp;rdquo; rationality shall forever remain parallel self-consistent options.&lt;/p&gt;
 </description>
     </item>
     
