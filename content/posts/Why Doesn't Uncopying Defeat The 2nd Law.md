@@ -1,11 +1,11 @@
 ---
 date: 2022-02-17
-lastmod: '2022-02-17T15:30:11-08:00'
+lastmod: '2022-02-17T15:32:05-08:00'
 tags:
 - physics
 - information
 - thermodynamics
-title: Why Doesn't Uncopying Defeat The 2nd Law
+title: Why Doesn't Uncopying Defeat The 2nd Law?
 ---
 
 
