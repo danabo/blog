@@ -1,6 +1,6 @@
 ---
 date: 2022-02-17
-lastmod: '2022-02-17T15:32:05-08:00'
+lastmod: '2022-02-26T16:37:02-08:00'
 tags:
 - physics
 - information
@@ -100,7 +100,7 @@ I'll make heavy use of external potential fields that contain "walls", which are
 
 ![](</gas_container_potential.jpg> "Steep potential hills make up the walls of the box holding a gas.")
 
-![](</potential_wall.png> "An idealized wall is an infinitely steep and infinitely high potential hill (depicted on the right). This can be constructed by taking the limit of a finite hill (left) as its height goes to infinity and its depth goes to zero.")
+![](</potential_wall.png> "An idealized wall is an infinitely steep and infinitely high potential hill (depicted on the right). This can be constructed by taking the limit of a finite hill (left) as its height goes to infinity and its width goes to zero.")
 
 ### Measurement
 
