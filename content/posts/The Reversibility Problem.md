@@ -1,6 +1,6 @@
 ---
 date: 2022-03-01
-lastmod: '2022-03-01T14:09:37-08:00'
+lastmod: '2022-03-11T11:04:31-08:00'
 tags:
 - thermodynamics
 - physics
@@ -84,14 +84,14 @@ $$
 With goal #1 I am interested in being able to ask (make well posed) thermodynamic-type questions of non-equlibrium systems. Even if those questions don't have tractable answers, does being able to precisely formulate those questions (as well as what an answer looks like) open up new directions on course-grained (effective theory) non-equlilibrium thermodynamics? Does doing this allow us to make any progress towards the thermodynamics of living systems (i.e. open systems far from equilibrium) ? In the philosophical direction, does formalizing this problem in generality allow for the laws of thermodynamics (or some version of them) to be derived from the laws of classical mechanics?
 
 
-With goals #2 and #3, I am interested in being able to answer philosophical (specifically interpretational questions) about physics and thermodynamics - specifically the role information plays, whether thermodynamics (and statistical mechanics in general) is anthropocentric (i.e. dependent on the beliefs/models of an agent), and whether the phenomenon of irreversibility and its quantitative property, entropy, generalize well beyond thermodynamics and touch on the fundamental nature of reality, ala the arrow of time and limits on our ability (as intelligent systems) to control the environment around us. Finally, is there a precise argument to be made as to how irreversible processes can exist in classical mechanics, which has [time-reversible dynamics](https://en.wikipedia.org/wiki/Time_reversibility).
+With goals #2 and #3, I am interested in being able to answer philosophical (specifically interpretational questions) about physics and thermodynamics - specifically the role information plays, whether thermodynamics (and statistical mechanics in general) is anthropocentric (i.e. dependent on the beliefs/models of an agent), and whether the phenomenon of irreversibility and its quantitative property, entropy, generalize well beyond thermodynamics and touch on the fundamental nature of reality, ala the arrow of time and limits on our ability (as intelligent systems) to control the environment around us. Finally, is there a precise argument to be made as to how irreversible processes can exist in classical mechanics (which has [time-reversible dynamics](https://en.wikipedia.org/wiki/Time_reversibility))?
 
 
-# Reverisibility and Thermodynamics
+# Reversibility and Thermodynamics
 
 The importance of reversibility in thermodynamics is due to its relationship with (energy) efficiency. The energy efficiency of a process that converts an energy source into "useful" work (where "useful" is relative to a goal-driven entity) is the ratio of useful work extracted to energy consumed (both measured in Joules).
 
-The canonical problem in thermodynamics is to determine the efficiency of a a process that uses energy from a heat source to move a piston against some resistance (e.g. pushing mass against gravity or moving the wheels of a locomotive). The heat source could, for instance, come from burning fuel (converting chemical potential into heat energy). The more heat energy that goes into useful work (e.g. the piston), the higher the efficiency of the engine. The theoretical limit on efficiency for any given transformation is the efficiency of a reversible process that achieves it.
+The canonical problem in thermodynamics is to determine the efficiency of a process that uses energy from a heat source to move a piston against some resistance (e.g. pushing mass against gravity or moving the wheels of a locomotive). The heat source could, for instance, come from burning fuel (converting chemical potential into heat energy). The more heat energy that goes into useful work (e.g. the piston), the higher the efficiency of the engine. The theoretical limit on efficiency for any given transformation is the efficiency of a reversible process that achieves it.
 
 (In general reversible processes are not perfectly efficient, i.e. not all all input energy is converted to useful work. E.g. see {{< locallink "Carnot Cycle" >}}. However, in a reversible process, all the wasted energy can be recovered if the transformation is reversed.),
 
@@ -101,7 +101,7 @@ Statistical thermodynamics sets out to explain what entropy is in terms of the l
 
 For example, rather than modeling a gas with millions of particles, it is much easier (and tractable) to model an ideal gas described by just a handful of quantities: temperature, volume, pressure, internal energy, and entropy. The course-grained theory needs to be able to predict the time-evolution of these quantities without referring to the fine-grained theory (so that we avoid modeling millions of particles). However, this course-grained representation of the gas will only make accurate predictions within a certain regime. It fails to model gasses outside of equilibrium where these course-grained quantities cease to be well-defined.
 
-I suspect that the philosophical problems I mentioned above are muddled by conflation between course-grained models as instrumental representations (they are useful approximations) and course-grained models as meta-physical assertions about what things really are. For instance, in classical thermodynamics the entropy of a gas is only well-defined when the gas is at equilibrium, but there is a strong impulse to want to generalize the idea of entropy as a universal and fundamental property of things in the universe - things that happen cannot be undone because the entropy of those things has increased. And more striking, while energy in the universe may be conserved, it becomes less useful over time because the entropy of the universe is increasing. Is entropy a well-defined concept in these use-cases?
+I suspect that the philosophical problems I mentioned above are muddled by conflation between course-grained models as instrumental representations (they are useful approximations) and course-grained models as metaphysical assertions about what things really are. For instance, in classical thermodynamics the entropy of a gas is only well-defined when the gas is at equilibrium, but there is a strong impulse to want to generalize the idea of entropy as a universal and fundamental property of things in the universe - things that happen cannot be undone because the entropy of those things has increased. And more striking, while energy in the universe may be conserved, it becomes less useful over time because the entropy of the universe is increasing. Is entropy a well-defined concept in these use-cases?
 
 One avenue towards seeking a general understanding of entropy is to pose the reversibility problem in general - i.e. for arbitrary processes. Although equilibrium or other simplifying assumptions are not necessary to pose the problem, but determining if a process is reversible will likely require course-grained representations to make reasoning about it tractable. It seems to me that a fine-grained definition of reversibility (and entropy if it exists) is useful for clarifying the meaning of things and what we are doing (philosophical considerations), and course-grained representations are useful for making calculations and predictions tractable.
 
@@ -119,7 +119,7 @@ This second leads to two implications about the system:
 1. That the system is interacting with the outside world in some way, i.e. it does work on the outside world. This means we must also consider and define the immediate boundary between system and outside, which we call the *environment* of the system.
 2. The useful work done during the forward process would not be undone by itself, so the reverse process requires some sort of agent-driven change in the system's environment that induces the reverse process to happen. In practice, the forward and reverse processes are both driven by an agent via the environment.
 
-The inclusion of an environment (which is itself an open system, being the boundary between system and universe) makes defining reversibility in terms of a fine-grained representation (i.e. classical mechanics) a much greater challenge, simply because formalizing environments in the same fine-grained representation is anywhere between challenging and intractable. 
+The inclusion of an environment (which is itself an open system, being the boundary between system and universe) makes defining reversibility in terms of a fine-grained representation (i.e. classical mechanics) a much greater challenge, simply because formalizing environments in the same fine-grained representation is somewhere between challenging and intractable. 
 
 Furthermore, the reversibility of the system now also depends on the repeatibility of the environment. By that I mean, with every cycle of the forward+reverse process the environment needs to behave the same w.r.t. its interaction with the system. Of course, the entire universe beyond the system's environment need not repeat, so this presents a problem of what it means for the system's environment to be reversed along with the system.
 
@@ -272,7 +272,7 @@ Another result from classical thermodynamics is that this process, isentropic ex
 ### Issues
 
 I call the above formulation of the reversibility problem naive because,
-1. There are environments and environment interactions which we cannot be modeled.
+1. There are environments and environment interactions which we cannot model.
 2. Energy transfers between different parts of the environment are not accounted for.
 
 Some examples of environments we are not able to model:
@@ -329,7 +329,7 @@ The field-snapshot ${\\Ue}\\up{t} : \\o\\mapsto\\Ue(\\o;\\ t)$ is treated as the
 
 3.
 The environment has its own state $\\vec{\\xi}$.
-Let $\\vec{q}=(q\_1,\\dots,q\_n)$, $\\vec{p}=(p\_1,\\dots,p\_n)$, and $\\vec{\\xi}$ some state vector for the environment. The environment's state need not be inertial. $\\H(\\vec{q},\\vec{p};\\ \\vec{\\xi}, t)=T(\\vec{p})+\\Ui(\\vec{q},\\vec{p})+\\Ue(\\vec{q},\\vec{p};\\ \\vec{\\xi},t)$, where $\\vec{\\xi}, t$ are not inertial coordinates involved in Hamilton's equations (not involved in the physics), but merely specify which external potential to use. ($t$ can be considered part of the environment state, e.g. if someone has a clock.)  There is a joint propagator $(\\vec{q}',\\vec{p}', \\vec{\\xi}') = \\t\_{t\_1\\to t\_2}(\\vec{q},\\vec{p}, \\vec{\\xi})$.
+Let $\\vec{q}=(q\_1,\\dots,q\_n)$, $\\vec{p}=(p\_1,\\dots,p\_n)$, and $\\vec{\\xi}$ some state vector for the environment. The environment's state need not be inertial. $\\H(\\vec{q},\\vec{p};\\ \\vec{\\xi}, t)=T(\\vec{p})+\\Ui(\\vec{q},\\vec{p})+\\Ue(\\vec{q},\\vec{p};\\ \\vec{\\xi},t)$, where $\\vec{\\xi}, t$ are not inertial coordinates involved in Hamilton's equations (not involved in the physics), but merely specify which external potential to use. ($t$ can be considered part of the environment state, e.g. if someone has a clock.)  There is a family of joint propagators of the form $(\\vec{q}',\\vec{p}', \\vec{\\xi}') = \\t\_{t\_1\\to t\_2}(\\vec{q},\\vec{p}, \\vec{\\xi})$. We require that the joint propagators be bijections (information preserving). This means than when the environment measures unknown state (conditions on state within the state region), the environment state becomes uncertain. Resetting the system and environment then includes erasing redundant state within the environment. Perhaps something like [Landauer's_principle](https://en.wikipedia.org/wiki/Landauer%27s_principle) can be derived from this setup.
 
 
 Pros

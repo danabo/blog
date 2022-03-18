@@ -1,6 +1,6 @@
 ---
 date: 2021-02-07
-lastmod: '2021-03-18T14:55:56-07:00'
+lastmod: '2022-03-08T10:30:20-08:00'
 tags:
 - free energy
 title: Free Energy Principle 1st Pass
@@ -22,8 +22,10 @@ $$
 
 Related notes:
 - {{< locallink "The free-energy principle a unified brain theory" >}}
-- {{< locallink "Friston's Free Energy (Active Inference)" >}}
+- {{< locallink "Active inference tutorial (actions)" >}}
 - Hackmd version of this note: https://hackmd.io/@z5RLVXyrTg-JLCnL9c_xOQ/r1KSFUjkO
+
+
 
 # My current understanding
 ## Note on probability notation
