@@ -4,7 +4,9 @@
 <meta name="supported-color-schemes" content="light dark"><title>Posts&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><link rel="alternate" type="application/rss+xml" href="https://danabo.github.io/blog/posts/index.xml" title="Dan's Notepad" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Posts" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>Posts</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/the-reversibility-problem/">
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>Posts</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/carnot-cycle/">
+            <p class="note title">Primer: Carnot Cycle</p><p class="note date">March 17, 2022</p><p class="note content">This is a brief and formal description of the Carnot cycle. I hope this post is a useful reference for anyone who wants to quickly ramp up on thermodynamics. The Carnot cycle is often used as a canonical introduction to classical thermodynamics (specifically the thermodynamics of ideal gasses) since it nicely illustrates the relationship between the entropy, temperature and volume of a gas.
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/thermodynamics/">thermodynamics</a><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/the-reversibility-problem/">
             <p class="note title">The Reversibility Problem</p><p class="note date">March 1, 2022</p><p class="note content">This is my exploration into formalizing the reversibility problem, i.e. the question &ldquo;Which processes are reversible?&rdquo;
 My long term goals are to,
  formally define what it means for any process to be reversible, regardless of equilibrium considerations; clarify the connection between information and reversibility (and by extension the connection between information and entropy); clarify (make well defined) the meaning of statements like &ldquo;breaking a glass is irreversible because the entropy of the broken glass is higher than the entropy of the unbroken glass,&rdquo; and &ldquo;the entropy of the universe is monotonically increasing.&rdquo; <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/thermodynamics/">thermodynamics</a><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/szilard-cycle-particle-piston-interaction-model/">
@@ -23,53 +25,7 @@ My long term goals are to,
             <p class="note title">Information Algebra</p><p class="note date">May 5, 2021</p><p class="note content">I further expand on the ideas I introduced in Bayesian information theory.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/causality-for-physics/">
             <p class="note title">Causality For Physics</p><p class="note date">April 20, 2021</p><p class="note content">The definition of causality within physics is not a settled matter, perhaps surprisingly. My understanding is that this question is studied more by philosophers than physicists, as the field of physics tends to avoid interpretational problems. That is to say, theories like relativity or quantum mechanics are mathematically well defined and make predictions, so that&rsquo;s all there is to it, right? I&rsquo;m not a physicist, so I will proceed to ask such questions.
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/modular-neural-networks/">
-            <p class="note title">Modular Neural Networks</p><p class="note date">April 13, 2021</p><p class="note content">$$
-\newcommand{\0}{\mathrm{false}}
-\newcommand{\1}{\mathrm{true}}
-\newcommand{\mb}{\mathbb}
-\newcommand{\mc}{\mathcal}
-\newcommand{\mf}{\mathfrak}
-\newcommand{\and}{\wedge}
-\newcommand{\or}{\vee}
-\newcommand{\a}{\alpha}
-\newcommand{\s}{\sigma}
-\newcommand{\t}{\theta}
-\newcommand{\T}{\Theta}
-\newcommand{\D}{\Delta}
-\newcommand{\o}{\omega}
-\newcommand{\O}{\Omega}
-\newcommand{\x}{\xi}
-\newcommand{\z}{\zeta}
-\newcommand{\fa}{\forall}
-\newcommand{\ex}{\exists}
-\newcommand{\X}{\mc{X}}
-\newcommand{\Y}{\mc{Y}}
-\newcommand{\Z}{\mc{Z}}
-\newcommand{\P}{\Psi}
-\newcommand{\y}{\psi}
-\newcommand{\p}{\phi}
-\newcommand{\l}{\lambda}
-\newcommand{\B}{\mb{B}}
-\newcommand{\m}{\times}
-\newcommand{\E}{\mb{E}}
-\newcommand{\H}{\mb{H}}
-\newcommand{\I}{\mb{I}}
-\newcommand{\R}{\mb{R}}
-\newcommand{\e}{\varepsilon}
-\newcommand{\set}[1]{\left\{#1\right\}}
-\newcommand{\par}[1]{\left(#1\right)}
-\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
-\newcommand{\inv}[1]{{#1}^{-1}}
-\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
-\newcommand{\dom}[2]{#1_{\mid #2}}
-\newcommand{\df}{\overset{\mathrm{def}}{=}}
-\newcommand{\M}{\mc{M}}
-\newcommand{\up}[1]{^{(#1)}}
-$$
-I wrote up these notes in preparation for my guest lecture in Tom Dean&rsquo;s Stanford course, CS379C: Computational Models of the Neocortex.
-Selected papers
- Towards Modular Algorithm Induction (Abolafia et al.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/machine-learning/">machine learning</a></p></li></ul><div class="pagination">
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a></p></li></ul><div class="pagination">
     <ul><li><a class="active" href="https://danabo.github.io/blog/posts/">1</a></li><li><a class="" href="https://danabo.github.io/blog/posts/page/2/">2</a></li></ul>
 </div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
