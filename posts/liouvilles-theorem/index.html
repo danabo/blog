@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Liouville&#39;s Theorem&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Liouville&#39;s Theorem" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Liouville's Theorem</h1><p class="article date">April 5, 2022</p></section><article class="article markdown-body"><p>Liouville&rsquo;s Theorem states that the size of a state region of any closed system remains constant as the system evolves through time. This has consequences for connections between information and physics.</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\s}{\sigma}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\th}{\theta}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\D}{\Delta}<br>
+\newcommand{\d}{\delta}<br>
+\newcommand{\dd}{\text{d}}<br>
+\newcommand{\pd}{\partial}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\G}{\Gamma}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\m}{\times}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\H}{\mc{H}}<br>
+\newcommand{\L}{\mc{L}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\tup}[1]{\left(#1\right)}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\btup}[1]{\left[#1\right]}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\dom}[2]{#1_{\mid #2}}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\up}[1]{^{(#1)}}<br>
+\newcommand{\restr}[1]{_{\mid{#1}}}<br>
+\newcommand{\dt}{{\D t}}<br>
+\newcommand{\Dt}{{\D t}}<br>
+\newcommand{\ddT}{{\delta T}}<br>
+\newcommand{\Mid}{\,\middle|\,}<br>
+\newcommand{\qed}{\ \ \blacksquare}<br>
+\newcommand{\diff}[2]{\frac{\dd #1}{\dd #2}}<br>
+\newcommand{\diffop}[1]{\frac{\dd}{\dd #1}}<br>
+\newcommand{\pdiff}[2]{\frac{\pd #1}{\pd #2}}<br>
+\newcommand{\pdiffop}[1]{\frac{\pd}{\pd #1}}<br>
+\newcommand{\evalat}[1]{\left. #1 \right|}<br>
+$$</p>
+<p>$\newcommand{\r}{\rho}$</p>
+<h1 id="preliminaries">Preliminaries</h1>
+<h2 id="hamiltonian-mechanics">Hamiltonian Mechanics</h2>
+<p>(I also briefly described Hamiltonian mechanics in <a href="https://danabo.github.io/blog/posts/the-reversibility-problem/#setup">The Reversibility Problem#setup</a>.)</p>
+<p>Let the state of some system be described by a real-valued tuple $\o  = (\o_1,\o_2,\dots,\o_{2n}) = (q_1, q_n, p_1, p_n) \in \O$, where $\O$ is the system&rsquo;s state space (set of all valid states) which is typically called its <a href="https://en.wikipedia.org/wiki/Phase_space"target="_blank">phase space</a>. We distinguish between the $q_i$ and $p_i$ coordinates. The subspace consisting of the tuples $(q_1,\dots,q_n)$ called <a href="https://en.wikipedia.org/wiki/Configuration_space_%28physics%29"target="_blank">configuration space</a>. For each $q_i$ there is a corresponding <a href="https://en.wikipedia.org/wiki/Phase_space#Conjugate_momenta"target="_blank">conjugate momentum</a> $p_i$. The $q_i$ are not called positions, but rather, configuration or <a href="https://en.wikipedia.org/wiki/Generalized_coordinates"target="_blank">generalized coordinates</a>, since they can represent arbitrary internal degrees of freedom of a system, such as distance between parts, their orientations in space, etc. The relationship between the pairs $(q_i,p_i)$ is determined by the Hamiltonian of the system, which I&rsquo;ll get to in a moment.</p>
+<p>In Cartesian coordinates where $q_i$ represents a position in space, we get the usual definition of momentum, $p_i = m_i\diffop{t}q_i$, but this need not be the case in general. For example, if $q_i$ is an angle of rotation then its conjugate momentum $p_i$ is an <a href="https://en.wikipedia.org/wiki/Angular_momentum"target="_blank">angular momentum</a> which has a different relationship with $q_i$.</p>
+<p>For our purposes, a <a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics#Phase_space_coordinates_%28p,q%29_and_Hamiltonian_H"target="_blank">Hamiltonian</a> is a function $H : \O\times\R \to \R$ mapping phase space coordinates and time to a real number which we will take to be the total energy of the system in question. So $H(\vec{q},\vec{p},t)$ is the total energy of the system when it is in state $(\vec{q},\vec{p})$ at time $t$. If $H$ is constant through time, i.e. $H(\vec{q},\vec{p},t)=H(\vec{q},\vec{p},t')$ for all $(\vec{q},\vec{p})\in\O$ and $t,t' \in \R$, then we call $H$ time-independent and drop the time input, i.e. we can just write $H(\vec{q},\vec{p})$. Otherwise, we call $H$ time-dependent. Time-independent systems satisfy <a href="https://en.wikipedia.org/wiki/Time_translation_symmetry"target="_blank">time-translational invariance</a>, i.e. time-shifting the system does not alter its dynamics.</p>
+<p>The Hamiltonian $H$ contains all the information we need to derive equations of motion of the system, which are explicit functions from time to phase state of the system $\s : \R \to \O$ which I call trajectories. So $\s(t)$ gives the state of an instance of the system at time $t$ following the trajectory $\s$.</p>
+<p>We can derive these trajectories directly from $H$ using <a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics#From_Euler-Lagrange_equation_to_Hamilton%27s_equations"target="_blank">Hamilton&rsquo;s equations</a>:</p>
+<p>$$<br>
+\diff{q_i}{t}=\pdiff{H}{p_i},\qquad \diff{p_i}{t}=-\pdiff{H}{q_i}\,.<br>
+$$</p>
+<p>These two equations are the only way $q_i$ and $p_i$ are distinguished mathematically. The possible trajectories of the system are all the solutions to this system of partial differential equations.</p>
+<p>The above math conflates coordinates $\vec{q},\vec{p}$ as free variables with trajectories $\s : \R\to\O$ which are functions from time to phase space. That is to say, the DiffEQs above take $\vec{q}(t),\vec{p}(t)$ to be functions of time, but the same $\vec{q},\vec{p}$ are also used as free coordinate variables in other contexts. So in instances where it is helpful to be more precise, we can rewrite Hamilton&rsquo;s equations in terms of trajectories.</p>
+<p>But first we need some notation. If $\s$ is a trajectory with $\s(t) = (\vec{q}\up{t},\vec{p}\up{t})=(q_1\up{t},\dots,q_n\up{t},p_1\up{t},\dots,p_n\up{t})$ being the state of the system along that trajectory at time $t$, then let $\s_\vec{q}(t) = \vec{q}\up{t}$ and $\s_\vec{p}(t) = \vec{p}\up{t}$ be the sub-dimensions of the output of $\s(t)$ corresponding to the configuration and conjugate momenta coordinates respectively. Furthermore, let $\s_{q_i}(t)=q_i\up{t}$ and $\s_{p_i}(t)=p_i\up{t}$ select specific configuration and momentum coordinates on the output of $\s(t)$.</p>
+<p>Let $\Sigma$ be the set of all trajectories $\s$ s.t.</p>
+<p>$$<br>
+\evalat{\diff{\s_{q_i}}{t}}_{t=\hat{t}} = \evalat{\pdiff{H}{p_i}}_{(\vec{q},\vec{p})=\s(t),\ t=\hat{t}} \quad\textrm{and}\quad  \evalat{\diff{\s_{p_i}}{t}}_{t=\hat{t}} = \evalat{-\pdiff{H}{q_i}}_{(\vec{q},\vec{p})=\s(t),\ t=\hat{t}}<br>
+$$</p>
+<p>for all $i=1,\dots,n$ and for all $\hat{t}\in\R$. Then $\Sigma$ is the set of all solutions to Hamilton&rsquo;s equations, which I call the set of valid trajectories w.r.t. $H$.</p>
+<p>It is useful to work explicitly in terms of functions that map states between times, called propagators. Let $\t_{t\to t'} : \O\to\O$ be a propagator mapping states at time $t$ to states at time $t'$ (if $t'&lt;t$ then we are propagating state backwards in time). We can define the behavior of the propagator in terms of the valid trajectories of $H$:</p>
+<p>$$<br>
+\t_{t\to t'}(\s(t)) = \s(t')<br>
+$$</p>
+<p>for all $\s \in \Sigma$ and all $t,t' \in \R$.</p>
+<p>Note that propagators are bijections where $\t^{-1}_{t\to \t'} = \t_{t' \to t}$.</p>
+<p>If $H$ is time-independent, then we can just specify propagators in terms of their delta time, where $\t_\Dt(\s(t))=\s(t+\Dt)$ for all $t,\Dt \in\R$.</p>
+<h2 id="measure">Measure</h2>
+<p>Liouville&rsquo;s theorem is a statement about measures on phase space which obey Hamilton&rsquo;s equations. Let&rsquo;s make all that precise.</p>
+<p>Briefly, a <a href="https://en.wikipedia.org/wiki/Measure_%28mathematics%29"target="_blank">measure</a> $\mu$ is a function from subsets of $\O$ to non-negative real numbers which is only defined on certain so-called measurable subset (as a <a href="https://en.wikipedia.org/wiki/Partial_function"target="_blank">partial function</a> $\mu$ has the type signature $\mu:2^\O \to \R_{\geq 0}$). We assume that $\O$ is a <a href="https://en.wikipedia.org/wiki/Measurable_space"target="_blank">measurable space</a>. For a primer on measure theory, see my <a href="http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory"target="_blank">post on probability theory</a>.</p>
+<p>Throughout this post we suppose we are given a measure $\mu$ on phase space $\O$. Everything that follows does not assume any particular interpretation to the meaning of $\mu$. Normalized measures can typically represent an i.i.d. stochastic drawing of the state of the system (i.e. frequentist interpretation), or the modeler&rsquo;s (you and I) state of belief about the system&rsquo;s state (called the Bayesian interpretation). I tend to think of these measures as simply providing a way to quantify the sizes (e.g. areas, volumes) of phase space regions (subsets of phase space). See <a href="https://danabo.github.io/blog/posts/bayesian-information-theory/">Bayesian information theory</a> and <a href="https://danabo.github.io/blog/posts/physical-information/">Physical Information</a> for details on this interpretation. That means that I don&rsquo;t assume $\mu$ is normalized, i.e. $\mu(\O)=1$, which is required for $\mu$ to be a probability measure.</p>
+<p>To talk about time-evolving a measure, we need to assign a measure $\mu_t$ to every moment of time $t\in\R$. Let $R \subseteq \O$ be any measurable subset of phase space $\O$, which I will henceforth simply refer to as a region, or phase region.</p>
+<p>We require that<br>
+$$<br>
+\mu_{t}(R) = \mu_{t'}(\t_{t \to t'}(R))\,,<br>
+$$</p>
+<p>for all regions $R$ and all $t,t' \in \R$.</p>
+<p>Note that everything described here is deterministic time-evolution. That is to say, if the measure $\mu_t$ at time $t$ represents uncertainty (Bayesian) or randomness (frequentist) due to the choice of the state of the system at time $t$, then every state before and after is uniquely determined by that choice. This is in contrast to stochastic time-evolution, which destroys information that states of the system share about each other across time, and involves a different sort of time-evolution of measure.</p>
+<p>Note that putting a measure on state space at some time $t$, and then deterministically time-evolving that measure according to the propagators $\t_{t\to t'}$, is equivalent to putting a measure on the valid trajectories in $\Sigma$. So an equivalent formulation would be to define $\Sigma$ as a measurable space and put a measure $M$ on $\Sigma$. This is equivalent to time-evolving measures on $\O$ as described. See <a href="https://danabo.github.io/blog/posts/causality-for-physics/#incorporating-probability">Causality For Physics#incorporating-probability</a> for details.</p>
+<p>Given that $\mu_t$ is time-evolved in this way, Liouville&rsquo;s Theorem makes a statement about how density behaves over time, given that the system is closed and conserves energy (according to its given Hamiltonian). It is easier to state the theorem in terms of density functions rather than measures. Though density functions may not exist for any measure on any measurable space, we can assume they do for phase spaces that represent Hamiltonian systems. In that case we can define the conversion between measure and density.</p>
+<p>Supposing $\O$ is an $N$-dimensional parametrized measurable space (for our purposes $N=2n$) where differentiation and integration is well defined (basically always the case for physical systems) with a measure $\mu_t$. Then the corresponding density function $\r:\O\times\R \to \R$ satisfies</p>
+<p>$$<br>
+\mu_t(R) = \int_R \r(\vec{\o},t)\ \dd{\o_1}\dots\dd{\o_{N}}\,,<br>
+$$</p>
+<p>for all regions $R$ and times $t\in\R$. We can <a href="https://en.wikipedia.org/wiki/Probability_density_function#Densities_associated_with_multiple_variables"target="_blank">explicitly derive the density</a> in terms of measure $\mu_t$ as</p>
+<p>$$\r(\o, t) = \frac{\dd^{N}}{\dd \o_1\dots \dd \o_{N}}\mu_t\big(\G(\o_1,\dots,\o_{N})\big)\,,$$</p>
+<p>where $\G(\o_1,\dots,\o_{N}) = \prod_{i=1}^{N}(-\infty,\o_i]$ is a hyper-quadrant with origin at $(\o_1,\dots,\o_{N})$.</p>
+<h1 id="statement-of-the-theorem">Statement Of The Theorem</h1>
+<p>As outlined above, suppose we have a system described by <a href="https://en.wikipedia.org/wiki/Canonical_coordinates"target="_blank">canonical coordinates</a> $\vec{\o}=(\vec{q},\vec{p})=(q_1,\dots,q_n,p_1,\dots,p_n)$ and a <a href="https://en.wikipedia.org/wiki/Hamiltonian_mechanics"target="_blank">Hamiltonian</a> $H$. Also suppose we are given some density function $\r(\vec{q},\vec{p},t)$, a function of coordinates and time, which obeys the time-evolution induced by $\H$ (as explained above in <a href="#measure">#Measure</a>). That is to say, the density must satisfy $\int_R \r(\vec{\o}, t)\ \dd^{2n}{\vec{\o}}=\int_{R'} \r(\vec{\o}, t')\ \dd^{2n}{\vec{\o}}$ for all regions $R$ and times $t,t'$, where $R'={\t_{t\to t'}(R)}$ and $\t_{t\to t'}$ is the propagator induced by $H$ mapping time $t$ to time $t'$.</p>
+<p>If the system is isolated and has constant total energy (obeys conservation of energy), then <a href="https://en.wikipedia.org/wiki/Liouville%27s_theorem_%28Hamiltonian%29#Liouville_equations"target="_blank">Liouville&rsquo;s Theorem states</a></p>
+<p>$$<br>
+\diff{\r}{t} = 0\,.<br>
+$$</p>
+<p>We have to be careful here.  It might look like we are stating that $\r$ is constant through time, but that&rsquo;s actually not what that means. We must make the important distinction between the partial derivative $\pdiff{\r}{t}$ which gives the change in $\r$ through time at some fixed point in phase space, and the single-variable derivative $\diff{\r}{t}$, which treats $\r$ as a single-variable function - specifically, $\r$ along some parametric curve $(\vec{q}(t),\vec{p}(t),t)$, i.e. $\r(t) = \r(\vec{q}(t),\vec{p}(t),t)$. This allows us to expand out the single-variable derivative using the multi-variate chain rule, thus rewriting Liouville&rsquo;s theorem like this:</p>
+<p>$$<br>
+\diffop{t}\r(\vec{q}(t),\vec{p}(t),t) = \sum_{i=1}^n \pdiff{\r}{q_i}\diff{q_i}{t} + \sum_{i=1}^n \pdiff{\r}{p_i}\diff{p_i}{t} + \pdiff{\r}{t} = 0\,,<br>
+$$</p>
+<p>where all derivatives are evaluated at the point $(\vec{q}(t),\vec{p}(t),t)$ for some chosen time $t$.</p>
+<p>We further assume this parametric curve $(\vec{q}(t),\vec{p}(t),t)$ satisfies Hamilton&rsquo;s equations, i.e. $(\vec{q}(t),\vec{p}(t))=\sigma(t)$ for all $t$, for some valid trajectory $\s\in\Sigma$. Then we can plugin and rewrite Liouville&rsquo;s theorem as</p>
+<p>$$<br>
+\diff{\r}{t} = \pdiff{\r}{t} + \sum_{i=1}^n \tup{\pdiff{\r}{q_i}\pdiff{H}{p_i} - \pdiff{\r}{p_i}\pdiff{H}{q_i}} = 0\,,<br>
+$$</p>
+<p>making implicit dependence on the valid trajectories of the system and explicit dependence on the given Hamiltonian $H$.</p>
+<p>We could also rewrite Liouville&rsquo;s theorem using our trajectory notation from above:</p>
+<p>$$<br>
+\evalat{\diff{\r}{t}}_{(\vec{q},\vec{p})=\s(\hat{t}),t=\hat{t}} = \evalat{\btup{\sum_{i=1}^n \pdiff{\r}{q_i}\diff{\s_{q_i}}{t} + \sum_{i=1}^n \pdiff{\r}{p_i}\diff{\s_{p_i}}{t} + \pdiff{\r}{t}} }_{(\vec{q},\vec{p})=\s(\hat{t}),t=\hat{t}} = 0<br>
+$$</p>
+<p>holds for all valid trajectories $\s\in\Sigma$ and all times $\hat{t}$.</p>
+<h3 id="intuition-pump">Intuition Pump</h3>
+<p>Let&rsquo;s look at a fairly typical class of Hamiltonians: $H = \sum_{i=1}^n \frac{1}{2m_i}p_i^2 + U(q)$. This is just the standard form of a time-independent Hamiltonian of a system in the presence of some constant potential field $U$, where $m_i$ is the mass of the $i$-th coordinate. Then Hamilton&rsquo;s equations tell us</p>
+<p>$$<br>
+\diff{q_i}{t} = \pdiff{H}{p_i} = \frac{p_i}{m_i}\,,\qquad \diff{p_i}{t} = -\pdiff{H}{q_i} = -\pdiff{U}{q_i}<br>
+$$</p>
+<p>where the first equation relates coordinates $q_i$ to conjugate momenta $p_i$ in the obvious way (i.e. $p_i =  \diffop{t}(m_iq_i)$ is taken as the definition of momentum in Newtonian physics), and the second equation states that the time derivative of momentum (in the $i$-th direction) is the negative coordinate derivative of the <a href="https://en.wikipedia.org/wiki/Force#Potential_energy"target="_blank">potential field</a> $U$ which gives the force along the $i$-th direction, i.e. $\diff{p_i}{t} = -\pdiff{U}{q_i}$ is just a restatement of Newton&rsquo;s second law, i.e. change in momentum is due to a force generated by a <a href="http://hyperphysics.phy-astr.gsu.edu/hbase/pegrav.html"target="_blank">change in potential energy</a>.</p>
+<p>Plugging in, Liouville&rsquo;s theorem then becomes</p>
+<p>$$<br>
+\diff{\r}{t} = \pdiff{\r}{t} + \sum_{i=1}^n \tup{\pdiff{\r}{q_i}\frac{p_i}{m_i} - \pdiff{\r}{p_i}\pdiff{U}{q_i}} = 0\,.<br>
+$$</p>
+<h2 id="uniform-measure">Uniform Measure</h2>
+<p>It may at a glance look like Liouville is just restating our starting definition for how density gets time-evolved. That is to say, we took as given that $\int_R \r(\vec{\o}, t)\ \dd^{2n}{\vec{\o}}=\int_{R'} \r(\vec{\o}, t')\ \dd^{2n}{\vec{\o}}$, or equivalently $\mu_t(R) = \mu_{t'}(R')$, which is stating that the measure of region $R$ is preserved when it is transformed to $R'= \t_{t\to t'}(R)$, because we transform the measure/density along with it. However, this statement tells us nothing about how $\r$ will change as individual states are time-evolved, i.e. how $\r(\s(t),t)$ will differ from $\r(\s(t'),t')$ along a given trajectory $\s$. The Liouville statement $\diff{\r}{t}=0$ is telling us that density is constant along valid trajectories, i.e. $\r(\s(t),t)=\r(\s(t'),t')$ for all $t,t' \in \R$, for all valid $\s\in\Sigma$ (hence we could instead just assign time-independent density to the trajectories themselves, i.e. make $\r$ a function on $\Sigma$).</p>
+<p>A common colloquial understanding is that Liouville&rsquo;s theorem states that the size of phase regions remains visually constant through time, where a Euclidean, i.e. uniform, measure on phase space is implied. This is indeed a very useful consequence of Liouville.</p>
+<p>Formally, a uniform measure is derived from a constant density function, i.e. $\r(\vec{\o},t) = \r(\vec{\o}',t)$ for any two $\vec{\o},\vec{\o}' \in \O$. Suppose $\r$ is uniform with $\r(\vec{\o},t_0)=\r_0$ at time $t_0$. Since by Liouville $\r(\s(t),t)=\r(\s(t'),t')$ for all times $t,t'\in\R$, then $\r(\s(t),t)=\r(\s(t_0),t_0)=\r_0$ holds for all valid trajectories $\s\in\Sigma$ for all times $t$. Thus $\r(\vec{\o},t)=\r_0$ is uniform at all times $t$, since there will be some trajectory passing through any $\vec{\o}\in\O$. We conclude that $\r = \r_0$ is constant in phase space and time when time-evolved.</p>
+<p>Preservation of phase volume under a measure/density which is constant through time is an interesting result of Liouville.</p>
+<h1 id="coordinate-agnostic-ignorance">Coordinate Agnostic Ignorance</h1>
+<p>Liouville&rsquo;s theorem is actually a special case of a more general phenomenon (the generalized Liouville theorem), and one of the usual proofs given for Liouville is actually a proof for the more general case. Rather than just time-evolution preserving density, the stronger result states that a certain class of coordinate transformations preserves density. Viewing time-evolution as such a coordinate transformation from time $t$ to new coordinates describing time $t'$, we see that Liouville becomes a special case.</p>
+<p>This more general form of Liouville is relevant to my interest in the relationship between information and thermodynamic entropy. Specifically, it allows us to bypass the <a href="https://en.wikipedia.org/wiki/Bertrand_paradox_%28probability%29"target="_blank">Bertrand paradox</a> and have a unique maximally ignorance way to quantify information. The Boltzmann formulation of entropy utilizes this same quantification (?)</p>
+<h2 id="canonical-coordinates">Canonical Coordinates</h2>
+<p>Some references that I found useful for this topic:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Canonical_transformation"target="_blank">Wikipedia: Canonical transformation</a></li>
+<li><a href="http://www.scielo.org.mx/pdf/rmfe/v57n2/v57n2a4.pdf"target="_blank">The generating function of a canonical transformation</a></li>
+<li><a href="https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Variational_Principles_in_Classical_Mechanics_%28Cline%29/15%3A_Advanced_Hamiltonian_Mechanics/15.03%3A_Canonical_Transformations_in_Hamiltonian_Mechanics"target="_blank">Canonical Transformations in Hamiltonian Mechanics</a></li>
+<li><a href="https://www.pearson.com/us/higher-education/program/Goldstein-Classical-Mechanics-3rd-Edition/PGM170105.html"target="_blank">Goldstein, Poole &amp; Safko, Classical Mechanics 3rd ed.</a>, section 9.4</li>
+<li><a href="https://www.elsevier.com/books/mechanics/landau/978-0-08-050347-9"target="_blank">Landau &amp; Lifshitz, Mechanics - Volume 1, 3rd ed.</a>
+<ul>
+<li>A good summary <a href="https://galileoandeinstein.phys.virginia.edu/7010/CM_10_Canonical_Transformations.html"target="_blank">here</a> and <a href="https://galileoandeinstein.phys.virginia.edu/7010/CM_11_Introduction_to_Liouville.html"target="_blank">here</a>)</li>
+</ul>
+</li>
+<li><a href="https://nononsensebooks.com/cm/"target="_blank">No-Nonsense Classical Mechanics</a>, section 7.3.2.</li>
+</ul>
+<p>In particular this discussion takes inspiration from the derivations in section 7.3.1 of <a href="https://nononsensebooks.com/cm/"target="_blank">No-Nonsense Classical Mechanics</a>.</p>
+<p>Consider a time-independent coordinate transformation specified by a set of bijective functions $Q_i(\vec{q},\vec{p})$ and $P_i(\vec{q},\vec{p})$ for $i=1,\dots,n$, where $\vec{q} = (q_1,\dots,q_n)$ and $\vec{p}=(p_1,\dots,p_n)$, written more compactly as vector-valued function $\vec{Q}(\vec{q},\vec{p})$ and $\vec{P}(\vec{q},\vec{p})$. Notice that we are allowing intermingling of position and momentum coordinates. For example, we could swap position and momentum where $Q_i = p_i$ and $P_i=-q_i$ for all $i$.</p>
+<p>Our Hamiltonian $H(\vec{q},\vec{p}, t)$ is a function of the original coordinates and time (a time-dependent Hamiltonian). We obtain the Hamiltonian in the new coordinate system by plugging in the inverse mappings: $\tilde{H}(\vec{Q},\vec{P},t) = H(\vec{q}(\vec{Q},\vec{P}),\vec{p}(\vec{Q},\vec{P}),t)$, where $\tilde{H}$ is a function of the new coordinates $(\vec{Q},\vec{P})$ and time.</p>
+<p>Note that I am only considering time-independent coordinate transformations. Canonical transformations are allowed to be time-dependent, where $\vec{Q}(\vec{q},\vec{p},t)$ and $\vec{P}(\vec{q},\vec{p},t)$ are functions of time as well. However this is more complex to deal with, especially since the Hamiltonian $\tilde{H}$ derived by naively plugging in the coordinate transformation may not be the valid Hamiltonian for the system in the transformed coordinates. <a href="https://en.wikipedia.org/wiki/Generating_function_%28physics%29"target="_blank">Generating functions</a> are needed to deal with time-dependent transformations which I won&rsquo;t get into here. Many of the sources I listed above explain them in detail. So for this post assume time-independent coordinate transformations.</p>
+<p>A <strong>canonical</strong> coordinate transformation is defined as a transformation that preserves Hamilton&rsquo;s equations, i.e.</p>
+<p>$$\diff{Q_i}{t}=\pdiff{\tilde{H}}{P_i}\,,\qquad \diff{P_i}{t}=-\pdiff{\tilde{H}}{Q_i}$$</p>
+<p>holds in the new coordinate system.  To be more precise, given the set of valid trajectories $\Sigma$ in coordinates $\vec{q},\vec{p}$, we want the transformed trajectories to also obey Hamilton&rsquo;s equations. For $\s\in\Sigma$, let $\tilde{\s}(t) = \vtup{\vec{Q},\vec{P}}(\s(t))$, which is a shorthand for the pair of relationships: $\tilde{\s}_{\vec{Q}}(t)=\vec{Q}(\s(t))$ and $\tilde{\s}_{\vec{P}}(t)=\vec{P}(\s(t))$. Let $\tilde{\Sigma} = \vtup{\vec{Q},\vec{P}}(\Sigma)$ be the set of all transformed trajectories in $\Sigma$. Then the coordinate transform is canonical iff</p>
+<p>$$<br>
+\evalat{\diff{\tilde{\s}_{Q_i}}{t}}_{t=\hat{t}} = \evalat{\pdiff{\tilde{H}}{P_i}}_{(\vec{Q},\vec{P})=\tilde{\s}(t),\ t=\hat{t}} \quad\textrm{and}\quad  \evalat{\diff{\tilde{\s}_{P_i}}{t}}_{t=\hat{t}} = \evalat{-\pdiff{\tilde{H}}{Q_i}}_{(\vec{Q},\vec{P})=\tilde{\s}(t),\ t=\hat{t}}<br>
+$$</p>
+<p>for all $\tilde{\s} \in \tilde{\Sigma}$, all $i=1,\dots,n$ and all $\hat{t}\in\R$.</p>
+<p>A coordinate system is canonical if Hamilton&rsquo;s equations hold in that coordinate system, and a canonical transformation applied to canonical coordinates produces canonical coordinates.</p>
+<p>For some intuition pumps, see <a href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/#example-2d-phase-space">Liouville Supplimental - Coordinate Transformations#example-2d-phase-space</a> and <a href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/#example-non-canonical">Liouville Supplimental - Coordinate Transformations#example-non-canonical</a></p>
+<h2 id="measure-preservation">Measure Preservation</h2>
+<p>Here we prove that coordinate transformations which preserve Hamilton&rsquo;s equations (i.e. canonical transformations) have a constant Jacobian equal to 1, implying that density is preserved under these transformations.</p>
+<p>References:</p>
+<ul>
+<li><a href="https://www.pearson.com/us/higher-education/program/Goldstein-Classical-Mechanics-3rd-Edition/PGM170105.html"target="_blank">Goldstein, Poole &amp; Safko, Classical Mechanics 3rd ed.</a> section 9.4</li>
+<li><a href="https://en.wikipedia.org/wiki/Canonical_transformation#Liouville's_theorem">https://en.wikipedia.org/wiki/Canonical_transformation#Liouville's_theorem</a></li>
+</ul>
+<p>Remember that $\vec{Q}$ is a function of $(\vec{q},\vec{p})$. Using chain rule, we have</p>
+<p>$$\begin{aligned}<br>
+\diffop{t}Q_i<br>
+&amp;= \sum_{j=1}^n \btup{\pdiff{Q_i}{q_j}\diff{q_j}{t}+\pdiff{Q_i}{p_j}\diff{p_j}{t}} \\<br>
+&amp;= \sum_{j=1}^n \btup{\pdiff{Q_i}{q_j}\pdiff{H}{p_j}-\pdiff{Q_i}{p_j}\pdiff{H}{q_j}}\,.<br>
+\end{aligned}$$</p>
+<p>Using $\tilde{H}(\vec{Q},\vec{P})=H(\vec{q}(\vec{Q},\vec{P}),\vec{p}(\vec{Q},\vec{P}))$, we have</p>
+<p>$$<br>
+\pdiff{\tilde{H}}{P_i} = \sum_{j=1}^n\btup{\pdiff{H}{q_j}\pdiff{q_j}{P_i} + \pdiff{H}{p_j}\pdiff{p_j}{P_i}}\,.<br>
+$$</p>
+<p>We want to satisfy</p>
+<p>$$\begin{aligned}<br>
+\diff{Q_i}{t} &amp;= \pdiff{\tilde{H}}{P_i}<br>
+\\<br>
+\implies \sum_{j=1}^n \btup{\pdiff{H}{q_j}\tup{-\pdiff{Q_i}{p_j}}+\pdiff{H}{p_j}\pdiff{Q_i}{q_j}} &amp;= \sum_{j=1}^n\btup{\pdiff{H}{q_j}\pdiff{q_j}{P_i} + \pdiff{H}{p_j}\pdiff{p_j}{P_i}}\,,<br>
+\end{aligned}$$</p>
+<p>giving us a the constraints</p>
+<p>$$<br>
+\pdiff{Q_i}{q_j} = \pdiff{p_j}{P_i}\,,\qquad \pdiff{Q_i}{p_j} = -\pdiff{q_j}{P_i}<br>
+$$</p>
+<p>for all $i=1,\dots,n$.</p>
+<p>The determinant <a href="https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant"target="_blank">Jacobian</a> of our transformation $\tup{\vec{Q}(\vec{q},\vec{p}),\vec{P}(\vec{q},\vec{p})}$ determines the relationship between our density $\r(\vec{q},\vec{p},t)$ and the transformed density $\tilde{\r}(\vec{Q},\vec{P},t)=\pdiff{(\vec{Q},\vec{P})}{(\vec{q},\vec{p})}\r\tup{\vec{q}(\vec{Q},\vec{P}),\vec{p}(\vec{Q},\vec{P}),t)}$, where</p>
+<p>$$<br>
+\pdiff{(\vec{Q},\vec{P})}{(\vec{q},\vec{p})} \df \det\begin{bmatrix}\pdiff{Q_1}{q_1} &amp; \dots &amp; \pdiff{Q_1}{p_n} \\ \vdots &amp; \ddots &amp; \vdots \\ \pdiff{P_n}{q_1} &amp; \dots &amp; \pdiff{P_n}{p_n}\end{bmatrix}<br>
+$$</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Chain_rule#General_rule"target="_blank">multivariate chain rule</a> tells us<br>
+$$\begin{aligned}<br>
+\pdiff{(\vec{Q},\vec{P})}{(\vec{q},\vec{p})} &amp;= \pdiff{(\vec{Q},\vec{P})}{(\vec{q},\vec{P})} \pdiff{(\vec{q},\vec{P})}{(\vec{q},\vec{p})} \\<br>
+&amp;= \left. \pdiff{(\vec{Q},\vec{P})}{(\vec{q},\vec{P})}  \middle/ \pdiff{(\vec{q},\vec{p})}{(\vec{q},\vec{P})} \right. \\<br>
+&amp;= \left. \pdiff{(\vec{Q})}{(\vec{q})}  \middle/ \pdiff{(\vec{p})}{(\vec{P})} \right.<br>
+\end{aligned}$$</p>
+<p>The middle step uses the fact that the Jacobian of the inverse of a transformation is the inverse of the Jacobian matrix, whose determinant is the reciprocal of the original determinant. The last step makes use of the cancellation of same variables.</p>
+<p>Plugging in our constraints, we have</p>
+<p>$$\begin{aligned}<br>
+\pdiff{(\vec{Q})}{(\vec{q})}<br>
+&amp;= \det\begin{bmatrix}\pdiff{Q_1}{q_1} &amp; \dots &amp; \pdiff{Q_1}{q_n} \\ \vdots &amp; \ddots &amp; \vdots \\ \pdiff{Q_n}{q_1} &amp; \dots &amp; \pdiff{Q_n}{q_n}\end{bmatrix} \\<br>
+&amp;= \det\begin{bmatrix}\pdiff{p_1}{P_1} &amp; \dots &amp; \pdiff{p_1}{P_n} \\ \vdots &amp; \ddots &amp; \vdots \\ \pdiff{p_n}{P_1} &amp; \dots &amp; \pdiff{p_n}{P_n}\end{bmatrix} \\<br>
+&amp;= \pdiff{(\vec{p})}{(\vec{P})}<br>
+\end{aligned}$$</p>
+<p>and so $\left. \pdiff{(\vec{Q})}{(\vec{q})}  \middle/ \pdiff{(\vec{p})}{(\vec{P})} \right. = 1$. Thus $\pdiff{(\vec{Q},\vec{P})}{(\vec{q},\vec{p})}= 1$.</p>
+<p>Let $T$ be a canonical coordinate transformation on $\O$. Then $\pdiff{(T(\vec{\o}))}{(\vec{\o})}=1$. By the change of variable rule,</p>
+<p>$$\begin{aligned}<br>
+\int_R \r(\vec{\o},t)\ \dd^{2n} \vec{\o} &amp;= \int_{T(R)} \pdiff{(T(\vec{\o}))}{(\vec{\o})}\r\tup{T^{-1}\tup{\vec{z}},t}\ \dd^{2n} \vec{z} \\&amp;= \int_{T(R)} \r\tup{T^{-1}\tup{\vec{z}},t}\ \dd^{2n} \vec{z}\,,<br>
+\end{aligned}$$</p>
+<p>and so naively applying the coordinate change to $\r$ s.t. $\tilde{\r}(\vec{z},t)=\r\tup{T^{-1}\tup{\vec{z}},t}$ gives us the correct density in the transformed coordinates. If $\r=\r_0$, then $\tilde{\r}=\r_0$, and so the uniform density is preserved under the transformation.</p>
+<h3 id="liouvilles-theorem">Liouville&rsquo;s theorem</h3>
+<p>Liouville&rsquo;s theorem is a special case of the above result. Time-evolution ends up being a canonical transformation, so long as energy is conserved in the system (i.e. the Hamiltonian is constant along every trajectory). Thus density is preserved through time-evolution, i.e. density is constant along a given trajectory. That is Liouville&rsquo;s theorem.</p>
+<p>There is a simple argument for why time-evolution is a canonical transformation. Since, for a valid physical model, we take as given that Hamilton&rsquo;s equations are obeyed at all times and phase coordinates, then transforming the system through time preserves Hamilton&rsquo;s equations, making that transformation canonical (by definition). This argument may seem a bit handwavy. There are formal proofs for this which go a bit out of scope of this post. However, I can outline a straightforward proof sketch.</p>
+<p>Note that, unlike the canonical transformations we considered above, time-evolution is a not universally canonical transformation (canonical w.r.t. all Hamiltonians). One Hamiltonian&rsquo;s time-evolution generally does not produce transformations that are canonical w.r.t. all Hamiltonians. So these time-translation transformations are examples of Hamiltonian-specific canonical transformations. See <a href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/#example-hamiltonian-specific">Liouville Supplimental - Coordinate Transformations#example-hamiltonian-specific</a>.</p>
+<p>Suppose we are given a time-independent Hamiltonian $H(\vec{q},\vec{p})$ which induces propagators $\t_{\Dt}$ for $\Dt\in\R$. As I mentioned earlier, dealing with time-dependent transformations is out of scope of this post, and time-evolution will only be time-independent if the Hamiltonian is.</p>
+<p>Fix a particular $\Dt\in\R$ and define the following coordinate transformation:</p>
+<p>$$\tup{\vec{Q}(\vec{q},\vec{p}),\vec{P}(\vec{q},\vec{p})}=\t_\Dt\tup{\vec{q},\vec{p}}\,,$$</p>
+<p>giving us the inverse transformation,<br>
+$$\tup{\vec{q}(\vec{Q},\vec{P}),\vec{p}(\vec{Q},\vec{P})}=\t_{-\Dt}\tup{\vec{Q},\vec{P}}\,.$$</p>
+<p>Then the transformed Hamiltonian is $\tilde{H}(\vec{Q},\vec{P})=H(\vec{q}(\vec{Q},\vec{P}),\vec{p}(\vec{Q},\vec{P}))$.</p>
+<p>Hamilton&rsquo;s equations in terms of trajectories $\s:\R\to\O$ are</p>
+<p>$$<br>
+\evalat{\diff{\s_{q_i}}{t}}_{t=\hat{t}} = \evalat{\pdiff{H}{p_i}}_{(\vec{q},\vec{p})=\s(t),\ t=\hat{t}} \quad\textrm{and}\quad  \evalat{\diff{\s_{p_i}}{t}}_{t=\hat{t}} = \evalat{-\pdiff{H}{q_i}}_{(\vec{q},\vec{p})=\s(t),\ t=\hat{t}}<br>
+$$</p>
+<p>The set of trajectories $\Sigma$ satisfying this system of partial differential equations constitute the valid trajectories of the system.</p>
+<p>We can write down what the transformed trajectories look like:</p>
+<p>$$\tilde{\s}(\hat{t}) = \vtup{\vec{Q},\vec{P}}(\s(\hat{t})) = \s(\hat{t}+\Dt)$$<br>
+for all $\s \in \Sigma$ and all $\hat{t}\in\R$.</p>
+<p>Then we have</p>
+<p>$$<br>
+\evalat{\diff{\tilde{\s}_{Q_i}}{t}}_{t=\hat{t}} = \evalat{\diff{\s_{q_i}}{t}}_{t=\hat{t}+\Dt} = \evalat{\pdiff{H}{p_i}}_{(\vec{q},\vec{p})=\s(\hat{t}+\Dt)}$$</p>
+<p>$$<br>
+\evalat{\diff{\tilde{\s}_{P_i}}{t}}_{t=\hat{t}} = \evalat{\diff{\s_{p_i}}{t}}_{t=\hat{t}+\Dt} = -\evalat{\pdiff{H}{q_i}}_{(\vec{q},\vec{p})=\s(\hat{t}+\Dt)}$$</p>
+<p>The next step in this proof requires that the Hamiltonian be invariant to time-translation, i.e. $\tilde{H}(\vec{q},\vec{p})=H(\vec{q},\vec{p})$. This ends up being the case for all Hamiltonians that obey conservation of energy, i.e. the Hamiltonian is constant along its valid trajectories, i.e. $H(\s(t))=H(\s(t'))$ for all $\s\in\Sigma$ and $t,t'\in\R$. I won&rsquo;t prove this here, but time-translation symmetry is a well known result in physics.</p>
+<p>Then we complete our proof with</p>
+<p>$$<br>
+\evalat{\pdiff{H}{q_i}}_{(\vec{q},\vec{p})=\s(\hat{t}+\Dt)} = \evalat{\pdiff{\tilde{H}}{q_i}}_{(\vec{q},\vec{p})=\s(\hat{t}+\Dt)} = \evalat{\pdiff{\tilde{H}}{Q_i}}_{(\vec{Q},\vec{P})=\tilde{\s}(\hat{t})}<br>
+$$</p>
+<p>$$<br>
+\evalat{\pdiff{H}{p_i}}_{(\vec{q},\vec{p})=\s(\hat{t}+\Dt)} = \evalat{\pdiff{\tilde{H}}{p_i}}_{(\vec{q},\vec{p})=\s(\hat{t}+\Dt)} = \evalat{\pdiff{\tilde{H}}{P_i}}_{(\vec{Q},\vec{P})=\tilde{\s}(\hat{t})}<br>
+$$</p>
+<p>And so we have Hamilton&rsquo;s equations in the transformed coordinates:</p>
+<p>$$<br>
+\evalat{\diff{\tilde{\s}_{Q_i}}{t}}_{t=\hat{t}} = \evalat{\pdiff{\tilde{H}}{P_i}}_{(\vec{Q},\vec{P})=\tilde{\s}(\hat{t})}\,,\qquad \evalat{\diff{\tilde{\s}_{P_i}}{t}}_{t=\hat{t}} = -\evalat{\pdiff{\tilde{H}}{Q_i}}_{(\vec{Q},\vec{P})=\tilde{\s}(\hat{t})}<br>
+$$</p>
+<h2 id="configuration-space-coordinate-transformations">Configuration Space Coordinate Transformations</h2>
+<p>A surprising result is that phase space measure is preserved under arbitrary change of configuration space coordinates, so long as we choose the right corresponding momentum transformation so that the phase space transformation is canonical.</p>
+<p>See <a href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/#arbitrary-configuration-space-transformations">Liouville Supplimental - Coordinate Transformations#arbitrary-configuration-space-transformations</a>.</p>
+<h2 id="hamiltonian-specific-canonical-transformations">Hamiltonian specific canonical transformations</h2>
+<p>Previously we derived transformations that are canonical for all Hamiltonians. However, there are yet more canonical transformations, specifically those which are specific to a given Hamiltonian.</p>
+<p>See <a href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/#hamiltonian-specific-canonical">Liouville Supplimental - Coordinate Transformations#hamiltonian-specific-canonical</a>.</p>
+<h1 id="entropy-and-the-bertrand-paradox">Entropy And The Bertrand Paradox</h1>
+<p><a href="https://en.wikipedia.org/wiki/Entropy_%28statistical_thermodynamics%29#Boltzmann%27s_principle"target="_blank">Boltzmann entropy</a> is proportional to the log of the size of a phase region. Entropy as such already appears to have an observer-arbitrary aspect to it, since the choice of phase region that describes a system depends on the observer&rsquo;s state of knowledge (or their goals, see <a href="https://danabo.github.io/blog/posts/the-reversibility-problem/#the-interpretation-of-state-regions">The Reversibility Problem#the-interpretation-of-state-regions</a>). The observer-arbitrariness of entropy is only compounded further if the choice of measure, for measuring sizes of phase regions, is also unconstrained and arbitrarily chosen. Luckily, canonical coordinates get us out of the latter conundrum.</p>
+<p>It would make sense to follow the <a href="https://en.wikipedia.org/wiki/Principle_of_indifference#Application_to_continuous_variables"target="_blank">principle of indifference</a> and always require a uniform measure on phase space. However, uniformity of measure depends on our chosen coordinate system. This problem can be viewed as a generalization of the <a href="https://en.wikipedia.org/wiki/Bertrand_paradox_%28probability%29"target="_blank">Bertrand paradox</a>. See <a href="https://danabo.github.io/blog/posts/liouville-supplimental-bertrand-paradox/">Liouville Supplimental - Bertrand Paradox</a>. This poses a problem since physics is coordinate system agnostic - there is no preferred coordinate system.</p>
+<p>You might be tempted to propose that we express everything in Cartesian coordinates, but what is considered as &ldquo;Cartesian&rdquo; is not in general well defined. While we might be able to take as primitive the idea that space around us (without relativistic gravitational forces) is flat, and so placing a grid on 3D space gives us Cartesian coordinates. However, when dealing with the generalized coordinates of an arbitrary system, the relationship between those coordinates and physical 3D space becomes complex. For example, we could have coordinates representing the orientations and positions of movable rigid parts in a compound structure. Or, we might be modeling the configuration of molecular structures, with various intermolecular orientations and relationships. Expressing any of that in Cartesian spatial coordinates is difficult to say the least.</p>
+<p>Luckily, we don&rsquo;t need to bother with any of that. The result above in <a href="#measure-preservation">#Measure Preservation</a>, and moreover in <a href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/#arbitrary-configuration-space-transformations">Liouville Supplimental - Coordinate Transformations#arbitrary-configuration-space-transformations</a>, tells us that no matter what coordinate system we put on configuration space, uniform measure in <em>phase space</em> will be preserved if we change configuration coordinates to anything else. Our only condition is that our phase space coordinates be canonical for the system in question, which is already taken as given in most circumstances (and if that is not true, there are many other complications to deal with).</p>
+<p>This neat property of classical mechanics also allows us to uniquely quantify information about physical systems. In <a href="https://danabo.github.io/blog/posts/physical-information/">Physical Information</a> I define what it means to have information about a system. Basically, if we&rsquo;ve narrowed down the state of the system to some subset of state space (phase space), then we have information. But if we want to quantify how much information we have (allowing us to invoke all of the machinery of Shannon&rsquo;s information theory, see <a href="https://danabo.github.io/blog/posts/physical-information/#shannon-quantities">Physical Information#shannon-quantities</a>), we need to choose a measure on state space. If there is nothing constraining our choice of measure, our quantities of information are not very &hellip; informative.</p>
+<p>But with the results above, in classical mechanics, we can safely put a uniform measure/density on phase space, in our chosen configuration coordinate system (assuming our phase coordinates are canonical). That measure/density will remains uniform in any other configuration coordinate system (assuming still in canonical phase coordinates). For example, suppose we have a system described with phase space $\O$ and Hamiltonian $H$. Let $\r = \r_0$ be a constant density function on $\O$ and time. Let $\mu_{\r_0}$ be the corresponding uniform measure. The information gained by narrowing down the state of a system from phase region $R$ to region $R'$ is</p>
+<p>$$\begin{aligned}<br>
+h(R' \mid R) &amp;= -\lg\frac{\mu_{\r_0}(R')}{\mu_{\r_0}(R)} \\<br>
+&amp;= -\lg\frac{\int_{R'} \r_0\ \dd^{2n}\vec{\o}}{\int_{R} \r_0\ \dd^{2n}\vec{\o}}  \\<br>
+&amp;= -\lg\frac{\r_0\int_{R'}\dd^{2n}\vec{\o}}{\r_0\int_{R}\dd^{2n}\vec{\o}}  \\<br>
+&amp;= -\lg\frac{\int_{R'}\dd^{2n}\vec{\o}}{\int_{R}\dd^{2n}\vec{\o}} \,.<br>
+\end{aligned}$$</p>
+<p>So our information gain (and similarly change in entropy - see <a href="" class="broken">Connecting Entropy And Information</a>) of the system does not depend on $\r_0$. We can go ahead and use the Euclidean measure $\l=\mu_1$ with $\r_0=1$. Note that even if the measure of the entire phase space is infinite, i.e. $\l(\O)=\infty$, we still get finite quantities of information gain so long as the starting region $R$ has finite measure. That is to say, going from knowing that a gas is in a box to knowing that the gas is in a smaller box gives us finitely many bits of information. On the other hand, going from knowing nothing to knowing there is a gas in a box gives us infinite information, since in that case $R=\O$. Since we are not supposing we are randomly drawing states of the system, we do not need to work with normalizable measures. The measure here simply measures sizes of regions.</p>
+<p>Note that statistical thermodynamics makes use of this coordinate-invariant measure result to justify using uniform measures on phase space. E.g. see <a href="https://www.elsevier.com/books/statistical-mechanics/beale/978-0-12-382188-1"target="_blank">Statistical Mechanics 3rd ed.</a> (Pathria &amp; Beale) section 2.2. This relieves us from being restricted to equilibrium processes (which are ergodic) where the choice of measure is determined by <a href="https://en.wikipedia.org/wiki/Ergodicity#Measure-preserving_dynamical_systems"target="_blank">measure invariance through time</a>. Here the measure actually represents a frequentist distribution of states over time, via <a href="https://en.wikipedia.org/wiki/Ergodicity"target="_blank">ergodicity</a>. However, we can freely put a uniform measure on the phase space of an arbitrary non-equilibrium process, where that measure represents sizes of phase regions and is used to quantify information gain. This doesn&rsquo;t, however, resolve the open problems in statistical mechanics and statistical thermodynamics, which have more to do with course-graining complexity. See <a href="https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics">https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics</a> and <a href="https://en.wikipedia.org/wiki/Renormalization_group">https://en.wikipedia.org/wiki/Renormalization_group</a>.</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/thermodynamics/>thermodynamics</a><a class="tag" href=https://danabo.github.io/blog/tags/physics/>physics</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#preliminaries">Preliminaries</a>
+      <ol>
+        <li><a href="#hamiltonian-mechanics">Hamiltonian Mechanics</a></li>
+        <li><a href="#measure">Measure</a></li>
+      </ol>
+    </li>
+    <li><a href="#statement-of-the-theorem">Statement Of The Theorem</a>
+      <ol>
+        <li>
+          <ol>
+            <li><a href="#intuition-pump">Intuition Pump</a></li>
+          </ol>
+        </li>
+        <li><a href="#uniform-measure">Uniform Measure</a></li>
+      </ol>
+    </li>
+    <li><a href="#coordinate-agnostic-ignorance">Coordinate Agnostic Ignorance</a>
+      <ol>
+        <li><a href="#canonical-coordinates">Canonical Coordinates</a></li>
+        <li><a href="#measure-preservation">Measure Preservation</a>
+          <ol>
+            <li><a href="#liouvilles-theorem">Liouville&rsquo;s theorem</a></li>
+          </ol>
+        </li>
+        <li><a href="#configuration-space-coordinate-transformations">Configuration Space Coordinate Transformations</a></li>
+        <li><a href="#hamiltonian-specific-canonical-transformations">Hamiltonian specific canonical transformations</a></li>
+      </ol>
+    </li>
+    <li><a href="#entropy-and-the-bertrand-paradox">Entropy And The Bertrand Paradox</a></li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/"><span class="iconfont icon-article"></span>Liouville Supplimental: Coordinate Transformations</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/carnot-cycle/"><span class="iconfont icon-article"></span>The Carnot Cycle</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>

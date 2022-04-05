@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Liouville Supplimental: Coordinate Transformations&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Liouville Supplimental: Coordinate Transformations" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Liouville Supplimental: Coordinate Transformations</h1><p class="article date">April 5, 2022</p></section><article class="article markdown-body"><p>This is supplemental material for <a href="https://danabo.github.io/blog/posts/liouvilles-theorem/">Liouville&#39;s Theorem</a>. Specifically I go through a few examples of phase space transformations, canonical and non-canonical. I also show that we can turn arbitrary configuration space transformations into canonical phase space transformations, a result that will be useful for my discussion about the Bertrand paradox (<a href="https://danabo.github.io/blog/posts/liouvilles-theorem/#the-bertrand-paradox">Liouville&#39;s Theorem#the-bertrand-paradox</a>).</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\b}{\beta}<br>
+\newcommand{\s}{\sigma}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\th}{\theta}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\D}{\Delta}<br>
+\newcommand{\d}{\delta}<br>
+\newcommand{\dd}{\text{d}}<br>
+\newcommand{\pd}{\partial}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\r}{\rho}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\G}{\Gamma}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\m}{\times}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\H}{\mc{H}}<br>
+\newcommand{\L}{\mc{L}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\tup}[1]{\left(#1\right)}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\dom}[2]{#1_{\mid #2}}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\up}[1]{^{(#1)}}<br>
+\newcommand{\restr}[1]{_{\mid{#1}}}<br>
+\newcommand{\dt}{{\D t}}<br>
+\newcommand{\Dt}{{\D t}}<br>
+\newcommand{\ddT}{{\delta T}}<br>
+\newcommand{\Mid}{\,\middle|\,}<br>
+\newcommand{\qed}{\ \ \blacksquare}<br>
+\newcommand{\diff}[2]{\frac{\dd #1}{\dd #2}}<br>
+\newcommand{\diffop}[1]{\frac{\dd}{\dd #1}}<br>
+\newcommand{\pdiff}[2]{\frac{\pd #1}{\pd #2}}<br>
+\newcommand{\pdiffop}[1]{\frac{\pd}{\pd #1}}<br>
+\newcommand{\evalat}[1]{\left. #1 \right|}<br>
+$$</p>
+<h1 id="example-scaling">Example: Scaling</h1>
+<p>A simple example to build intuition.</p>
+<p>First let&rsquo;s look at a simple transformation which is not canonical. Define a scaling transformation $Q(q,p)=2q$ and $P(q,p)=2p$. Let&rsquo;s also consider a specific Hamiltonian, $H(q,p)=\frac{1}{2}p^2$.   Then $q(Q,P) = \frac{1}{2}Q$ and $p(Q,P) = \frac{1}{2}P$, and $\tilde{H}(Q,P) = H(q(Q,P),p(Q,P))=\frac{1}{2}\tup{\frac{1}{2}P}^2 = \frac{1}{8}P^2$.</p>
+<p>Using the multivariate chain rule we have<br>
+$$\begin{aligned}<br>
+\diff{Q}{t}&amp;=\pdiff{Q}{q}\diff{q}{t} + \pdiff{Q}{p}\diff{p}{t} \\&amp;= \pdiff{Q}{q}\pdiff{H}{p} - \pdiff{Q}{p}\pdiff{H}{q} \\&amp;= 2p = P<br>
+\end{aligned}$$</p>
+<p>But $\pdiff{\tilde{H}}{P} = \frac{1}{4}P \neq P = \diff{Q}{t}$, and so we cannot write $\diff{Q}{t} = \pdiff{\tilde{H}}{P}$ in this coordinate system, at least if we want to keep the dynamics of the system the same.</p>
+<p>On the other hand, we can make the $Q$-space transformation $Q(q,p)=2q$ canonical by choosing a different $P$-space transformation, specifically $P(q,p)=p/2$. Then $q(Q,P) = \frac{1}{2}Q$ and $p(Q,P) = 2P$, and $\tilde{H}(Q,P) = H(q(Q,P),p(Q,P))=\frac{1}{2}\tup{2P}^2 = 2P^2$.</p>
+<p>Then we have</p>
+<p>$$\begin{aligned}<br>
+\diff{Q}{t}&amp;=\pdiff{Q}{q}\diff{q}{t} + \pdiff{Q}{p}\diff{p}{t} \\&amp;= \pdiff{Q}{q}\pdiff{H}{p} - \pdiff{Q}{p}\pdiff{H}{q} \\&amp;= 2p = 4P<br>
+\end{aligned}$$</p>
+<p>Thus $\pdiff{\tilde{H}}{P} = 4P = \diff{Q}{t}$, and so Hamilton&rsquo;s equation is satisfied (clearly $\pdiff{\tilde{H}}{Q}=0=-\diff{P}{t}$).</p>
+<p>(This transformation is canonical for all Hamiltonians on 2D phase space)</p>
+<h1 id="hamiltonian-specific-canonical">Hamiltonian Specific Canonical</h1>
+<p>It is important to clarify the difference between a transformation being canonical for a particular Hamiltonian vs canonical for all Hamiltonians. The derivation in <a href="https://danabo.github.io/blog/posts/liouvilles-theorem/#measure-preservation">Liouville&#39;s Theorem#measure-preservation</a> is not specific to any Hamiltonian, and gives us conditions for canonical transformations that are Hamiltonian agnostic.</p>
+<p>Let&rsquo;s take a look at a transformation that is canonical for some but not all Hamiltonians. The following system is a 1D harmonic oscillator (2D phase space). We will perform a Cartesian to polar transformation on phase space. Recall from calculus that Cartesian to polar coordinates has a non-unit Jacobian: $\pdiff{(Q,P)}{(q,p)}=P$ and so $\tilde{\r}(Q,P,t)=P\r(q(Q,P),p(Q,P),t)$ for any density $\r$. Yet in this particular example, we will find that Hamilton&rsquo;s equations hold in the new coordinate system.</p>
+<p>Consider the Hamiltonian $H = \frac{1}{2}\tup{p^2+q^2}$. This is a <a href="https://en.wikipedia.org/wiki/Harmonic_oscillator"target="_blank">harmonic oscillator</a> with spring mass $m=1$ and spring constant $k=1$.</p>
+<p>To solve the system, use Hamilton&rsquo;s equations,</p>
+<p>$$<br>
+\diff{q}{t} = \pdiff{H}{p} = p\,,<br>
+$$</p>
+<p>$$<br>
+\diff{p}{t} = -\pdiff{H}{q} = -q\,.<br>
+$$</p>
+<p>Solving the PDE system, we get</p>
+<p>$$<br>
+q(t) = q_0 \cos(t)+p_0 \sin(t)\,,<br>
+$$</p>
+<p>$$<br>
+p(t) = -q_0 \sin(t)+p_0 \cos(t)\,,<br>
+$$</p>
+<p>where $(q(0),p(0))=(q_0,p_0)$. Basically, the trajectories of this system are circles in phase space centered at the origin. For a given initial condition $(q_0,p_0)$, the trajectory of the system is the circle passing through that point.</p>
+<p>Let&rsquo;s transform to polar coordinates: $Q(q,p)=\tan^{-1}\tup{\frac{p}{q}}$ and  $P(q,p)=\sqrt{q^2+p^2}$, giving us the inverse transformation $q(Q,P)=P\cos Q$ and $p(Q,P)=P\sin Q$.</p>
+<p>In the transformed coordinate system, $\tilde{H}=\frac{1}{2}\tup{\tup{P\cos Q}^2+\tup{P\sin Q}^2}=\frac{1}{2}P^2$. If we blindly apply Hamilton&rsquo;s equations in the transformed coordinates we get</p>
+<p>$$<br>
+\diff{Q}{t} = \pdiff{\tilde{H}}{P} = P\,,<br>
+$$</p>
+<p>$$<br>
+\diff{P}{t} = -\pdiff{\tilde{H}}{Q} = 0\,.<br>
+$$</p>
+<p>This Hamiltonian corresponds to a free particle at constant momentum. Solutions are $P(t)=P_0$ and $Q(t)=Q_0+P_0t$. These are circular paths in the original coordinate system, and so we have the same trajectories transformed.</p>
+<p>As mentioned above transforming 2D phase space to polar coordinates is not measure preserving and in general not a canonical transformation for all Hamiltonians. But for this particular Hamiltonian, our trajectories do not change their distance from the origin, i.e. radius (they trace out circles). The Cartesian to polar transformation is not measure preserving as the radius coordinate changes, but is measure preserving as the angle changes. This transformation preserves rotational symmetry, i.e. density is preserved along circular paths, and our Hamiltonian produces circular paths.</p>
+<p>An interesting question to consider: Do all the symmetries of a given Hamiltonian generate transformations canonical to that Hamiltonian? Then it would make sense that if one Hamiltonian obeys a symmetry and another doesn&rsquo;t, then they wouldn&rsquo;t share the same canonical transformations. Furthermore, we can recast Liouville&rsquo;s theorem as stating that for Hamiltonians obeying time-translation symmetry (which are the Hamiltonians conserving energy), time-translations are canonical transformations.</p>
+<h1 id="arbitrary-configuration-space-transformations">Arbitrary Configuration-Space Transformations</h1>
+<p>A surprising result is that for all configuration space transformations $\vec{Q}(\vec{q})$, there is a momentum space transformation such that the combined phase space transformation is canonical. My derivation below follows  <a href="https://nononsensebooks.com/cm/"target="_blank">No-Nonsense Classical Mechanics</a> section 7.3.2.</p>
+<p>Suppose we are given some configuration space transformation $\vec{Q}(\vec{q})$ which does not depend on the conjugate momenta $\vec{p}$. We can derive the $\vec{P}(\vec{q}, \vec{p})$ needed to make $\vtup{\vec{Q},\vec{P}}(\vec{q}, \vec{p})$ a canonical transformation.</p>
+<p>In the <a href="https://en.wikipedia.org/wiki/Lagrangian_mechanics"target="_blank">Lagrangian formulation of classical mechanics</a>, momentum is defined as $p_i \df \pdiff{\L(\vec{q},\dot{\vec{q}})}{\dot{q_i}}$ where $\dot{q_i} = \diff{q_i}{t}$. The Lagrangian is valid (<a href="https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation"target="_blank">Euler-Lagrangian equations</a> hold) for all choice of configuration coordinates. Then $P_i \df \pdiff{\L(\vec{q}(\vec{Q}),\dot{\vec{q}}(\vec{Q},\dot{\vec{Q}}))}{\dot{Q_i}}$ where $\vec{q}(\vec{Q})$ is the inverse coordinate transformation and $\dot{q}_i(\vec{Q},\dot{\vec{Q}})=\diffop{t}\left[q_i(\vec{Q})\right]=\sum_{j=1}^n\pdiff{q_i}{Q_j}\diff{Q_j}{t}=\sum_{j=1}^n\pdiff{q_i}{Q_j}\ \dot{Q}_j$.</p>
+<p>Then</p>
+<p>$$\begin{aligned}<br>
+P_i &amp;= \pdiff{\L(\vec{q}(\vec{Q}),\dot{\vec{q}}(\vec{Q},\dot{\vec{Q}}))}{\dot{Q}_i} \\<br>
+&amp;= \sum_{j=1}^n \pdiff{\L(\vec{q},\dot{q}_j)}{\dot{q}_j} \pdiff{\dot{q}_j}{\dot{Q}_i} \\<br>
+&amp;= \sum_{j=1}^n p_j \pdiff{q_j}{Q_i}\,,<br>
+\end{aligned}$$</p>
+<p>since $p_j = \pdiff{\L(\vec{q},\dot{q}_j)}{\dot{q}_j}$ and $\pdiff{\dot{q}_j}{\dot{Q}_i}=\pdiffop{\dot{Q}_i}\left[\dot{q}_i(\vec{Q},\dot{\vec{Q}})\right]=\pdiffop{\dot{Q}_i}\left[\sum_{k=1}^n \pdiff{q_j}{Q_k}\dot{Q}_k\right]=\pdiff{q_j}{Q_i}$. Note that $\pdiffop{\dot{Q}_i}\dot{Q}_k = 1$ when $i=k$ and $0$ otherwise, since we take $\dot{Q}_1,\dots,\dot{Q}_n$ to be free variables in the Lagrangian formulation.</p>
+<p>In general, the point transformation $\vec{Q}(\vec{q})$ need not be (uniform) measure preserving in configuration space. However, when we consider the combined phase space, the transformation $\vec{Q}(\vec{q})$ and $\vec{P}(\vec{q},\vec{p})=\evalat{\pdiff{\vec{q}}{\vec{Q}}}_{\vec{q}}\cdot\vec{p}$ (where $\pdiff{\vec{q}}{\vec{Q}}$ is the Jacobian matrix evaluated at $\vec{q}$, i.e. $P_i(\vec{q},\vec{p})=\vec{p}\cdot \evalat{\pdiff{\vec{q}}{Q_i}}_{\vec{q}}$ is a dot product) produces a (uniform) measure invariant transformation in phase space.</p>
+<p>We can prove this (thus proving Liouville&rsquo;s theorem) by showing that the Jacobian $\pdiff{(\vec{q},\vec{p})}{(\vec{Q},\vec{P})}=1$ at all locations in phase space.</p>
+<h2 id="example-2d-phase-space">Example: 2D phase space</h2>
+<p>Working in 2D phase space is convenient because we can visualize it in full.</p>
+<p>Consider the transformation $Q(q)=q^2$.<br>
+Inverse: $q(Q) = \sqrt{Q}$.<br>
+Then we determine $P(q,p)$,</p>
+<p>$$<br>
+P(q,p) = p\pdiff{q}{Q} = \frac{p}{2\sqrt{Q}} = \frac{p}{2\sqrt{q^2}} = \frac{p}{2q}<br>
+$$</p>
+<p>If we want to smoothly interpolate between the old and new coordinates, we can generalize our transformation to $Q(q)=a q^2 + b q$ where $a=\gamma$ and $b=1-\gamma$, where $\gamma$ is our interpolating parameter.<br>
+Inverse: $q(Q) = \frac{-b+\sqrt{4 a Q+b^2}}{2 a}$.</p>
+<p>$$<br>
+P(q,p) = p\pdiff{q}{Q} = \frac{p}{\sqrt{4 a Q+b^2}} = \frac{p}{2 a q + b} = \frac{p}{2 \gamma q + 1-\gamma}<br>
+$$</p>
+<p>Here we have the Cartesian grid in $(q,p)$ space transformed into $(Q,P)$ space, varying $\gamma$ from 0 towards 1.</p>
+<p><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220405121020.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220405121020.png" width="400"/></a></span>
+</span><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220405121031.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220405121031.png" width="400"/></a></span>
+</span><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220405121036.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220405121036.png" width="400"/></a></span>
+</span><span class="image-container"><span class="link" ><a href="../../Pasted%20image%2020220405121102.png" 
+        target="_blank"><img class="img" src="../../Pasted%20image%2020220405121102.png" width="400"/></a></span>
+</span></p>
+<h2 id="example-cartesian-to-polar-configuration">Example: Cartesian To Polar Configuration</h2>
+<p>The result that all configuration space transformations can be made canonical with the right momentum space transformation is surprising because so many configuration space transformations are not measure preserving by themselves. Just above we took the Cartesian to polar transformation as an example of a non-measure preserving transformation. I will go through the derivation of the canonical transformation which does a Cartesian to polar configuration transformation. The reason why this works is that configuration space is an infinitely thin slice of phase space, so all configuration space regions have 0 measure in phase space. Thus there is trivially no need to conserve measure in configuration space alone. The momentum transformation must be such that whatever distortions of measure occur in configuration space are &ldquo;balanced out&rdquo; in momentum space.</p>
+<p>Consider a system in 4D Cartesian phase space $(x,y,p_x,p_y)$, with $\vec{q}=(x,y)$ and $\vec{p}=(p_x,p_y)$. Let&rsquo;s give the system the following Hamiltonian, $H=\frac{1}{2m}\tup{p_x^2+p_y^2} + U(x,y)$ where $U$ is some time-independent (constant through time) potential function and $m$ is the mass of the system.</p>
+<p>Then by Hamilton&rsquo;s equations we have</p>
+<p>$$<br>
+\dot{x}=\pdiff{H}{p_x}=\frac{p_x}{m}\,,\qquad \dot{y}=\pdiff{H}{p_y}=\frac{p_y}{m}\,,<br>
+$$</p>
+<p>and</p>
+<p>$$<br>
+\dot{p_x}=-\pdiff{H}{x}=-\pdiff{U(x,y)}{x}\,,\qquad \dot{p_y}=-\pdiff{H}{y}=-\pdiff{U(x,y)}{y}<br>
+\,.<br>
+$$</p>
+<p>These are the standard equations that a Newtonian point particle obeys in the presence of a potential field $U$.</p>
+<p>Now transform to polar spatial coordinates: $R(x,y)=\sqrt{x^2+y^2}$ and $\T(x,y)=\tan^{-1}\tup{\frac{y}{x}}$, giving us the inverse transformation $x(R,\T)=R\cos\T$ and $y(R,\T)=R\sin\T$.</p>
+<p>We can independently derive the momenta in polar coordinates <a href="https://en.wikipedia.org/wiki/Angular_momentum#Orbital_angular_momentum_in_two_dimensions"target="_blank">from Newtonian mechanics</a>: $P_R=m\dot{R}$ and $P_\T=mR^2\dot{\T}$.</p>
+<p>Let&rsquo;s see what momentum transformation we derive using from the constraint that we need a canonical transformation (using the equations above).</p>
+<p>$$\begin{aligned}<br>
+P_R(x,y,p_x,p_y) &amp;= p_x \pdiff{x}{R}+p_y \pdiff{y}{R} \\<br>
+&amp;= p_x \cos\T+p_y \sin\T<br>
+\end{aligned}$$</p>
+<p>$$\begin{aligned}<br>
+P_\T(x,y,p_x,p_y)&amp;=p_x \pdiff{x}{\T}+p_y \pdiff{y}{\T} \\<br>
+&amp;= -p_x R\sin\T+p_y R\cos\T<br>
+\end{aligned}$$</p>
+<p>Solving this system of equations for $p_x,p_y$ we get the inverse transformation for momentum:</p>
+<p>$$\begin{aligned}<br>
+p_x(R,\T,P_R,P_\T) &amp;= P_R \cos (\T)-\frac{P_\T \sin(\T)}{R} \\<br>
+p_y(R,\T,P_R,P_\T) &amp;= P_R \sin (\T)+\frac{P_\T \cos(\T)}{R}<br>
+\end{aligned}$$</p>
+<p>Plugging in $x(R,\T),y(R,\T),p_x(R,\T,P_R,P_\T),p_y(R,\T,P_R,P_\T)$ to $H(x,y,p_x,p_y)$, we get</p>
+<p>$$\begin{aligned}<br>
+&amp; H(R,\T,P_R,P_\T) \\<br>
+&amp;= \frac{1}{2m}\tup{p_x(R,\T,P_R,P_\T)^2+p_y(R,\T,P_R,P_\T)^2} \\ &amp;\quad\ +\ U(x(R,\T),y(R,\T)) \\<br>
+&amp;= \frac{1}{2m}\tup{\tup{P_R \cos (\T)-\frac{P_\T \sin(\T)}{R}}^2+\tup{P_R \sin (\T)+\frac{P_\T \cos(\T)}{R}}^2} \\ &amp;\quad\ +\ U(R\cos\T,R\sin\T)) \\<br>
+&amp;= \frac{1}{2m}\tup{P_R^2 + \frac{1}{R^2}P_\T^2} + U(R\cos\T,R\sin\T)<br>
+\end{aligned}$$</p>
+<p>Then Hamilton&rsquo;s equations give us</p>
+<p>$$<br>
+\dot{R}=\pdiff{H}{P_R}=\frac{P_R}{m}\,,\qquad \dot{\T}=\pdiff{H}{P_\T}=\frac{P_\T}{mR^2}\,,<br>
+$$</p>
+<p>(matching what we expect)</p>
+<p>and</p>
+<p>$$\begin{aligned}<br>
+\dot{P}_R&amp;=-\pdiff{H}{R}\\&amp;=-\pdiff{U(x,y)}{x}\pdiff{x}{R}-\pdiff{U(x,y)}{y}\pdiff{y}{R}\\&amp;=-\pdiff{U(x,y)}{x}\cos\T-\pdiff{U(x,y)}{y}\sin\T\,,<br>
+\end{aligned}$$</p>
+<p>$$\begin{aligned}<br>
+\dot{P}_\T&amp;=-\pdiff{H}{\T}\\&amp;=-\pdiff{U(x,y)}{x}\pdiff{x}{\T}-\pdiff{U(x,y)}{y}\pdiff{y}{\T} \\&amp;= \pdiff{U(x,y)}{x}R\sin\T-\pdiff{U(x,y)}{y}R\cos\T\,.<br>
+\end{aligned}$$</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/thermodynamics/>thermodynamics</a><a class="tag" href=https://danabo.github.io/blog/tags/physics/>physics</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#example-scaling">Example: Scaling</a></li>
+    <li><a href="#hamiltonian-specific-canonical">Hamiltonian Specific Canonical</a></li>
+    <li><a href="#arbitrary-configuration-space-transformations">Arbitrary Configuration-Space Transformations</a>
+      <ol>
+        <li><a href="#example-2d-phase-space">Example: 2D phase space</a></li>
+        <li><a href="#example-cartesian-to-polar-configuration">Example: Cartesian To Polar Configuration</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/liouville-supplimental-bertrand-paradox/"><span class="iconfont icon-article"></span>Liouville Supplimental: Bertrand Paradox</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/liouvilles-theorem/"><span class="iconfont icon-article"></span>Liouville's Theorem</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>

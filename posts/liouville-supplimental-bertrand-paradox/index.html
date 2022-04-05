@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Liouville Supplimental: Bertrand Paradox&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Liouville Supplimental: Bertrand Paradox" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Liouville Supplimental: Bertrand Paradox</h1><p class="article date">April 5, 2022</p></section><article class="article markdown-body"><p>I reframe the <a href="https://en.wikipedia.org/wiki/Bertrand_paradox_%28probability%29"target="_blank">Bertrand paradox</a> as the statement that uniformity of measure is relative to choice of coordinate system.</p>
+<p>The objective-Bayesian approach to the  <a href="https://en.wikipedia.org/wiki/Bayesian_epistemology#Problem_of_priors"target="_blank">problem of priors</a> is to assign a maximally uninformative prior to the given possibility space. What is considered maximally uninformative can be derived with the <a href="https://en.wikipedia.org/wiki/Principle_of_maximum_entropy"target="_blank">maximum entropy principle</a> - a generalization of the <a href="https://en.wikipedia.org/wiki/Principle_of_indifference#Application_to_continuous_variables"target="_blank">principle of indifference</a>. In many cases this ends up being a uniform prior. However, we run into a problem since uniformity is relative to choice of coordinates. This is relevant to physics since there is no preferred coordinate system to work in.</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\b}{\beta}<br>
+\newcommand{\s}{\sigma}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\th}{\theta}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\D}{\Delta}<br>
+\newcommand{\d}{\delta}<br>
+\newcommand{\dd}{\text{d}}<br>
+\newcommand{\pd}{\partial}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\r}{\rho}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\G}{\Gamma}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\m}{\times}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\H}{\mc{H}}<br>
+\newcommand{\L}{\mc{L}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\tup}[1]{\left(#1\right)}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\dom}[2]{#1_{\mid #2}}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\up}[1]{^{(#1)}}<br>
+\newcommand{\restr}[1]{_{\mid{#1}}}<br>
+\newcommand{\dt}{{\D t}}<br>
+\newcommand{\Dt}{{\D t}}<br>
+\newcommand{\ddT}{{\delta T}}<br>
+\newcommand{\Mid}{\,\middle|\,}<br>
+\newcommand{\qed}{\ \ \blacksquare}<br>
+\newcommand{\diff}[2]{\frac{\dd #1}{\dd #2}}<br>
+\newcommand{\diffop}[1]{\frac{\dd}{\dd #1}}<br>
+\newcommand{\pdiff}[2]{\frac{\pd #1}{\pd #2}}<br>
+\newcommand{\pdiffop}[1]{\frac{\pd}{\pd #1}}<br>
+\newcommand{\evalat}[1]{\left. #1 \right|}<br>
+$$</p>
+<hr>
+<p>A measure is <strong>uniform</strong> if its corresponding density function is constant. We need to specify which coordinate system the density is constant with respect to.</p>
+<p>In the Bertrand paradox, we are asked to randomly draw chords (a line connecting two points on the circumference of a circle) from the unit circle. The paradox is that depending on how we construct our chords, the sampling statistics of the chords will be different. Is it implied that the phrase &ldquo;random draw&rdquo; implies a uniform sampling distribution.</p>
+<p>We are given three different sampling methods as a demonstration.</p>
+<ol>
+<li>Pick two points on the circumfrence and draw a chord</li>
+<li>Pick a radius (angle of the radius) and a point on the radius and draw a chord perpendicular to the radius</li>
+<li>Pick a point in the circle and make that the midpoint of the chord</li>
+</ol>
+<p>We can reframe these sampling methods as different coordinate systems over the same space of chords:</p>
+<ol>
+<li>$(\a, \b) \in \set{\a',\b'\in[0,2\pi) \mid \b' \geq \a'}$</li>
+<li>$r \in (0,1],\ \th \in [0,2\pi)$</li>
+<li>$(x, y) \in \overline{B}_1(0,0) = \set{(x',y') \in \R^2 \mid x'^2+y'^2 \leq 1}$</li>
+</ol>
+<p>Let&rsquo;s calculate the Jacobians for some of the transformations between these coordinates.</p>
+<p>1 &ndash;&gt; 2<br>
+$r(\a,\b)=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}$<br>
+$\th(\a,\b)=\frac{\a+\b}{2}$<br>
+(<a href="https://en.wikipedia.org/wiki/Law_of_cosines"target="_blank">Law of cosines</a>,  where $c$ is the chord length and $r^2 = 1-(c/2)^2$)<br>
+$$\begin{aligned}<br>
+\pdiff{(\th,r)}{(\a,\b)}&amp;=\det\pmatrix{\pdiff{\th}{\a}&amp;\pdiff{\th}{\b}\\\pdiff{r}{\a}&amp;\pdiff{r}{\b}}\\&amp;=\det\pmatrix{\frac{1}{2}&amp;\frac{1}{2}\\ -\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}} &amp; \frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}}}\\&amp;=\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}}<br>
+\end{aligned}$$</p>
+<p>2 &ndash;&gt; 3<br>
+$x(r,\th) = r\cos\th$<br>
+$y(r,\th) = r\sin\th$<br>
+$$\begin{aligned}<br>
+\pdiff{(x,y)}{(\th,r)}&amp;=\pdiff{(x,y)}{(r,\th)}\\&amp;=\det\pmatrix{\pdiff{x}{r}&amp;\pdiff{x}{\th}\\\pdiff{y}{r}&amp;\pdiff{y}{\th}}\\&amp;=\det\pmatrix{\cos\th &amp; -r\sin\th \\ \sin\th &amp; r\cos\th} \\&amp;= r\cos^2\th + r\sin^2\th \\&amp;= r<br>
+\end{aligned}$$</p>
+<p>1 &ndash;&gt; 3<br>
+$x(\a,\b)=r\cos\th=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}\cdot \cos\tup{\frac{\a+\b}{2}}$<br>
+$y(\a,\b)=r\sin\th=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}\cdot \sin\tup{\frac{\a+\b}{2}}$<br>
+$$\begin{aligned}<br>
+\pdiff{(x,y)}{(\a,\b)}&amp;=\pdiff{(\th,r)}{(\a,\b)}\cdot\pdiff{(x,y)}{(\th,r)}\\&amp;=\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}}\cdot r\\&amp;=\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}} \cdot \sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)} \\&amp;= \frac{1}{4} \sin (\alpha -\beta )<br>
+\end{aligned}$$</p>
+<p>Inverse Jacobians are just reciprocals, so $\pdiff{(\a,\b)}{(x,y)}=1/\pdiff{(x,y)}{(\a,\b)}$ and $\pdiff{(r,\th)}{(x,y)}=1/\pdiff{(x,y)}{(r,\th)}$.<br>
+Swapping variables negates the Jacobian, so $\pdiff{(r,\th)}{(\a,\b)}=-\pdiff{(\th,r)}{(\a,\b)}$.</p>
+<p>Useful coordinate relationships:<br>
+$r = \sqrt{x^2+y^2}$<br>
+$\frac{1}{4} \sin (\alpha -\beta ) = \frac{1}{2} \sqrt{x^2+y^2}\sqrt{1-x^2-y^2}$</p>
+<p>Let $\l_1$ be a uniform measure in coordinate #1 with constant density $\r_1$.<br>
+Let $\l_2$ be a uniform measure in coordinate #2 with constant density $\r_2$.<br>
+Let $\l_3$ be a uniform measure in coordinate #3 with constant density $\r_3$.</p>
+<p>If $R$ is a set of points in Cartesian coordinates (#3), let $\vtup{r,\th}(R) = \set{(r(x,y),\th(x,y)) \mid (x,y) \in R}$ and $\vtup{\a,\b}(R) = \set{(\a(x,y),\b(x,y)) \mid (x,y) \in R}$ be the transformed set into the other coordinate systems.</p>
+<p>The measure of a set $R$ in Cartesian coordinates (#3), according to each measure $\l_1,\l_2$ and $\l_3$, is<br>
+$$<br>
+\l_3(R) = \int_R \r_3\ \dd x\ \dd y<br>
+$$</p>
+<p>$$\begin{aligned}<br>
+\l_2(R) &amp;= \int_{\vtup{r,\th}(R)} \r_2\ \dd r\ \dd \th \\&amp;= \int_R \r_2\abs{\pdiff{(r,\th)}{(x,y)}}\ \dd x\ \dd y \\&amp;= \int_R \frac{\r_2}{r}\ \dd x\ \dd y \\&amp;=\int_R \frac{\r_2}{\sqrt{x^2+y^2}}\ \dd x\ \dd y<br>
+\end{aligned}$$</p>
+<p>$$\begin{aligned}<br>
+\l_1(R) &amp;= \int_{\vtup{\a,\b}(R)} \r_1\ \dd \a\ \dd \b \\&amp;= \int_R \r_1\abs{\pdiff{(\a,\b)}{(x,y)}}\ \dd x\ \dd y \\&amp;= \int_R \frac{4\r_1}{\sin (\alpha -\beta )}\ \dd x\ \dd y \\&amp;=\int_R \frac{2\r_1}{\sqrt{x^2+y^2}\sqrt{1-x^2-y^2}}\ \dd x\ \dd y<br>
+\end{aligned}$$</p>
+<p>Thus the density function for $\l_1$ in Cartesian is $\tilde{\r}_1(x,y)=\frac{2\r_1}{\sqrt{x^2+y^2}\sqrt{1-x^2-y^2}}$ and the density function for $\l_2$ in Cartesian is $\tilde{\r}_2(x,y)=\frac{\r_2}{\sqrt{x^2+y^2}}$. The measures $\l_1$ and $\l_2$ have non-constant density functions in Cartesian coordinates, and so are non-uniform in Cartesian coordinates. Clearly what is considered a random draw depends on our choice of coordinates.</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/thermodynamics/>thermodynamics</a><a class="tag" href=https://danabo.github.io/blog/tags/physics/>physics</a></section>
+</div><nav id="TableOfContents"></nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/"><span class="iconfont icon-article"></span>Liouville Supplimental: Coordinate Transformations</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>
