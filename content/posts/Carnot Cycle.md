@@ -1,13 +1,13 @@
 ---
 date: 2022-03-17
-lastmod: '2022-03-17T18:21:02-07:00'
+lastmod: '2022-04-05T13:44:16-07:00'
 tags:
 - thermodynamics
 - physics
-title: 'Primer: Carnot Cycle'
+title: The Carnot Cycle
 ---
 
-This is a brief and formal description of the Carnot cycle. I hope this post is a useful reference for anyone who wants to quickly ramp up on thermodynamics. The Carnot cycle is often used as a canonical introduction to classical thermodynamics (specifically the thermodynamics of ideal gasses) since it nicely illustrates the relationship between the entropy, temperature and volume of a gas.
+This a formal description of the Carnot cycle which I hope is a useful reference for anyone who wants to quickly ramp up on thermodynamics. The Carnot cycle is often used as a canonical introduction to classical thermodynamics (specifically the thermodynamics of ideal gasses) since it nicely illustrates the relationship between the entropy, temperature and volume of a gas.
 
 <!--more-->
 
@@ -15,6 +15,8 @@ This is a brief and formal description of the Carnot cycle. I hope this post is 
 The [Carnot cycle](https://en.wikipedia.org/wiki/Carnot_cycle) is a toy thermodynamic process (read as "thought experiment") devised by [Sadi Carnot](https://en.wikipedia.org/wiki/Nicolas_L%C3%A9onard_Sadi_Carnot) in 1824 to derive the first theory of heat efficiency (essentially a proto-thermodynamics). Carnot proves that his hypothetical cycle achieves the theoretically optimal efficiency of any heat engine that converts heat into mechanical work on a piston. Carnot also shows that the optimal efficiency of any transformation is achieved by a [reversible process](https://en.wikipedia.org/wiki/Reversible_process_(thermodynamics)) which caries it out, thus establishing the connection between thermodynamics and reversibility (the Carnot cycle is reversible). See {{< locallink "The Reversibility Problem" "reversibility-and-thermodynamics" >}} for more discussion on that.
 
 Later, [Rudolf Clausius](https://en.wikipedia.org/wiki/Rudolf_Clausius) reformulated Carnot's theory and [introduced a new concept](https://en.wikipedia.org/wiki/History_of_entropy#1862_definition): entropy. This marks the inception of [classical thermodynamics](https://en.wikipedia.org/wiki/Thermodynamics#Classical_thermodynamics), where entropy is taken as a primitive property of processes involving heat, like energy and mass. Later, [Ludwig Boltzmann](https://en.wikipedia.org/wiki/Ludwig_Boltzmann) attempted to derive entropy and classical thermodynamics from Newtonian mechanics, giving rise to [statistical thermodynamics](https://en.wikipedia.org/wiki/Statistical_thermodynamics).
+
+
 
 
 
@@ -89,11 +91,13 @@ I will derive everything below from the laws of classical mechanics, plus three 
 
 
 
-For an [ideal gas](https://en.wikipedia.org/wiki/Ideal_gas) at equilibrium with pressure $P$, volume $V$, temperature $T$, [gas constant](https://en.wikipedia.org/wiki/Gas_constant) $R$, and number of [moles](https://en.wikipedia.org/wiki/Amount_of_substance) $n$ of gas (i.e. number of particles divided by the [Avogadro constant](https://en.wikipedia.org/wiki/Avogadro_constant)), the [ideal gas law](https://en.wikipedia.org/wiki/Ideal_gas_law) states that
+For an [ideal gas](https://en.wikipedia.org/wiki/Ideal_gas) at [equilibrium](https://en.wikipedia.org/wiki/Thermodynamic_equilibrium) with pressure $P$, volume $V$, temperature $T$, [gas constant](https://en.wikipedia.org/wiki/Gas_constant) $R$ (depends on the type of gas), and number of [moles](https://en.wikipedia.org/wiki/Amount_of_substance) $n$ of gas (i.e. number of particles divided by the [Avogadro constant](https://en.wikipedia.org/wiki/Avogadro_constant)), the [ideal gas law](https://en.wikipedia.org/wiki/Ideal_gas_law) states that
 
 $$
 PV=nRT\\,.
 $$
+
+All the equilibrium states of the gas are fully described by the triple $(P,V,T)$, with one of the three being redundant due to the ideal gas law. In this post, I will use $(T,V)$ to describe the state of the gas at equilibrium.
 
 For an ideal gas initially at equilibrium with volume and temperature $V\_i,T\_i$, and later at equilibrium again with final volume and temperature $V\_f,T\_f$, the change in entropy of this gas is ([source 1](https://web.mit.edu/16.unified/www/FALL/thermodynamics/notes/node40.html), [source 2](http://hyperphysics.phy-astr.gsu.edu/hbase/Therm/entropgas.html), [source 3](https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_(Fleming)/05%3A_The_Second_Law/5.04%3A_Calculating_Entropy_Changes))
 
@@ -101,13 +105,13 @@ $$
 \\D S = nC\_V \\ln\\par{\\frac{T\_f}{T\_i}} + nR \\ln\\par{\\frac{V\_f}{V\_i}}\\,,
 $$
 
- where $C\_V$ is the [molar heat capacity at a constant volume](https://en.wikipedia.org/wiki/Molar_heat_capacity) and $R$ is the [gas constant](https://en.wikipedia.org/wiki/Gas_constant). In the context of this post, this is the definition of entropy, which will be taken as a primitive quantity. This definition is agnostic to how we define the absolute entropy of a gas at a particular temperature and volume. Only changes in entropy will be considered in this post.
+ where $C\_V$ is the [molar heat capacity at a constant volume](https://en.wikipedia.org/wiki/Molar_heat_capacity) (another constant that depends on the type of gas) and $R$ is the [gas constant](https://en.wikipedia.org/wiki/Gas_constant). In the context of this post, this is the definition of entropy, which will be taken as a primitive quantity. This definition is agnostic to how we define the absolute entropy of a gas at a particular temperature and volume. Only changes in entropy will be considered in this post.
 
 
 Note that the gas only needs to be at equilibrium at the start and end of the transformation and need not be in equilibrium during the change. This is because entropy is a [state variable](https://en.wikipedia.org/wiki/Entropy#State_variables_and_functions_of_state), which means that the entropy of a system only depends on its current state (if the entropy is well defined in its current state), and not the path the system took to get to its current state. This allows us to calculate changes in entropy for processes with undefined entropy during intermediate steps. In this post, the entropy of a gas is not defined outside of equilibrium.
 
 
-The [internal energy](https://chemed.chem.purdue.edu/genchem/topicreview/bp/ch21/chemical.php#inter) of an ideal gas is the total KE of all the particles of the gas. When in equilibrium, the temperature $T$ of the gas is proportional to the average KE across all the degrees of freedom of the gas (e.g. the $x$, $y$ and $z$ axes for each particle). Then the total KE is proportional to $T$ and $n$ (proportional to the number of particles in the gas). We have
+The [internal energy](https://chemed.chem.purdue.edu/genchem/topicreview/bp/ch21/chemical.php#inter) of an ideal gas is the total kinetic energy (KE) of all the particles of the gas. When in equilibrium, the temperature $T$ of the gas is proportional to the average KE across all the degrees of freedom of the gas (e.g. the $x$, $y$ and $z$ axes for each particle). Then the total KE is proportional to $T$ and $n$ (proportional to the number of particles in the gas). We have the internal energy of the gas,
 
 $$E\_\\text{int} = nC\_VT\\,,$$
 
@@ -126,7 +130,7 @@ During the cycle, the piston pushes against the gas with some force. The magnitu
 Illustration of a piston doing mechanical work - in this case rotating a wheel (for example, this could be applied to a locomotive):
 ![](https://lawofthermodynamicsinfo.com/wp-content/uploads/2020/04/heat-engine-gif-7.gif "Illustration of a piston. Source: https://lawofthermodynamicsinfo.com/what-is-carnot-cycle-in-thermodynamics/")
 
-At various phases in the cycle, the gas may or may not be in thermal contact with heat reservoirs. Heat reservoirs are idealized systems with infinitely many degrees of freedom which maintain their temperature no matter how much heat energy is added or subtracted. For example, a gas with infinitely many particles occupying infinite volume. A heat reservoir that provides heat energy output is called a heat source, and a heat reservoir that absorbs heat energy input is called a heat sink. Heat sources are often called "hot" and heat sinks are often called "cold".
+At various phases in the cycle, the gas may or may not be in thermal contact with heat reservoirs (each phase defines which heat reservoirs are present). Heat reservoirs are idealized systems with infinitely many degrees of freedom (e.g. particle positions) which maintain their temperature no matter how much heat energy is added or subtracted. For example, a gas with infinitely many particles occupying infinite volume. A heat reservoir that provides heat energy output is called a heat source, and a heat reservoir that absorbs heat energy input is called a heat sink. Heat sources are often called "hot" and heat sinks are often called "cold".
 
 
 
@@ -134,7 +138,6 @@ At various phases in the cycle, the gas may or may not be in thermal contact wit
 
 ![](https://www.saburchill.com/physics/images_thermal_physics/Carnot_cycle_05.gif "This animation illustrates the four phases in action. To understand the details of what is happening, please refer to the formal definition of each phase in the following sections. Source: https://www.saburchill.com/physics/chapters/0124b.html")
 
-Here is an excellent particle-level simulation of the carnot cycle: https://www.youtube.com/watch?v=M6XQi8eYYNs
 
 
 ![](https://www.grc.nasa.gov/www/k-12/airplane/Images/carnot.gif "This diagram shows the four phases with variable amounts of mass applied to the piston. In the following sections I go in depth in calculating what those masses should be and how they should change throughout the cycle, since this can be a point of confusion. Source: https://www.grc.nasa.gov/www/k-12/airplane/carnot.html")
@@ -142,6 +145,7 @@ Here is an excellent particle-level simulation of the carnot cycle: https://www.
 
 
 
+Also, this video is a good illustration of the carnot cycle in action (with particle level simulation of the gas): https://www.youtube.com/watch?v=M6XQi8eYYNs
 
 
 All phases of the Carnot cycle are [quasistatic](https://en.wikipedia.org/wiki/Quasistatic_process), which means that the process stays close to equilibrium during the changes that take place. What this means for us is that we can assume that the entropy, temperature, volume and pressure of the gas are always well defined through out each phase. The quasistatic assumption is needed to ensure that every phase of the cycle is reversible, which makes the cycle as a whole reversible.
