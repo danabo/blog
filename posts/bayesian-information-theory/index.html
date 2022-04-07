@@ -353,6 +353,13 @@ $$</p>
 <li>$\mb{I}_\mu(\mf{A}, \mf{B}) = \sum_{A\in\mf{A}}\sum_{B\in\mf{B}} \mu(A\cap B) i_\mu(A, B)$</li>
 </ul>
 <p>where $A,B\subseteq\H$ and $\mf{A},\mf{B}$ are two partitions of $\H$. Note that $\abs{\H}$ disappears because it becomes $\mu(\H) = 1$.</p>
+<p>If we don&rsquo;t use a normalized (probability) measure, i.e. $\mu(\H)$ is anything (except non-zero), then we can also calculate information quantities:</p>
+<ul>
+<li>$h_\mu(A) = -\lg \par{\frac{\mu(A)}{\mu(\H)}}$</li>
+<li>$h_\mu(A \mid B) = -\lg \par{\frac{\mu(A \cap B)}{\mu(B)}}$</li>
+<li>$i_\mu(A, B) = \lg\par{\frac{\mu(A\cap B)\mu(\H)}{\mu(A)\mu(B)}}$</li>
+</ul>
+<p>&hellip; etc. Though, if $\mu(\H)$ is infinite or not defined (i.e. $\mu$ is not normalizable), then these quantities are not well defined.</p>
 <h2 id="optimal-compression">Optimal Compression</h2>
 <p>Now we see that Bayesian information theory is mathematically equivalent to Shannon&rsquo;s information theory, where a probability measure $\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).</p>
 <p>However, what is the connection between narrowing down hypothesis sets and optimal compression? Given probability measure $\mu$ on $\H$, the $\mu$-probability of finite observation $x\in\X^*$ is $\mu(\dom{\H}{x})$. (We can abuse notation and write $\mu(x)$ where $x$ is shorthand for $\dom{\H}{x}$ when given as the argument to $\mu$.) Then is $h_\mu(\dom{\H}{x})$ the optimal compressed length of $x$?</p>
