@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2022-04-07T14:11:21-07:00'
+lastmod: '2022-04-07T14:20:13-07:00'
 tags:
 - epistemology
 - information
@@ -500,7 +500,7 @@ If we don't use a normalized (probability) measure, i.e. $\\mu(\\H)$ is anything
 - $h\_\\mu(A \\mid B) = -\\lg \\par{\\frac{\\mu(A \\cap B)}{\\mu(B)}}$
 - $i\_\\mu(A, B) = \\lg\\par{\\frac{\\mu(A\\cap B)\\mu(\\H)}{\\mu(A)\\mu(B)}}$
 
-... etc. Though, if $\\mu(\\H)$ is infinite or not defined (i.e. $\\mu$ is not normalizable), then these quantities are not well defined.
+... etc. Though, if $\\mu(\\H)$ is infinite or not defined (i.e. $\\mu$ is not normalizable), then these quantities are not well defined. However, that is alright, since my definition of information is based on the sets of possibilities involved. How those sets are quantified is secondary. That is to say, the intricacies of getting quantification of information to work out don't bear weight on what information actually is. I am not defining information as its quantity (Shannon information theory could be construed as doing that), and I don't necessarily require that information gain (and mutual information, etc.) is always quantifiable (its quantity could be undefined or infinite).
 
 ## Optimal Compression
 Now we see that Bayesian information theory is mathematically equivalent to Shannon's information theory, where a probability measure $\\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).
