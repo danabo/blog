@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Liouville Supplimental: Bertrand Paradox</h1><p class="article date">April 5, 2022</p></section><article class="article markdown-body"><p>I reframe the <a href="https://en.wikipedia.org/wiki/Bertrand_paradox_%28probability%29"target="_blank">Bertrand paradox</a> as the statement that uniformity of measure is relative to choice of coordinate system.</p>
+    <h1 class="article title">Liouville Supplimental: Bertrand Paradox</h1><p class="article date">April 5, 2022<span class="lastmod"> • edited April 6, 2022</span></p></section><article class="article markdown-body"><p>I reframe the <a href="https://en.wikipedia.org/wiki/Bertrand_paradox_%28probability%29"target="_blank">Bertrand paradox</a> as the statement that uniformity of measure is relative to choice of coordinate system.</p>
 <p>The objective-Bayesian approach to the  <a href="https://en.wikipedia.org/wiki/Bayesian_epistemology#Problem_of_priors"target="_blank">problem of priors</a> is to assign a maximally uninformative prior to the given possibility space. What is considered maximally uninformative can be derived with the <a href="https://en.wikipedia.org/wiki/Principle_of_maximum_entropy"target="_blank">maximum entropy principle</a> - a generalization of the <a href="https://en.wikipedia.org/wiki/Principle_of_indifference#Application_to_continuous_variables"target="_blank">principle of indifference</a>. In many cases this ends up being a uniform prior. However, we run into a problem since uniformity is relative to choice of coordinates. This is relevant to physics since there is no preferred coordinate system to work in.</p>
 <p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
@@ -80,25 +80,25 @@ $$</p>
 </ol>
 <p>We can reframe these sampling methods as different coordinate systems over the same space of chords:</p>
 <ol>
-<li>$(\a, \b) \in \set{\a',\b'\in[0,2\pi) \mid \b' \geq \a'}$</li>
+<li>$(\a, \b) \in \set{(\a',\b')\in[0,2\pi)^2 \mid \b' \geq \a'}$</li>
 <li>$r \in (0,1],\ \th \in [0,2\pi)$</li>
 <li>$(x, y) \in \overline{B}_1(0,0) = \set{(x',y') \in \R^2 \mid x'^2+y'^2 \leq 1}$</li>
 </ol>
 <p>Let&rsquo;s calculate the Jacobians for some of the transformations between these coordinates.</p>
-<p>1 &ndash;&gt; 2<br>
-$r(\a,\b)=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}$<br>
+<p>$(1 \longrightarrow 2)$<br>
 $\th(\a,\b)=\frac{\a+\b}{2}$<br>
+$r(\a,\b)=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}$<br>
 (<a href="https://en.wikipedia.org/wiki/Law_of_cosines"target="_blank">Law of cosines</a>,  where $c$ is the chord length and $r^2 = 1-(c/2)^2$)<br>
 $$\begin{aligned}<br>
 \pdiff{(\th,r)}{(\a,\b)}&amp;=\det\pmatrix{\pdiff{\th}{\a}&amp;\pdiff{\th}{\b}\\\pdiff{r}{\a}&amp;\pdiff{r}{\b}}\\&amp;=\det\pmatrix{\frac{1}{2}&amp;\frac{1}{2}\\ -\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}} &amp; \frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}}}\\&amp;=\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}}<br>
 \end{aligned}$$</p>
-<p>2 &ndash;&gt; 3<br>
+<p>$(2 \longrightarrow 3)$<br>
 $x(r,\th) = r\cos\th$<br>
 $y(r,\th) = r\sin\th$<br>
 $$\begin{aligned}<br>
 \pdiff{(x,y)}{(\th,r)}&amp;=\pdiff{(x,y)}{(r,\th)}\\&amp;=\det\pmatrix{\pdiff{x}{r}&amp;\pdiff{x}{\th}\\\pdiff{y}{r}&amp;\pdiff{y}{\th}}\\&amp;=\det\pmatrix{\cos\th &amp; -r\sin\th \\ \sin\th &amp; r\cos\th} \\&amp;= r\cos^2\th + r\sin^2\th \\&amp;= r<br>
 \end{aligned}$$</p>
-<p>1 &ndash;&gt; 3<br>
+<p>$(1 \longrightarrow 3)$<br>
 $x(\a,\b)=r\cos\th=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}\cdot \cos\tup{\frac{\a+\b}{2}}$<br>
 $y(\a,\b)=r\sin\th=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}\cdot \sin\tup{\frac{\a+\b}{2}}$<br>
 $$\begin{aligned}<br>

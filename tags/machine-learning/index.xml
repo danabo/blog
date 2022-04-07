@@ -90,25 +90,25 @@ $$&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;We can reframe these sampling methods as different coordinate systems over the same space of chords:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;$(\a, \b) \in \set{\a&#39;,\b&#39;\in[0,2\pi) \mid \b&#39; \geq \a&#39;}$&lt;/li&gt;
+&lt;li&gt;$(\a, \b) \in \set{(\a&#39;,\b&#39;)\in[0,2\pi)^2 \mid \b&#39; \geq \a&#39;}$&lt;/li&gt;
 &lt;li&gt;$r \in (0,1],\ \th \in [0,2\pi)$&lt;/li&gt;
 &lt;li&gt;$(x, y) \in \overline{B}_1(0,0) = \set{(x&#39;,y&#39;) \in \R^2 \mid x&#39;^2+y&#39;^2 \leq 1}$&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Let&amp;rsquo;s calculate the Jacobians for some of the transformations between these coordinates.&lt;/p&gt;
-&lt;p&gt;1 &amp;ndash;&amp;gt; 2&lt;br&gt;
-$r(\a,\b)=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}$&lt;br&gt;
+&lt;p&gt;$(1 \longrightarrow 2)$&lt;br&gt;
 $\th(\a,\b)=\frac{\a+\b}{2}$&lt;br&gt;
+$r(\a,\b)=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}$&lt;br&gt;
 (&lt;a href=&#34;https://en.wikipedia.org/wiki/Law_of_cosines&#34;target=&#34;_blank&#34;&gt;Law of cosines&lt;/a&gt;,  where $c$ is the chord length and $r^2 = 1-(c/2)^2$)&lt;br&gt;
 $$\begin{aligned}&lt;br&gt;
 \pdiff{(\th,r)}{(\a,\b)}&amp;amp;=\det\pmatrix{\pdiff{\th}{\a}&amp;amp;\pdiff{\th}{\b}\\\pdiff{r}{\a}&amp;amp;\pdiff{r}{\b}}\\&amp;amp;=\det\pmatrix{\frac{1}{2}&amp;amp;\frac{1}{2}\\ -\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}} &amp;amp; \frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}}}\\&amp;amp;=\frac{\sin (\alpha -\beta )}{2^{3/2} \sqrt{\cos (\alpha -\beta )+1}}&lt;br&gt;
 \end{aligned}$$&lt;/p&gt;
-&lt;p&gt;2 &amp;ndash;&amp;gt; 3&lt;br&gt;
+&lt;p&gt;$(2 \longrightarrow 3)$&lt;br&gt;
 $x(r,\th) = r\cos\th$&lt;br&gt;
 $y(r,\th) = r\sin\th$&lt;br&gt;
 $$\begin{aligned}&lt;br&gt;
 \pdiff{(x,y)}{(\th,r)}&amp;amp;=\pdiff{(x,y)}{(r,\th)}\\&amp;amp;=\det\pmatrix{\pdiff{x}{r}&amp;amp;\pdiff{x}{\th}\\\pdiff{y}{r}&amp;amp;\pdiff{y}{\th}}\\&amp;amp;=\det\pmatrix{\cos\th &amp;amp; -r\sin\th \\ \sin\th &amp;amp; r\cos\th} \\&amp;amp;= r\cos^2\th + r\sin^2\th \\&amp;amp;= r&lt;br&gt;
 \end{aligned}$$&lt;/p&gt;
-&lt;p&gt;1 &amp;ndash;&amp;gt; 3&lt;br&gt;
+&lt;p&gt;$(1 \longrightarrow 3)$&lt;br&gt;
 $x(\a,\b)=r\cos\th=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}\cdot \cos\tup{\frac{\a+\b}{2}}$&lt;br&gt;
 $y(\a,\b)=r\sin\th=\sqrt{\frac{1}{2}+\frac{1}{2}\cos(\b-\a)}\cdot \sin\tup{\frac{\a+\b}{2}}$&lt;br&gt;
 $$\begin{aligned}&lt;br&gt;
@@ -449,7 +449,7 @@ $$&lt;/p&gt;
 &lt;p&gt;for all regions $R$ and times $t\in\R$. We can &lt;a href=&#34;https://en.wikipedia.org/wiki/Probability_density_function#Densities_associated_with_multiple_variables&#34;target=&#34;_blank&#34;&gt;explicitly derive the density&lt;/a&gt; in terms of measure $\mu_t$ as&lt;/p&gt;
 &lt;p&gt;$$\r(\o, t) = \frac{\dd^{N}}{\dd \o_1\dots \dd \o_{N}}\mu_t\big(\G(\o_1,\dots,\o_{N})\big)\,,$$&lt;/p&gt;
 &lt;p&gt;where $\G(\o_1,\dots,\o_{N}) = \prod_{i=1}^{N}(-\infty,\o_i]$ is a hyper-quadrant with origin at $(\o_1,\dots,\o_{N})$.&lt;/p&gt;
-&lt;h1 id=&#34;statement-of-the-theorem&#34;&gt;Statement Of The Theorem&lt;/h1&gt;
+&lt;h1 id=&#34;liouvilles-theorem&#34;&gt;Liouville&amp;rsquo;s Theorem&lt;/h1&gt;
 &lt;p&gt;As outlined above, suppose we have a system described by &lt;a href=&#34;https://en.wikipedia.org/wiki/Canonical_coordinates&#34;target=&#34;_blank&#34;&gt;canonical coordinates&lt;/a&gt; $\vec{\o}=(\vec{q},\vec{p})=(q_1,\dots,q_n,p_1,\dots,p_n)$ and a &lt;a href=&#34;https://en.wikipedia.org/wiki/Hamiltonian_mechanics&#34;target=&#34;_blank&#34;&gt;Hamiltonian&lt;/a&gt; $H$. Also suppose we are given some density function $\r(\vec{q},\vec{p},t)$, a function of coordinates and time, which obeys the time-evolution induced by $\H$ (as explained above in &lt;a href=&#34;#measure&#34;&gt;#Measure&lt;/a&gt;). That is to say, the density must satisfy $\int_R \r(\vec{\o}, t)\ \dd^{2n}{\vec{\o}}=\int_{R&#39;} \r(\vec{\o}, t&#39;)\ \dd^{2n}{\vec{\o}}$ for all regions $R$ and times $t,t&#39;$, where $R&#39;={\t_{t\to t&#39;}(R)}$ and $\t_{t\to t&#39;}$ is the propagator induced by $H$ mapping time $t$ to time $t&#39;$.&lt;/p&gt;
 &lt;p&gt;If the system is isolated and has constant total energy (obeys conservation of energy), then &lt;a href=&#34;https://en.wikipedia.org/wiki/Liouville%27s_theorem_%28Hamiltonian%29#Liouville_equations&#34;target=&#34;_blank&#34;&gt;Liouville&amp;rsquo;s Theorem states&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
@@ -567,7 +567,7 @@ $$\begin{aligned}&lt;br&gt;
 \int_R \r(\vec{\o},t)\ \dd^{2n} \vec{\o} &amp;amp;= \int_{T(R)} \pdiff{(T(\vec{\o}))}{(\vec{\o})}\r\tup{T^{-1}\tup{\vec{z}},t}\ \dd^{2n} \vec{z} \\&amp;amp;= \int_{T(R)} \r\tup{T^{-1}\tup{\vec{z}},t}\ \dd^{2n} \vec{z}\,,&lt;br&gt;
 \end{aligned}$$&lt;/p&gt;
 &lt;p&gt;and so naively applying the coordinate change to $\r$ s.t. $\tilde{\r}(\vec{z},t)=\r\tup{T^{-1}\tup{\vec{z}},t}$ gives us the correct density in the transformed coordinates. If $\r=\r_0$, then $\tilde{\r}=\r_0$, and so the uniform density is preserved under the transformation.&lt;/p&gt;
-&lt;h3 id=&#34;liouvilles-theorem&#34;&gt;Liouville&amp;rsquo;s theorem&lt;/h3&gt;
+&lt;h3 id=&#34;liouville-proof-sketch&#34;&gt;Liouville proof sketch&lt;/h3&gt;
 &lt;p&gt;Liouville&amp;rsquo;s theorem is a special case of the above result. Time-evolution ends up being a canonical transformation, so long as energy is conserved in the system (i.e. the Hamiltonian is constant along every trajectory). Thus density is preserved through time-evolution, i.e. density is constant along a given trajectory. That is Liouville&amp;rsquo;s theorem.&lt;/p&gt;
 &lt;p&gt;There is a simple argument for why time-evolution is a canonical transformation. Since, for a valid physical model, we take as given that Hamilton&amp;rsquo;s equations are obeyed at all times and phase coordinates, then transforming the system through time preserves Hamilton&amp;rsquo;s equations, making that transformation canonical (by definition). This argument may seem a bit handwavy. There are formal proofs for this which go a bit out of scope of this post. However, I can outline a straightforward proof sketch.&lt;/p&gt;
 &lt;p&gt;Note that, unlike the canonical transformations we considered above, time-evolution is a not universally canonical transformation (canonical w.r.t. all Hamiltonians). One Hamiltonian&amp;rsquo;s time-evolution generally does not produce transformations that are canonical w.r.t. all Hamiltonians. So these time-translation transformations are examples of Hamiltonian-specific canonical transformations. See &lt;a href=&#34;https://danabo.github.io/blog/posts/liouville-supplimental-coordinate-transformations/#example-hamiltonian-specific&#34;&gt;Liouville Supplimental - Coordinate Transformations#example-hamiltonian-specific&lt;/a&gt;.&lt;/p&gt;
@@ -622,7 +622,7 @@ h(R&#39; \mid R) &amp;amp;= -\lg\frac{\mu_{\r_0}(R&#39;)}{\mu_{\r_0}(R)} \\&lt;b
 &amp;amp;= -\lg\frac{\int_{R&#39;}\dd^{2n}\vec{\o}}{\int_{R}\dd^{2n}\vec{\o}} \,.&lt;br&gt;
 \end{aligned}$$&lt;/p&gt;
 &lt;p&gt;So our information gain (and similarly change in entropy - see &lt;a href=&#34;&#34; class=&#34;broken&#34;&gt;Connecting Entropy And Information&lt;/a&gt;) of the system does not depend on $\r_0$. We can go ahead and use the Euclidean measure $\l=\mu_1$ with $\r_0=1$. Note that even if the measure of the entire phase space is infinite, i.e. $\l(\O)=\infty$, we still get finite quantities of information gain so long as the starting region $R$ has finite measure. That is to say, going from knowing that a gas is in a box to knowing that the gas is in a smaller box gives us finitely many bits of information. On the other hand, going from knowing nothing to knowing there is a gas in a box gives us infinite information, since in that case $R=\O$. Since we are not supposing we are randomly drawing states of the system, we do not need to work with normalizable measures. The measure here simply measures sizes of regions.&lt;/p&gt;
-&lt;p&gt;Note that statistical thermodynamics makes use of this coordinate-invariant measure result to justify using uniform measures on phase space. E.g. see &lt;a href=&#34;https://www.elsevier.com/books/statistical-mechanics/beale/978-0-12-382188-1&#34;target=&#34;_blank&#34;&gt;Statistical Mechanics 3rd ed.&lt;/a&gt; (Pathria &amp;amp; Beale) section 2.2. This relieves us from being restricted to equilibrium processes (which are ergodic) where the choice of measure is determined by &lt;a href=&#34;https://en.wikipedia.org/wiki/Ergodicity#Measure-preserving_dynamical_systems&#34;target=&#34;_blank&#34;&gt;measure invariance through time&lt;/a&gt;. Here the measure actually represents a frequentist distribution of states over time, via &lt;a href=&#34;https://en.wikipedia.org/wiki/Ergodicity&#34;target=&#34;_blank&#34;&gt;ergodicity&lt;/a&gt;. However, we can freely put a uniform measure on the phase space of an arbitrary non-equilibrium process, where that measure represents sizes of phase regions and is used to quantify information gain. This doesn&amp;rsquo;t, however, resolve the open problems in statistical mechanics and statistical thermodynamics, which have more to do with course-graining complexity. See &lt;a href=&#34;https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics&#34;&gt;https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics&lt;/a&gt; and &lt;a href=&#34;https://en.wikipedia.org/wiki/Renormalization_group&#34;&gt;https://en.wikipedia.org/wiki/Renormalization_group&lt;/a&gt;.&lt;/p&gt;</description>
+&lt;p&gt;Note that statistical thermodynamics makes use of this coordinate-invariant measure result to justify using uniform measures on phase space. E.g. see &lt;a href=&#34;https://www.elsevier.com/books/statistical-mechanics/beale/978-0-12-382188-1&#34;target=&#34;_blank&#34;&gt;Statistical Mechanics 4th ed.&lt;/a&gt; (Pathria &amp;amp; Beale) section 2.2. This relieves us from being restricted to equilibrium processes (which are ergodic) where the choice of measure is determined by &lt;a href=&#34;https://en.wikipedia.org/wiki/Ergodicity#Measure-preserving_dynamical_systems&#34;target=&#34;_blank&#34;&gt;measure invariance through time&lt;/a&gt;. Here the measure actually represents a frequentist distribution of states over time, via &lt;a href=&#34;https://en.wikipedia.org/wiki/Ergodicity&#34;target=&#34;_blank&#34;&gt;ergodicity&lt;/a&gt;. However, we can freely put a uniform measure on the phase space of an arbitrary non-equilibrium process, where that measure represents sizes of phase regions and is used to quantify information gain. This doesn&amp;rsquo;t, however, resolve the open problems in statistical mechanics and statistical thermodynamics, which have more to do with course-graining complexity. See &lt;a href=&#34;https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics&#34;&gt;https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics&lt;/a&gt; and &lt;a href=&#34;https://en.wikipedia.org/wiki/Renormalization_group&#34;&gt;https://en.wikipedia.org/wiki/Renormalization_group&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>
