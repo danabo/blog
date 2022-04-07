@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2022-04-07T13:37:05-07:00'
+lastmod: '2022-04-07T13:45:30-07:00'
 tags:
 - epistemology
 - information
@@ -208,7 +208,7 @@ $$
 h\_\\H(\\dom{\\H}{001}) = -\\lg\\par{\\frac{0}{1}} = \\infty\\,.
 $$
 
-We've maximized the amount of narrowing-down - it's infinite. But at the same time this defeats the actual goal of being maximally certain about predictions. Having an empty hypothesis set is a degenerate state. Clearly, too much information gain is bad. Is there an ideal trade-off?
+We've maximized the amount of narrowing-down - it's infinite. But at the same time this defeats the actual goal of being maximally certain about predictions. Having an empty hypothesis set is a degenerate state. Clearly, too much information gain is bad. Is there an ideal trade-off? That is a question I hope to explore in a future post (unpublished: {{< locallink "Information Gain Dynamics" >}}).
 
 
 ## Compound hypotheses
