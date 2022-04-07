@@ -359,7 +359,7 @@ $$</p>
 <li>$h_\mu(A \mid B) = -\lg \par{\frac{\mu(A \cap B)}{\mu(B)}}$</li>
 <li>$i_\mu(A, B) = \lg\par{\frac{\mu(A\cap B)\mu(\H)}{\mu(A)\mu(B)}}$</li>
 </ul>
-<p>&hellip; etc. Though, if $\mu(\H)$ is infinite or not defined (i.e. $\mu$ is not normalizable), then these quantities are not well defined.</p>
+<p>&hellip; etc. Though, if $\mu(\H)$ is infinite or not defined (i.e. $\mu$ is not normalizable), then these quantities are not well defined. However, that is alright, since my definition of information is based on the sets of possibilities involved. How those sets are quantified is secondary. That is to say, the intricacies of getting quantification of information to work out don&rsquo;t bear weight on what information actually is. I am not defining information as its quantity (Shannon information theory could be construed as doing that), and I don&rsquo;t necessarily require that information gain (and mutual information, etc.) is always quantifiable (its quantity could be undefined or infinite).</p>
 <h2 id="optimal-compression">Optimal Compression</h2>
 <p>Now we see that Bayesian information theory is mathematically equivalent to Shannon&rsquo;s information theory, where a probability measure $\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).</p>
 <p>However, what is the connection between narrowing down hypothesis sets and optimal compression? Given probability measure $\mu$ on $\H$, the $\mu$-probability of finite observation $x\in\X^*$ is $\mu(\dom{\H}{x})$. (We can abuse notation and write $\mu(x)$ where $x$ is shorthand for $\dom{\H}{x}$ when given as the argument to $\mu$.) Then is $h_\mu(\dom{\H}{x})$ the optimal compressed length of $x$?</p>
