@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2022-04-07T13:45:30-07:00'
+lastmod: '2022-04-07T14:11:21-07:00'
 tags:
 - epistemology
 - information
@@ -494,6 +494,13 @@ If we replace $\\abs{\\cdot}$ with probability measure $\\mu(\\cdot)$ everywhere
 - $\\mb{I}\_\\mu(\\mf{A}, \\mf{B}) = \\sum\_{A\\in\\mf{A}}\\sum\_{B\\in\\mf{B}} \\mu(A\\cap B) i\_\\mu(A, B)$
 
 where $A,B\\subseteq\\H$ and $\\mf{A},\\mf{B}$ are two partitions of $\\H$. Note that $\\abs{\\H}$ disappears because it becomes $\\mu(\\H) = 1$.
+
+If we don't use a normalized (probability) measure, i.e. $\\mu(\\H)$ is anything (except non-zero), then we can also calculate information quantities:
+- $h\_\\mu(A) = -\\lg \\par{\\frac{\\mu(A)}{\\mu(\\H)}}$
+- $h\_\\mu(A \\mid B) = -\\lg \\par{\\frac{\\mu(A \\cap B)}{\\mu(B)}}$
+- $i\_\\mu(A, B) = \\lg\\par{\\frac{\\mu(A\\cap B)\\mu(\\H)}{\\mu(A)\\mu(B)}}$
+
+... etc. Though, if $\\mu(\\H)$ is infinite or not defined (i.e. $\\mu$ is not normalizable), then these quantities are not well defined.
 
 ## Optimal Compression
 Now we see that Bayesian information theory is mathematically equivalent to Shannon's information theory, where a probability measure $\\mu$ is used to measure the sizes of hypothesis sets (sets of predictions).

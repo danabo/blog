@@ -1,6 +1,6 @@
 ---
 date: 2022-04-05
-lastmod: '2022-04-06T15:35:18-07:00'
+lastmod: '2022-04-07T14:13:00-07:00'
 tags:
 - thermodynamics
 - physics
@@ -132,7 +132,7 @@ Liouville's theorem is a statement about measures on phase space which obey Hami
 
 Briefly, a [measure](https://en.wikipedia.org/wiki/Measure_(mathematics)) $\\mu$ is a function from subsets of $\\O$ to non-negative real numbers which is only defined on certain so-called measurable subset (as a [partial function](https://en.wikipedia.org/wiki/Partial_function) $\\mu$ has the type signature $\\mu:2^\\O \\to \\R\_{\\geq 0}$). We assume that $\\O$ is a [measurable space](https://en.wikipedia.org/wiki/Measurable_space). For a primer on measure theory, see my [post on probability theory](http://zhat.io/articles/primer-probability-theory#primer-to-measure-theory).
 
-Throughout this post we suppose we are given a measure $\\mu$ on phase space $\\O$. Everything that follows does not assume any particular interpretation to the meaning of $\\mu$. Normalized measures can typically represent an i.i.d. stochastic drawing of the state of the system (i.e. frequentist interpretation), or the modeler's (you and I) state of belief about the system's state (called the Bayesian interpretation). I tend to think of these measures as simply providing a way to quantify the sizes (e.g. areas, volumes) of phase space regions (subsets of phase space). See {{< locallink "Bayesian information theory" >}} and {{< locallink "Physical Information" >}} for details on this interpretation. That means that I don't assume $\\mu$ is normalized, i.e. $\\mu(\\O)=1$, which is required for $\\mu$ to be a probability measure.
+Throughout this post we suppose we are given a measure $\\mu$ on phase space $\\O$. Everything that follows does not assume any particular interpretation to the meaning of $\\mu$. Normalized measures can typically represent an i.i.d. stochastic drawing of the state of the system (i.e. frequentist interpretation), or the modeler's (you and I) state of belief about the system's state (called the Bayesian interpretation). I tend to think of these measures as simply providing a way to quantify the sizes (e.g. areas, volumes) of phase space regions (subsets of phase space). See {{< locallink "Bayesian information theory" >}} and {{< locallink "Physical Information" >}} for details on this interpretation. That means that I don't assume $\\mu$ is normalized (which is required for $\\mu$ to be a probability measure), i.e. $\\mu(\\O)$ need not be $1$ and need not even be defined ($\\mu$ need not be not normalizable).
 
 To talk about time-evolving a measure, we need to assign a measure $\\mu\_t$ to every moment of time $t\\in\\R$. Let $R \\subseteq \\O$ be any measurable subset of phase space $\\O$, which I will henceforth simply refer to as a region, or phase region.
 
