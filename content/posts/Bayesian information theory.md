@@ -1,6 +1,6 @@
 ---
 date: 2021-04-09
-lastmod: '2022-04-07T13:30:21-07:00'
+lastmod: '2022-04-07T13:37:05-07:00'
 tags:
 - epistemology
 - information
@@ -161,7 +161,7 @@ $$
 $$
 
 
-There are more sequences in $\\H$ starting with $1$ than with $0$, and so $\\dom{H}{0}$ is a relatively smaller portion of $\\H$ than $\\dom{H}{1}$ is - specifically $\\dom{H}{0}$ is 1/4 of $\\H$ and $\\dom{H}{1}$ is 3/4 of $\\H$.
+There are more sequences in $\\H$ starting with $1$ than with $0$, and so $\\dom{\\H}{0}$ is a relatively smaller portion of $\\H$ (in terms of set cardinality) than $\\dom{\\H}{1}$ is - specifically $\\dom{\\H}{0}$ makes up 1/4 of the elements of $\\H$ and $\\dom{\\H}{1}$ makes up 3/4 of $\\H$.
 
 If the agent's goal is to make a prediction, it has incentive to narrow down as much of $\\H$ as possible to reduce prediction uncertainty, prior to making the prediction. Thus, for this particular $\\H$, the agent prefers to observe $0$ than $1$ as the first bit. In other words, smaller subsets $\\H$ are better because they also mean $\\H$ was narrowed down by a greater amount.
 
