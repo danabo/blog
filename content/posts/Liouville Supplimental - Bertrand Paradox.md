@@ -1,6 +1,6 @@
 ---
 date: 2022-04-05
-lastmod: '2022-04-05T13:54:12-07:00'
+lastmod: '2022-04-06T15:42:46-07:00'
 tags:
 - thermodynamics
 - physics
@@ -91,29 +91,29 @@ We are given three different sampling methods as a demonstration.
 
 
 We can reframe these sampling methods as different coordinate systems over the same space of chords:
-1. $(\\a, \\b) \\in \\set{\\a',\\b'\\in\[0,2\\pi) \\mid \\b' \\geq \\a'}$
+1. $(\\a, \\b) \\in \\set{(\\a',\\b')\\in\[0,2\\pi)^2 \\mid \\b' \\geq \\a'}$
 2. $r \\in (0,1\],\\ \\th \\in \[0,2\\pi)$
 3. $(x, y) \\in \\overline{B}\_1(0,0) = \\set{(x',y') \\in \\R^2 \\mid x'^2+y'^2 \\leq 1}$
 
 
 Let's calculate the Jacobians for some of the transformations between these coordinates.
 
-1 --> 2
-$r(\\a,\\b)=\\sqrt{\\frac{1}{2}+\\frac{1}{2}\\cos(\\b-\\a)}$
+$(1 \\longrightarrow 2)$
 $\\th(\\a,\\b)=\\frac{\\a+\\b}{2}$
+$r(\\a,\\b)=\\sqrt{\\frac{1}{2}+\\frac{1}{2}\\cos(\\b-\\a)}$
 ([Law of cosines](https://en.wikipedia.org/wiki/Law_of_cosines),  where $c$ is the chord length and $r^2 = 1-(c/2)^2$)
 $$\\begin{aligned}
 \\pdiff{(\\th,r)}{(\\a,\\b)}&=\\det\\pmatrix{\\pdiff{\\th}{\\a}&\\pdiff{\\th}{\\b}\\\\\\pdiff{r}{\\a}&\\pdiff{r}{\\b}}\\\\&=\\det\\pmatrix{\\frac{1}{2}&\\frac{1}{2}\\\\ -\\frac{\\sin (\\alpha -\\beta )}{2^{3/2} \\sqrt{\\cos (\\alpha -\\beta )+1}} & \\frac{\\sin (\\alpha -\\beta )}{2^{3/2} \\sqrt{\\cos (\\alpha -\\beta )+1}}}\\\\&=\\frac{\\sin (\\alpha -\\beta )}{2^{3/2} \\sqrt{\\cos (\\alpha -\\beta )+1}}
 \\end{aligned}$$
 
-2 --> 3
+$(2 \\longrightarrow 3)$
 $x(r,\\th) = r\\cos\\th$
 $y(r,\\th) = r\\sin\\th$
 $$\\begin{aligned}
 \\pdiff{(x,y)}{(\\th,r)}&=\\pdiff{(x,y)}{(r,\\th)}\\\\&=\\det\\pmatrix{\\pdiff{x}{r}&\\pdiff{x}{\\th}\\\\\\pdiff{y}{r}&\\pdiff{y}{\\th}}\\\\&=\\det\\pmatrix{\\cos\\th & -r\\sin\\th \\\\ \\sin\\th & r\\cos\\th} \\\\&= r\\cos^2\\th + r\\sin^2\\th \\\\&= r
 \\end{aligned}$$
 
-1 --> 3
+$(1 \\longrightarrow 3)$
 $x(\\a,\\b)=r\\cos\\th=\\sqrt{\\frac{1}{2}+\\frac{1}{2}\\cos(\\b-\\a)}\\cdot \\cos\\tup{\\frac{\\a+\\b}{2}}$
 $y(\\a,\\b)=r\\sin\\th=\\sqrt{\\frac{1}{2}+\\frac{1}{2}\\cos(\\b-\\a)}\\cdot \\sin\\tup{\\frac{\\a+\\b}{2}}$
 $$\\begin{aligned}

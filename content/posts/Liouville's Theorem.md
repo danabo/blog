@@ -1,6 +1,6 @@
 ---
 date: 2022-04-05
-lastmod: '2022-04-05T13:46:17-07:00'
+lastmod: '2022-04-06T15:35:18-07:00'
 tags:
 - thermodynamics
 - physics
@@ -165,7 +165,7 @@ where $\\G(\\o\_1,\\dots,\\o\_{N}) = \\prod\_{i=1}^{N}(-\\infty,\\o\_i\]$ is a h
 
 
 
-# Statement Of The Theorem
+# Liouville's Theorem
 As outlined above, suppose we have a system described by [canonical coordinates](https://en.wikipedia.org/wiki/Canonical_coordinates) $\\vec{\\o}=(\\vec{q},\\vec{p})=(q\_1,\\dots,q\_n,p\_1,\\dots,p\_n)$ and a [Hamiltonian](https://en.wikipedia.org/wiki/Hamiltonian_mechanics) $H$. Also suppose we are given some density function $\\r(\\vec{q},\\vec{p},t)$, a function of coordinates and time, which obeys the time-evolution induced by $\\H$ (as explained above in [#Measure](#measure)). That is to say, the density must satisfy $\\int\_R \\r(\\vec{\\o}, t)\\ \\dd^{2n}{\\vec{\\o}}=\\int\_{R'} \\r(\\vec{\\o}, t')\\ \\dd^{2n}{\\vec{\\o}}$ for all regions $R$ and times $t,t'$, where $R'={\\t\_{t\\to t'}(R)}$ and $\\t\_{t\\to t'}$ is the propagator induced by $H$ mapping time $t$ to time $t'$.
 
 
@@ -351,7 +351,7 @@ $$\\begin{aligned}
 and so naively applying the coordinate change to $\\r$ s.t. $\\tilde{\\r}(\\vec{z},t)=\\r\\tup{T^{-1}\\tup{\\vec{z}},t}$ gives us the correct density in the transformed coordinates. If $\\r=\\r\_0$, then $\\tilde{\\r}=\\r\_0$, and so the uniform density is preserved under the transformation.
 
 
-### Liouville's theorem
+### Liouville proof sketch
 
 Liouville's theorem is a special case of the above result. Time-evolution ends up being a canonical transformation, so long as energy is conserved in the system (i.e. the Hamiltonian is constant along every trajectory). Thus density is preserved through time-evolution, i.e. density is constant along a given trajectory. That is Liouville's theorem.
 
@@ -448,6 +448,6 @@ h(R' \\mid R) &= -\\lg\\frac{\\mu\_{\\r\_0}(R')}{\\mu\_{\\r\_0}(R)} \\\\
 
 So our information gain (and similarly change in entropy - see {{< locallink "Connecting Entropy And Information" >}}) of the system does not depend on $\\r\_0$. We can go ahead and use the Euclidean measure $\\l=\\mu\_1$ with $\\r\_0=1$. Note that even if the measure of the entire phase space is infinite, i.e. $\\l(\\O)=\\infty$, we still get finite quantities of information gain so long as the starting region $R$ has finite measure. That is to say, going from knowing that a gas is in a box to knowing that the gas is in a smaller box gives us finitely many bits of information. On the other hand, going from knowing nothing to knowing there is a gas in a box gives us infinite information, since in that case $R=\\O$. Since we are not supposing we are randomly drawing states of the system, we do not need to work with normalizable measures. The measure here simply measures sizes of regions.
 
-Note that statistical thermodynamics makes use of this coordinate-invariant measure result to justify using uniform measures on phase space. E.g. see [Statistical Mechanics 3rd ed.](https://www.elsevier.com/books/statistical-mechanics/beale/978-0-12-382188-1) (Pathria & Beale) section 2.2. This relieves us from being restricted to equilibrium processes (which are ergodic) where the choice of measure is determined by [measure invariance through time](https://en.wikipedia.org/wiki/Ergodicity#Measure-preserving_dynamical_systems). Here the measure actually represents a frequentist distribution of states over time, via [ergodicity](https://en.wikipedia.org/wiki/Ergodicity). However, we can freely put a uniform measure on the phase space of an arbitrary non-equilibrium process, where that measure represents sizes of phase regions and is used to quantify information gain. This doesn't, however, resolve the open problems in statistical mechanics and statistical thermodynamics, which have more to do with course-graining complexity. See https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics and https://en.wikipedia.org/wiki/Renormalization_group.
+Note that statistical thermodynamics makes use of this coordinate-invariant measure result to justify using uniform measures on phase space. E.g. see [Statistical Mechanics 4th ed.](https://www.elsevier.com/books/statistical-mechanics/beale/978-0-12-382188-1) (Pathria & Beale) section 2.2. This relieves us from being restricted to equilibrium processes (which are ergodic) where the choice of measure is determined by [measure invariance through time](https://en.wikipedia.org/wiki/Ergodicity#Measure-preserving_dynamical_systems). Here the measure actually represents a frequentist distribution of states over time, via [ergodicity](https://en.wikipedia.org/wiki/Ergodicity). However, we can freely put a uniform measure on the phase space of an arbitrary non-equilibrium process, where that measure represents sizes of phase regions and is used to quantify information gain. This doesn't, however, resolve the open problems in statistical mechanics and statistical thermodynamics, which have more to do with course-graining complexity. See https://en.wikipedia.org/wiki/Non-equilibrium_thermodynamics#Difference_between_equilibrium_and_non-equilibrium_thermodynamics and https://en.wikipedia.org/wiki/Renormalization_group.
 
 
