@@ -1,10 +1,10 @@
 ---
 date: 2022-04-05
-lastmod: '2022-04-06T15:42:46-07:00'
+lastmod: '2022-06-21T18:59:44-07:00'
 tags:
 - thermodynamics
 - physics
-title: 'Liouville Supplimental: Bertrand Paradox'
+title: 'Liouville Supplemental: Bertrand Paradox'
 ---
 
 I reframe the [Bertrand paradox](https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)) as the statement that uniformity of measure is relative to choice of coordinate system.

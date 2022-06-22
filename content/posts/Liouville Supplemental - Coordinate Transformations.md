@@ -1,10 +1,10 @@
 ---
 date: 2022-04-05
-lastmod: '2022-04-05T13:50:48-07:00'
+lastmod: '2022-06-21T18:59:30-07:00'
 tags:
 - thermodynamics
 - physics
-title: 'Liouville Supplimental: Coordinate Transformations'
+title: 'Liouville Supplemental: Coordinate Transformations'
 ---
 
 This is supplemental material for {{< locallink "Liouville's Theorem" >}}. Specifically I go through a few examples of phase space transformations, canonical and non-canonical. I also show that we can turn arbitrary configuration space transformations into canonical phase space transformations, a result that will be useful for my discussion about the Bertrand paradox ({{< locallink "Liouville's Theorem" "the-bertrand-paradox" >}}). <!--more-->

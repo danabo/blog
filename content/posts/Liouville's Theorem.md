@@ -1,6 +1,6 @@
 ---
 date: 2022-04-05
-lastmod: '2022-04-07T14:13:00-07:00'
+lastmod: '2022-06-21T18:59:41-07:00'
 tags:
 - thermodynamics
 - physics
@@ -271,7 +271,7 @@ for all $\\tilde{\\s} \\in \\tilde{\\Sigma}$, all $i=1,\\dots,n$ and all $\\hat{
 
 A coordinate system is canonical if Hamilton's equations hold in that coordinate system, and a canonical transformation applied to canonical coordinates produces canonical coordinates.
 
-For some intuition pumps, see {{< locallink "Liouville Supplimental - Coordinate Transformations" "example-2d-phase-space" >}} and {{< locallink "Liouville Supplimental - Coordinate Transformations" "example-non-canonical" >}}
+For some intuition pumps, see {{< locallink "Liouville Supplemental - Coordinate Transformations" "example-2d-phase-space" >}} and {{< locallink "Liouville Supplemental - Coordinate Transformations" "example-non-canonical" >}}
 
 
 
@@ -357,7 +357,7 @@ Liouville's theorem is a special case of the above result. Time-evolution ends u
 
 There is a simple argument for why time-evolution is a canonical transformation. Since, for a valid physical model, we take as given that Hamilton's equations are obeyed at all times and phase coordinates, then transforming the system through time preserves Hamilton's equations, making that transformation canonical (by definition). This argument may seem a bit handwavy. There are formal proofs for this which go a bit out of scope of this post. However, I can outline a straightforward proof sketch. 
 
-Note that, unlike the canonical transformations we considered above, time-evolution is a not universally canonical transformation (canonical w.r.t. all Hamiltonians). One Hamiltonian's time-evolution generally does not produce transformations that are canonical w.r.t. all Hamiltonians. So these time-translation transformations are examples of Hamiltonian-specific canonical transformations. See {{< locallink "Liouville Supplimental - Coordinate Transformations" "example-hamiltonian-specific" >}}.
+Note that, unlike the canonical transformations we considered above, time-evolution is a not universally canonical transformation (canonical w.r.t. all Hamiltonians). One Hamiltonian's time-evolution generally does not produce transformations that are canonical w.r.t. all Hamiltonians. So these time-translation transformations are examples of Hamiltonian-specific canonical transformations. See {{< locallink "Liouville Supplemental - Coordinate Transformations" "example-hamiltonian-specific" >}}.
 
 
 
@@ -417,23 +417,23 @@ $$
 
 A surprising result is that phase space measure is preserved under arbitrary change of configuration space coordinates, so long as we choose the right corresponding momentum transformation so that the phase space transformation is canonical.
 
-See {{< locallink "Liouville Supplimental - Coordinate Transformations" "arbitrary-configuration-space-transformations" >}}.
+See {{< locallink "Liouville Supplemental - Coordinate Transformations" "arbitrary-configuration-space-transformations" >}}.
 
 ## Hamiltonian specific canonical transformations
 
 Previously we derived transformations that are canonical for all Hamiltonians. However, there are yet more canonical transformations, specifically those which are specific to a given Hamiltonian.
 
-See {{< locallink "Liouville Supplimental - Coordinate Transformations" "hamiltonian-specific-canonical" >}}.
+See {{< locallink "Liouville Supplemental - Coordinate Transformations" "hamiltonian-specific-canonical" >}}.
 
 # Entropy And The Bertrand Paradox
 
 [Boltzmann entropy](https://en.wikipedia.org/wiki/Entropy_(statistical_thermodynamics)#Boltzmann's_principle) is proportional to the log of the size of a phase region. Entropy as such already appears to have an observer-arbitrary aspect to it, since the choice of phase region that describes a system depends on the observer's state of knowledge (or their goals, see {{< locallink "The Reversibility Problem" "the-interpretation-of-state-regions" >}}). The observer-arbitrariness of entropy is only compounded further if the choice of measure, for measuring sizes of phase regions, is also unconstrained and arbitrarily chosen. Luckily, canonical coordinates get us out of the latter conundrum.
 
-It would make sense to follow the [principle of indifference](https://en.wikipedia.org/wiki/Principle_of_indifference#Application_to_continuous_variables) and always require a uniform measure on phase space. However, uniformity of measure depends on our chosen coordinate system. This problem can be viewed as a generalization of the [Bertrand paradox](https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)). See {{< locallink "Liouville Supplimental - Bertrand Paradox" >}}. This poses a problem since physics is coordinate system agnostic - there is no preferred coordinate system. 
+It would make sense to follow the [principle of indifference](https://en.wikipedia.org/wiki/Principle_of_indifference#Application_to_continuous_variables) and always require a uniform measure on phase space. However, uniformity of measure depends on our chosen coordinate system. This problem can be viewed as a generalization of the [Bertrand paradox](https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)). See {{< locallink "Liouville Supplemental - Bertrand Paradox" >}}. This poses a problem since physics is coordinate system agnostic - there is no preferred coordinate system. 
 
 You might be tempted to propose that we express everything in Cartesian coordinates, but what is considered as "Cartesian" is not in general well defined. While we might be able to take as primitive the idea that space around us (without relativistic gravitational forces) is flat, and so placing a grid on 3D space gives us Cartesian coordinates. However, when dealing with the generalized coordinates of an arbitrary system, the relationship between those coordinates and physical 3D space becomes complex. For example, we could have coordinates representing the orientations and positions of movable rigid parts in a compound structure. Or, we might be modeling the configuration of molecular structures, with various intermolecular orientations and relationships. Expressing any of that in Cartesian spatial coordinates is difficult to say the least.
 
-Luckily, we don't need to bother with any of that. The result above in [#Measure Preservation](#measure-preservation), and moreover in {{< locallink "Liouville Supplimental - Coordinate Transformations" "arbitrary-configuration-space-transformations" >}}, tells us that no matter what coordinate system we put on configuration space, uniform measure in *phase space* will be preserved if we change configuration coordinates to anything else. Our only condition is that our phase space coordinates be canonical for the system in question, which is already taken as given in most circumstances (and if that is not true, there are many other complications to deal with).
+Luckily, we don't need to bother with any of that. The result above in [#Measure Preservation](#measure-preservation), and moreover in {{< locallink "Liouville Supplemental - Coordinate Transformations" "arbitrary-configuration-space-transformations" >}}, tells us that no matter what coordinate system we put on configuration space, uniform measure in *phase space* will be preserved if we change configuration coordinates to anything else. Our only condition is that our phase space coordinates be canonical for the system in question, which is already taken as given in most circumstances (and if that is not true, there are many other complications to deal with).
 
 This neat property of classical mechanics also allows us to uniquely quantify information about physical systems. In {{< locallink "Physical Information" >}} I define what it means to have information about a system. Basically, if we've narrowed down the state of the system to some subset of state space (phase space), then we have information. But if we want to quantify how much information we have (allowing us to invoke all of the machinery of Shannon's information theory, see {{< locallink "Physical Information" "shannon-quantities" >}}), we need to choose a measure on state space. If there is nothing constraining our choice of measure, our quantities of information are not very ... informative.
 

@@ -1,6 +1,6 @@
 ---
 date: 2022-06-21
-lastmod: '2022-06-21T18:32:40-07:00'
+lastmod: '2022-06-21T19:20:16-07:00'
 tags:
 - thermodynamics
 - physics
@@ -75,11 +75,11 @@ $$
 
 In this post I will interpret entropy as measuring modeling uncertainty about some system, as in {{< locallink "The Reversibility Problem" >}}, {{< locallink "Why Doesn't Uncopying Defeat The 2nd Law" >}} and {{< locallink "Reversible Szilard Cycle Problem" >}}.
 
-To recap, the state of some system we are modeling is described by a real-valued tuple $\\o  = (\\o\_1,\\o\_2,\\dots,\\o\_{2n}) = (q\_1, q\_n, p\_1, p\_n) \\in \\O = \\R^{2n}$, where $\\O$ is the state space of that system. The system's time-evolution is defined by a family of functions, $\\t\_\\Dt:\\O\\to\\O$, called propagators, where each $\\t\_\\Dt$ maps states at time $t$ to time $t+\\Dt$ (for all $t\\in\\R$, making these propagators time-independent.)
+To recap, the state of some system we are modeling is described by a real-valued tuple $\\o  = (\\o\_1,\\o\_2,\\dots,\\o\_{2n}) = (q\_1, q\_n, p\_1, p\_n) \\in \\O \\subseteq \\R^{2n}$, where $\\O$ is the state space of that system. The system's time-evolution is defined by a family of functions, $\\set{\\t\_\\Dt\\mid\\Dt\\in\\R}$, called propagators, where each $\\t\_\\Dt:\\O\\to\\O$ maps states at time $t$ to time $t+\\Dt$ (for all $t\\in\\R$, making these propagators time-independent.)
 
 Suppose we know that the system is initialized in some state region $\\G\_0 \\subseteq \\O$, i.e. we know that $\\o\_0 \\in \\G\_0$ where $\\o\_0 \\in \\O$ is the initial state of the system. We know this either by performing a measurement on the system which produces only partial information, or by assumption. Then at any time $t$, we know that the state of the system is $\\o\_t \\in \\G\_t = \\t\_t(\\G\_0)$, assuming the propagator $\\t\_t$ is the correct time-evolution of the system.
 
-Let $\\mu$ be a uniform measure on $\\O$, i.e. $\\mu$ is defined by some constant density function on $\\O$. Then by Liouville $\\mu$ is uniform under any canonical change of coordinates. See {{< locallink "Liouville's Theorem" "uniform-measure" >}}.
+Let $\\mu$ be a uniform measure on $\\O$ (need not be normalized), i.e. $\\mu$ is defined by some constant density function on $\\O$ (see {{< locallink "Liouville's Theorem" "uniform-measure" >}}). Then by Liouville $\\mu$ is uniform under any canonical change of coordinates. See {{< locallink "Liouville's Theorem" "measure-preservation" >}}.
 
 Given two state regions, $\\G\_A\\subseteq\\O$ and $\\G\_B\\subseteq\\O$, we can quantify their relative size difference with the fraction $\\mu(\\G\_A)/\\mu(\\G\_B)$. Or expressed in the unit of *bits*, 
 
@@ -87,13 +87,21 @@ $$
 \\D h = \\lg\\tup{\\frac{\\mu(\\G\_A)}{\\mu(\\G\_B)}}
 $$
 
-which is positive when $\\mu(\\G\_A) > \\mu(\\G\_B)$ and $0$ when $\\mu(\\G\_A) = \\mu(\\G\_B)$. Then $\\D h$ is the number of halvings to go from $\\G\_A$ to $\\G\_B$. See {{< locallink "Bayesian information theory" >}}.
+(where $\\lg = \\log\_2$ is log base 2), which is positive when $\\mu(\\G\_A) > \\mu(\\G\_B)$ and $0$ when $\\mu(\\G\_A) = \\mu(\\G\_B)$. Then $\\D h$ is the number of halvings to go from $\\G\_A$ to $\\G\_B$. See {{< locallink "Bayesian information theory" >}}.
 
-Why do we care about the quantity $\\D h$ in the context of thermodynamics? Because of the connection to (ir)reversibility of the process in question. But what is that connection? If we want a system starting in state region $\\G\_0$ to reliably end up in the state region  $\\G\_\\text{final}$ at time $t$ (i.e. we want $\\t\_t(\\G\_0) \\subseteq \\G\_\\text{final}$), then we must have $\\mu(\\G\_0) \\leq \\mu(\\G\_\\text{final})$ if the system is isolated during this process. This is due to Liouville's theorem which tells us that phase volume is invariant to the time-evolution of an isolated system. That is to say, $\\mu(\\G\_0) = \\mu(\\t\_t(\\G\_0))$. So then $\\t\_t(\\G\_0) \\subseteq \\G\_\\text{final}$ implies $\\mu(\\G\_0) \\leq \\mu(\\G\_\\text{final})$.
+Why do we care about the quantity $\\D h$ in the context of thermodynamics? Because of the connection to (ir)reversibility of the process in question. But what is that connection? Suppose our goal is to have a system starting in state region $\\G\_0$ at time $0$ to reliably end up in the state region $\\G\_\\text{final}$ at time $t$ (i.e. we want $\\t\_t(\\G\_0) \\subseteq \\G\_\\text{final}$), then by Liouville we must have $\\mu(\\G\_0)=\\mu(\\t\_t(\\G\_0)) \\leq \\mu(\\G\_\\text{final})$ (if the system is isolated during this process). This is a necessary but not sufficient condition for what I'll call reliability.
 
-Then if $\\D h = \\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\G\_0)} < 0$ we know that there is no physically valid time-evolution function (obeying some Hamiltonian) which maps $\\G\_0$ into a subset of $\\G\_\\text{final}$ without external interaction. We can still have it be the case that $\\G\_\\text{final}\\subset \\t\_t(\\G\_0)$, which would mean that some of the trajectories starting in $\\G\_0$ end up outside of $\\G\_\\text{final}$. I would then say that this process unreliably puts the system into $\\G\_\\text{final}$. The extent to which this transition can be relied on is quantified by $\\D h$, with more negative $\\D h$ meaning less reliable and $\\D h\\geq 0$ being perfectly reliable.
+The formal problem statement is to choose a propagator family $\\set{\\t\_\\Dt\\mid\\Dt\\in\\R}$ (equivalently a Hamiltonian) that minimizes $\\mu(\\t\_t(\\G\_0) - \\G\_\\text{final})$ (minimize the quantity of $\\t\_t(\\G\_0)$ outside of $\\G\_\\text{final}$). We are restricted to physically valid propagators which also preserve the system's internal dynamics. E.g. the particles of a gas collide in the way the usually do, but we have freedom to chose how the container morphs over time (the container interacts with the gas particles via an external potential). See {{< locallink "The Reversibility Problem" "naive-formulation" >}}.
 
-Note that when $\\D h>0$, if we take $\\G\_\\text{final}$ to be the final state region of the system instead of $\\t\_t(\\G\_0)$, we discard $\\D h$ bits of information. Furthermore, the reverse transition $\\G\_\\text{final}$ to $\\G\_0$ would be impossible to perform reliably for the same reason, since $-\\D h < 0$. On the other hand, if we don't discard information and pose the reversal problem as $\\t\_t(\\G\_0)$ to $\\G\_0$, then $\\lg\\par{\\mu(\\G\_0)/\\t\_t(\\G\_0)} = 0$, which does not rule out such a reversal. But that is not enough to conclude the transformation is possible. See {{< locallink "Why Doesn't Uncopying Defeat The 2nd Law" >}}.
+Since $\\D h = \\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\G\_0)}=\\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\t\_t(\\G\_0))}$, if $\\D h = \\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\G\_0)} < 0$, then we know that there is no physically valid time-evolution function (obeying some Hamiltonian) which reliably maps $\\G\_0$ into a subset of $\\G\_\\text{final}$ without external interaction. No matter what propagators we choose, some of the trajectories starting in $\\G\_0$ must end up outside of $\\G\_\\text{final}$.
+
+On the other hand, if $\\D h \\geq 0$, then a perfectly reliable process from $\\G\_0$ into $\\G\_\\text{final}$ is not ruled out, but that is still not enough to conclude that perfect reliability is achievable. See {{< locallink "Why Doesn't Uncopying Defeat The 2nd Law" >}}.
+
+Take a moment to compare the statement, "$\\D h < 0$ implies that perfect reliability of the $\\G\_0$-to-$\\G\_\\text{final}$ transition is impossible," with the [2nd law of thermodynamics](https://en.wikipedia.org/wiki/The_2nd_Law) which roughly states, "entropy of an isolated system cannot decrease."
+
+
+
+
 
 # Observer information as entropy?
 
@@ -186,8 +194,7 @@ $$
 
 We more or less have the expression we want. It is now a matter of transforming some constants and scaling.
 
-As stated above, $\\D h$ is a quantity with the unit *bits* (where $\\lg = \\log\_2$ is log base 2).
-Boltzmann defined [thermodynamic entropy](https://en.wikipedia.org/wiki/Boltzmann's_entropy_formula) as $S = k\_B\\ln W$ where $W$ is the normalized phase volume (i.e. probability) of some state region (i.e. macrostate) and $k\_B$ is the  [Boltzmann constant](https://en.wikipedia.org/wiki/Boltzmann_constant). Then $\\D S$ and $\\D h$ differ by a scaling factor, specifically $\\D S = \\frac{k\_B}{\\lg e}\\D h$. Thermodynamic entropy $S$ has the units $J/K$ (Joules per Kelvin).
+As stated above, $\\D h$ is a quantity with the unit *bits* (log base 2). Boltzmann defined [thermodynamic entropy](https://en.wikipedia.org/wiki/Boltzmann's_entropy_formula) as $S = k\_B\\ln W$ where $W$ is the normalized phase volume (i.e. probability) of some state region (i.e. macrostate) and $k\_B$ is the  [Boltzmann constant](https://en.wikipedia.org/wiki/Boltzmann_constant). Then $\\D S$ and $\\D h$ differ by a scaling factor, specifically $\\D S = \\frac{k\_B}{\\lg e}\\D h$. Thermodynamic entropy $S$ has the units $J/K$ (Joules per Kelvin).
 
 
 A few additional transformations gives us the final entropy equation. Let's let $D=3$ (the gas is in 3D space), since the remaining transformations rely on this. We are using total energy $E$ instead of temperature to define our macrostates, but we can convert total energy to temperature using the [kinetic definition of temperature](https://en.wikipedia.org/wiki/Temperature#Kinetic_theory_approach), which says $T \\propto E/3N$, i.e. that temperature is proportional to the total kinetic energy averaged across all of the degrees of freedom of the system. Our gas has $3N$ degrees of freedom. The scaling factor determines the temperature units. In this case, we have  $T=\\frac{2}{3Nk\_B}E$. Then $T\_f/T\_i = E\_f/E\_i$ when $N\_f=N\_i$.
@@ -249,7 +256,7 @@ $$
 S = k\_B\\ln W
 $$
 
-where $W$ is the *probability* of the corresponding macrostate we wish to calculate the entropy for. Then $W$, and thus $S$, depends on the set of allowed macrostates of the system, because that determines the normalizing factor which makes our measure over states a probability measure. However, the change in entropy $\\D S = k\_B\\ln \\par{W\_2/W\_1}$  between two macrostates does not depend on the set of allowed macrostates, since the normalizing factor gets canceled out in the fraction $W\_2/W\_1$.
+where $W$ is the *probability* of the corresponding macrostate we wish to calculate the entropy for. Then $W$, and thus $S$, depends on the set of allowed macrostates of the system, because that determines the normalizing factor which makes our measure over states a probability measure. However, the change in entropy $\\D S = k\_B\\ln \\par{W\_2/W\_1}$  between two macrostates does not depend on the set of allowed macrostates, since the normalizing factor gets canceled out in the fraction $W\_2/W\_1$. See {{< locallink "Liouville's Theorem" "entropy-and-the-bertrand-paradox" >}}.
 
 Going back to the example of a gas in a container, if we are only considering gasses with temperature and volume within some bounded ranges, we can put a uniform probability distribution over all such gasses. The bounds we place on allowed temperatures and volumes will determine the normalizing factor on our measure, and thus scale $W$ for each macrostate accordingly.
 
