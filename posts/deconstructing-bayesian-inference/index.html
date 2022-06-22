@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Deconstructing Bayesian Inference</h1><p class="article date">March 31, 2021<span class="lastmod"> • edited April 12, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Deconstructing Bayesian Inference</h1><p class="article date">March 31, 2021<span class="lastmod"> • edited April 15, 2022</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
 \newcommand{\mb}{\mathbb}<br>
@@ -44,7 +44,7 @@ $$</p>
 <p>An &ldquo;agent&rdquo; here refers to a physical entity that tries to predict the future. An agent can be a robot or a biological organism. Either way, the agent receives a stream of sensory data over the course of its life. The agent&rsquo;s goal is to predict the future of this stream, in some capacity. Predictions about high-level objects and states of the world are made indirectly by predicting their effect on the sensory stream. That is to say, all prediction can be rolled into predicting the sensory stream. Though the agent may also act to influence the future of its sensory stream, for simplicity, I will consider only prediction and not actions.</p>
 <p>Let&rsquo;s work in discrete time.<br>
 Let $\X$ be the set of possible observations at each time-step.<br>
-The agent&rsquo;s sensory stream is a sequence $(x_1, x_2, x_3, \dots) \in \X^\infty$. I&rsquo;m assuming the sensory stream is infinite, i.e. the agent lives forever. This is not a reasonable assumption but it&rsquo;s workable. The alternative (assuming the stream is finite) is more complicated because it requires the agent to predict the end time of its own stream (presumably when it will die).</p>
+The agent&rsquo;s sensory stream is a sequence $(x_1, x_2, x_3, \dots) \in \X^\infty$. I&rsquo;m assuming the sensory stream is infinite, i.e. the agent lives forever. This is not a reasonable assumption but it&rsquo;s workable. The alternative (that the stream is finite) is more complicated because it requires the agent to predict the end time of its own stream (presumably when it will die).</p>
 <p>Let $\o\in\X^\infty$.<br>
 $\o_i$ denotes the $i$-th binary value in $\o$.<br>
 $\o_{(i_1,i_2,\dots)}$ denotes the sub-sequence of $\o$ indexed by the sequence $(i_1,i_2,\dots)$.<br>

@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Variational Solomonoff Induction</h1><p class="article date">February 18, 2021<span class="lastmod"> • edited June 1, 2021</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Variational Solomonoff Induction</h1><p class="article date">February 18, 2021<span class="lastmod"> • edited May 3, 2022</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\mb}{\mathbb}<br>
 \newcommand{\mc}{\mathcal}<br>
 \newcommand{\E}{\mb{E}}<br>
@@ -54,7 +54,7 @@ $$</p>
 <ul>
 <li>$z \in \mc{Z}$ is a hypothesis.</li>
 <li>$\tilde{\t} = \argmin{\t}\kl{q_\t(z)}{p(z \mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.</li>
-<li>$\t^* = \argmin{\t}\kl{q_\t(z)}{p(z)} - \E_{z\sim q_\t(z)}\left[\lg p(D \mid z)\right]$ is the approximation. This is what we find through optimization.</li>
+<li>$\t^* = \argmin{\t}\set{\kl{q_\t(z)}{p(z)} - \E_{z\sim q_\t(z)}\left[\lg p(D \mid z)\right]}$ is the approximation. This is what we find through optimization.</li>
 </ul>
 </li>
 </ul>
