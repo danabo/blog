@@ -30,6 +30,7 @@ import os.path
 import glob
 import copy
 import datetime
+import pytz
 import re
 import time
 import shutil
@@ -48,7 +49,8 @@ HUGO_HACKS = True
 
 
 def human_time(seconds_since_epoch):
-  return datetime.datetime.fromtimestamp(seconds_since_epoch).astimezone().replace(microsecond=0).isoformat()
+  tz = pytz.timezone('US/Pacific')  # Keep blog time in US pacific time, regardless of where I push posts from.
+  return datetime.datetime.fromtimestamp(seconds_since_epoch).astimezone(tz).replace(microsecond=0).isoformat()
 
 
 class Translator(object):

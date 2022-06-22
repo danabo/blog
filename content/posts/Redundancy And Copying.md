@@ -1,6 +1,6 @@
 ---
 date: 2021-06-23
-lastmod: '2022-02-09T16:37:51-08:00'
+lastmod: '2022-04-15T02:06:23-07:00'
 tags:
 - information
 - physics
@@ -132,7 +132,7 @@ For binary $k$-tuples $a, b \\in \\B^k$,
 
 ## Simple Copier - style 1
 
-Let's take a look at the simplest possible copier, where the state one one system is copied to the state of another system in one time-step. There are actually two different copiers of this size. I'll give them both.
+Let's take a look at the simplest possible copier, where the state of one system is copied to the state of another system in one time-step. There are actually two different copiers of this size. I'll give them both.
 
 We have two systems, A and B, with state spaces
 $A = \\B$

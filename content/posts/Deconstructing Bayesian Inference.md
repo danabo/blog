@@ -1,6 +1,6 @@
 ---
 date: 2021-03-31
-lastmod: '2021-04-12T09:55:57-07:00'
+lastmod: '2022-04-15T02:22:00-07:00'
 tags:
 - epistemology
 title: Deconstructing Bayesian Inference
@@ -48,7 +48,7 @@ An "agent" here refers to a physical entity that tries to predict the future. An
 
 Let's work in discrete time.
 Let $\\X$ be the set of possible observations at each time-step.
-The agent's sensory stream is a sequence $(x\_1, x\_2, x\_3, \\dots) \\in \\X^\\infty$. I'm assuming the sensory stream is infinite, i.e. the agent lives forever. This is not a reasonable assumption but it's workable. The alternative (assuming the stream is finite) is more complicated because it requires the agent to predict the end time of its own stream (presumably when it will die).
+The agent's sensory stream is a sequence $(x\_1, x\_2, x\_3, \\dots) \\in \\X^\\infty$. I'm assuming the sensory stream is infinite, i.e. the agent lives forever. This is not a reasonable assumption but it's workable. The alternative (that the stream is finite) is more complicated because it requires the agent to predict the end time of its own stream (presumably when it will die).
 
 Let $\\o\\in\\X^\\infty$.
 $\\o\_i$ denotes the $i$-th binary value in $\\o$.

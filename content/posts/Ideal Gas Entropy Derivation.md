@@ -1,0 +1,270 @@
+---
+date: 2022-06-21
+lastmod: '2022-06-21T18:32:40-07:00'
+tags:
+- thermodynamics
+- physics
+title: Ideal Gas Entropy Derivation
+---
+
+Derivation of the change in entropy formula for an ideal gas (used in the {{< locallink "Carnot Cycle" >}} post) from state space volumes. Discussion about connections between the observer's information about the gas and how that relates to the reversibility of transformations applied to the gas.
+
+<!--more-->
+
+$$
+\\newcommand{\\0}{\\mathrm{false}}
+\\newcommand{\\1}{\\mathrm{true}}
+\\newcommand{\\mb}{\\mathbb}
+\\newcommand{\\mc}{\\mathcal}
+\\newcommand{\\mf}{\\mathfrak}
+\\newcommand{\\and}{\\wedge}
+\\newcommand{\\or}{\\vee}
+\\newcommand{\\a}{\\alpha}
+\\newcommand{\\s}{\\sigma}
+\\newcommand{\\t}{\\tau}
+\\newcommand{\\th}{\\theta}
+\\newcommand{\\T}{\\Theta}
+\\newcommand{\\D}{\\Delta}
+\\newcommand{\\d}{\\delta}
+\\newcommand{\\dd}{\\text{d}}
+\\newcommand{\\pd}{\\partial}
+\\newcommand{\\o}{\\omega}
+\\newcommand{\\O}{\\Omega}
+\\newcommand{\\x}{\\xi}
+\\newcommand{\\z}{\\zeta}
+\\newcommand{\\fa}{\\forall}
+\\newcommand{\\ex}{\\exists}
+\\newcommand{\\X}{\\mc{X}}
+\\newcommand{\\Y}{\\mc{Y}}
+\\newcommand{\\Z}{\\mc{Z}}
+\\newcommand{\\P}{\\Psi}
+\\newcommand{\\y}{\\psi}
+\\newcommand{\\l}{\\lambda}
+\\newcommand{\\G}{\\Gamma}
+\\newcommand{\\B}{\\mb{B}}
+\\newcommand{\\m}{\\times}
+\\newcommand{\\E}{\\mb{E}}
+\\newcommand{\\R}{\\mb{R}}
+\\newcommand{\\H}{\\mc{H}}
+\\newcommand{\\L}{\\mc{L}}
+\\newcommand{\\e}{\\varepsilon}
+\\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
+\\newcommand{\\tup}\[1\]{\\left(#1\\right)}
+\\newcommand{\\par}{\\tup}
+\\newcommand{\\abs}\[1\]{\\left\\lvert#1\\right\\rvert}
+\\newcommand{\\vtup}\[1\]{\\left\\langle#1\\right\\rangle}
+\\newcommand{\\btup}\[1\]{\\left\[#1\\right\]}
+\\newcommand{\\inv}\[1\]{{#1}^{-1}}
+\\newcommand{\\ceil}\[1\]{\\left\\lceil#1\\right\\rceil}
+\\newcommand{\\dom}\[2\]{#1\_{\\mid #2}}
+\\newcommand{\\df}{\\overset{\\mathrm{def}}{=}}
+\\newcommand{\\up}\[1\]{^{(#1)}}
+\\newcommand{\\restr}\[1\]{\_{\\mid{#1}}}
+\\newcommand{\\dt}{{\\D t}}
+\\newcommand{\\Dt}{{\\D t}}
+\\newcommand{\\ddT}{{\\delta T}}
+\\newcommand{\\Mid}{\\,\\middle|\\,}
+\\newcommand{\\qed}{\\ \\ \\blacksquare}
+\\newcommand{\\p}{\\vec{p}}
+\\newcommand{\\q}{\\vec{q}}
+$$
+
+
+
+# Observer information and reversibility
+
+In this post I will interpret entropy as measuring modeling uncertainty about some system, as in {{< locallink "The Reversibility Problem" >}}, {{< locallink "Why Doesn't Uncopying Defeat The 2nd Law" >}} and {{< locallink "Reversible Szilard Cycle Problem" >}}.
+
+To recap, the state of some system we are modeling is described by a real-valued tuple $\\o  = (\\o\_1,\\o\_2,\\dots,\\o\_{2n}) = (q\_1, q\_n, p\_1, p\_n) \\in \\O = \\R^{2n}$, where $\\O$ is the state space of that system. The system's time-evolution is defined by a family of functions, $\\t\_\\Dt:\\O\\to\\O$, called propagators, where each $\\t\_\\Dt$ maps states at time $t$ to time $t+\\Dt$ (for all $t\\in\\R$, making these propagators time-independent.)
+
+Suppose we know that the system is initialized in some state region $\\G\_0 \\subseteq \\O$, i.e. we know that $\\o\_0 \\in \\G\_0$ where $\\o\_0 \\in \\O$ is the initial state of the system. We know this either by performing a measurement on the system which produces only partial information, or by assumption. Then at any time $t$, we know that the state of the system is $\\o\_t \\in \\G\_t = \\t\_t(\\G\_0)$, assuming the propagator $\\t\_t$ is the correct time-evolution of the system.
+
+Let $\\mu$ be a uniform measure on $\\O$, i.e. $\\mu$ is defined by some constant density function on $\\O$. Then by Liouville $\\mu$ is uniform under any canonical change of coordinates. See {{< locallink "Liouville's Theorem" "uniform-measure" >}}.
+
+Given two state regions, $\\G\_A\\subseteq\\O$ and $\\G\_B\\subseteq\\O$, we can quantify their relative size difference with the fraction $\\mu(\\G\_A)/\\mu(\\G\_B)$. Or expressed in the unit of *bits*, 
+
+$$
+\\D h = \\lg\\tup{\\frac{\\mu(\\G\_A)}{\\mu(\\G\_B)}}
+$$
+
+which is positive when $\\mu(\\G\_A) > \\mu(\\G\_B)$ and $0$ when $\\mu(\\G\_A) = \\mu(\\G\_B)$. Then $\\D h$ is the number of halvings to go from $\\G\_A$ to $\\G\_B$. See {{< locallink "Bayesian information theory" >}}.
+
+Why do we care about the quantity $\\D h$ in the context of thermodynamics? Because of the connection to (ir)reversibility of the process in question. But what is that connection? If we want a system starting in state region $\\G\_0$ to reliably end up in the state region  $\\G\_\\text{final}$ at time $t$ (i.e. we want $\\t\_t(\\G\_0) \\subseteq \\G\_\\text{final}$), then we must have $\\mu(\\G\_0) \\leq \\mu(\\G\_\\text{final})$ if the system is isolated during this process. This is due to Liouville's theorem which tells us that phase volume is invariant to the time-evolution of an isolated system. That is to say, $\\mu(\\G\_0) = \\mu(\\t\_t(\\G\_0))$. So then $\\t\_t(\\G\_0) \\subseteq \\G\_\\text{final}$ implies $\\mu(\\G\_0) \\leq \\mu(\\G\_\\text{final})$.
+
+Then if $\\D h = \\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\G\_0)} < 0$ we know that there is no physically valid time-evolution function (obeying some Hamiltonian) which maps $\\G\_0$ into a subset of $\\G\_\\text{final}$ without external interaction. We can still have it be the case that $\\G\_\\text{final}\\subset \\t\_t(\\G\_0)$, which would mean that some of the trajectories starting in $\\G\_0$ end up outside of $\\G\_\\text{final}$. I would then say that this process unreliably puts the system into $\\G\_\\text{final}$. The extent to which this transition can be relied on is quantified by $\\D h$, with more negative $\\D h$ meaning less reliable and $\\D h\\geq 0$ being perfectly reliable.
+
+Note that when $\\D h>0$, if we take $\\G\_\\text{final}$ to be the final state region of the system instead of $\\t\_t(\\G\_0)$, we discard $\\D h$ bits of information. Furthermore, the reverse transition $\\G\_\\text{final}$ to $\\G\_0$ would be impossible to perform reliably for the same reason, since $-\\D h < 0$. On the other hand, if we don't discard information and pose the reversal problem as $\\t\_t(\\G\_0)$ to $\\G\_0$, then $\\lg\\par{\\mu(\\G\_0)/\\t\_t(\\G\_0)} = 0$, which does not rule out such a reversal. But that is not enough to conclude the transformation is possible. See {{< locallink "Why Doesn't Uncopying Defeat The 2nd Law" >}}.
+
+# Observer information as entropy?
+
+Hopefully the above discussion elucidated the connection between an experimenter's state of information about a system and the reversibility of that system (from the experimenter's perspective). This motivates our interest in the quantity $\\lg(\\mu(\\G\_\\text{final}) / \\mu(\\G\_\\text{initial}))$ when our system is an $N$-particle gas which we want reliably transition from $\\G\_\\text{initial}$ to $\\G\_\\text{final}$ for the purposes of extracting work from heat energy, as illustrated in the {{< locallink "Carnot Cycle" >}}.
+
+In the Carnot cycle, we have a gas described by the macroscopic quantities of (spatial volume) $V$, temperature $T$, and number of particles $N$. This gas is operated on by a sequence of processes (phases), each of which have an initial gas state $(V\_i, T\_i, N\_i)$ and final gas state $(V\_f, T\_f, N\_f)$, where $N\_i=N\_f=N$ for a closed gas. For the remainder of this post, assume that $N$ is held fixed.
+
+For the purposes of determining the thermodynamic efficiency of the Carnot cycle, we used the quantity
+
+$$
+nR\\log\\par{\\frac{V\_f}{V\_i}} + nC\_V\\lg\\par{\\frac{T\_f}{T\_i}}
+$$
+
+which is defined as the thermodynamic change in entropy of the gas. Here, $C\_V$ is the [molar heat capacity at a constant volume](https://en.wikipedia.org/wiki/Molar_heat_capacity) (a constant that depends on the type of gas being considered), $R$ is the [gas constant](https://en.wikipedia.org/wiki/Gas_constant), and $n$ is the number of moles of gas, i.e. $n = N/A$ where $A$ is the [Avogadro number](https://en.wikipedia.org/wiki/Avogadro_number).
+
+References for change in entropy formula:
+- https://en.wikipedia.org/wiki/Entropy#Cooling_and_heating
+- https://www.grc.nasa.gov/WWW/K-12/airplane/entropy.html
+
+The next section of this post will derive this change in entropy formula. We suppose that the macroscopic state, or macrostate, $(V, T, N)$ identifies the gas's microscopic state, or microstate, $\\o \\in\\O$ as being in the state region comprised of all microstates which have volume $V$, temperature $T$, and number of particles $N$. In other words, macrostate is a state region (i.e. a set of states). Let $\\G(V, T, N)\\subseteq\\O$ be the macrostate (set of states) for $(V, T, N)$.
+
+With $\\mu$ being a uniform measure on $\\O$, we do indeed find that
+
+$$
+\\lg\\par{\\frac{\\mu(\\G(V\_f, T\_f, N\_f)}{\\mu(\\G(V\_i, T\_i, N\_i)}} \\propto nR\\log\\par{\\frac{V\_f}{V\_i}} + nC\_V\\lg\\par{\\frac{T\_f}{T\_i}}\\,.
+$$
+
+(This relationship ends up being approximate.)
+
+# Derivation of ideal gas entropy
+
+This derivation is similar to the one in "Statistical Physics of Particles" by Kardar, section 4.4 "The Ideal Gas".
+
+Let $\\O$ be the state space of all $N$ particle gasses, where $(\\q,\\p)=(\\q\_1,\\dots,\\q\_N,\\p\_1,\\dots,\\p\_N)\\in\\O$ with $\\q\_i$ and $\\p\_i$ being scalars, pairs, or 3-tuples, depending on whether we are working in 1D, 2D or 3D space. Let $D$ be the dimensionality of space so that $\\O=\\R^{DN}$. Each $\\o\\in\\O$ is a microstate.
+
+We have an ideal gas of $N$ particles at total kinetic energy $E$ and confined to a container with spatial volume $V$. This defines a macrostate $\\G(E,V,N)\\subseteq\\O$, which is the set of all microstates satisfying these criteria, specifically
+
+$$\\begin{aligned}
+\\G(E,V,N) = \\Bigg\\{(\\q,\\p)\\in\\O \\,\\,\\Bigg\\vert\\,  &\\Big(\\fa i\\in\\set{1,\\dots,N}:\\q\_i \\in \\text{container}\\Big)\\\\
+& \\text{and}\\ \\par{\\frac{1}{2m}\\sum\_{i=1}^N {\\p\_i}^n \\in \[E,E+\\e\]}\\Bigg\\}
+\\end{aligned}$$
+
+where $\\e>0$ is our uncertainty about the total energy (our measurement precision) and $\[E,E+\\e\]$ is the closed interval from $E$ to $E+\\e$.
+
+Let $\\mu$ be the uniform unit measure on $\\O$ (defined by constant density of 1 everywhere) w.r.t. our chosen unit of spatial length, so that the unit-hypercube has a $\\mu$-volume of 1. We want to find the volume of our macrostate $\\mu(\\G(E,V,N))$. We can do this by noticing that, (1) each particle position $q\_i$ independently occupies any point in the container with volume $V$, and (2) the momenta are constrained to lie on a spherical shell containing the surface of the $DN$-ball with radius $r = \\sqrt{2mE}$. This shell has thickness $\\D r = \\sqrt{2m(E+\\e)} - \\sqrt{2mE}$.  
+
+The [hypervolume](https://en.wikipedia.org/wiki/N-sphere#Volume_and_surface_area) of the unit $n$-ball with radius $r$ (interior volume of sphere in $n$ dimensions) is
+$$
+B\_n(r) = \\frac{\\pi^{\\frac{n}{2}}}{\\tup{\\frac{n}{2}}!}r^{n}\\,.
+$$
+
+(Here $n=DN$ and not the number of moles of gas.)
+
+
+Then the macrostate hypervolume is
+$$
+\\mu(\\G(E,V,N)) = V^N \\cdot\\left\[B\_{DN}\\par{\\sqrt{2m(E+\\e)}} - B\_{DN}\\par{\\sqrt{2mE}}\\right\]\\,.
+$$
+
+Expanding out the term in square brackets, we get
+
+$$\\begin{aligned}
+& B\_{n}\\par{\\sqrt{2m(E+\\e)}} - B\_{n}\\par{\\sqrt{2mE}} \\\\
+=\\ & \\frac{\\pi^{\\frac{n}{2}}}{\\tup{\\frac{n}{2}}!}\\par{2m}^{n/2}\\left\[\\par{E+\\e}^{n/2} - E^{n/2}\\right\]\\,.
+\\end{aligned}$$
+
+We can make a convenient approximation when $\\e$ is small. Using the [generalized binomial theorem](https://en.wikipedia.org/wiki/Binomial_theorem#Newton's_generalized_binomial_theorem), we have
+$$\\begin{aligned}
+& (E+\\e)^{n/2} - E^{n/2} \\\\
+=\\ & \\left\[\\sum\_{k=0}^{\\infty} {n/2\\choose k}E^{n/2-k}{\\e}^k\\right\] - E^{n/2} \\\\
+=\\ & \\par{E^{n/2} - E^{n/2}} + n/2\\par{E^{n/2-1}}\\e + {n/2\\choose 2}E^{n/2-2}{\\e}^2 + \\dots \\\\
+\\approx\\ & n/2\\par{E^{n/2-1}}\\e
+\\end{aligned}$$
+
+where $\\e^k\\approx 0$ for $k\\geq2$ if we assume that $\\e$ is small enough so that higher powers of $\\e$ are negligible (this is a 1st order approximation).
+
+(The generalized binomial theorem reduces to the standard binomial theorem for integer powers, i.e. when $n/2$ is an integer we have ${n/2\\choose k}=0$ for all $k>n/2$.)
+
+Plugging in our approximation (with $n=DN$), we have
+
+$$
+\\mu(\\G(E,V,N)) \\approx V^N\\frac{\\pi^{\\frac{DN}{2}}}{\\tup{\\frac{DN}{2}}!}\\par{2m}^{DN/2}\\frac{DN}{2}E^{DN/2-1}\\e
+$$
+
+Given two macrostates, $\\G(E\_i,V\_i,N)$ and $\\G(E\_f,V\_f,N)$, the log-ratio between their $\\mu$-sizes is approximately
+
+$$
+\\D h = \\lg\\par{\\frac{\\mu(\\G(E\_f,V\_f,N))}{\\mu(\\G(E\_i,V\_i,N))}} \\approx N\\lg\\par{\\frac{V\_f}{V\_i}} + (DN/2-1)\\lg\\par{\\frac{E\_f}{E\_i}}\\,.
+$$
+
+We more or less have the expression we want. It is now a matter of transforming some constants and scaling.
+
+As stated above, $\\D h$ is a quantity with the unit *bits* (where $\\lg = \\log\_2$ is log base 2).
+Boltzmann defined [thermodynamic entropy](https://en.wikipedia.org/wiki/Boltzmann's_entropy_formula) as $S = k\_B\\ln W$ where $W$ is the normalized phase volume (i.e. probability) of some state region (i.e. macrostate) and $k\_B$ is the  [Boltzmann constant](https://en.wikipedia.org/wiki/Boltzmann_constant). Then $\\D S$ and $\\D h$ differ by a scaling factor, specifically $\\D S = \\frac{k\_B}{\\lg e}\\D h$. Thermodynamic entropy $S$ has the units $J/K$ (Joules per Kelvin).
+
+
+A few additional transformations gives us the final entropy equation. Let's let $D=3$ (the gas is in 3D space), since the remaining transformations rely on this. We are using total energy $E$ instead of temperature to define our macrostates, but we can convert total energy to temperature using the [kinetic definition of temperature](https://en.wikipedia.org/wiki/Temperature#Kinetic_theory_approach), which says $T \\propto E/3N$, i.e. that temperature is proportional to the total kinetic energy averaged across all of the degrees of freedom of the system. Our gas has $3N$ degrees of freedom. The scaling factor determines the temperature units. In this case, we have  $T=\\frac{2}{3Nk\_B}E$. Then $T\_f/T\_i = E\_f/E\_i$ when $N\_f=N\_i$.
+
+Finally, we make use of the definitions of the [gas constant](https://en.wikipedia.org/wiki/Gas_constant), $R = Ak\_B=\\frac{N}{n}k\_B$, and the [monatomic constant volume molar heat capacity](https://en.wikipedia.org/wiki/Molar_heat_capacity#Monatomic_gases), $C\_V = \\frac{3}{2}R = \\frac{3N}{2n}k\_B$.
+
+Then 
+
+$$\\begin{aligned}
+\\D S = k\_B\\frac{\\D h}{\\lg(e)} &\\approx k\_BN\\ln\\par{\\frac{V\_f}{V\_i}} + k\_B(3N/2-1)\\ln\\par{\\frac{E\_f}{E\_i}} \\\\
+&= k\_BN\\lg\\par{\\frac{V\_f}{V\_i}} + k\_B(3N/2-1)\\lg\\par{\\frac{T\_f}{T\_i}} \\\\
+&\\approx k\_BN\\ln\\par{\\frac{V\_f}{V\_i}} + k\_B(3N/2)\\ln\\par{\\frac{T\_f}{T\_i}} \\\\
+&= nR\\ln\\par{\\frac{V\_f}{V\_i}} + nC\_V\\ln\\par{\\frac{T\_f}{T\_i}}\\,.
+\\end{aligned}$$
+
+The second approximation holds when $N$ is large so that $3N/2-1 \\approx 3N/2$.
+
+---
+
+As an amusing aside, we can view thermodynamic entropy as just having a different log base than $\\D h$, where
+
+$$
+S=k\_B\\frac{\\lg W}{\\lg(e)} = \\frac{\\lg W}{\\frac{1}{k\_B}\\lg(e)} = \\frac{\\lg W}{\\lg(e^{1/k\_B})} = \\log\_{e^{1/k\_B}} W\\,.
+$$
+
+We can see that thermodynamic entropy uses log base $e^{1/k\_B} \\approx \\exp(7.24297 \\times 10^{22})$, which is an insanely large number with $\\log\_{10}(\\exp(7.24297 \\times 10^{22})) \\approx 3.1456\\times 10^{22}$ digits in base 10. Then $\\D S$ measures the number of times we divide $\\mu$-size by $e^{1/k\_B}$ when we transform between two phase regions, instead of the number of halvings, i.e. number of times we divide by 2.
+
+In [natural units](https://en.wikipedia.org/wiki/Natural_units), $k\_B=1$.
+See https://en.wikipedia.org/wiki/Boltzmann_constant#Natural_units.
+
+## Temperature and uncertainty
+
+
+It may not be intuitively obvious why state region size should depend on temperature.
+
+Hopefully it is intuitive that state region size depends on volume. If the spatial coordinate $q$ is confined to an interval, then the marginal size of that region is proportional to the length of the interval. I.e. the larger the container the more possible states the gas can be in.
+
+{{< figure src="../../change_in_volume.jpg" width="400" caption="" >}}
+On the other hand, the temperature is proportional to the kinetic energy of each degree of freedom which is proportional to momentum squared. In other words, moving our state region up and down along a $p$ axis changes the temperature of the gas accordingly. But we are only translating the state region, rather than stretching or shrinking it, so how does the size of the state region change?
+
+{{< figure src="../../change_in_momentum.jpg" width="400" caption="" >}}
+Indeed, for a gas with one particle in 1D space, i.e. $DN = 1$, the state region size does not depend on temperature. 
+
+
+
+When $DN > 1$, changing the temperature (and thus total kinetic energy) changes the radius of a hyperspherical shell in $DN$-dimensional momentum space, which changes the hyper-surfacearea of that shell (which is proportional to the hypervolume of the shell when it has small thickness).
+
+![](</momentum_sphere.jpg>)
+# Absolute entropy
+I want to point out that entropy, $S$, and change in entropy, $\\D S$, are very different beasts.
+
+Going back to our information-theoretic perspective, we have $\\D h = \\lg\\tup{\\mu(\\G\_A)/\\mu(\\G\_B)}$ is the change in information (i.e. information gain) by going from state region $\\G\_A$ to state region $\\G\_B$. This implies we are viewing $h\_A=\\lg\\par{1/\\mu(\\G\_A)}$ and $h\_B=\\lg\\par{1/\\mu(\\G\_B)}$ as absolute quantities of information that $\\G\_A$ and $\\G\_B$ are respectively worth. This would be a valid perspective if the measure $\\mu$ were a probability measure where $\\mu(\\O)=1$. However, if the domain $\\O$ is, say $\\R^n$, then there does not exist a uniform probability measure. If we tried to normalized a given uniform measure $\\mu$, we'd find that $\\lg\\par{\\mu(\\O)/\\mu(\\G\_A)}=\\infty$, i.e. $\\G\_A$ is worth an infinite amount of information.
+
+One reason to prefer to only consider changes in information $\\D h$ rather than absolute information $h$ is so that we are free to put a uniform measure on $\\R^n$, have it be unnormalized, and don't need to care about the arbitrary choice of which uniform measure to use (each defined by a different choice of constant density). With Liouville's theorem we are assured that uniform measures are uniform in all canonical coordinate systems. Then $\\D h$ is a uniquely determined quantity just by stating that we are using a uniform measure on state space (but $h$ depends on our particular choice of uniform measure).
+
+Importantly, even when physicists are calculating an entropy $S$ for a system, this is not absolute in the sense that I mean. The [Boltzmann entropy formula](https://en.wikipedia.org/wiki/Boltzmann's_entropy_formula) is
+
+$$
+S = k\_B\\ln W
+$$
+
+where $W$ is the *probability* of the corresponding macrostate we wish to calculate the entropy for. Then $W$, and thus $S$, depends on the set of allowed macrostates of the system, because that determines the normalizing factor which makes our measure over states a probability measure. However, the change in entropy $\\D S = k\_B\\ln \\par{W\_2/W\_1}$  between two macrostates does not depend on the set of allowed macrostates, since the normalizing factor gets canceled out in the fraction $W\_2/W\_1$.
+
+Going back to the example of a gas in a container, if we are only considering gasses with temperature and volume within some bounded ranges, we can put a uniform probability distribution over all such gasses. The bounds we place on allowed temperatures and volumes will determine the normalizing factor on our measure, and thus scale $W$ for each macrostate accordingly.
+
+If we wanted to place no bounds, then we cannot have the measure be uniform and be a probability measure. We would either be stuck with the arbitrary choice of some non-uniform probability measure out of an infinite space of possible measures, or with the arbitrary choice of unnormalized uniform measure. The latter case is equivalent to defining absolute entropy as $S = k\_B\\ln W + \\text{constant}$, where the scaling factor on the uniform measure determines the constant offset. We can then see that this constant offset is quite irrelevant. Indeed, in the case of an ideal gas, the efficiency analysis of the {{< locallink "Carnot Cycle" >}} depends only on $\\D S$. 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
