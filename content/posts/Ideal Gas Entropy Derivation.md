@@ -1,6 +1,6 @@
 ---
 date: 2022-06-21
-lastmod: '2022-06-21T19:20:16-07:00'
+lastmod: '2022-06-23T11:34:12-07:00'
 tags:
 - thermodynamics
 - physics
@@ -46,7 +46,7 @@ $$
 \\newcommand{\\E}{\\mb{E}}
 \\newcommand{\\R}{\\mb{R}}
 \\newcommand{\\H}{\\mc{H}}
-\\newcommand{\\L}{\\mc{L}}
+\\newcommand{\\L}{\\Lambda}
 \\newcommand{\\e}{\\varepsilon}
 \\newcommand{\\set}\[1\]{\\left\\{#1\\right\\}}
 \\newcommand{\\tup}\[1\]{\\left(#1\\right)}
@@ -77,27 +77,27 @@ In this post I will interpret entropy as measuring modeling uncertainty about so
 
 To recap, the state of some system we are modeling is described by a real-valued tuple $\\o  = (\\o\_1,\\o\_2,\\dots,\\o\_{2n}) = (q\_1, q\_n, p\_1, p\_n) \\in \\O \\subseteq \\R^{2n}$, where $\\O$ is the state space of that system. The system's time-evolution is defined by a family of functions, $\\set{\\t\_\\Dt\\mid\\Dt\\in\\R}$, called propagators, where each $\\t\_\\Dt:\\O\\to\\O$ maps states at time $t$ to time $t+\\Dt$ (for all $t\\in\\R$, making these propagators time-independent.)
 
-Suppose we know that the system is initialized in some state region $\\G\_0 \\subseteq \\O$, i.e. we know that $\\o\_0 \\in \\G\_0$ where $\\o\_0 \\in \\O$ is the initial state of the system. We know this either by performing a measurement on the system which produces only partial information, or by assumption. Then at any time $t$, we know that the state of the system is $\\o\_t \\in \\G\_t = \\t\_t(\\G\_0)$, assuming the propagator $\\t\_t$ is the correct time-evolution of the system.
+Suppose we know that the system is initialized in some state region $\\L\_0 \\subseteq \\O$, i.e. we know that $\\o\_0 \\in \\L\_0$ where $\\o\_0 \\in \\O$ is the initial state of the system. We know this either by performing a measurement on the system which produces only partial information, or by assumption. Then at any time $t$, we know that the state of the system is $\\o\_t \\in \\L\_t = \\t\_t(\\L\_0)$, assuming the propagator $\\t\_t$ is the correct time-evolution of the system.
 
 Let $\\mu$ be a uniform measure on $\\O$ (need not be normalized), i.e. $\\mu$ is defined by some constant density function on $\\O$ (see {{< locallink "Liouville's Theorem" "uniform-measure" >}}). Then by Liouville $\\mu$ is uniform under any canonical change of coordinates. See {{< locallink "Liouville's Theorem" "measure-preservation" >}}.
 
-Given two state regions, $\\G\_A\\subseteq\\O$ and $\\G\_B\\subseteq\\O$, we can quantify their relative size difference with the fraction $\\mu(\\G\_A)/\\mu(\\G\_B)$. Or expressed in the unit of *bits*, 
+Given two state regions, $\\L\_A\\subseteq\\O$ and $\\L\_B\\subseteq\\O$, we can quantify their relative size difference with the fraction $\\mu(\\L\_A)/\\mu(\\L\_B)$. Or expressed in the unit of *bits*, 
 
 $$
-\\D h = \\lg\\tup{\\frac{\\mu(\\G\_A)}{\\mu(\\G\_B)}}
+\\D h = \\lg\\tup{\\frac{\\mu(\\L\_A)}{\\mu(\\L\_B)}}
 $$
 
-(where $\\lg = \\log\_2$ is log base 2), which is positive when $\\mu(\\G\_A) > \\mu(\\G\_B)$ and $0$ when $\\mu(\\G\_A) = \\mu(\\G\_B)$. Then $\\D h$ is the number of halvings to go from $\\G\_A$ to $\\G\_B$. See {{< locallink "Bayesian information theory" >}}.
+(where $\\lg = \\log\_2$ is log base 2), which is positive when $\\mu(\\L\_A) > \\mu(\\L\_B)$ and $0$ when $\\mu(\\L\_A) = \\mu(\\L\_B)$. Then $\\D h$ is the number of halvings to go from $\\L\_A$ to $\\L\_B$. See {{< locallink "Bayesian information theory" >}}.
 
-Why do we care about the quantity $\\D h$ in the context of thermodynamics? Because of the connection to (ir)reversibility of the process in question. But what is that connection? Suppose our goal is to have a system starting in state region $\\G\_0$ at time $0$ to reliably end up in the state region $\\G\_\\text{final}$ at time $t$ (i.e. we want $\\t\_t(\\G\_0) \\subseteq \\G\_\\text{final}$), then by Liouville we must have $\\mu(\\G\_0)=\\mu(\\t\_t(\\G\_0)) \\leq \\mu(\\G\_\\text{final})$ (if the system is isolated during this process). This is a necessary but not sufficient condition for what I'll call reliability.
+Why do we care about the quantity $\\D h$ in the context of thermodynamics? Because of the connection to (ir)reversibility of the process in question. But what is that connection? Suppose our goal is to have a system starting in state region $\\L\_0$ at time $0$ to reliably end up in the state region $\\L\_\\text{final}$ at time $t$ (i.e. we want $\\t\_t(\\L\_0) \\subseteq \\L\_\\text{final}$), then by Liouville we must have $\\mu(\\L\_0)=\\mu(\\t\_t(\\L\_0)) \\leq \\mu(\\L\_\\text{final})$ (if the system is isolated during this process). This is a necessary but not sufficient condition for what I'll call reliability.
 
-The formal problem statement is to choose a propagator family $\\set{\\t\_\\Dt\\mid\\Dt\\in\\R}$ (equivalently a Hamiltonian) that minimizes $\\mu(\\t\_t(\\G\_0) - \\G\_\\text{final})$ (minimize the quantity of $\\t\_t(\\G\_0)$ outside of $\\G\_\\text{final}$). We are restricted to physically valid propagators which also preserve the system's internal dynamics. E.g. the particles of a gas collide in the way the usually do, but we have freedom to chose how the container morphs over time (the container interacts with the gas particles via an external potential). See {{< locallink "The Reversibility Problem" "naive-formulation" >}}.
+The formal problem statement is to choose a propagator family $\\set{\\t\_\\Dt\\mid\\Dt\\in\\R}$ (equivalently a Hamiltonian) that minimizes $\\mu(\\t\_t(\\L\_0) - \\L\_\\text{final})$ (minimize the quantity of $\\t\_t(\\L\_0)$ outside of $\\L\_\\text{final}$). We are restricted to physically valid propagators which also preserve the system's internal dynamics. E.g. the particles of a gas collide in the way the usually do, but we have freedom to chose how the container morphs over time (the container interacts with the gas particles via an external potential). See {{< locallink "The Reversibility Problem" "naive-formulation" >}}.
 
-Since $\\D h = \\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\G\_0)}=\\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\t\_t(\\G\_0))}$, if $\\D h = \\lg\\tup{\\mu(\\G\_\\text{final})/\\mu(\\G\_0)} < 0$, then we know that there is no physically valid time-evolution function (obeying some Hamiltonian) which reliably maps $\\G\_0$ into a subset of $\\G\_\\text{final}$ without external interaction. No matter what propagators we choose, some of the trajectories starting in $\\G\_0$ must end up outside of $\\G\_\\text{final}$.
+Since $\\D h = \\lg\\tup{\\mu(\\L\_\\text{final})/\\mu(\\L\_0)}=\\lg\\tup{\\mu(\\L\_\\text{final})/\\mu(\\t\_t(\\L\_0))}$, if $\\D h = \\lg\\tup{\\mu(\\L\_\\text{final})/\\mu(\\L\_0)} < 0$, then we know that there is no physically valid time-evolution function (obeying some Hamiltonian) which reliably maps $\\L\_0$ into a subset of $\\L\_\\text{final}$ without external interaction. No matter what propagators we choose, some of the trajectories starting in $\\L\_0$ must end up outside of $\\L\_\\text{final}$.
 
-On the other hand, if $\\D h \\geq 0$, then a perfectly reliable process from $\\G\_0$ into $\\G\_\\text{final}$ is not ruled out, but that is still not enough to conclude that perfect reliability is achievable. See {{< locallink "Why Doesn't Uncopying Defeat The 2nd Law" >}}.
+On the other hand, if $\\D h \\geq 0$, then a perfectly reliable process from $\\L\_0$ into $\\L\_\\text{final}$ is not ruled out, but that is still not enough to conclude that perfect reliability is achievable. See {{< locallink "Why Doesn't Uncopying Defeat The 2nd Law" >}}.
 
-Take a moment to compare the statement, "$\\D h < 0$ implies that perfect reliability of the $\\G\_0$-to-$\\G\_\\text{final}$ transition is impossible," with the [2nd law of thermodynamics](https://en.wikipedia.org/wiki/The_2nd_Law) which roughly states, "entropy of an isolated system cannot decrease."
+Take a moment to compare the statement, "$\\D h < 0$ implies that perfect reliability of the $\\L\_0$-to-$\\L\_\\text{final}$ transition is impossible," with the [2nd law of thermodynamics](https://en.wikipedia.org/wiki/The_2nd_Law) which roughly states, "entropy of an isolated system cannot decrease."
 
 
 
@@ -105,7 +105,7 @@ Take a moment to compare the statement, "$\\D h < 0$ implies that perfect reliab
 
 # Observer information as entropy?
 
-Hopefully the above discussion elucidated the connection between an experimenter's state of information about a system and the reversibility of that system (from the experimenter's perspective). This motivates our interest in the quantity $\\lg(\\mu(\\G\_\\text{final}) / \\mu(\\G\_\\text{initial}))$ when our system is an $N$-particle gas which we want reliably transition from $\\G\_\\text{initial}$ to $\\G\_\\text{final}$ for the purposes of extracting work from heat energy, as illustrated in the {{< locallink "Carnot Cycle" >}}.
+Hopefully the above discussion elucidated the connection between an experimenter's state of information about a system and the reversibility of that system (from the experimenter's perspective). This motivates our interest in the quantity $\\lg(\\mu(\\L\_\\text{final}) / \\mu(\\L\_\\text{initial}))$ when our system is an $N$-particle gas which we want reliably transition from $\\L\_\\text{initial}$ to $\\L\_\\text{final}$ for the purposes of extracting work from heat energy, as illustrated in the {{< locallink "Carnot Cycle" >}}.
 
 In the Carnot cycle, we have a gas described by the macroscopic quantities of (spatial volume) $V$, temperature $T$, and number of particles $N$. This gas is operated on by a sequence of processes (phases), each of which have an initial gas state $(V\_i, T\_i, N\_i)$ and final gas state $(V\_f, T\_f, N\_f)$, where $N\_i=N\_f=N$ for a closed gas. For the remainder of this post, assume that $N$ is held fixed.
 
@@ -121,12 +121,12 @@ References for change in entropy formula:
 - https://en.wikipedia.org/wiki/Entropy#Cooling_and_heating
 - https://www.grc.nasa.gov/WWW/K-12/airplane/entropy.html
 
-The next section of this post will derive this change in entropy formula. We suppose that the macroscopic state, or macrostate, $(V, T, N)$ identifies the gas's microscopic state, or microstate, $\\o \\in\\O$ as being in the state region comprised of all microstates which have volume $V$, temperature $T$, and number of particles $N$. In other words, macrostate is a state region (i.e. a set of states). Let $\\G(V, T, N)\\subseteq\\O$ be the macrostate (set of states) for $(V, T, N)$.
+The next section of this post will derive this change in entropy formula. We suppose that the macroscopic state, or macrostate, $(V, T, N)$ identifies the gas's microscopic state, or microstate, $\\o \\in\\O$ as being in the state region comprised of all microstates which have volume $V$, temperature $T$, and number of particles $N$. In other words, macrostate is a state region (i.e. a set of states). Let $\\L(V, T, N)\\subseteq\\O$ be the macrostate (set of states) for $(V, T, N)$.
 
 With $\\mu$ being a uniform measure on $\\O$, we do indeed find that
 
 $$
-\\lg\\par{\\frac{\\mu(\\G(V\_f, T\_f, N\_f)}{\\mu(\\G(V\_i, T\_i, N\_i)}} \\propto nR\\log\\par{\\frac{V\_f}{V\_i}} + nC\_V\\lg\\par{\\frac{T\_f}{T\_i}}\\,.
+\\lg\\par{\\frac{\\mu(\\L(V\_f, T\_f, N\_f)}{\\mu(\\L(V\_i, T\_i, N\_i)}} \\propto nR\\log\\par{\\frac{V\_f}{V\_i}} + nC\_V\\lg\\par{\\frac{T\_f}{T\_i}}\\,.
 $$
 
 (This relationship ends up being approximate.)
@@ -137,16 +137,16 @@ This derivation is similar to the one in "Statistical Physics of Particles" by K
 
 Let $\\O$ be the state space of all $N$ particle gasses, where $(\\q,\\p)=(\\q\_1,\\dots,\\q\_N,\\p\_1,\\dots,\\p\_N)\\in\\O$ with $\\q\_i$ and $\\p\_i$ being scalars, pairs, or 3-tuples, depending on whether we are working in 1D, 2D or 3D space. Let $D$ be the dimensionality of space so that $\\O=\\R^{DN}$. Each $\\o\\in\\O$ is a microstate.
 
-We have an ideal gas of $N$ particles at total kinetic energy $E$ and confined to a container with spatial volume $V$. This defines a macrostate $\\G(E,V,N)\\subseteq\\O$, which is the set of all microstates satisfying these criteria, specifically
+We have an ideal gas of $N$ particles at total kinetic energy $E$ and confined to a container with spatial volume $V$. This defines a macrostate $\\L(E,V,N)\\subseteq\\O$, which is the set of all microstates satisfying these criteria, specifically
 
 $$\\begin{aligned}
-\\G(E,V,N) = \\Bigg\\{(\\q,\\p)\\in\\O \\,\\,\\Bigg\\vert\\,  &\\Big(\\fa i\\in\\set{1,\\dots,N}:\\q\_i \\in \\text{container}\\Big)\\\\
+\\L(E,V,N) = \\Bigg\\{(\\q,\\p)\\in\\O \\,\\,\\Bigg\\vert\\,  &\\Big(\\fa i\\in\\set{1,\\dots,N}:\\q\_i \\in \\text{container}\\Big)\\\\
 & \\text{and}\\ \\par{\\frac{1}{2m}\\sum\_{i=1}^N {\\p\_i}^n \\in \[E,E+\\e\]}\\Bigg\\}
 \\end{aligned}$$
 
 where $\\e>0$ is our uncertainty about the total energy (our measurement precision) and $\[E,E+\\e\]$ is the closed interval from $E$ to $E+\\e$.
 
-Let $\\mu$ be the uniform unit measure on $\\O$ (defined by constant density of 1 everywhere) w.r.t. our chosen unit of spatial length, so that the unit-hypercube has a $\\mu$-volume of 1. We want to find the volume of our macrostate $\\mu(\\G(E,V,N))$. We can do this by noticing that, (1) each particle position $q\_i$ independently occupies any point in the container with volume $V$, and (2) the momenta are constrained to lie on a spherical shell containing the surface of the $DN$-ball with radius $r = \\sqrt{2mE}$. This shell has thickness $\\D r = \\sqrt{2m(E+\\e)} - \\sqrt{2mE}$.  
+Let $\\mu$ be the uniform unit measure on $\\O$ (defined by constant density of 1 everywhere) w.r.t. our chosen unit of spatial length, so that the unit-hypercube has a $\\mu$-volume of 1. We want to find the volume of our macrostate $\\mu(\\L(E,V,N))$. We can do this by noticing that, (1) each particle position $q\_i$ independently occupies any point in the container with volume $V$, and (2) the momenta are constrained to lie on a spherical shell containing the surface of the $DN$-ball with radius $r = \\sqrt{2mE}$. This shell has thickness $\\D r = \\sqrt{2m(E+\\e)} - \\sqrt{2mE}$.  
 
 The [hypervolume](https://en.wikipedia.org/wiki/N-sphere#Volume_and_surface_area) of the unit $n$-ball with radius $r$ (interior volume of sphere in $n$ dimensions) is
 $$
@@ -158,7 +158,7 @@ $$
 
 Then the macrostate hypervolume is
 $$
-\\mu(\\G(E,V,N)) = V^N \\cdot\\left\[B\_{DN}\\par{\\sqrt{2m(E+\\e)}} - B\_{DN}\\par{\\sqrt{2mE}}\\right\]\\,.
+\\mu(\\L(E,V,N)) = V^N \\cdot\\left\[B\_{DN}\\par{\\sqrt{2m(E+\\e)}} - B\_{DN}\\par{\\sqrt{2mE}}\\right\]\\,.
 $$
 
 Expanding out the term in square brackets, we get
@@ -183,13 +183,13 @@ where $\\e^k\\approx 0$ for $k\\geq2$ if we assume that $\\e$ is small enough so
 Plugging in our approximation (with $n=DN$), we have
 
 $$
-\\mu(\\G(E,V,N)) \\approx V^N\\frac{\\pi^{\\frac{DN}{2}}}{\\tup{\\frac{DN}{2}}!}\\par{2m}^{DN/2}\\frac{DN}{2}E^{DN/2-1}\\e
+\\mu(\\L(E,V,N)) \\approx V^N\\frac{\\pi^{\\frac{DN}{2}}}{\\tup{\\frac{DN}{2}}!}\\par{2m}^{DN/2}\\frac{DN}{2}E^{DN/2-1}\\e
 $$
 
-Given two macrostates, $\\G(E\_i,V\_i,N)$ and $\\G(E\_f,V\_f,N)$, the log-ratio between their $\\mu$-sizes is approximately
+Given two macrostates, $\\L(E\_i,V\_i,N)$ and $\\L(E\_f,V\_f,N)$, the log-ratio between their $\\mu$-sizes is approximately
 
 $$
-\\D h = \\lg\\par{\\frac{\\mu(\\G(E\_f,V\_f,N))}{\\mu(\\G(E\_i,V\_i,N))}} \\approx N\\lg\\par{\\frac{V\_f}{V\_i}} + (DN/2-1)\\lg\\par{\\frac{E\_f}{E\_i}}\\,.
+\\D h = \\lg\\par{\\frac{\\mu(\\L(E\_f,V\_f,N))}{\\mu(\\L(E\_i,V\_i,N))}} \\approx N\\lg\\par{\\frac{V\_f}{V\_i}} + (DN/2-1)\\lg\\par{\\frac{E\_f}{E\_i}}\\,.
 $$
 
 We more or less have the expression we want. It is now a matter of transforming some constants and scaling.
@@ -246,7 +246,7 @@ When $DN > 1$, changing the temperature (and thus total kinetic energy) changes 
 # Absolute entropy
 I want to point out that entropy, $S$, and change in entropy, $\\D S$, are very different beasts.
 
-Going back to our information-theoretic perspective, we have $\\D h = \\lg\\tup{\\mu(\\G\_A)/\\mu(\\G\_B)}$ is the change in information (i.e. information gain) by going from state region $\\G\_A$ to state region $\\G\_B$. This implies we are viewing $h\_A=\\lg\\par{1/\\mu(\\G\_A)}$ and $h\_B=\\lg\\par{1/\\mu(\\G\_B)}$ as absolute quantities of information that $\\G\_A$ and $\\G\_B$ are respectively worth. This would be a valid perspective if the measure $\\mu$ were a probability measure where $\\mu(\\O)=1$. However, if the domain $\\O$ is, say $\\R^n$, then there does not exist a uniform probability measure. If we tried to normalized a given uniform measure $\\mu$, we'd find that $\\lg\\par{\\mu(\\O)/\\mu(\\G\_A)}=\\infty$, i.e. $\\G\_A$ is worth an infinite amount of information.
+Going back to our information-theoretic perspective, we have $\\D h = \\lg\\tup{\\mu(\\L\_A)/\\mu(\\L\_B)}$ is the change in information (i.e. information gain) by going from state region $\\L\_A$ to state region $\\L\_B$. This implies we are viewing $h\_A=\\lg\\par{1/\\mu(\\L\_A)}$ and $h\_B=\\lg\\par{1/\\mu(\\L\_B)}$ as absolute quantities of information that $\\L\_A$ and $\\L\_B$ are respectively worth. This would be a valid perspective if the measure $\\mu$ were a probability measure where $\\mu(\\O)=1$. However, if the domain $\\O$ is, say $\\R^n$, then there does not exist a uniform probability measure. If we tried to normalized a given uniform measure $\\mu$, we'd find that $\\lg\\par{\\mu(\\O)/\\mu(\\L\_A)}=\\infty$, i.e. $\\L\_A$ is worth an infinite amount of information.
 
 One reason to prefer to only consider changes in information $\\D h$ rather than absolute information $h$ is so that we are free to put a uniform measure on $\\R^n$, have it be unnormalized, and don't need to care about the arbitrary choice of which uniform measure to use (each defined by a different choice of constant density). With Liouville's theorem we are assured that uniform measures are uniform in all canonical coordinate systems. Then $\\D h$ is a uniquely determined quantity just by stating that we are using a uniform measure on state space (but $h$ depends on our particular choice of uniform measure).
 
