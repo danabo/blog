@@ -1,6 +1,6 @@
 ---
 date: 2022-06-21
-lastmod: '2022-06-23T11:34:12-07:00'
+lastmod: '2022-06-26T08:28:46-07:00'
 tags:
 - thermodynamics
 - physics
@@ -141,7 +141,7 @@ We have an ideal gas of $N$ particles at total kinetic energy $E$ and confined t
 
 $$\\begin{aligned}
 \\L(E,V,N) = \\Bigg\\{(\\q,\\p)\\in\\O \\,\\,\\Bigg\\vert\\,  &\\Big(\\fa i\\in\\set{1,\\dots,N}:\\q\_i \\in \\text{container}\\Big)\\\\
-& \\text{and}\\ \\par{\\frac{1}{2m}\\sum\_{i=1}^N {\\p\_i}^n \\in \[E,E+\\e\]}\\Bigg\\}
+& \\text{and}\\ \\par{\\frac{1}{2m}\\sum\_{i=1}^N {\\p\_i}^2 \\in \[E,E+\\e\]}\\Bigg\\}
 \\end{aligned}$$
 
 where $\\e>0$ is our uncertainty about the total energy (our measurement precision) and $\[E,E+\\e\]$ is the closed interval from $E$ to $E+\\e$.

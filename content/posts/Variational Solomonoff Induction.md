@@ -1,8 +1,9 @@
 ---
 date: 2021-02-18
-lastmod: '2022-05-03T14:04:54-07:00'
+lastmod: '2022-07-01T17:13:40-07:00'
 tags:
 - free energy
+- machine-learning
 title: Variational Solomonoff Induction
 ---
 
