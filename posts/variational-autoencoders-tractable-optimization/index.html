@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Variational Autoencoders - Tractable Optimization&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Variational Autoencoders - Tractable Optimization" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Variational Autoencoders - Tractable Optimization</h1><p class="article date">July 1, 2022</p></section><article class="article markdown-body"><p>This is my multi-part review of the innovation in <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a>, which introduces something called the variational autoencoder (VAE), a class of generative model (e.g. for image generation) that has proved quite successful. However, the paper also introduces an entire methodology, of which the VAE is one instance (though given heavy focus). Specifically, this paper provides a method for fitting continuous latent variable models to data with maximum marginal likelihood via gradient descent (the meaning of these words will hopefully become clear as you read this article).</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\es}{\emptyset}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\pr}{\times}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\N}{\mb{N}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\par}[1]{\left(#1\right)}<br>
+\newcommand{\tup}{\par}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\t}{\theta}<br>
+\newcommand{\kl}[2]{D_{\text{KL}}\left(#1\ \| \ #2\right)}<br>
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }<br>
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }<br>
+\newcommand{\d}{\mathrm{d}}<br>
+\newcommand{\L}{\mc{L}}<br>
+\newcommand{\M}{\mc{M}}<br>
+\newcommand{\Er}{\mc{E}}<br>
+\newcommand{\ht}{\hat{\t}}<br>
+\newcommand{\D}{\mc{D}}<br>
+\newcommand{\softmax}{\text{softmax}}<br>
+$$</p>
+<p>For an explanation of what the term &ldquo;variational&rdquo; means here, see <a href="" class="broken">Machine Learning Jargon - Variational Bayes</a>.</p>
+<h1 id="maximum-marginal-likelihood-objective">Maximum Marginal Likelihood Objective</h1>
+<p><a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> is concerned with the following problem: We have a dataset $X = (x_1,x_2,\dots,x_n) \in \X^n$ which we are modeling as being sampled i.i.d. from some unknown distribution over $\X$. We define some other set $\Z$ (called the latent space) and define our model in two pieces as probability distributions, $p_\t(z)$ and $p_\t(x\mid z)$, parameterized by $\t\in\T$. This fully specifies the relationship between the random variables $x$ and $z$ by the joint distribution $p_\t(x,z) = p_\t(z)p_\t(x_i\mid z)$.</p>
+<p>The marginal probability of the dataset under our model (the marginal likelihood) given parameters $\t$ is</p>
+<p>$$\begin{aligned}<br>
+p_\t(X) &amp;= \prod_{i=1}^n p_\t(x_i) \\<br>
+&amp;= \prod_{i=1}^n \int_\Z p_\t(z)p_\t(x_i\mid z)\ \d z \\<br>
+&amp;= \prod_{i=1}^n \E_{z\sim p_\t(z)}\left[p_\t(x_i\mid z)\right]\,.<br>
+\end{aligned}$$</p>
+<p>(Replace the integral with a sum when $\Z$ is discrete.)</p>
+<p>Maximizing the marginal likelihood $p_\t(X)$ &ldquo;fits&rdquo; our model to the data. Once our model is fit to the data, we can use it to generate new data that &ldquo;looks like&rdquo; (i.e. is distributed like) the training data.</p>
+<p>Suppose the fit parameters are $\ht$. Then our generation procedure is,</p>
+<ol>
+<li>sample a latent code from the marginal distribution, $z \sim p_\ht(z)$,</li>
+<li>then sample from the decoder, $x \sim p_\ht(x_i\mid z)$.</li>
+</ol>
+<p>This way, $x$ is marginally distributed according to $p_\ht(x_i)$.</p>
+<h2 id="log-likelihood-loss">Log-Likelihood Loss</h2>
+<p>Let $h_\t(x) = \log\par{1/p_\t(x)}$. This quantity is called the <a href="https://en.wikipedia.org/wiki/Information_content"target="_blank">self-information</a> (or <em>surprisal</em>) of $x$ w.r.t. $p_\t$. We can see from the definition that $h_\t(x)$ is always non-negative, and $h_\t(x) = 0$ iff $p_\t(x)=1$. That means minimizing $h_\t(x)$ is equivalent to maximizing $p_\t(x)$. Since $\log$ is monotonically increasing, any decrease in $h_\t(x)$ necessarily implies an increase in $p_\t(x)$. In this way, the following loss function (to be minimized) is essentially equivalent to our maximum likelihood objective above,</p>
+<p>$$\begin{aligned}<br>
+\M(\t;\ X) &amp;= h_\t(X) \\<br>
+&amp;= \log\par{1/p_\t(X)} \\<br>
+&amp;= -\sum_{i=1}^n \log p_\t(x_i) \\<br>
+&amp;= -\sum_{i=1}^n  \E_{z\sim p_\t(z)}\left[p_\t(x_i\mid z)\right]\,.<br>
+\end{aligned}$$</p>
+<p>Minimizing a positive number to zero, rather than maximizing a negative number to 0, is a bit more intuitive in my opinion. Also, a minimization objective (a loss) conforms to the standard paradigm of deep learning, where the training objective is always a loss to be minimized via gradient descent.</p>
+<p>A more practical reason to prefer to use log-likelihood (positive or negative) over likelihood is that the former is numerically stable to optimize with gradient ascent/descent. The probabilities involved in the product over $x_i$ can be quite small which can lead to loss of precision, which log-scale avoids.</p>
+<h1 id="tractable-optimization">Tractable Optimization</h1>
+<p>The marginal likelihood loss $\M(\t;\ X)$ is generally intractable to optimize via gradient descent when the latent space is large (e.g. uncountable) due to the integral/sum over the latent space being intractable, with either numerical methods or exact methods. <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> is interested in making these situations tractable.</p>
+<p>The approach of <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> is to find an approximation $q_\p(z \mid x)\approx p_\t(z\mid x_i)$ and use that to define a tractable proxy loss which we minimize instead of the target loss $\M(\t;\ X)$. The defining feature of a proxy loss is that it has the same global minima as our target loss.</p>
+<p>Define our proxy loss as</p>
+<p>$$\begin{aligned}<br>
+\L(\t,\p;\ X) = \sum_{i=1}^n\Big\{ \kl{q_\p(z\mid x_i)}{p_\t(z)} + \E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\right] \Big\}\,.<br>
+\end{aligned}$$</p>
+<p>Why $\L(\t,\p;\ X)$ is a proxy for $\M(\t;\ X)$ will be explained in the next section, but for now take as given that it is. We know how to calculate exactly all the probabilities involved. The probabilities $p_\t(x_i \mid z)$ and $p_\t(z)$ are assumed to be given as the definition of our model, and we define $q_\p(z\mid x_i)$ explicitly to be a tractable quantity.</p>
+<p>However, we are not out of the woods yet. We still need to make sure the two terms, KL-divergence on the left and expectation on the right, are tractable quantities too. <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> deals with instances (namely where $q_\p(z\mid x_i)$ and $p_\t(z)$ are made to be Gaussian) where the KL-divergence $\kl{q_\p(z\mid x_i)}{p_\t(z)}$ has a known closed form expression. Unfortunately, the expectation term $\sum_{i=1}^n\E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\right]$ is intractable to calculate exactly because it is yet another integral over $\Z$.</p>
+<p>The usual trick at this point is to use a <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"target="_blank">Monte Carlo approximation</a> of the expectation, which in this case is</p>
+<p>$$<br>
+\E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\right] \approx \frac{1}{k}\sum_{j=1}^k \log\par{1/p_\t(x_i \mid z_j)}<br>
+$$</p>
+<p>where $z_1,\dots,z_k$ are sampled i.i.d. from $q_\p(z \mid x_i)$, which we assume is a tractable operation. (Surprisingly, most implementations of the VAE use $k=1$, e.g. <a href="https://gist.github.com/williamFalcon/1da585dd427002bca915f9ec323fbbbe#file-vae-py-L71"target="_blank">example 1</a> and <a href="https://github.com/keras-team/keras-io/blob/b8d1e05f4c9193cefd8137caf000fde6597d2d79/examples/generative/vae.py#L31"target="_blank">example 2</a>.)</p>
+<p>We want to jointly minimize $\L(\t,\p;\ X)$ w.r.t. $\t$ and $\p$ using gradient descent. That requires us to calculate or approximate the gradient of this loss w.r.t. the parameters. Using our MC approximation for the expectation, we get MC gradients w.r.t. $\t$,</p>
+<p>$$\begin{aligned}<br>
+&amp;\nabla_\t\E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\right] \\<br>
+=\ &amp; \E_{z\sim q_\p(z \mid x_i)}\left[\nabla_\t\log\par{1/p_\t(x_i \mid z)}\right] \\<br>
+\approx\ &amp; \frac{1}{k}\sum_{j=1}^k \nabla_\t\log\par{1/p_\t(x_i \mid z_j)}<br>
+\end{aligned}$$</p>
+<p>and w.r.t. $\p$ (using the <a href="https://danieltakeshi.github.io/2017/03/28/going-deeper-into-reinforcement-learning-fundamentals-of-policy-gradients/"target="_blank">log-derivative trick</a>),</p>
+<p>$$\begin{aligned}<br>
+&amp;\nabla_\p\E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\right] \\<br>
+=\ &amp; \E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\nabla_\p\log q_\p(z \mid x_i) \right] \\<br>
+\approx\ &amp; \frac{1}{k}\sum_{j=1}^k \log\par{1/p_\t(x_i \mid z_j)}\nabla_\p\log q_\p(z \mid x_i)\,.<br>
+\end{aligned}$$</p>
+<p><a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> reports that <em>&ldquo;gradient estimator [w.r.t. $\p$] exhibits exhibits very high variance (see e.g. <a href="https://arxiv.org/abs/1206.6430"target="_blank">BJP12</a>) and is impractical for our purposes.&quot;</em></p>
+<p>Instead, <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> offers an alternative approach using the so-called <a href="https://en.wikipedia.org/wiki/Variational_autoencoder#Reparameterization"target="_blank">reparameterization trick</a> to &ldquo;pass gradients&rdquo; through the expectation to $\p$. I won&rsquo;t go into the reparameterization trick here, but I suggest reading the paper or <a href="https://gregorygundersen.com/blog/2018/04/29/reparameterization"target="_blank">this post</a> to learn more.</p>
+<h1 id="proxy-loss-derivation">Proxy Loss Derivation</h1>
+<p>This derivation follows slightly different reasoning than <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a>, but is in my opinion the most straightforward way to derive and understand the proxy loss $\L(\t,\p;\ X)$ which we defined above.</p>
+<p>Recall that our proxy loss uses and approximation $q_\p(z\mid x_i)$ for the intractable distribution $p_\t(z\mid x_i)$ (because it involves an integral over $\Z$). Then as a result we have a dual optimization objective. In addition to minimizing the log-likelihood loss,<br>
+$$\M(\t;\ X) \df \sum_{i=1}^n\log \par{1/p_\t(x_i)}\,,$$<br>
+w.r.t. $\t$, we want to simultaneously minimize the approximation error,</p>
+<p>$$\begin{aligned}<br>
+\Er(\t,\p;\ X) &amp;\df \sum_{i=1}^n\kl{q_\p(z\mid x_i)}{p_\t(z\mid x_i)} \\&amp;= \sum_{i=1}^n\int_\Z q_\p(z\mid x_i)\log\par{\frac{q_\p(z\mid x_i)}{p_\t(z\mid x_i)}}\ \d z\,,<br>
+\end{aligned}$$</p>
+<p>w.r.t. $\p$, where $\kl{q_\p(z\mid x_i)}{p_\t(z\mid x_i)}$ is the <a href="https://en.wikipedia.org/wiki/Kullback%e2%80%93Leibler_divergence"target="_blank">KL-divergence</a> between $q_\p(z\mid x_i)$ and $p_\t(z\mid x_i)$ w.r.t. $z$. KL-divergence acts like a distance function between probability distributions (though asymmetric w.r.t. the ordering of its two arguments). Conveniently, KL-divergence is always non-negative, and $0$ iff the two distributions are equal. In this way $\Er(\t,\p;\ X)$ is also well suited as a loss function.</p>
+<p>Unfortunately, $\Er(\t,\p;\ X)$ is also intractable to directly calculate and minimize for the same reason as $\M(\t;\ X)$ - specifically because $\Er(\t,\p;\ X)$ makes use of $p_\t(z\mid x_i)$ which is calculated with an intractable integral over $\Z$.</p>
+<p>However, something miraculous happens when we sum our two objectives. Let $\L(\t,\p;\ X)$ be that sum. Then we have<br>
+$$\begin{aligned}<br>
+\L(\t,\p;\ X)&amp;\df\M(\t;\ X) + \Er(\t,\p;\ X) \\<br>
+&amp;=\sum_{i=1}^n\Big\{ \kl{q_\p(z\mid x_i)}{p_\t(z)} + \E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\right] \Big\}\,,<br>
+\end{aligned}$$</p>
+<p>which is the loss that <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> shows how to tractably minimize. See <a href="#appendix">#Appendix</a> for the derivation.</p>
+<h2 id="variational-bounds">Variational Bounds</h2>
+<p>Now we can answer why $\L(\t,\p;\ X)$ is a suitable proxy loss for $\M(\t;\ X)$. <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> calls $\L(\t,\p;\ X)$ a &ldquo;variational bound&rdquo; of $\M(\t;\ X)$ (specifically an upper bound). To see why $\L(\t,\p;\ X)$ is an upper bound, first recall from the previous section that $\M(\t;\ X)$ and $\Er(\t,\p;\ X)$ are always non-negative and achieve their global minima at $0$. Then the relationship $\L(\t,\p;\ X) = \M(\t;\ X) + \Er(\t,\p;\ X)$ becomes the inequality</p>
+<p>$$<br>
+\L(\t,\p;\ X) \geq \M(\t;\ X)<br>
+$$</p>
+<p>with the gap being the non-negative difference $\Er(\t,\p;\ X)$. Then minimizing $\L(\t,\p;\ X)$ to $0$ necessarily minimizes $\M(\t;\ X)$ to $0$, fulfilling the requirements of a proxy loss.</p>
+<p>Inspiration for this proxy loss, and the terms &ldquo;variational bound&rdquo; and &ldquo;variational Bayes&rdquo;, come directly from the paper <a href="https://arxiv.org/abs/1206.6430"target="_blank">Paisley et al.</a> which discusses an instance of <a href="https://danabo.github.io/blog/posts/variational-bayesian-inference/">Variational Bayesian Inference</a>. However, the adaptation of variational Bayesian inference in <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> does not have quite the same properties - see the next section, <a href="#variational-bayes">#Variational Bayes</a>.</p>
+<p>(For a broader explanation of the terms &ldquo;variational&rdquo; and &ldquo;Bayesian&rdquo; in machine learning, see <a href="" class="broken">Machine Learning Jargon - Variational Bayes</a>.)</p>
+<h3 id="variational-bayes">Variational Bayes</h3>
+<p>To match the template of variational Bayesian inference (see <a href="https://danabo.github.io/blog/posts/variational-bayesian-inference/#variational-inference">Variational Bayesian Inference#variational-inference</a>), we want to use the relationship $\L(\t,\p;\ X) = \M(\t;\ X) + \Er(\t,\p;\ X)$ to establish the inequality</p>
+<p>$$<br>
+\L(\t,\p;\ X) \geq \Er(\t,\p;\ X)<br>
+$$</p>
+<p>(since $\M(\t;\ X)=\log\par{1/p_\t(X)}$ is non-negative), where $\t$ is held fixed and $z \in \Z$ takes the place of the hypotheses $h \in \mc{H}$. In this perspective, $\L(\t,\p;\ X)$ is a proxy loss for $\Er(\t,\p;\ X)$ w.r.t. $\p$.</p>
+<p>As in <a href="https://danabo.github.io/blog/posts/variational-bayesian-inference/#variational-inference">Variational Bayesian Inference#variational-inference</a>, we have the nice property that decreasing $\L(\t,\p;\ X)$ w.r.t. $\p$, even slightly (while holding $\t$ fixed), results in $\Er(\t,\p;\ X)$ necessarily decreasing as well, because their difference is a constant w.r.t. $\p$. Furthermore, when $\L(\t,\p;\ X)$ is at its global minimum w.r.t. $\p$ iff $\Er(\t,\p;\ X)$ is also at its global minimum w.r.t. $\p$ (again holding $\t$ fixed).</p>
+<p>However, when we use $\L(\t,\p;\ X)$ as a proxy loss for $\M(\t;\ X)$ w.r.t. $\t$, we don&rsquo;t get the same nice property. As we minimize $\L(\t,\p;\ X)$ w.r.t. $\t$, the difference $\L(\t,\p;\ X)-\M(\t;\ X)=\Er(\t,\p;\ X)$ is not constant w.r.t. $\t$. The only guarantee we have is that the upper bound on $\M(\t;\ X)$ has shrunk. It&rsquo;s technically possible that $\M(\t;\ X)$ may even increase in some instances where $\L(\t,\p;\ X)$ is incrementally decreased w.r.t. $\t$, so we don&rsquo;t get the lockstep decrease as before.</p>
+<p>However, we can reliably lessen the gap between $\L(\t,\p;\ X)$ and $\M(\t;\ X)$ by incrementally decreasing $\L(\t,\p;\ X)$ w.r.t. $\p$, taking advantage of the lockstep relationship between $\L(\t,\p;\ X)$ and $\Er(\t,\p;\ X)$ with fixed $\t$.</p>
+<p>In the Bayesian paradigm described in <a href="https://danabo.github.io/blog/posts/variational-bayesian-inference/">Variational Bayesian Inference</a>, updating $\L(\t,\p;\ X)$ w.r.t. $\t$ is like altering the Bayesian distribution (both priors and likelihoods of the hypotheses) in the middle of optimizing the approximate posterior $q_\p(z \mid x)$ w.r.t. $\p$. In this light, $\Er(\t,\p;\ X)$ is a non-stationary optimization objective w.r.t. $\p$, where $\t$ controls how the objective changes over time.</p>
+<h3 id="approximate-likelihood">Approximate Likelihood</h3>
+<p>Another way to derive $\L(\t,\p;\ X)$ as a proxy for $\M(\t;\ X)$ is to observe that</p>
+<p>$$\sum_{i=1}^n \log p_\t(x_i) = \sum_{i=1}^n\log\par{\frac{p_\t(x_i\mid z)p_\t(z)}{p_\t(z\mid x_i)}}$$</p>
+<p>for all $z\in\Z$. This moves the intractable integral over $\Z$ into $p_\t(z\mid x_i)$.</p>
+<p>From here we can substitute $p_\t(z\mid x_i)$ with our approximation $q_\p(z\mid x_i)$ and define the approximate loss</p>
+<p>$$<br>
+\mc{A}(\t,\p;\ X, z) = -\sum_{i=1}^n\log\par{\frac{p_\t(x_i\mid z)p_\t(z)}{q_\p(z\mid x_i)}}<br>
+$$</p>
+<p>on some choice of $z\in\Z$. This loss depends only on quantities we know how to calculate. However, now the problem is that when $q_\p(z\mid x_i) \neq p_\t(z\mid x_i)$, it is not clear what minimizing this loss w.r.t. $\t$ will end up doing (we cannot yet call $\mc{A}(\t,\p;\ X, z)$ a proxy loss).</p>
+<p>It also now matters which $z\in \Z$ we choose for this loss, since $q_\p(z\mid x_i)$ can be a more or less accurate approximation of $p_\t(z\mid x_i)$ on different $z$. One mitigation would be to take the expectation w.r.t. $z \sim q_\p(z\mid x_i)$, with the hand-wavy idea that we care more about this optimization where $z$ is more likely. Sure enough, if we naively run with that idea, we get</p>
+<p>$$\begin{aligned}<br>
+&amp;\E_{z\sim q_\p(z\mid x_i)}[\mc{A}(\t,\p;\ X, z)] \\<br>
+&amp;=-\sum_{i=1}^n\E_{z\sim q_\p(z\mid x_i)}\left[\log\par{\frac{p_\t(x_i \mid z)p_\t(z)}{q_\p(z\mid x_i)}}\right] \\<br>
+&amp;= -\sum_{i=1}^n\E_{z\sim q_\p(z\mid x_i)}\left[\log\par{\frac{p_\t(z)}{q_\p(z\mid x_i)}} + \log p_\t(x_i \mid z)\right] \\<br>
+&amp;= \sum_{i=1}^n\Big\{\kl{q_\p(z\mid x_i)}{p(z)}-\E_{z\sim q_\p(z\mid x_i)}\big[\log p_\t(x_i \mid z)\big]\Big\} \\<br>
+&amp;= \L(\t,\p;\ X)\,,<br>
+\end{aligned}$$</p>
+<p>which is the same proxy loss we derived twice before!</p>
+<p>Thinking about it like this, the relationship</p>
+<p>$$<br>
+\L(\t,\p;\ X) - \M(\t;\ X) = \Er(\t,\p;\ X)<br>
+$$</p>
+<p>takes on a slightly different meaning, where $\Er(\t,\p;\ X)$ is the error term due to using $\L(\t,\p;\ X)$ as an approximation of $\M(\t;\ X)$. This gives us a way to answer to the question of what minimizing $\mc{A}(\t,\p;\ X, z)$ w.r.t. $\t$ does when $q_\p(z\mid x_i) \neq p_\t(z\mid x_i)$.</p>
+<p>Notice that the error term $\Er(\t,\p;\ X)$ is entirely due to $q_\p(z\mid x_i)$ being an imperfect approximation of $p_\t(z\mid x_i)$. Just by minimizing the approximation $\L(\t,\p;\ X)$ w.r.t. $\t$ and $\p$ jointly, we minimize the approximation error due to $q_\p(z\mid x_i)$ in the process.</p>
+<h1 id="appendix">Appendix</h1>
+<p>Proof that $\Er(\t,\p;\ X) + \M(\t;\ X) = \L(\t,\p;\ X)$,</p>
+<p>$$\begin{aligned}<br>
+&amp; \Er(\t,\p;\ X) + \M(\t;\ X) \\<br>
+=\ &amp; \sum_{i=1}^n\kl{q_\p(z\mid x_i)}{p_\t(z\mid x_i)} + \sum_{i=1}^n\log \par{1/p_\t(x_i)} \\<br>
+=\ &amp; \sum_{i=1}^n\Big[\int_\Z q_\p(z\mid x_i) \log\par{\frac{q_\p(z\mid x_i)}{p_\t(z\mid x_i)}}\ \d z - \int_\Z q_\p(z\mid x_i)\log p_\t(x_i)\ \d z \Big] \\<br>
+=\ &amp; \sum_{i=1}^n \int_\Z q_\p(z\mid x_i) \log\par{\frac{q_\p(z\mid x_i)}{p_\t(x_i\mid z)p_\t(z)/p_\t(x_i)}\cdot\frac{1}{p_\t(x_i)}}\ \d z \\<br>
+=\ &amp; \sum_{i=1}^n\int_\Z q_\p(z\mid x_i) \log\par{\frac{q_\p(z\mid x_i)}{p_\t(z)}\cdot\frac{1}{p_\t(x_i\mid z)}}\ \d z \\<br>
+=\ &amp; \sum_{i=1}^n\Big[ \int_\Z q_\p(z\mid x_i) \log\par{\frac{q_\p(z\mid x_i)}{p_\t(z)}}\ \d z + \int_\Z q_\p(z\mid x_i) \log\par{\frac{1}{p_\t(x_i\mid z)}}\ \d z \Big] \\<br>
+=\ &amp; \sum_{i=1}^n\Big[ \kl{q_\p(z\mid x_i)}{p_\t(z)} + \E_{z\sim q_\p(z \mid x_i)}\left[\log\par{1/p_\t(x_i \mid z)}\right] \Big] \\<br>
+=\ &amp; \L(\t,\p;\ X)\,.<br>
+\end{aligned}$$</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/machine-learning/>machine-learning</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#maximum-marginal-likelihood-objective">Maximum Marginal Likelihood Objective</a>
+      <ol>
+        <li><a href="#log-likelihood-loss">Log-Likelihood Loss</a></li>
+      </ol>
+    </li>
+    <li><a href="#tractable-optimization">Tractable Optimization</a></li>
+    <li><a href="#proxy-loss-derivation">Proxy Loss Derivation</a>
+      <ol>
+        <li><a href="#variational-bounds">Variational Bounds</a>
+          <ol>
+            <li><a href="#variational-bayes">Variational Bayes</a></li>
+            <li><a href="#approximate-likelihood">Approximate Likelihood</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#appendix">Appendix</a></li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/variational-bayesian-inference/"><span class="iconfont icon-article"></span>Variational Bayesian Inference</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>

@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Variational Solomonoff Induction</h1><p class="article date">February 18, 2021<span class="lastmod"> • edited May 3, 2022</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Variational Solomonoff Induction</h1><p class="article date">February 18, 2021<span class="lastmod"> • edited July 1, 2022</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\mb}{\mathbb}<br>
 \newcommand{\mc}{\mathcal}<br>
 \newcommand{\E}{\mb{E}}<br>
@@ -275,7 +275,7 @@ $$</p>
 <h1 id="lifelong-learning">Lifelong learning</h1>
 <p>Solomonoff induction is a framework for general-purpose life-long learning, which is a paradigm where an intelligent agent learns to predict it&rsquo;s future (or gain reward) from only one continuous data stream. The agent must learn on-line, and there are no independence assumptions (the data is a timeseries).</p>
 <p>In the variational setup outlined above, we converted the problem of Bayesian inference into a reinforcement learning problem. At time $t$, data $x_{1:t}$ is observed, and a policy $q_{\t^*}$ on programs is trained using policy gradient methods. However, every $t$ requires its own $q_{\t_t^*}$, thus we would need to perform RL training at every timestep. One way to speed this up is to reuse policies from previous timesteps. That is to say, at time $t+1$ perform $\argmax{\t\in\T}\set{ \E_{h \sim q_\t}\left[R(h)\right] + \mb{H}_{h \sim q_\t}[q_\t(h)]}$ using Monte Carlo gradient descent starting from the previous parameter $\t_t^*$. This can be considered fine-tuning. However, this may fail to work if the posterior changes drastically between timesteps.</p>
-</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/free-energy/>free energy</a></section>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/free-energy/>free energy</a><a class="tag" href=https://danabo.github.io/blog/tags/machine-learning/>machine-learning</a></section>
 </div><nav id="TableOfContents">
   <ol>
     <li><a href="#machine-learning">Machine learning</a>

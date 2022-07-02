@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Ideal Gas Entropy Derivation</h1><p class="article date">June 21, 2022<span class="lastmod"> • edited June 23, 2022</span></p></section><article class="article markdown-body"><p>Derivation of the change in entropy formula for an ideal gas (used in the <a href="https://danabo.github.io/blog/posts/carnot-cycle/">Carnot Cycle</a> post) from state space volumes. Discussion about connections between the observer&rsquo;s information about the gas and how that relates to the reversibility of transformations applied to the gas.</p>
+    <h1 class="article title">Ideal Gas Entropy Derivation</h1><p class="article date">June 21, 2022<span class="lastmod"> • edited June 26, 2022</span></p></section><article class="article markdown-body"><p>Derivation of the change in entropy formula for an ideal gas (used in the <a href="https://danabo.github.io/blog/posts/carnot-cycle/">Carnot Cycle</a> post) from state space volumes. Discussion about connections between the observer&rsquo;s information about the gas and how that relates to the reversibility of transformations applied to the gas.</p>
 <p>$$<br>
 \newcommand{\0}{\mathrm{false}}<br>
 \newcommand{\1}{\mathrm{true}}<br>
@@ -104,7 +104,7 @@ $$</p>
 <p>We have an ideal gas of $N$ particles at total kinetic energy $E$ and confined to a container with spatial volume $V$. This defines a macrostate $\L(E,V,N)\subseteq\O$, which is the set of all microstates satisfying these criteria, specifically</p>
 <p>$$\begin{aligned}<br>
 \L(E,V,N) = \Bigg\{(\q,\p)\in\O \,\,\Bigg\vert\,  &amp;\Big(\fa i\in\set{1,\dots,N}:\q_i \in \text{container}\Big)\\<br>
-&amp; \text{and}\ \par{\frac{1}{2m}\sum_{i=1}^N {\p_i}^n \in [E,E+\e]}\Bigg\}<br>
+&amp; \text{and}\ \par{\frac{1}{2m}\sum_{i=1}^N {\p_i}^2 \in [E,E+\e]}\Bigg\}<br>
 \end{aligned}$$</p>
 <p>where $\e&gt;0$ is our uncertainty about the total energy (our measurement precision) and $[E,E+\e]$ is the closed interval from $E$ to $E+\e$.</p>
 <p>Let $\mu$ be the uniform unit measure on $\O$ (defined by constant density of 1 everywhere) w.r.t. our chosen unit of spatial length, so that the unit-hypercube has a $\mu$-volume of 1. We want to find the volume of our macrostate $\mu(\L(E,V,N))$. We can do this by noticing that, (1) each particle position $q_i$ independently occupies any point in the container with volume $V$, and (2) the momenta are constrained to lie on a spherical shell containing the surface of the $DN$-ball with radius $r = \sqrt{2mE}$. This shell has thickness $\D r = \sqrt{2m(E+\e)} - \sqrt{2mE}$.</p>
@@ -198,7 +198,7 @@ $$</p>
     <li><a href="#absolute-entropy">Absolute entropy</a></li>
   </ol>
 </nav></div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/liouville-supplemental-bertrand-paradox/"><span class="iconfont icon-article"></span>Liouville Supplemental: Bertrand Paradox</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/variational-bayesian-inference/"><span class="iconfont icon-article"></span>Variational Bayesian Inference</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/liouville-supplemental-bertrand-paradox/"><span class="iconfont icon-article"></span>Liouville Supplemental: Bertrand Paradox</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 

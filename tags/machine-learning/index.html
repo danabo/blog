@@ -4,7 +4,11 @@
 <meta name="supported-color-schemes" content="light dark"><title>machine learning&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><link rel="alternate" type="application/rss+xml" href="https://danabo.github.io/blog/tags/machine-learning/index.xml" title="Dan's Notepad" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="machine learning" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>machine learning</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/modular-neural-networks/">
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>machine learning</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/variational-autoencoders-tractable-optimization/">
+            <p class="note title">Variational Autoencoders - Tractable Optimization</p><p class="note date">July 1, 2022</p><p class="note content">This is my multi-part review of the innovation in Kingma et al., which introduces something called the variational autoencoder (VAE), a class of generative model (e.g. for image generation) that has proved quite successful. However, the paper also introduces an entire methodology, of which the VAE is one instance (though given heavy focus). Specifically, this paper provides a method for fitting continuous latent variable models to data with maximum marginal likelihood via gradient descent (the meaning of these words will hopefully become clear as you read this article).
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/machine-learning/">machine-learning</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/variational-bayesian-inference/">
+            <p class="note title">Variational Bayesian Inference</p><p class="note date">July 1, 2022</p><p class="note content">What is variational Bayesian inference, a.k.a. variational Bayes?
+<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/machine-learning/">machine-learning</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/modular-neural-networks/">
             <p class="note title">Modular Neural Networks</p><p class="note date">April 13, 2021</p><p class="note content">$$
 \newcommand{\0}{\mathrm{false}}
 \newcommand{\1}{\mathrm{true}}
@@ -50,7 +54,27 @@
 $$
 I wrote up these notes in preparation for my guest lecture in Tom Dean&rsquo;s Stanford course, CS379C: Computational Models of the Neocortex.
 Selected papers
- Towards Modular Algorithm Induction (Abolafia et al.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/machine-learning/">machine learning</a></p></li></ul></section><section id="footer"><div class="footer-wrap">
+ Towards Modular Algorithm Induction (Abolafia et al.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/machine-learning/">machine learning</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/">
+            <p class="note title">Variational Solomonoff Induction</p><p class="note date">February 18, 2021</p><p class="note content">$$
+\newcommand{\mb}{\mathbb}
+\newcommand{\mc}{\mathcal}
+\newcommand{\E}{\mb{E}}
+\newcommand{\B}{\mb{B}}
+\newcommand{\R}{\mb{R}}
+\newcommand{\kl}[2]{D_{KL}\left(#1\ \| \ #2\right)}
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\t}{\theta}
+\newcommand{\T}{\Theta}
+\newcommand{\o}{\omega}
+\newcommand{\O}{\Omega}
+\newcommand{\sm}{\mathrm{softmax}}
+$$
+The free energy principle is a variational Bayesian method for approximating posteriors. Can free energy minimization combined with program synthesis methods from machine learning tractably approximate Solomonoff induction (i.e. universal inference)? In these notes, I explore what the combination of these ideas looks like.
+Machine learning I want to make an important clarification about &ldquo;Bayesian machine learning&rdquo;.<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/free-energy/">free energy</a><a class="tag" href="https://danabo.github.io/blog/tags/machine-learning/">machine-learning</a></p></li></ul></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2021 Daniel Abolafia.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 

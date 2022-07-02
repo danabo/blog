@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Variational Bayesian Inference&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Variational Bayesian Inference" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">Variational Bayesian Inference</h1><p class="article date">July 1, 2022</p></section><article class="article markdown-body"><p>What is variational Bayesian inference, a.k.a. variational Bayes?</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\es}{\emptyset}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\t}{\theta}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Psi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\pr}{\times}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\N}{\mb{N}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\par}[1]{\left(#1\right)}<br>
+\newcommand{\tup}{\par}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\t}{\theta}<br>
+\newcommand{\kl}[2]{D_{\text{KL}}\left(#1\ \| \ #2\right)}<br>
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }<br>
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }<br>
+\newcommand{\d}{\mathrm{d}}<br>
+\newcommand{\L}{\mc{L}}<br>
+\newcommand{\F}{\mc{E}}<br>
+$$</p>
+<p>Further reading:</p>
+<ul>
+<li><a href="https://danabo.github.io/blog/posts/variational-solomonoff-induction/#machine-learning">Variational Solomonoff Induction#machine-learning</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Variational_Bayesian_methods">https://en.wikipedia.org/wiki/Variational_Bayesian_methods</a></li>
+<li><a href="https://arxiv.org/abs/1206.6430"target="_blank">Variational Bayesian Inference with Stochastic Search</a></li>
+</ul>
+<p>For an explanation of what &ldquo;variational&rdquo; means here, see <a href="" class="broken">Machine Learning Jargon - Variational Bayes</a>.</p>
+<h2 id="bayesian-inference">Bayesian Inference</h2>
+<p>First, we need to define the &ldquo;Bayesian&rdquo; paradigm. Bayesian inference operates in a paradigm (I would call this paradigm &ldquo;Bayesian epistemology&rdquo;) where we have a set of hypotheses $\mc{H}$ and a set of data sequences $\X^\infty$.</p>
+<p>We we suppose we are given a distribution $p(h)$ over hypotheses, called the prior, and a family of distributions $p(x_{1:n} \mid h)$ over arbitrary length (finite) data sequence (for all $n,\ x_{1:n}$) indexed by hypotheses $h$. Each distribution $p(x_{1:n} \mid h)$ for a given $h$ called the likelihood of the data $x_{1:n}$ under $h$. These two distributions together give us a full joint distribution $p(x_{1:n}, h)=p(x_{1:n} \mid h)p(h)$.</p>
+<p>We also suppose we observe a finite data sequence $x_{1:n}$. There are then two probability distributions of interest, the data posterior $p(x_{m:n+1} \mid x_{1:n})$ (for some $m &gt; n$) and the hypothesis posterior $p(h \mid x_{1:n})$, which can be derived from the full joint distribution using the rules of probability (particularly the <a href="https://en.wikipedia.org/wiki/Chain_rule_%28probability%29"target="_blank">chain rule</a>, see <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/#defining-bayesian-inference">Deconstructing Bayesian Inference#defining-bayesian-inference</a>.)</p>
+<p>It is important to stress that in this paradigm, $p(h)$ and $p(x_{1:n}\mid h)$ are not just known, but are chosen by the &ldquo;user&rdquo;. This is the essential philosophical distinction between Bayesian inference and other sorts of statistical inference. The probabilities given here do not represent some objective description of reality. The Bayesian perspective is that there is no well-defined and objective probabilistic description of the world, i.e. these probabilities don&rsquo;t exist out there in the world. Instead these probabilities represent the user&rsquo;s beliefs about the world (specifically, uncertainty about the world relative to the &ldquo;user&rdquo;). Then the data posterior is the user&rsquo;s prediction about the future data given beliefs and past data, and the hypothesis posterior is the user&rsquo;s current state of belief given the prior and past data.</p>
+<p>In this paradigm data is streamed to the user over time, so that $n$ keeps growing. However, hypotheses are never directly observed. As more data comes in, the user&rsquo;s hypothesis posterior changes, corresponding to how the user&rsquo;s beliefs (probability assignment to hypotheses) changes as more data is observed.</p>
+<h2 id="variational-inference">Variational Inference</h2>
+<p>In practice, calculating the posterior from the given joint distribution,</p>
+<p>$$\begin{aligned}p(h \mid x_{1:n}) &amp;= \frac{p(x_{1:n},h)}{p(x_{1:n})}<br>
+\\ &amp;=\frac{p(x_{1:n},h)}{\int_{\mc{H}} p(x_{1:n},h)\ \d h}\,,\end{aligned}$$</p>
+<p>is intractable because the integral in the denominator is intractable to approximate (a sum when $\mc{H}$ is countable or finite). That integral, $p(x_{1:n})=\int_{\mc{H}} p(x_{1:n},h)\ \d h$, is the marginal probability of the data, called the subjective data distribution. Again, this is not an objective probability of the data, but represents the users aggregate beliefs (prior-weighted average likelihood).</p>
+<p>We can instead formulate this posterior calculation as an optimization problem and then find an approximate solution via numerical optimization (e.g. gradient descent). This is called a &ldquo;variational&rdquo; approximation of Bayesian inference (for now, don&rsquo;t worry about why it&rsquo;s call that).</p>
+<p>To achieve this approximation, we define some family of distributions, $q_\t(h \mid x_{1:n})$, one for every $x_{1:n}$ and $n\in\N$, parametrized by $\t$ (I use $q$ instead of $p$ to signify a different probability distribution from $p(x_{1:n}, h)$). We want to find $\t$ s.t. $q_\t(h \mid x_{1:n})$ is as close as possible to $p(h \mid x_{1:n})$ for all $h$, $x_{1:n}$ and $n\in\N$. That requires that we have a notion of distance between two probability distributions. <a href="https://en.wikipedia.org/wiki/Kullback%e2%80%93Leibler_divergence"target="_blank">KL-divergence</a> serves as a suitable distance function, defined as</p>
+<p>$$<br>
+\kl{q_\t(h \mid x_{1:n})}{p(h \mid x_{1:n})} = \int_\mc{H} q_\t(h \mid x_{1:n}) \log\par{\frac{q_\t(h \mid x_{1:n})}{p(h \mid x_{1:n})}}\ \d h\,,<br>
+$$</p>
+<p>which is always non-negative, and $\kl{q_\t(h \mid x_{1:n})}{p(h \mid x_{1:n})} = 0$ iff $q_\t(h \mid x_{1:n}) = p(h \mid x_{1:n})$.</p>
+<p>(Note that there is no full joint $q_\t(h, x_{1:n})$. We are only interested in distributions over hypotheses given various data sequences. Technically this is an abuse of notation and we should instead index these distributions by the data, like this, $q_{\t, x_{1:n}}(h)$. But that notation tends to be more confusing and cluttered, so I am going with the former.)</p>
+<p>Then, given observation $x_{1:n}$, our optimization goal is</p>
+<p>$$\tilde{\t} = \argmin{\t}\kl{q_\t(h \mid x_{1:n})}{p(h \mid x_{1:n})}\,.$$</p>
+<p>However, this alone buys us nothing. If $p(h \mid x_{1:n})$ is intractable to calculate, then so is $\kl{q_\t(h \mid x_{1:n})}{p(h \mid x_{1:n})}$.</p>
+<p>We can get around this by instead considering a proxy objective which is minimized iff the target objective is minimized. In this case,</p>
+<p>$$\t^* = \argmin{\t}\Big\{\kl{q_\t(h\mid x_{1:n})}{p(h)} - \E_{h\sim q_\t(h\mid x_{1:n})}\left[\log p(x_{1:n} \mid h)\right]\Big\}\,.$$</p>
+<p>This expression involves only objects we are explicitly given, $p(h),\ p(x_{1:n} \mid h)$ and $q_\t(h\mid x_{1:n})$, and thus we can assume these probabilities are readily obtainable. However, that expectation may still be intractable since it is another integral over hypotheses. If we can get away with approximating the expectation via Monte Carlo (MC) sampling, we are in business.</p>
+<p>(If we are using gradient descent to minimize this objective, we need to &ldquo;pass gradients&rdquo; through the MC approximation of the expectation, which is a non-trivial proposition. We could employ tricks, such as the <a href="https://gregorygundersen.com/blog/2018/04/29/reparameterization/"target="_blank">reparametrization trick</a> or the <a href="https://danieltakeshi.github.io/2017/03/28/going-deeper-into-reinforcement-learning-fundamentals-of-policy-gradients/"target="_blank">log-derivative trick</a>.)</p>
+<p>We can see why that objective acts as a proxy with the following relationship. Letting $\F(\t;\ x_{1:n})$ be the target objective and $\mc{L}(\t;\ x_{1:n})$ be the proxy objective, we have</p>
+<p>$$\begin{aligned}<br>
+&amp;\F(\t;\ x_{1:n}) + \log\par{1/p(x_{1:n})} \\<br>
+&amp;\quad= \kl{q_\t(h \mid x_{1:n})}{p(h \mid x_{1:n})} + \log\par{1/p(x_{1:n})} \\<br>
+&amp;\quad= \E_{h\sim q_\t(h \mid x_{1:n})}\left[\log\par{\frac{q_\t(h\mid x_{1:n})}{p(h,x_{1:n})}}\right] \\<br>
+&amp;\quad= \kl{q_\t(h\mid x_{1:n})}{p(h)} - \E_{h\sim q_\t(h \mid x_{1:n})}\left[\log p(x_{1:n} \mid h)\right] \\<br>
+&amp;\quad= \mc{L}(\t;\ x_{1:n})\,.<br>
+\end{aligned}$$</p>
+<p>Note that $\log\par{1/p(x_{1:n})}$ is necessarily nonnegative and is constant w.r.t. $\t$ (because $0\leq p(x_{1:n}) \leq 1$). This implies<br>
+$$\mc{L}(\t;\ x_{1:n}) \geq \F(\t;\ x_{1:n})$$<br>
+with equality iff $p(x_{1:n}) = 1$. Pushing down the LHS then pushes down the RHS, and minimizing the LHS minimizes the RHS, making this a suitable proxy objective.</p>
+<p>Since KL-divergence is <a href="https://en.wikipedia.org/wiki/Gibbs%27_inequality#Gibbs%27_inequality"target="_blank">always non-negative</a>, then $\F(\t;\ x_{1:n})$ is non-negative, which means $\mc{L}(\t;\ x_{1:n})$ must also be non-negative. We can also see that from the definition of $\mc{L}(\t;\ x_{1:n})$, since it is the sum of a KL-divergence (always non-negative) and $-\E_{h\sim q_\t(h \mid x_{1:n})}\left[\log p(x_{1:n} \mid h)\right]=\E_{h\sim q_\t(h \mid x_{1:n})}\left[\log \par{1/p(x_{1:n} \mid h)}\right]$ which is also non-negative because $0\leq p(x_{1:n} \mid h)\leq 1$ for all $h$.</p>
+<p>Another way to show that $\mc{L}(\t;\ x_{1:n})$ is a proxy objective for $\F(\t;\ x_{1:n})$ is by rewriting their relationship as</p>
+<p>$$<br>
+\F(\t;\ x_{1:n}) - \mc{L}(\t;\ x_{1:n}) = \log p(x_{1:n}) = \text{constant}\,.<br>
+$$</p>
+<p>Then pushing down $\mc{L}(\t;\ x_{1:n})$ must also push down $\F(\t;\ x_{1:n})$ since their gap is constant w.r.t. $\t$.</p>
+<p>Under the variational inference scheme, we would train a new model $q_\t(h\mid x_{1:n})$ (e.g. a neural network) every time $n$ increases and we have new data, by minimizing the loss $\mc{L}(\t;\ x_{1:n})$ w.r.t. $\t$ (e.g. using gradient descent). (A NN can act as a probability distribution if it outputs the parameters of some common probability distribution, like a Gaussian or categorical distribution.)</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/machine-learning/>machine-learning</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#bayesian-inference">Bayesian Inference</a></li>
+        <li><a href="#variational-inference">Variational Inference</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/variational-autoencoders-tractable-optimization/"><span class="iconfont icon-article"></span>Variational Autoencoders - Tractable Optimization</a></p><p><a class="link" href="https://danabo.github.io/blog/posts/ideal-gas-entropy-derivation/"><span class="iconfont icon-article"></span>Ideal Gas Entropy Derivation</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>
