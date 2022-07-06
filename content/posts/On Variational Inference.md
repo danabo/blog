@@ -1,6 +1,6 @@
 ---
 date: 2022-07-06
-lastmod: '2022-07-06T13:48:00-07:00'
+lastmod: '2022-07-06T13:52:09-07:00'
 tags:
 - machine-learning
 - variational-ml
@@ -90,7 +90,7 @@ Furthermore, we have conditional probabilities, e.g. $p\_\\t(x\\mid z)=p\_\\t(x,
 
 This covers the various functions that $p\_\\t$ can represent, and you can see how the form of the arguments to $p\_\\t$ determines which function we are considering.
 
-# "Variational"
+# Terminology
 
 My experience with other sources that explain variational inference is that they leave me confused about what the word "variational" is pointing at. E.g. [Murphy 2012](https://probml.github.io/pml-book/book0.html) (*Machine Learning: a Probabilistic Perspective*), [Bishop 2006](https://link.springer.com/book/9780387310732) (*Pattern Recognition and Machine Learning*), [Blei 2016](https://arxiv.org/abs/1601.00670) (*Variational Inference: A Review for Statisticians*), and even Wikipedia: [Variational Bayesian methods](https://en.wikipedia.org/wiki/Variational_Bayesian_methods).
 
@@ -98,7 +98,7 @@ Aside from being irksome, I find the lack of clarity around this word inhibits b
 
 To that end, this section is a detour to explore the meaning of the word "variational" in the context of variational inference. If this does not interest you, feel free to skip to the next section, [#Variational Inference](#variational-inference).
 
-## What is "variational" ?
+## What is Variational ?
 In the context of variational inference, the word "variational" refers to the [calculus of variations](https://en.wikipedia.org/wiki/Calculus_of_variations) (CoV). Some variational inference texts mention the CoV connection explicitly, e.g. [Bishop 2006](https://link.springer.com/book/9780387310732), section 10.1.
 
 According to Wikipedia,
@@ -137,7 +137,7 @@ So with this notion, regular calculus is not variational, despite involving sear
 
 [Jordan et al.](https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf) is implicitly defining what "variational" means here. We are given an optimization criteria, namely $\\fa x,\\ \\min\_{\\l\_x}\\set{\\l\_x x-\\ln\\l\_x-1}$, which has infinitely many optimization parameters, $\\l\_x$ for every $x$. We could view this optimization as being over the space of (continuous) functions, $\\R\\to\\R$, and searching for some $\\l:\\R\\to\\R$ s.t. $\\l(x) x-\\ln\\l(x)-1$ is minimal for every $x\\in(0,\\infty)$. In this case, $\\l(x)=1/x$ is the solution.
 
-Note that in this problem we don't have a functional. Nevertheless  [Jordan et al.](https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf) is taking this to be a variational method. If we are to broaden our notion of variational from the previous section, [#What is variational](#what-is-variational), to accommodate this usage, we could say that a variational problem is an optimization problem over an infinite dimensional function space, or equivalently with infinitely many optimization parameters. In most cases the optimization problem can be specified with a functional, but in this case it is not.
+Note that in this problem we don't have a functional. Nevertheless  [Jordan et al.](https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf) is taking this to be a variational method. If we are to broaden our notion of variational from the previous section, [#What is Variational](#what-is-variational), to accommodate this usage, we could say that a variational problem is an optimization problem over an infinite dimensional function space, or equivalently with infinitely many optimization parameters. In most cases the optimization problem can be specified with a functional, but in this case it is not.
 
 **Question**: Is $\\min\_{\\l:\\R\\to\\R}\\set{\\int\_\\X\\l(x) x-\\ln\\l(x)-1\\ \\d x}$ an equivalent problem? Then $\\mc{F}\[\\l\]=\\int\_\\X\\l(x) x-\\ln\\l(x)-1\\ \\d x$ is our functional.
 
