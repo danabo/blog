@@ -6,7 +6,7 @@
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
     <div class="article-container"><section class="article header">
-    <h1 class="article title">Free Energy Principle 1st Pass</h1><p class="article date">February 7, 2021<span class="lastmod"> • edited March 8, 2022</span></p></section><article class="article markdown-body"><p>$$<br>
+    <h1 class="article title">Free Energy Principle 1st Pass</h1><p class="article date">February 7, 2021<span class="lastmod"> • edited July 6, 2022</span></p></section><article class="article markdown-body"><p>$$<br>
 \newcommand{\mb}{\mathbb}<br>
 \newcommand{\mc}{\mathcal}<br>
 \newcommand{\E}{\mb{E}}<br>
@@ -71,6 +71,7 @@ $$</p>
 <li><a href="https://psyarxiv.com/b4jm6/"target="_blank">A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data</a></li>
 <li><a href="https://arxiv.org/abs/1901.07945"target="_blank">What does the free energy principle tell us about the brain?</a></li>
 </ul>
+<p>Also see <a href="https://danabo.github.io/blog/posts/on-variational-inference/">On Variational Inference</a>.</p>
 <p>Suppose $x\in\mc{X}$ is observed and the posterior $p_{H \mid X=x}$ is intractable to compute. We can instead approximate it by minimizing</p>
 <p>$$<br>
 q_x^* = \argmin{q \in \mc{Q}} \kl{q}{p_{H \mid X=x}}<br>
@@ -190,7 +191,7 @@ First of all, I thought there is a joint distribution $p(o,s,\pi)$, implying tha
 <li>Is the agent assumed to have a dynamics model of the environment where all that&rsquo;s unknown to the agent is the environment state? that seems unrealistic. if the agent doesn&rsquo;t know the &ldquo;true&rdquo; dynamics model, by what mechanism would the agent improve its dynamics model? The Bayesian posterior approximation is for estimating the effect of its actions on environment state, but this doesn&rsquo;t address how the agent learns about the relationship between action and state.</li>
 <li>How are time and actions incorporated? I understand the time-less variational free energy formulation that I explained above. What I don&rsquo;t understand is what this looks like when applied to an agent-environment interaction loop over time.</li>
 </ol>
-</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/free-energy/>free energy</a></section>
+</article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/free-energy/>free-energy</a></section>
 </div><nav id="TableOfContents">
   <ol>
     <li><a href="#my-current-understanding">My current understanding</a>

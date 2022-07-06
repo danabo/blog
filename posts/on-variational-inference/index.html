@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>On Variational Inference&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="On Variational Inference" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><div class="article-outer">
+    <div class="article-container"><section class="article header">
+    <h1 class="article title">On Variational Inference</h1><p class="article date">July 6, 2022</p></section><article class="article markdown-body"><p>This is a primer on so-called variational inference in machine learning, based on sections of <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a> (<em>An Introduction to Variational Methods for Graphical Models</em>; 1999). I go over the mathematical forms of variational inference, and I include a discussion on what it means for something to be &ldquo;variational.&rdquo; I hope this conveys a bit of the generating ideas that give rise to the various forms of variational inference.</p>
+<p>$$<br>
+\newcommand{\0}{\mathrm{false}}<br>
+\newcommand{\1}{\mathrm{true}}<br>
+\newcommand{\mb}{\mathbb}<br>
+\newcommand{\mc}{\mathcal}<br>
+\newcommand{\mf}{\mathfrak}<br>
+\newcommand{\and}{\wedge}<br>
+\newcommand{\or}{\vee}<br>
+\newcommand{\es}{\emptyset}<br>
+\newcommand{\a}{\alpha}<br>
+\newcommand{\t}{\tau}<br>
+\newcommand{\T}{\Theta}<br>
+\newcommand{\o}{\omega}<br>
+\newcommand{\O}{\Omega}<br>
+\newcommand{\x}{\xi}<br>
+\newcommand{\z}{\zeta}<br>
+\newcommand{\fa}{\forall}<br>
+\newcommand{\ex}{\exists}<br>
+\newcommand{\X}{\mc{X}}<br>
+\newcommand{\Y}{\mc{Y}}<br>
+\newcommand{\Z}{\mc{Z}}<br>
+\newcommand{\P}{\Phi}<br>
+\newcommand{\y}{\psi}<br>
+\newcommand{\p}{\phi}<br>
+\newcommand{\l}{\lambda}<br>
+\newcommand{\pr}{\times}<br>
+\newcommand{\B}{\mb{B}}<br>
+\newcommand{\N}{\mb{N}}<br>
+\newcommand{\R}{\mb{R}}<br>
+\newcommand{\E}{\mb{E}}<br>
+\newcommand{\e}{\varepsilon}<br>
+\newcommand{\set}[1]{\left\{#1\right\}}<br>
+\newcommand{\par}[1]{\left(#1\right)}<br>
+\newcommand{\tup}{\par}<br>
+\newcommand{\brak}[1]{\left[#1\right]}<br>
+\newcommand{\vtup}[1]{\left\langle#1\right\rangle}<br>
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}<br>
+\newcommand{\inv}[1]{{#1}^{-1}}<br>
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}<br>
+\newcommand{\df}{\overset{\mathrm{def}}{=}}<br>
+\newcommand{\t}{\theta}<br>
+\newcommand{\kl}[2]{D_{\text{KL}}\left(#1\ \| \ #2\right)}<br>
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}\ }<br>
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}\ }<br>
+\newcommand{\d}{\mathrm{d}}<br>
+\newcommand{\L}{\mc{L}}<br>
+\newcommand{\M}{\mc{M}}<br>
+\newcommand{\Er}{\mc{E}}<br>
+\newcommand{\ht}{\hat{\t}}<br>
+\newcommand{\hp}{\hat{\p}}<br>
+\newcommand{\D}{\mc{D}}<br>
+\newcommand{\H}{\mc{H}}<br>
+\newcommand{\softmax}{\text{softmax}}<br>
+\newcommand{\up}[1]{^{(#1)}}<br>
+$$</p>
+<h1 id="setup">Setup</h1>
+<p>Let $x = (x_1,x_2,x_3,\dots) \in \X = \X_1\pr\X_2\pr\X_3\pr\dots$ and $z = (z_1,z_2,z_3,\dots) \in \Z = \Z_1\pr\Z_2\pr\Z_3\pr\dots$ be finite or infinite length tuples, where $x$ is the <em>data variable</em> and $\X$ is the <em>data space</em>, and $z$ is the <em>hidden</em> or <em>latent variable</em> and $\Z$ is the <em>latent space</em>.</p>
+<p>When we visualize $(x,z)$ as a graph, we call each $x_i$ or $z_j$ a <em>node</em> (in the context of the graphical model literature). However, in this post I will call them <em>dimensions</em>. Each $\X_i$ and $\Z_j$ can be a finite or countable set, or an uncountable set with a metric space (typically the Euclidean metric on $\R$).</p>
+<p>Suppose we have a family of joint distributions $\set{p_\t\mid\t\in\T}$, i.e. $p_\t(x,z)$ is the joint probability of $x$ and $z$ for some choice of $\t\in\T$. We say that $p_\t$ is <em>parametrized</em> by $\t$, where $\T$ is a finite dimensional metric space, e.g. $\T\subseteq\R^r$ with $r\in\N$.</p>
+<p>We assume that $p_\t(x,z)$ and $p_\t(z)$ are tractable (i.e. fast) quantities to calculate with a computer (to sufficient precision) for all $(x,z)\in\X\pr\Z$, but that $p_\t(x)$ and $p_\t(z\mid x)$ are intractable (too slow to be useful) while also being quantities of interest.</p>
+<p>Variational inference is a method for tractably approximating $p_\t(x)$ and $p_\t(z\mid x)$ for all $(x,z)\in\X\pr\Z$.</p>
+<h2 id="note-about-probability-notation">Note about probability notation</h2>
+<p>When I write $p_\t(x,z)$, I am treating $p_\t$ as a function of $x$ and $z$ that outputs a probability mass or density.</p>
+<p>However, I will overload $p_\t$, by argument name, to represent a number of related functions. For instance, the marginal probabilities $p_\t(x) = \int_\Z p_\t(x,z)\ \d z$ and $p_\t(z) = \int_\X p_\t(x,z)\ \d x$ (replacing integrals with sums when variables are discrete) are different quantities depending on whether the argument to $p_\t$ is $x$ or $z$. Additionally I might consider marginal probabilities of specific dimensions, e.g. $p_\t(x_{i_1},x_{i_2},\dots,z_{j_1},z_{j_2},\dots)$ is the integral of $p_\t(x,z)$ over all dimensions not included as arguments.</p>
+<p>Furthermore, we have conditional probabilities, e.g. $p_\t(x\mid z)=p_\t(x,z)/p_\t(z)$ or $p_\t(x_{i_1},z_{j_1}\mid x_{i_2},z_{j_2})=p_\t(x_{i_1},x_{i_2},z_{j_1},z_{j_2})/p_\t(x_{i_2},z_{j_2})$.</p>
+<p>This covers the various functions that $p_\t$ can represent, and you can see how the form of the arguments to $p_\t$ determines which function we are considering.</p>
+<h1 id="variational">&ldquo;Variational&rdquo;</h1>
+<p>My experience with other sources that explain variational inference is that they leave me confused about what the word &ldquo;variational&rdquo; is pointing at. E.g. <a href="https://probml.github.io/pml-book/book0.html"target="_blank">Murphy 2012</a> (<em>Machine Learning: a Probabilistic Perspective</em>), <a href="https://link.springer.com/book/9780387310732"target="_blank">Bishop 2006</a> (<em>Pattern Recognition and Machine Learning</em>), <a href="https://arxiv.org/abs/1601.00670"target="_blank">Blei 2016</a> (<em>Variational Inference: A Review for Statisticians</em>), and even Wikipedia: <a href="https://en.wikipedia.org/wiki/Variational_Bayesian_methods"target="_blank">Variational Bayesian methods</a>.</p>
+<p>Aside from being irksome, I find the lack of clarity around this word inhibits by ability to grok what authors are thinking when they write about variational inference. Specifically, I want to understand the underlying generating idea for this class of methodologies. As an ML practitioner and researcher, aim to build off of existing ideas. To do that I need to know how previous authors thought about their ideas. Having the generator of an idea, I can play with it and potentially generate something not previously considered.</p>
+<p>To that end, this section is a detour to explore the meaning of the word &ldquo;variational&rdquo; in the context of variational inference. If this does not interest you, feel free to skip to the next section, <a href="#variational-inference">#Variational Inference</a>.</p>
+<h2 id="what-is-variational-">What is &ldquo;variational&rdquo; ?</h2>
+<p>In the context of variational inference, the word &ldquo;variational&rdquo; refers to the <a href="https://en.wikipedia.org/wiki/Calculus_of_variations"target="_blank">calculus of variations</a> (CoV). Some variational inference texts mention the CoV connection explicitly, e.g. <a href="https://link.springer.com/book/9780387310732"target="_blank">Bishop 2006</a>, section 10.1.</p>
+<p>According to Wikipedia,</p>
+<blockquote>
+<p>The <strong>calculus of variations</strong> is a field of <a href="https://en.wikipedia.org/wiki/Mathematical_analysis"title="Mathematical analysis"target="_blank">mathematical analysis</a> that uses variations, which are small changes in <a href="https://en.wikipedia.org/wiki/Function_%28mathematics%29"title="Function (mathematics)"target="_blank">functions</a> and <a href="https://en.wikipedia.org/wiki/Functional_%28mathematics%29"title="Functional (mathematics)"target="_blank">functionals</a>, to find maxima and minima of functionals: <a href="https://en.wikipedia.org/wiki/Map_%28mathematics%29"title="Map (mathematics)"target="_blank">mappings</a> from a set of <a href="https://en.wikipedia.org/wiki/Function_%28mathematics%29"title="Function (mathematics)"target="_blank">functions</a> to the <a href="https://en.wikipedia.org/wiki/Real_number"title="Real number"target="_blank">real numbers</a>.</p>
+</blockquote>
+<p><a href="https://mathworld.wolfram.com/CalculusofVariations.html"target="_blank">wolfram.com</a> gives a slightly different description for the CoV,</p>
+<blockquote>
+<p>A branch of mathematics that is a sort of generalization of <a href="https://mathworld.wolfram.com/Calculus.html"target="_blank">calculus</a>. Calculus of variations seeks to find the path, curve, surface, etc., for which a given <a href="https://mathworld.wolfram.com/Function.html"target="_blank">function</a> has a <a href="https://mathworld.wolfram.com/StationaryValue.html"target="_blank">stationary value</a> (which, in physical problems, is usually a <a href="https://mathworld.wolfram.com/Minimum.html"target="_blank">minimum</a> or <a href="https://mathworld.wolfram.com/Maximum.html"target="_blank">maximum</a>).</p>
+</blockquote>
+<p>The &ldquo;stationary value&rdquo; here refers to the min or max of a functional, and a functional is a mapping from functions to real numbers. Both accounts of the CoV make reference optimizing a functional.</p>
+<p>If we want to use &ldquo;variational&rdquo; as an adjective, e.g. in &ldquo;variational method&rdquo; (<a href="https://en.wikipedia.org/wiki/History_of_variational_principles_in_physics"target="_blank">examples</a>), how could we reasonably extrapolate from the above description of the CoV?</p>
+<p>Here&rsquo;s my proposal: something is &ldquo;variational&rdquo; if it involves an optimization problem with uncountably many degrees of freedom. Equivalently, we are searching over a function space to find an optimal function (according to our optimization criteria). Then a &ldquo;variation&rdquo; is some &ldquo;perturbation&rdquo; to a candidate function that moves us infinitesimally in some direction in function space.</p>
+<p>So with this notion, regular calculus is not variational, despite involving searching over function spaces, because a given function is either the solution or not, and is not scored. I suppose that if we recast integration and differentiation as functionals whose optima are the derivatives and integrals of the desired function, we would be reposing calculus as a variational problem (similar to the kind of problem-reposing we will see in the next section).</p>
+<h2 id="variational-methods-in-ml">Variational methods in ML</h2>
+<p><a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a>, section 4, <em>Basics of variational methodology</em>, gives us a primer on variational methods.</p>
+<blockquote>
+<p>Let us begin by considering a simple example. In particular, let us express the logarithm function variationally:<br>
+$$\ln(x) = \min_\l\set{\l x-\ln\l-1}\,.$$<br>
+In this expression $\l$ is the variational parameter, and we are required to perform the minimization for each value of $x$.</p>
+</blockquote>
+<p><a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a> is implicitly defining what &ldquo;variational&rdquo; means here. We are given an optimization criteria, namely $\fa x,\ \min_{\l_x}\set{\l_x x-\ln\l_x-1}$, which has infinitely many optimization parameters, $\l_x$ for every $x$. We could view this optimization as being over the space of (continuous) functions, $\R\to\R$, and searching for some $\l:\R\to\R$ s.t. $\l(x) x-\ln\l(x)-1$ is minimal for every $x\in(0,\infty)$. In this case, $\l(x)=1/x$ is the solution.</p>
+<p>Note that in this problem we don&rsquo;t have a functional. Nevertheless  <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a> is taking this to be a variational method. If we are to broaden our notion of variational from the previous section, <a href="#what-is-variational">#What is variational</a>, to accommodate this usage, we could say that a variational problem is an optimization problem over an infinite dimensional function space, or equivalently with infinitely many optimization parameters. In most cases the optimization problem can be specified with a functional, but in this case it is not.</p>
+<p><strong>Question</strong>: Is $\min_{\l:\R\to\R}\set{\int_\X\l(x) x-\ln\l(x)-1\ \d x}$ an equivalent problem? Then $\mc{F}[\l]=\int_\X\l(x) x-\ln\l(x)-1\ \d x$ is our functional.</p>
+<p>To generalize this variational method, suppose we have a function $f(x)$ which is intractable to calculate directly, but that we know of some other tractable function, $g(x,\l)$, s.t. $g(x,\l) \geq f(x)$ for all $\l\in\R$ and $x\in\X$, and $g(x,\l) = f(x)$ for some $\l\in\R$, for all $x\in\X$ ($g$ is a tight upper bound of $f$). Let $\l(x) = \argmin{\l}g(x,\l)$. Then $f(x) = g(x,\l(x))$ for all $x\in\X$.</p>
+<p>If we are not able to perform the exact minimization $\argmin{\l}g(x,\l)$ symbolically, but we instead find an approximate minimum $\hat{\l}_x$ numerically (e.g. with gradient descent). Then $g(x,\hat{\l}_x)$ is an approximation of $f(x)$, and $g(x,\hat{\l}_x) \geq f(x)$ is guaranteed. This is now useful as a way to numerically approximate $f(x)$ by converting it into an optimization problem which we know how to numerically approximate.</p>
+<h1 id="variational-inference">Variational Inference</h1>
+<p>See <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a>, section 6, <em>The block approach</em>.</p>
+<p>Continuing from the <a href="#setup">#Setup</a> above, $p_\t(z\mid x)$ is an intractable quantity (for most $z$ and $x$). So instead we introduce the family of tractable distributions $q_\p$ on $z$ parametrized by $\p\in\P$, where $q_\p(z)$ is intended to be our approximation of $p_\t(z\mid x)$, and $\p$ will be our variational parameter(s) w.r.t. $x$ (i.e. the optimization solution will be a function from $\X$ to $\P$).</p>
+<p>Define the following quantities,</p>
+<p>$$\begin{aligned}<br>
+\M(\t;\ x) &amp;\df \log\par{1/p_\t(x)}\,, \\<br>
+\Er(\t,\p;\ x) &amp;\df \kl{q_\p(z)}{p_\t(z\mid x)} \\&amp;= \int_\Z q_\p(z)\log\par{\frac{q_\p(z)}{p_\t(z\mid x)}}\ \d z\,, \\<br>
+\L(\t,\p;\ x) &amp;\df \M(\t;\ x) + \Er(\t,\p;\ x)\,.<br>
+\end{aligned}$$</p>
+<p>All three quantities are non-negative for all $\t,\p,x$. Then we have</p>
+<p>$$<br>
+\L(\t,\p;\ x) \geq \M(\t;\ x)\,,<br>
+$$</p>
+<p>with equality when $\Er(\t,\p;\ x)=0$, i.e. when $q_\p(z)=p_\t(z\mid x)$ for all $z$.</p>
+<p>Let $\t$ be constant. When $p_\t(\cdot \mid x) \in\set{q_\p(\cdot)\mid \p\in\P}$ for all $x$, then we can write $\M(\t;\ x) = \min_\p\L(\t,\p;\ x)$, with the solution being some function $\p^*:\X\to\P$. Hence we have a variational optimization problem whose solution is a function.</p>
+<p>Otherwise if $p_\t(\cdot \mid x) \notin\set{q_\p(\cdot)\mid \p\in\P}$, then $\L(\t,\p;\ x)$ is forever an upper bound of $\M(\t;\ x)$, but its minimum may still be close enough to $\M(\t;\ x)$ for it to be a reasonable substitute. So the variational minimization problem, $\fa x,\ \min_{\p_x}\L(\t,\p_x;\ x)$, is of interest in either case.</p>
+<p>A nice property of this particular setup is that the minimization objective, $\fa x,\ \min_{\p_x}\L(\t,\p_x;\ x)$, will also achieve $\fa x,\ \min_{\p_x}\Er(\t,\p_x;\ x)$ because $\M(\t;\ x)$ remains constant w.r.t. $\p_x$ (i.e. the gap $\Er(\t,\p_x;\ x)=\L(\t,\p;\ x) - \M(\t;\ x)$ is minimized). Minimal $\Er(\t,\p_x;\ x)$ in turn implies that $q_\p(z)$ is the best approximation of $p_\t(z\mid x)$ for all $z,x$. So from our single variational optimization, we get two approximations of intractable quantities: for $\M(\t;\ x)$ and for $p_\t(z\mid x)$.</p>
+<hr>
+<p>Note that $\M(\t;\ x)$ is intractable iff $p_\t(z\mid x)$ is intractable, assuming $p_\t(x,z)$ is tractable, since $p_\t(z\mid x)=p_\t(x,z)\exp(\M(\t;\ x))$ and $\M(\t;\ x)=\log\par{p_\t(z\mid x)/p_\t(x,z)}$.</p>
+<h2 id="tractability">Tractability</h2>
+<p>Suppose $\M(\t;\ x)$ is intractable. Then we can subsitute it for our variational approximation, $\L(\t,\p;\ x)$. Now the question is whether we can tractably calculate $\L(\t,\p;\ x)$ for all $\t,\p,x$.</p>
+<p>We have</p>
+<p>$$\begin{aligned}<br>
+\L(\t,\p;\ x)=\kl{q_\p(z)}{p_\t(z)} + \E_{z\sim q_\p(z)}\left[\log\par{1/p_\t(x \mid z)}\right]\,,<br>
+\end{aligned}$$</p>
+<p>where $\kl{q_\p(z)}{p_\t(z)}=\int_\Z q_\p(z)\log\par{\frac{q_\p(z)}{p_\t(z)}}\ \d z$<br>
+and $\E_{z\sim q_\p(z)}\left[\log\par{1/p_\t(x \mid z)}\right]=\int_\Z q_\p(z)\log\par{1/p_\t(x \mid z)}\ \d z$.</p>
+<p>See <a href="#appendix">#Appendix</a> for derivation.</p>
+<p>This form is promising because it involves only quantities that we know are tractable, $q_\p(z)$, $p_\t(z)$ and $p_\t(x \mid z)$. However, calculating expectations w.r.t. $q_\p(z)$, and optimizing $\p$ through those expectations (e.g. with gradient descent) may still be tricky to perform tractably, and further approximations are likely needed. E.g. <a href="https://arxiv.org/pdf/1312.6114.pdf"target="_blank">Kingma et al.</a> discusses this problem and ways to get around it.</p>
+<h2 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h2>
+<p>See <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a>, section 6.2, <em>Parameter estimation via variational methods</em>.</p>
+<p>Often, we are interested in solving</p>
+<p>$$<br>
+\t^* = \argmin{\t} \M(\t;\ x)\,.<br>
+$$</p>
+<p>This is maximum likelihood estimation, which is one way to <em>fit</em> a <em>model</em> (i.e. the family of distributions $p_\t$ for $\t\in\T$) to a dataset. Here, $\M(\t;\ x)$ is called a loss function. Often, we cannot solve this optimization exactly, so we use numerical optimization, such as gradient descent w.r.t. $\t$.</p>
+<p>When the loss $\M(\t;\ x)$ is intractable to calculate, we can replace it with the upper bound $\L(\t,\p;\ x)$ and then perform the joint minimization</p>
+<p>$$<br>
+(\t^*,\p^*)=\argmin{\t,\p} \L(\t,\p;\ x)\,,<br>
+$$</p>
+<p>which also gives us the approximation $q_{\p^*}(z)\approx p_{\t^*}(z\mid x)$.</p>
+<h3 id="iid-datasets">i.i.d. datasets</h3>
+<p>Usually, we are performing maximum likelihood estimation on a dataset that we are modeling as i.i.d. Specifically, our dataset is a list, $X=(x\up{1},\dots,x\up{n})$, of $n$ instances of the visible dimensions, where each $x\up{k} \in \X$. As before we have the parametrized distribution $p_\t(x,z)$ on $\X\pr\Z$. Since we assume the dataset is i.i.d., then we have</p>
+<p>$$p_\t(X) = p_\t(x\up{1},\dots,x\up{n}) = \prod_{k=1}^n p_\t(x\up{k})\,,$$</p>
+<p>and when $Z \in \Z^n$,</p>
+<p>$$p_\t(X,Z) = \prod_{k=1}^n p_\t(x\up{k},z\up{k})\,.$$</p>
+<p>Then we have</p>
+<p>$$\begin{aligned}\M(\t;\ X) &amp;= \log\par{1/p_\t(X)} \\&amp;= \sum_{k=1}^n \log\par{1/p_\t(x\up{k})} \\&amp;= \sum_{k=1}^n\M(\t;\ x\up{k})\,.\end{aligned}$$</p>
+<p>We want to approximate $p_\t(z\mid x)$ like before, but unlike before $x$ is not held fixed. In addition to having $n$ instances of $x$ in our dataset, we also want to efficiently calculate $p_\t(z\mid x)$ on any arbitrary $x\in\X$ outside our dataset.</p>
+<p>Following the example of <a href="#variational-methods-in-ml">#Variational methods in ML</a>, let&rsquo;s perform a separate minimization for every $x\in\X$. That is to say, let $q_\p(z)$ be a distribution over $\Z$ like before, with $\Er(\t,\p;\ x)=\kl{q_\p(z)}{p_\t(z\mid x)}$ and $\L(\t,\p;\ x) = \M(\t;\ x) + \Er(\t,\p;\ x)$.</p>
+<p>Then for each $x\up{k} \in X$ we have separate parameters $\p_{x\up{k}}$ so that $q_{\p_{x\up{k}}}(z)$ is our working approximation for $p_\t(z\mid x\up{k})$. Then our approximation of $p_\t(Z\mid X)$ is $q_{\p_{x\up{1}},\dots,\p_{x\up{n}}}(Z)=\prod_{k=1}q_{\p_{x\up{k}}}(z\up{k})$, and so</p>
+<p>$$\begin{aligned}<br>
+\Er(\t,\p;\ X) &amp;= \int_{\Z^n} q_{\p_{x\up{1}},\dots,\p_{x\up{n}}}(Z)\log\par{\frac{q_{\p_{x\up{1}},\dots,\p_{x\up{n}}}(Z)}{p_\t(Z\mid X)}}\ \d Z \\<br>
+&amp;= \int_{\Z^n} \brak{\prod_{k=1}^n q_{\p_{x\up{k}}}(z\up{k})}\brak{\sum_{k=1}^n\log\par{\frac{q_{\p_{x\up{k}}}(z\up{k})}{p_\t(z\up{k}\mid x\up{k})}}}\ \d z\up{1}\dots\d z\up{n} \\<br>
+&amp;= \sum_{k=1}^n \int_{\Z} q_{\p_{x\up{k}}}(z)\log\par{\frac{q_{\p_{x\up{k}}}(z)}{p_\t(z\mid x\up{k})}}\ \d z \\<br>
+&amp;= \sum_{i=1}^n \Er(\t,\p_{x\up{k}};\ x\up{k})<br>
+\end{aligned}$$</p>
+<p>Then our dataset loss is $\sum_{k=1}^n\L(\t,\p_{x\up{k}};\ x\up{k})$ with $\L(\t,\p_{x\up{k}};\ x\up{k}) = \M(\t;\ x\up{k}) + \Er(\t,\p_{x\up{k}};\ x\up{k})$.</p>
+<p>To fit the model to $X=(x\up{1},\dots,x\up{n})$ w.r.t. $\t$, we perform the joint minimization,</p>
+<p>$$<br>
+(\ht,\hp_{x\up{1}},\dots,\hp_{x\up{n}}) = \argmin{\t,\p_{x\up{1}},\dots,\p_{x\up{n}}} \sum_{k=1}^n\L(\t,\p_{x\up{k}};\ x\up{k})\,,<br>
+$$<br>
+to obtain $\ht$ (we can discard the $\set{\hp_{x\up{k}}}$).</p>
+<p>Then for any $x\in\X$ of interest, we perform the minimization</p>
+<p>$$<br>
+\hp_x = \argmin{\p} \L(\ht,\p;\ x)\,,<br>
+$$</p>
+<p>giving us $q_{\hp_x}(z) \approx p_\ht(z\mid x)$.</p>
+<h4 id="another-approach">Another Approach</h4>
+<p>An alternative way to approximate $p_\t(z\mid x)$ for arbitrary $x\in\X$ is to have our approximate distribution $q_\p$ be a function of both $z$ and $x$ (for a single choice of parameters $\p$). This is typically notated as $q_\p(z\mid x)$, though this is technically an abuse of notation since we do not define the joint $q_\p(x,z)$. We could instead write $q_{\p,x}(z)$ or $q_{\p}(z;\ x)$, both of which make it clear that the probability distribution is only over $\Z$-space. However, I will continue with $q_\p(z\mid x)$ since it visually mimics $p_\t(z\mid x)$ and I find that easier to think about.</p>
+<p>Then we have $q_\p(Z\mid X)=\prod_{k=1}q_\p(z\up{k}\mid x\up{k})$, and so</p>
+<p>$$\begin{aligned}<br>
+\Er(\t,\p;\ X) &amp;= \int_{\Z^n} q_\p(Z\mid X)\log\par{\frac{q_\p(Z\mid X)}{p_\t(Z\mid X)}}\ \d Z \\<br>
+&amp;= \int_{\Z^n} \brak{\prod_{k=1}^n q_\p(z\up{k}\mid x\up{k})}\brak{\sum_{k=1}^n\log\par{\frac{q_\p(z\up{k}\mid x\up{k})}{p_\t(z\up{k}\mid x\up{k})}}}\ \d z\up{1}\dots\d z\up{n} \\<br>
+&amp;= \sum_{k=1}^n \int_{\Z} q_\p(z\mid x\up{k})\log\par{\frac{q_\p(z\mid x\up{k})}{p_\t(z\mid x\up{k})}}\ \d z \\<br>
+&amp;= \sum_{i=1}^n \Er(\t,\p;\ x\up{k})<br>
+\end{aligned}$$</p>
+<p>Then our dataset loss is $\L(\t,\p;\ X) = \sum_{k=1}^n\L(\t,\p;\ x\up{k})$ with $\L(\t,\p;\ x\up{k}) = \M(\t;\ x\up{k}) + \Er(\t,\p;\ x\up{k})$.</p>
+<p>Our optimization problem becomes</p>
+<p>$$<br>
+(\ht,\hp) = \argmin{\t,\p} \sum_{k=1}^n\L(\t,\p;\ x\up{k})\,.<br>
+$$</p>
+<p>Then $q_\hp(z\mid x) \approx p_\ht(z\mid x)$ for any $x\in\X$ of interest.</p>
+<p>This approach may let us approximate $p_\t(z\mid x)$ faster since we don&rsquo;t rerun our optimization process for every $x$.</p>
+<p><strong>Question</strong>: What other reasons are there to prefer one of these two approaches to i.i.d. MLE. What are the pros and cons of each?</p>
+<h1 id="variational-bayes">Variational Bayes</h1>
+<p>See <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a>, section 7.1.3, <em>Bayesian methods</em>.</p>
+<p>Variational inference (VI) applied to Bayesian inference is sometimes called &ldquo;variational Bayes&rdquo; (VB) (short for &ldquo;variational Bayesian inference&rdquo;). Mathematically VI and VB are the same. Whether we are doing Bayesian inference or just inference is a difference about the meaning we ascribe to that math, which determines how we apply it.</p>
+<p>Bayesian inference operates in a paradigm which I would call &ldquo;Bayesian epistemology.&rdquo; Informally, in this paradigm we observe pieces of data over a period of time, we have a set of hypotheses which remain unobserved, and each hypothesis gives us a prediction about what we will observe in the future given the present. To each hypothesis we assign a weight representing our belief about the plausibility of that hypothesis. Then we take the weighted average of all the hypotheses' predictions to get our final prediction which we use, e.g. for decision making. See <a href="https://danabo.github.io/blog/posts/deconstructing-bayesian-inference/#defining-bayesian-inference">Deconstructing Bayesian Inference#defining-bayesian-inference</a> for a more in-depth account of Bayesian epistemology.</p>
+<p>Formally, suppose we have a joint distribution $P(x,z)$ as before, except that $P$ is not parametrized. We take $\Z$ to be our hypothesis space and $\X$ to be the data space. We also suppose that we have partial data, e.g. we observe $x_{\leq n} = (x_1,\dots,x_n) \in \X_1\pr\dots\pr\X_n$, which is a subset of all the dimensions of the data space $\X$. I didn&rsquo;t specify that we observe each dimension in the order of its indexing, but for convenience let&rsquo;s re-index so that that is the case.</p>
+<p>Let $P(z)$ be the belief weight we assign for each $z\in\Z$. Call $P(z)$ our prior about $z$. Upon observing $x_{\leq n}$, our beliefs change, where $P(z\mid x_{\leq n})$ is now the weight we assign to $z$, called the posterior. We are interested in our average prediction distribution over the unobserved data, $x_{&gt;n} = (x_{n+1},x_{n+2},\dots) \in \X_{n+1}\pr\X_{n+2}\pr\dots$, given the observed data $x_{\leq n}$,</p>
+<p>$$\begin{aligned}<br>
+P(x_{&gt;n}\mid x_{\leq n}) &amp;= \int_{\Z}P(x_{&gt;n}\mid x_{\leq n},z)P(z\mid x_{\leq n})\ \d z \\<br>
+\end{aligned}$$</p>
+<p>for all $x_{&gt;n}\in\X_{&gt;n}$. We can see that the posterior $P(z\mid x_{\leq n})$ is involved in this calculation.</p>
+<p>When the posterior is intractable, we can perform VI (now restyled as VB), by defining an approximate posterior $q_\p(z)$ parametrized by $\p$. Like before, let</p>
+<p>$$\M(x_{\leq n}) = \log\par{1/P(x_{\leq n})}$$</p>
+<p>$$\Er(\p;\ x_{\leq n}) = \kl{q_\p(z)}{P(z\mid x_{\leq n})}$$</p>
+<p>and</p>
+<p>$$\L(\p;\ x_{\leq n}) = \M(x_{\leq n}) + \Er(\p;\ x_{\leq n})$$</p>
+<p>Then we want to find $\p^*:\X_{\leq n} \to \P$ which solves the minimization problem, $\fa x_{\leq n},\ \min_{\p_{x_{\leq n}}}\L(\p_{x_{\leq n}};\ x_{\leq n})$.</p>
+<p><strong>Question</strong>: Supposing our prediction distribution $P(x_{&gt;n}\mid x_{\leq n})$ is intractable, can we obtain a variational approximation of this probability?</p>
+<hr>
+<p>In machine learning, model parameters are hypotheses. Bayesian machine learning often seeks to convert a parametrized model like $p_\t(x,z)$ into a Bayesian model by putting a prior on $\T$.</p>
+<p>Let $P(x,z,\t) = p_\t(x,z)P(\t)$ where $P(\t)$ is the prior probability of $\t$. Instead of finding a single $\t^*$ which maximizes $p_\t(x)$, we are interested in the posterior $P(\t \mid x)$ and our average prediction of the latent variable, $P(z\mid x)$.</p>
+<p>This is the same as what I outlined above, replacing $x_{\leq n} \mapsto x$, $z\mapsto\t$ and $x_{&gt;n}\mapsto z$.</p>
+<h1 id="appendix">Appendix</h1>
+<p>$$\begin{aligned}<br>
+&amp; \L(\t,\p;\ x) \\<br>
+=\ &amp; \Er(\t,\p;\ x) + \M(\t;\ x) \\<br>
+=\ &amp; \kl{q_\p(z)}{p_\t(z\mid x)} + \log \par{1/p_\t(x)} \\<br>
+=\ &amp; \int_\Z q_\p(z) \log\par{\frac{q_\p(z)}{p_\t(z\mid x)}}\ \d z + \int_\Z q_\p(z)\log \par{\frac{1}{p_\t(x)}}\ \d z  \\<br>
+=\ &amp; \int_\Z q_\p(z) \log\par{\frac{q_\p(z)}{p_\t(x\mid z)p_\t(z)/p_\t(x)}\cdot\frac{1}{p_\t(x)}}\ \d z \\<br>
+=\ &amp; \int_\Z q_\p(z) \log\par{\frac{q_\p(z)}{p_\t(z)}\cdot\frac{1}{p_\t(x\mid z)}}\ \d z \\<br>
+=\ &amp; \int_\Z q_\p(z) \log\par{\frac{q_\p(z)}{p_\t(z)}}\ \d z + \int_\Z q_\p(z) \log\par{\frac{1}{p_\t(x\mid z)}}\ \d z  \\<br>
+=\ &amp;  \kl{q_\p(z)}{p_\t(z)} + \E_{z\sim q_\p(z)}\left[\log\par{1/p_\t(x \mid z)}\right] \,.<br>
+\end{aligned}$$</p></article><section class="article labels"><a class="tag" href=https://danabo.github.io/blog/tags/machine-learning/>machine-learning</a><a class="tag" href=https://danabo.github.io/blog/tags/variational-ml/>variational-ml</a></section>
+</div><nav id="TableOfContents">
+  <ol>
+    <li><a href="#setup">Setup</a>
+      <ol>
+        <li><a href="#note-about-probability-notation">Note about probability notation</a></li>
+      </ol>
+    </li>
+    <li><a href="#variational">&ldquo;Variational&rdquo;</a>
+      <ol>
+        <li><a href="#what-is-variational-">What is &ldquo;variational&rdquo; ?</a></li>
+        <li><a href="#variational-methods-in-ml">Variational methods in ML</a></li>
+      </ol>
+    </li>
+    <li><a href="#variational-inference">Variational Inference</a>
+      <ol>
+        <li><a href="#tractability">Tractability</a></li>
+        <li><a href="#maximum-likelihood-estimation">Maximum Likelihood Estimation</a>
+          <ol>
+            <li><a href="#iid-datasets">i.i.d. datasets</a>
+              <ol>
+                <li><a href="#another-approach">Another Approach</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#variational-bayes">Variational Bayes</a></li>
+    <li><a href="#appendix">Appendix</a></li>
+  </ol>
+</nav></div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="https://danabo.github.io/blog/posts/ideal-gas-entropy-derivation/"><span class="iconfont icon-article"></span>Ideal Gas Entropy Derivation</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2021 Daniel Abolafia.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ 
+                tex2jax: { 
+                    inlineMath: [['$','$'], ['\\(','\\)']] 
+                },
+
+                "HTML-CSS": {
+                    preferredFont: "TeX",
+                    availableFonts: ["TeX"]
+                }
+            });
+        </script></body>
+
+</html>
