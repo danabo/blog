@@ -1,8 +1,8 @@
 ---
 date: 2021-02-07
-lastmod: '2022-03-08T10:30:20-08:00'
+lastmod: '2022-07-06T13:44:37-07:00'
 tags:
-- free energy
+- free-energy
 title: Free Energy Principle 1st Pass
 ---
 $$
@@ -92,6 +92,7 @@ sources:
 - [A Step-by-Step Tutorial on Active Inference and its Application to Empirical Data](https://psyarxiv.com/b4jm6/)
 - [What does the free energy principle tell us about the brain?](https://arxiv.org/abs/1901.07945)
 
+Also see {{< locallink "On Variational Inference" >}}.
 
 Suppose $x\\in\\mc{X}$ is observed and the posterior $p\_{H \\mid X=x}$ is intractable to compute. We can instead approximate it by minimizing 
 

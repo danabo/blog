@@ -1,9 +1,10 @@
 ---
 date: 2021-02-18
-lastmod: '2022-07-01T17:13:40-07:00'
+lastmod: '2022-07-06T13:43:52-07:00'
 tags:
-- free energy
+- free-energy
 - machine-learning
+- variational-ml
 title: Variational Solomonoff Induction
 ---
 
@@ -47,7 +48,7 @@ Typical usage "modes" of $q\_\\t$ in machine learning:
     - $\\t\\in\\T$ is a hypothesis.
     - $p(\\t \\mid D) = \\frac{q\_\\t(D) p(\\t)}{\\int\_\\T q\_\\t(D) p(\\t) d\\t}$ is the exact posterior on hypotheses $\\T$ given dataset $D$.
     - Unlike in MLE and MAP, there is no notion of optimal parameter $\\t^\*$. Instead we have much more information: $p(\\t \\mid D)$ "scores" every parameter in $\\T$, and all the scores taken together constitute our information.
-- **Variational Bayes** (free energy minimization): training produces a (approximate) posterior distribution over hypotheses.
+- **Variational Bayes** (free energy minimization): training produces a (approximate) posterior distribution over hypotheses (see {{< locallink "On Variational Inference" >}}).
     - $z \\in \\mc{Z}$ is a hypothesis.
     - $\\tilde{\\t} = \\argmin{\\t}\\kl{q\_\\t(z)}{p(z \\mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.
     - $\\t^\* = \\argmin{\\t}\\set{\\kl{q\_\\t(z)}{p(z)} - \\E\_{z\\sim q\_\\t(z)}\\left\[\\lg p(D \\mid z)\\right\]}$ is the approximation. This is what we find through optimization.

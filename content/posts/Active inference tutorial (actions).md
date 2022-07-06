@@ -1,8 +1,8 @@
 ---
 date: 2021-02-07
-lastmod: '2021-03-18T14:55:56-07:00'
+lastmod: '2022-07-06T13:43:57-07:00'
 tags:
-- free energy
+- free-energy
 title: Active inference tutorial (actions)
 ---
 
