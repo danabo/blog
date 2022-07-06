@@ -1,13 +1,13 @@
 ---
 date: 2022-07-06
-lastmod: '2022-07-06T13:52:09-07:00'
+lastmod: '2022-07-06T13:54:15-07:00'
 tags:
 - machine-learning
 - variational-ml
 title: On Variational Inference
 ---
 
-This is a primer on so-called variational inference in machine learning, based on sections of [Jordan et al.](https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf) (*An Introduction to Variational Methods for Graphical Models*; 1999). I go over the mathematical forms of variational inference, and I include a discussion on what it means for something to be "variational." I hope this conveys a bit of the generating ideas that give rise to the various forms of variational inference. <!--more-->
+This is a primer on variational inference in machine learning, based on sections of [Jordan et al.](https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf) (*An Introduction to Variational Methods for Graphical Models*; 1999). I go over the mathematical forms of variational inference, and I include a discussion on what it means for something to be "variational." I hope this conveys a bit of the generating ideas that give rise to the various forms of variational inference. <!--more-->
 
 
 
