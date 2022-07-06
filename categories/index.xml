@@ -15,7 +15,7 @@
       <pubDate>Wed, 06 Jul 2022 00:00:00 +0000</pubDate>
       
       <guid>https://danabo.github.io/blog/posts/on-variational-inference/</guid>
-      <description>&lt;p&gt;This is a primer on so-called variational inference in machine learning, based on sections of &lt;a href=&#34;https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf&#34;target=&#34;_blank&#34;&gt;Jordan et al.&lt;/a&gt; (&lt;em&gt;An Introduction to Variational Methods for Graphical Models&lt;/em&gt;; 1999). I go over the mathematical forms of variational inference, and I include a discussion on what it means for something to be &amp;ldquo;variational.&amp;rdquo; I hope this conveys a bit of the generating ideas that give rise to the various forms of variational inference.&lt;/p&gt;
+      <description>&lt;p&gt;This is a primer on variational inference in machine learning, based on sections of &lt;a href=&#34;https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf&#34;target=&#34;_blank&#34;&gt;Jordan et al.&lt;/a&gt; (&lt;em&gt;An Introduction to Variational Methods for Graphical Models&lt;/em&gt;; 1999). I go over the mathematical forms of variational inference, and I include a discussion on what it means for something to be &amp;ldquo;variational.&amp;rdquo; I hope this conveys a bit of the generating ideas that give rise to the various forms of variational inference.&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \newcommand{\0}{\mathrm{false}}&lt;br&gt;
 \newcommand{\1}{\mathrm{true}}&lt;br&gt;
