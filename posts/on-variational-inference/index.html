@@ -73,11 +73,11 @@ $$</p>
 <p>However, I will overload $p_\t$, by argument name, to represent a number of related functions. For instance, the marginal probabilities $p_\t(x) = \int_\Z p_\t(x,z)\ \d z$ and $p_\t(z) = \int_\X p_\t(x,z)\ \d x$ (replacing integrals with sums when variables are discrete) are different quantities depending on whether the argument to $p_\t$ is $x$ or $z$. Additionally I might consider marginal probabilities of specific dimensions, e.g. $p_\t(x_{i_1},x_{i_2},\dots,z_{j_1},z_{j_2},\dots)$ is the integral of $p_\t(x,z)$ over all dimensions not included as arguments.</p>
 <p>Furthermore, we have conditional probabilities, e.g. $p_\t(x\mid z)=p_\t(x,z)/p_\t(z)$ or $p_\t(x_{i_1},z_{j_1}\mid x_{i_2},z_{j_2})=p_\t(x_{i_1},x_{i_2},z_{j_1},z_{j_2})/p_\t(x_{i_2},z_{j_2})$.</p>
 <p>This covers the various functions that $p_\t$ can represent, and you can see how the form of the arguments to $p_\t$ determines which function we are considering.</p>
-<h1 id="variational">&ldquo;Variational&rdquo;</h1>
+<h1 id="terminology">Terminology</h1>
 <p>My experience with other sources that explain variational inference is that they leave me confused about what the word &ldquo;variational&rdquo; is pointing at. E.g. <a href="https://probml.github.io/pml-book/book0.html"target="_blank">Murphy 2012</a> (<em>Machine Learning: a Probabilistic Perspective</em>), <a href="https://link.springer.com/book/9780387310732"target="_blank">Bishop 2006</a> (<em>Pattern Recognition and Machine Learning</em>), <a href="https://arxiv.org/abs/1601.00670"target="_blank">Blei 2016</a> (<em>Variational Inference: A Review for Statisticians</em>), and even Wikipedia: <a href="https://en.wikipedia.org/wiki/Variational_Bayesian_methods"target="_blank">Variational Bayesian methods</a>.</p>
 <p>Aside from being irksome, I find the lack of clarity around this word inhibits by ability to grok what authors are thinking when they write about variational inference. Specifically, I want to understand the underlying generating idea for this class of methodologies. As an ML practitioner and researcher, aim to build off of existing ideas. To do that I need to know how previous authors thought about their ideas. Having the generator of an idea, I can play with it and potentially generate something not previously considered.</p>
 <p>To that end, this section is a detour to explore the meaning of the word &ldquo;variational&rdquo; in the context of variational inference. If this does not interest you, feel free to skip to the next section, <a href="#variational-inference">#Variational Inference</a>.</p>
-<h2 id="what-is-variational-">What is &ldquo;variational&rdquo; ?</h2>
+<h2 id="what-is-variational-">What is Variational ?</h2>
 <p>In the context of variational inference, the word &ldquo;variational&rdquo; refers to the <a href="https://en.wikipedia.org/wiki/Calculus_of_variations"target="_blank">calculus of variations</a> (CoV). Some variational inference texts mention the CoV connection explicitly, e.g. <a href="https://link.springer.com/book/9780387310732"target="_blank">Bishop 2006</a>, section 10.1.</p>
 <p>According to Wikipedia,</p>
 <blockquote>
@@ -99,7 +99,7 @@ $$\ln(x) = \min_\l\set{\l x-\ln\l-1}\,.$$<br>
 In this expression $\l$ is the variational parameter, and we are required to perform the minimization for each value of $x$.</p>
 </blockquote>
 <p><a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a> is implicitly defining what &ldquo;variational&rdquo; means here. We are given an optimization criteria, namely $\fa x,\ \min_{\l_x}\set{\l_x x-\ln\l_x-1}$, which has infinitely many optimization parameters, $\l_x$ for every $x$. We could view this optimization as being over the space of (continuous) functions, $\R\to\R$, and searching for some $\l:\R\to\R$ s.t. $\l(x) x-\ln\l(x)-1$ is minimal for every $x\in(0,\infty)$. In this case, $\l(x)=1/x$ is the solution.</p>
-<p>Note that in this problem we don&rsquo;t have a functional. Nevertheless  <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a> is taking this to be a variational method. If we are to broaden our notion of variational from the previous section, <a href="#what-is-variational">#What is variational</a>, to accommodate this usage, we could say that a variational problem is an optimization problem over an infinite dimensional function space, or equivalently with infinitely many optimization parameters. In most cases the optimization problem can be specified with a functional, but in this case it is not.</p>
+<p>Note that in this problem we don&rsquo;t have a functional. Nevertheless  <a href="https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf"target="_blank">Jordan et al.</a> is taking this to be a variational method. If we are to broaden our notion of variational from the previous section, <a href="#what-is-variational">#What is Variational</a>, to accommodate this usage, we could say that a variational problem is an optimization problem over an infinite dimensional function space, or equivalently with infinitely many optimization parameters. In most cases the optimization problem can be specified with a functional, but in this case it is not.</p>
 <p><strong>Question</strong>: Is $\min_{\l:\R\to\R}\set{\int_\X\l(x) x-\ln\l(x)-1\ \d x}$ an equivalent problem? Then $\mc{F}[\l]=\int_\X\l(x) x-\ln\l(x)-1\ \d x$ is our functional.</p>
 <p>To generalize this variational method, suppose we have a function $f(x)$ which is intractable to calculate directly, but that we know of some other tractable function, $g(x,\l)$, s.t. $g(x,\l) \geq f(x)$ for all $\l\in\R$ and $x\in\X$, and $g(x,\l) = f(x)$ for some $\l\in\R$, for all $x\in\X$ ($g$ is a tight upper bound of $f$). Let $\l(x) = \argmin{\l}g(x,\l)$. Then $f(x) = g(x,\l(x))$ for all $x\in\X$.</p>
 <p>If we are not able to perform the exact minimization $\argmin{\l}g(x,\l)$ symbolically, but we instead find an approximate minimum $\hat{\l}_x$ numerically (e.g. with gradient descent). Then $g(x,\hat{\l}_x)$ is an approximation of $f(x)$, and $g(x,\hat{\l}_x) \geq f(x)$ is guaranteed. This is now useful as a way to numerically approximate $f(x)$ by converting it into an optimization problem which we know how to numerically approximate.</p>
@@ -227,9 +227,9 @@ P(x_{&gt;n}\mid x_{\leq n}) &amp;= \int_{\Z}P(x_{&gt;n}\mid x_{\leq n},z)P(z\mid
         <li><a href="#note-about-probability-notation">Note about probability notation</a></li>
       </ol>
     </li>
-    <li><a href="#variational">&ldquo;Variational&rdquo;</a>
+    <li><a href="#terminology">Terminology</a>
       <ol>
-        <li><a href="#what-is-variational-">What is &ldquo;variational&rdquo; ?</a></li>
+        <li><a href="#what-is-variational-">What is Variational ?</a></li>
         <li><a href="#variational-methods-in-ml">Variational methods in ML</a></li>
       </ol>
     </li>
