@@ -50,7 +50,7 @@ $$</p>
 <li>Unlike in MLE and MAP, there is no notion of optimal parameter $\t^*$. Instead we have much more information: $p(\t \mid D)$ &ldquo;scores&rdquo; every parameter in $\T$, and all the scores taken together constitute our information.</li>
 </ul>
 </li>
-<li><strong>Variational Bayes</strong> (free energy minimization): training produces a (approximate) posterior distribution over hypotheses (see <a href="https://danabo.github.io/blog/posts/on-variational-inference/">On Variational Inference</a>).
+<li><strong>Variational Bayes</strong> (free energy minimization): training produces a (approximate) posterior distribution over hypotheses (see <a href="https://danabo.github.io/blog/posts/variational-inference/">Variational Inference</a>).
 <ul>
 <li>$z \in \mc{Z}$ is a hypothesis.</li>
 <li>$\tilde{\t} = \argmin{\t}\kl{q_\t(z)}{p(z \mid D)}$ is the target parameter for dataset $D$ and model $p(D,z)$. This is assumed to be intractable to find.</li>
