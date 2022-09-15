@@ -1,6 +1,6 @@
 ---
 date: 2022-07-06
-lastmod: '2022-07-06T20:37:10-07:00'
+lastmod: '2022-08-12T12:11:17-07:00'
 tags:
 - machine-learning
 - variational-ml
@@ -121,7 +121,7 @@ Note that in this problem we don't have a functional. Nevertheless  [Jordan et a
 
 
 
-To generalize this variational method, suppose we have a function $f(x)$ which is intractable to calculate directly, but that we know of some other tractable function, $g(x,\\l)$, s.t. $g(x,\\l) \\geq f(x)$ for all $\\l\\in\\R$ and $x\\in\\X$, and $g(x,\\l) = f(x)$ for some $\\l\\in\\R$, for all $x\\in\\X$ ($g$ is a tight upper bound of $f$). Let $\\l(x) = \\argmin\_{\\l}g(x,\\l)$. Then $f(x) = g(x,\\l(x))$ for all $x\\in\\X$.
+To generalize this variational method, suppose we have a function $f(x)$ which is intractable to calculate directly. Luckily, we know of some other tractable function, $g(x,\\l)$, s.t. $g(x,\\l) \\geq f(x)$ for all $\\l\\in\\R$ and $x\\in\\X$. Furthermore, $g(x,\\l) = f(x)$ for some $\\l\\in\\R$, for all $x\\in\\X$ - i.e. $g$ is a tight upper bound of $f$. Let $\\l(x) = \\argmin\_{\\tilde{\\l}}g(x,\\tilde{\\l})$. Then it is the case that $f(x) = g(x,\\l(x))$ for all $x\\in\\X$. So for any $f$, a suitable choice of $g$ gives us a variational form of $f(x)$.
 
 If we are not able to perform the exact minimization $\\argmin\_{\\l}g(x,\\l)$ symbolically, but we instead find an approximate minimum $\\hat{\\l}\_x$ numerically (e.g. with gradient descent). Then $g(x,\\hat{\\l}\_x)$ is an approximation of $f(x)$, and $g(x,\\hat{\\l}\_x) \\geq f(x)$ is guaranteed. This is now useful as a way to numerically approximate $f(x)$ by converting it into an optimization problem which we know how to numerically approximate.
 
@@ -151,7 +151,7 @@ This covers the various functions that $p\_\\t$ can represent, and you can see h
 # Variational Inference
 See [Jordan et al.](https://link.springer.com/content/pdf/10.1023%2FA%3A1007665907178.pdf), section 6, *The block approach*.
 
-Continuing from the [#Setup](#setup) above, $p\_\\t(z\\mid x)$ is an intractable quantity (for most $z$ and $x$). So instead we introduce the family of tractable distributions $q\_\\p$ on $z$ parametrized by $\\p\\in\\P$, where $q\_\\p(z)$ is intended to be our approximation of $p\_\\t(z\\mid x)$, and $\\p$ will be our variational parameter(s) w.r.t. $x$ (i.e. the optimization solution will be a function from $\\X$ to $\\P$).
+Continuing from the [#Setup](#setup) above, $p\_\\t(z\\mid x)$ is an intractable quantity (for most $z$ and $x$). So instead we introduce the family of tractable distributions $q\_\\p$ on $z$ parametrized by $\\p\\in\\P$, where $q\_\\p(z)$ is intended to be our approximation of $p\_\\t(z\\mid x)$ for a particular $x$, and $\\p$ will be our variational parameter(s) w.r.t. $x$ (i.e. the optimization solution will be a function from $\\X$ to $\\P$).
 
 Define the following quantities,
 
@@ -160,6 +160,8 @@ $$\\begin{aligned}
 \\Er(\\t,\\p;\\ x) &\\df \\kl{q\_\\p(z)}{p\_\\t(z\\mid x)} \\\\&= \\int\_\\Z q\_\\p(z)\\log\\par{\\frac{q\_\\p(z)}{p\_\\t(z\\mid x)}}\\ \\d z\\,, \\\\
 \\L(\\t,\\p;\\ x) &\\df \\M(\\t;\\ x) + \\Er(\\t,\\p;\\ x)\\,.
 \\end{aligned}$$
+
+($\\kl{\\cdot}{\\cdot}$ is the [KL-divergence](https://en.wikipedia.org/wiki/Kullback–Leibler_divergence), which is [always non-negative](https://en.wikipedia.org/wiki/Kullback–Leibler_divergence#Properties).)
 
 All three quantities are non-negative for all $\\t,\\p,x$. Then we have 
 
@@ -328,7 +330,7 @@ and
 
 $$\\L(\\p;\\ x\_{\\leq n}) = \\M(x\_{\\leq n}) + \\Er(\\p;\\ x\_{\\leq n})$$
 
-Then we want to find $\\p^\*:\\X\_{\\leq n} \\to \\P$ which solves the minimization problem, $\\fa x\_{\\leq n},\\ \\min\_{\\p\_{x\_{\\leq n}}}\\L(\\p\_{x\_{\\leq n}};\\ x\_{\\leq n})$.
+Then we want to find the infinite vector $(\\p^\*\_{x\_{\\leq n}})\_{x\_{\\leq n} \\in \\X\_{\\leq n}}$ (equivalently represented as the function $\\p^\*:\\X\_{\\leq n} \\to \\P$) which solves the minimization problem, $\\fa x\_{\\leq n},\\ \\min\_{\\p\_{x\_{\\leq n}}}\\L(\\p\_{x\_{\\leq n}};\\ x\_{\\leq n})$.
 
 **Question**: Supposing our prediction distribution $P(x\_{>n}\\mid x\_{\\leq n})$ is intractable, can we obtain a variational approximation of this probability?
 

@@ -1,6 +1,6 @@
 ---
 date: 2021-04-20
-lastmod: '2022-02-09T16:34:27-08:00'
+lastmod: '2022-07-10T17:16:17-07:00'
 tags:
 - physics
 title: Causality For Physics
@@ -211,7 +211,7 @@ In any theory of physics there is a state space $\\O$. In Newtonian mechanics, s
 
 A **theory of physics** specifies both the state space $\\O$ and how to solve for the time-evolution of the system given a particular state $\\o\_t$ at time $t$. The result is a complete description of a system's time evolution through state space given as a state-function of time, $\\s : \\R \\to \\O : t \\mapsto \\s(t)$, which I'll call a **trajectory**. To be clear, a single trajectory $\\s$ is a single possible time-evolution, e.g. where $\\s(t) = \\o\_t$.
 
-The mathematical machinery that converts known information, e.g. the state of the system at time $t$, varies between theories of physics and often makes use of a [Lagrangian](https://en.wikipedia.org/wiki/Analytical_mechanics#Lagrangian_mechanics) or [Hamiltonian](https://en.wikipedia.org/wiki/Analytical_mechanics#Hamiltonian_mechanics). These details can be abstracted away.  In principle, for any theory of physics  there is a family of [time-evolution functions](https://en.wikipedia.org/wiki/Time_evolution#Time_evolution_operators) $\\t\_{\\Dt} : \\O \\to \\O$, for every time interval $\\Dt\\in\\R$ (both positive and negative) which maps any state $\\o\\in\\O$ at time $t$ to the state at time $t+\\Dt$. Typically physics is [time-symmetric](https://en.wikipedia.org/wiki/T-symmetry), which means that $\\t\_{\\Dt}$ is a bijection and thus invertible. Note also that $\\t\_{\\Dt}$ does not depend on the absolute time $t$, and so we are implicitly assuming the given theory of physics is [time-translationally invariant](https://en.wikipedia.org/wiki/Time_translation_symmetry).
+The mathematical machinery that converts known information, e.g. the state of the system at time $t$, varies between theories of physics and often makes use of a [Lagrangian](https://en.wikipedia.org/wiki/Analytical_mechanics#Lagrangian_mechanics) or [Hamiltonian](https://en.wikipedia.org/wiki/Analytical_mechanics#Hamiltonian_mechanics). These details can be abstracted away.  In principle, for any theory of physics  there is a family of [time-evolution functions](https://en.wikipedia.org/wiki/Time_evolution#Time_evolution_operators) $\\t\_{\\Dt} : \\O \\to \\O$ (also called propagators), for every time interval $\\Dt\\in\\R$ (both positive and negative) which maps any state $\\o\\in\\O$ at time $t$ to the state at time $t+\\Dt$. Typically physics is [time-symmetric](https://en.wikipedia.org/wiki/T-symmetry), which means that $\\t\_{\\Dt}$ is a bijection and thus invertible. Note also that $\\t\_{\\Dt}$ does not depend on the absolute time $t$, and so we are implicitly assuming the given theory of physics is [time-translationally invariant](https://en.wikipedia.org/wiki/Time_translation_symmetry).
 
 The set of all trajectories is $\\R \\to \\O$, [denoting the set of all functions](https://en.wikipedia.org/wiki/Function_space) from $\\R$ to $\\O$. For a given time-evolution family $\\t$, there is a subset of trajectories which are **valid for $\\t$** (or **$\\t$-valid**),
 

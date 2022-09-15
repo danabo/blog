@@ -1,6 +1,6 @@
 ---
 date: 2022-06-21
-lastmod: '2022-06-26T08:28:46-07:00'
+lastmod: '2022-09-15T08:29:45-07:00'
 tags:
 - thermodynamics
 - physics
@@ -45,6 +45,7 @@ $$
 \\newcommand{\\m}{\\times}
 \\newcommand{\\E}{\\mb{E}}
 \\newcommand{\\R}{\\mb{R}}
+\\newcommand{\\N}{\\mb{N}}
 \\newcommand{\\H}{\\mc{H}}
 \\newcommand{\\L}{\\Lambda}
 \\newcommand{\\e}{\\varepsilon}
@@ -150,13 +151,14 @@ Let $\\mu$ be the uniform unit measure on $\\O$ (defined by constant density of 
 
 The [hypervolume](https://en.wikipedia.org/wiki/N-sphere#Volume_and_surface_area) of the unit $n$-ball with radius $r$ (interior volume of sphere in $n$ dimensions) is
 $$
-B\_n(r) = \\frac{\\pi^{\\frac{n}{2}}}{\\tup{\\frac{n}{2}}!}r^{n}\\,.
+B\_n(r) = \\frac{\\pi^{\\frac{n}{2}}}{\\G\\tup{\\frac{n}{2}+1}}r^{n}\\,,
 $$
+where $\\G(x)$ is the [gamma function](https://en.wikipedia.org/wiki/Gamma_function) which is the continuous extension of factorial where $\\G(n) = (n-1)!$ for $n\\in\\N$ (excluding 0). Note that $\\G(n+\\frac{1}{2})=\\frac{(2n)!}{4^n n!}\\sqrt{\\pi}$ for $n\\in\\N$ ([source](https://en.wikipedia.org/wiki/Particular_values_of_the_gamma_function)). We will only be concerned with these integer and half-integer values of the gamma function.
 
-(Here $n=DN$ and not the number of moles of gas.)
+For our purposes, $n=DN$, the total number of dimensions in state space, and not the number of moles of gas.
 
 
-Then the macrostate hypervolume is
+The macrostate hypervolume is
 $$
 \\mu(\\L(E,V,N)) = V^N \\cdot\\left\[B\_{DN}\\par{\\sqrt{2m(E+\\e)}} - B\_{DN}\\par{\\sqrt{2mE}}\\right\]\\,.
 $$
@@ -165,7 +167,7 @@ Expanding out the term in square brackets, we get
 
 $$\\begin{aligned}
 & B\_{n}\\par{\\sqrt{2m(E+\\e)}} - B\_{n}\\par{\\sqrt{2mE}} \\\\
-=\\ & \\frac{\\pi^{\\frac{n}{2}}}{\\tup{\\frac{n}{2}}!}\\par{2m}^{n/2}\\left\[\\par{E+\\e}^{n/2} - E^{n/2}\\right\]\\,.
+=\\ & \\frac{\\pi^{\\frac{n}{2}}}{\\G\\tup{\\frac{n}{2}+1}}\\par{2m}^{n/2}\\left\[\\par{E+\\e}^{n/2} - E^{n/2}\\right\]\\,.
 \\end{aligned}$$
 
 We can make a convenient approximation when $\\e$ is small. Using the [generalized binomial theorem](https://en.wikipedia.org/wiki/Binomial_theorem#Newton's_generalized_binomial_theorem), we have
@@ -183,7 +185,7 @@ where $\\e^k\\approx 0$ for $k\\geq2$ if we assume that $\\e$ is small enough so
 Plugging in our approximation (with $n=DN$), we have
 
 $$
-\\mu(\\L(E,V,N)) \\approx V^N\\frac{\\pi^{\\frac{DN}{2}}}{\\tup{\\frac{DN}{2}}!}\\par{2m}^{DN/2}\\frac{DN}{2}E^{DN/2-1}\\e
+\\mu(\\L(E,V,N)) \\approx V^N\\frac{\\pi^{\\frac{DN}{2}}}{\\G\\tup{\\frac{DN}{2}+1}}\\par{2m}^{DN/2}\\frac{DN}{2}E^{DN/2-1}\\e
 $$
 
 Given two macrostates, $\\L(E\_i,V\_i,N)$ and $\\L(E\_f,V\_f,N)$, the log-ratio between their $\\mu$-sizes is approximately
