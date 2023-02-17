@@ -1,6 +1,6 @@
 ---
 date: 2022-04-05
-lastmod: '2022-06-21T18:59:41-07:00'
+lastmod: '2022-11-20T21:11:20-08:00'
 tags:
 - thermodynamics
 - physics
@@ -166,7 +166,7 @@ where $\\G(\\o\_1,\\dots,\\o\_{N}) = \\prod\_{i=1}^{N}(-\\infty,\\o\_i\]$ is a h
 
 
 # Liouville's Theorem
-As outlined above, suppose we have a system described by [canonical coordinates](https://en.wikipedia.org/wiki/Canonical_coordinates) $\\vec{\\o}=(\\vec{q},\\vec{p})=(q\_1,\\dots,q\_n,p\_1,\\dots,p\_n)$ and a [Hamiltonian](https://en.wikipedia.org/wiki/Hamiltonian_mechanics) $H$. Also suppose we are given some density function $\\r(\\vec{q},\\vec{p},t)$, a function of coordinates and time, which obeys the time-evolution induced by $\\H$ (as explained above in [#Measure](#measure)). That is to say, the density must satisfy $\\int\_R \\r(\\vec{\\o}, t)\\ \\dd^{2n}{\\vec{\\o}}=\\int\_{R'} \\r(\\vec{\\o}, t')\\ \\dd^{2n}{\\vec{\\o}}$ for all regions $R$ and times $t,t'$, where $R'={\\t\_{t\\to t'}(R)}$ and $\\t\_{t\\to t'}$ is the propagator induced by $H$ mapping time $t$ to time $t'$.
+As outlined above, suppose we have a system described by [canonical coordinates](https://en.wikipedia.org/wiki/Canonical_coordinates) $\\vec{\\o}=(\\vec{q},\\vec{p})=(q\_1,\\dots,q\_n,p\_1,\\dots,p\_n)$ and a [Hamiltonian](https://en.wikipedia.org/wiki/Hamiltonian_mechanics) $H$. Also suppose we are given some density function $\\r(\\vec{q},\\vec{p},t)$, a function of coordinates and time, which obeys the time-evolution induced by $H$ (as explained above in [#Measure](#measure)). That is to say, the density must satisfy $\\int\_R \\r(\\vec{\\o}, t)\\ \\dd^{2n}{\\vec{\\o}}=\\int\_{R'} \\r(\\vec{\\o}, t')\\ \\dd^{2n}{\\vec{\\o}}$ for all regions $R$ and times $t,t'$, where $R'={\\t\_{t\\to t'}(R)}$ and $\\t\_{t\\to t'}$ is the propagator induced by $H$ mapping time $t$ to time $t'$.
 
 
 
