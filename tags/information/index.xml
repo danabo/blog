@@ -5,10 +5,293 @@
     <description>Recent content in information on Dan&#39;s Notepad</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>©2021 Daniel Abolafia.</copyright>
-    <lastBuildDate>Tue, 01 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Feb 2023 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://danabo.github.io/blog/tags/information/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Shannon vs Universal Compression</title>
+      <link>https://danabo.github.io/blog/posts/shannon-vs-universal-compression/</link>
+      <pubDate>Thu, 16 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://danabo.github.io/blog/posts/shannon-vs-universal-compression/</guid>
+      <description>&lt;p&gt;$$&lt;br&gt;
+\newcommand{\mb}{\mathbb}&lt;br&gt;
+\newcommand{\mc}{\mathcal}&lt;br&gt;
+\newcommand{\B}{\mb{B}}&lt;br&gt;
+\newcommand{\Z}{\mb{Z}}&lt;br&gt;
+\newcommand{\N}{\mb{N}}&lt;br&gt;
+\newcommand{\R}{\mb{R}}&lt;br&gt;
+\newcommand{\D}{\Delta}&lt;br&gt;
+\newcommand{\X}{\mc{X}}&lt;br&gt;
+\newcommand{\T}{\Theta}&lt;br&gt;
+\newcommand{\O}{\Omega}&lt;br&gt;
+\newcommand{\o}{\omega}&lt;br&gt;
+\newcommand{\l}{\lambda}&lt;br&gt;
+\newcommand{\z}{\zeta}&lt;br&gt;
+\newcommand{\g}{\gamma}&lt;br&gt;
+\newcommand{\e}{\varepsilon}&lt;br&gt;
+\newcommand{\E}{\mb{E}}&lt;br&gt;
+\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
+\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
+\newcommand{\brac}[1]{\left[#1\right]}&lt;br&gt;
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}&lt;br&gt;
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}&lt;br&gt;
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}&lt;br&gt;
+\newcommand{\real}[1]{#1^{(\R)}}&lt;br&gt;
+\newcommand{\bin}[1]{#1^{\par{\B^\infty}}}&lt;br&gt;
+\newcommand{\binn}[1]{#1^{\par{\B^n}}}&lt;br&gt;
+\newcommand{\cyl}[1]{{\overbracket[0.5pt]{\underbracket[0.5pt]{#1}}}}&lt;br&gt;
+\newcommand{\int}[2]{\left[#1,\,\,#2\right)}&lt;br&gt;
+\newcommand{\len}[1]{\abs{#1}}&lt;br&gt;
+\newcommand{\Mid}{\,\middle\vert\,}&lt;br&gt;
+\DeclareMathOperator*{\argmin}{argmin}&lt;br&gt;
+\DeclareMathOperator*{\argmax}{argmax}&lt;br&gt;
+\newcommand{\up}[1]{^{\par{#1}}}&lt;br&gt;
+\newcommand{\Km}{Km}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;References&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://link.springer.com/book/10.1007/978-0-387-49820-1&#34;target=&#34;_blank&#34;&gt;An Introduction to Kolmogorov Complexity and Its Applications&lt;/a&gt; - Li &amp;amp; Vitanyi 2008 (L&amp;amp;V)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://staff.ustc.edu.cn/~cgong821/Wiley.Interscience.Elements.of.Information.Theory.Jul.2006.eBook-DDU.pdf&#34;target=&#34;_blank&#34;&gt;Elements of Information Theory&lt;/a&gt; - Cover &amp;amp; Thomas 2nd ed. 2006 (C&amp;amp;T)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf&#34;target=&#34;_blank&#34;&gt;A Mathematical Theory of Communication&lt;/a&gt; - Claude Shannon 1948 (Shannon)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;AIT = Algorithmic Information Theory&lt;/p&gt;
+&lt;h1 id=&#34;notation&#34;&gt;Notation&lt;/h1&gt;
+&lt;p&gt;Let $\X$ be a finite set of symbols called an alphabet.&lt;br&gt;
+Let $\B = \set{0,1}$ be the binary alphabet.&lt;/p&gt;
+&lt;p&gt;$\X^\infty$ is the set of all infinite sequences, and&lt;/p&gt;
+&lt;p&gt;$$\X^* = \X^0 \cup \X^1 \cup \X^2 \cup \X^3 \cup \dots$$&lt;br&gt;
+is the set of all finite sequences of any length.&lt;/p&gt;
+&lt;p&gt;For $\o \in \X^*$ or $\o\in\X^\infty$,&lt;br&gt;
+$\o_i$ denotes the $i$-th symbol in the sequence $\o=(\o_1,\o_2,\o_3,\dots)$.&lt;br&gt;
+$\o_{i:j} = \o_{(i,i+1,\dots,j-1,j)}$ denotes the slice of $\o$ starting from $i$ and ending at $j$ (inclusive).&lt;br&gt;
+When $\o$ is infinite, $\o_{i:\infty} = (\o_i,\o_{i+1},\o_{i+2},\dots)$ denotes the infinite sequence starting from position $i$.&lt;br&gt;
+$\o_{&amp;lt;i} = \o_{1:i-1}$ denotes the slice up to position $i-1$.&lt;br&gt;
+$\o_{\leq i} = \o_{1:i}$ includes $i$. We say that $\o_{\leq i}$ is a &lt;strong&gt;prefix&lt;/strong&gt; of $\o$.&lt;br&gt;
+$\o_{&amp;gt;i} = \o_{i+1:\infty}$ denotes the unbounded slice starting at position $i+1$.&lt;/p&gt;
+&lt;p&gt;Let $\ell(x)$ denote the length of the finite sequence $x\in\X^*$.&lt;/p&gt;
+&lt;p&gt;For $x\in\B^*$ and $y \in \B^*\cup\B^\infty$,&lt;br&gt;
+$x \sqsubset y$ means &amp;ldquo;$x$ is a prefix of $y$&amp;rdquo;, and&lt;br&gt;
+$x \sqsubseteq y$ means &amp;ldquo;$x$ is a prefix of or equal to $y$&amp;rdquo;.&lt;/p&gt;
+&lt;h1 id=&#34;ait-for-infinite-sequences&#34;&gt;AIT for Infinite Sequences&lt;/h1&gt;
+&lt;h2 id=&#34;monotone-machines&#34;&gt;Monotone Machines&lt;/h2&gt;
+&lt;p&gt;From L&amp;amp;V chapter 4.5, &amp;ldquo;Continuous Sample Space&amp;rdquo;, definition 4.5.2 gives us monotone machines. These are Turing machines equipped with three tapes: the usual read/write work tape, a read-only one-way (can only move the head to the right) input tape, and a write-only one-way output tape.&lt;/p&gt;
+&lt;p&gt;Let $M$ be a monotone Turing machine. We can overload this object $M$ to act like a function with signature $M:\B^*\to\B^*$, where for any $x\in\B^*$, we define $M(x)\in\B^*$ to be the longest prefix written to the output tape (the write head position defines the output length) before the input tape head has read past $x$ in some hypothetical infinite input (e.g. $x00000\dots$).&lt;/p&gt;
+&lt;p&gt;Such machines $M$ satisfy the monotone property:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+x\sqsubseteq y \implies M(x) \sqsubseteq M(y)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;for $x,y\in\B^*$.&lt;/p&gt;
+&lt;p&gt;$M$ induces a function $f:\B^\infty\to\B^\infty$. Given $\o\in\B^\infty$, if for all $n\in\N$ there exists an $m\in\N$ s.t.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+f(\o)_{1:n} \sqsubseteq M(\o_{1:m})&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;then every position of the output $f(\o)$ is defined. Note that this need not be the case since $M$ may go into an infinite loop and never output beyond some finite output position. For $\o\in\B^\infty$, let&amp;rsquo;s overload $M$ so that we can write $M(\o) = f(\o)\in\B^\infty$ whenever $f(\o)$ is defined.&lt;/p&gt;
+&lt;h2 id=&#34;semimeasures&#34;&gt;Semimeasures&lt;/h2&gt;
+&lt;p&gt;Let $\l$ be the uniform measure on $\B^\infty$, and let $\mu = \l_M$ be the measure on $\B^\infty$ induced by monotone machine $M$ reading an input sequence drawn from $\l$. That is to say, when $M$ is fed as input a uniformly random sequence, the induced distribution over output sequences from $M$ is $\mu$.&lt;/p&gt;
+&lt;p&gt;$\mu$ is a &lt;strong&gt;semimeasure&lt;/strong&gt; if&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\mu(x0) + \mu(x1) \leq \mu(x)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;$\mu$ is a &lt;strong&gt;measure&lt;/strong&gt; if $\mu(x0) + \mu(x1) = \mu(x)$ for all $x\in\B^*$.&lt;/p&gt;
+&lt;p&gt;We further require that $\mu$ be unit normalized (making it a probability semimeasure), i.e. $\mu\big(()\big) \leq 1$ where $()$ is the empty sequence (with equality when $\mu$ is a measure).&lt;/p&gt;
+&lt;p&gt;$\mu$ is &lt;strong&gt;semicomputable&lt;/strong&gt; if there exists a Turing machine $\phi(x, k)$ of two arguments, $x\in\B^*$ and $k\in\N$, outputting a rational number, s.t.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\lim_{k\to\infty} \phi(x, k) = \mu(x)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;and $\phi(x, k)$ is monotonic in $k$.  $\mu$ is called &lt;strong&gt;lower semicomputable&lt;/strong&gt; if $\phi$ is increasing in $k$, and &lt;strong&gt;upper semicomputable&lt;/strong&gt; if $\phi$ is decreasing in $k$.&lt;/p&gt;
+&lt;p&gt;$\mu$ is &lt;strong&gt;computable&lt;/strong&gt; iff there exists such a $\phi$ which is increasing in $k$, and another such $\phi&#39;$ which is decreasing in $k$. Equivalently, $\mu$ is &lt;strong&gt;computable&lt;/strong&gt; iff there exists a Turing machine $\psi(x, \e)$ with $\e\in\mb{Q}$ s.t. $\abs{\psi(x, \e) - \mu(x)} &amp;lt; \e$ for all $\e$ and&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\lim_{\e \to 0} \psi(x, \e) = \mu(x)&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;All measures are semimeasures, and all computable functions are semicomputable.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;L&amp;amp;V Lemma 4.5.1:&lt;br&gt;
+If a continuous lower semicomputable semimeasure is a measure, it is computable.&lt;/p&gt;
+&lt;p&gt;L&amp;amp;V Theorem 4.5.2:&lt;br&gt;
+A semimeasure $\mu$ is lower semicomputable if and only if there is a monotone Turing machine $M$ such that $\mu = \l_M$.&lt;/p&gt;
+&lt;p&gt;L&amp;amp;V Definition 4.5.5:&lt;br&gt;
+A monotone Turing machine $M$ is $\mu$-regular if the set of sequences $\o \in\B^\infty$ for which $M(\o)$ is defined has $\mu$-measure one.&lt;/p&gt;
+&lt;p&gt;L&amp;amp;V Lemma 4.5.4:&lt;br&gt;
+(ii) For each computable measure $\mu$ there exists a $\l$-regular monotone machine $M$ such that $\l_M = \mu$; moreover, there is a $\mu$-regular monotone machine $E$ such that $\mu_E = \l$ and $E$ is the inverse of $M$ in the domain of definition of $EM$, and $E(\o) \in\B^\infty$ for all $\o\in\B^\infty$, except for possibly the computable $\o$′s and $\o$’s lying in countably many intervals of $\mu$-measure $0$.&lt;/p&gt;
+&lt;p&gt;Note that given a computable measure $\mu$, we can explicitly construct $M$ and $E$ s.t. $\mu = \l_M$ and $\l = \mu_E$ with $E$ being the inverse of $M$. Just let $M$ be the arithmetic decoder and $E$ be the arithmetic encoder for $\mu$.&lt;/p&gt;
+&lt;p&gt;Call $E$ the &lt;strong&gt;encoder&lt;/strong&gt; for $\mu$ and call $M$ the &lt;strong&gt;decoder&lt;/strong&gt; for $\mu$.&lt;/p&gt;
+&lt;h2 id=&#34;universal-elements&#34;&gt;Universal Elements&lt;/h2&gt;
+&lt;p&gt;L&amp;amp;V Definition 4.5.1:&lt;br&gt;
+A semimeasure $\mu_0$ is universal (or maximal) for a set of semimeasures $\mc{M}$ if $\mu_0 \in \mc{M}$, and for all $\mu \in \mc{M}$, there exists a constant $c &amp;gt; 0$ such that for all $x\in\B^*$, we have $\mu_0(x) \geq c\mu(x)$ (we say that $\mu_0$ &lt;strong&gt;dominates&lt;/strong&gt; $\mu$).&lt;/p&gt;
+&lt;p&gt;We are then told that&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;the set of computable semimeasures has no universal element&lt;/li&gt;
+&lt;li&gt;the set of semicomputable semimeasures has a universal element (actually infinitely many of them), which I&amp;rsquo;ll denote as $\xi$&lt;/li&gt;
+&lt;li&gt;$\xi$ is necessarily not computable and not a measure (but it is a semicomputable semimeasure)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We also have that $\xi(x) \geq 2^{−K(\mu)}\mu(x)$ for all semicomputable semimeasures $\mu$ and all $x\in\B^*$. This implies that $\xi$ is a mixture over all semicomputable semimeasures, which is the Solomonoff mixture.&lt;/p&gt;
+&lt;p&gt;A monotone Turing machine $U$ is universal if it can emulate any monotone Turing machine (e.g. there could be a prefix free code for monotone Turing machines which, when fed into $U$, causes $U$ to act as the machine encoded from then on out). There are infinitely many universal monotone Turing machines.&lt;/p&gt;
+&lt;p&gt;From L&amp;amp;V Definition 4.5.6, we have that when $U$ is a universal monotone Turing machine, then $\xi = \l_U$ is a universal semimeasure.&lt;br&gt;
+I.e. $\xi$ is a universal semimeasure iff $U$ is a universal monotone Turing machine (is this an &amp;ldquo;iff&amp;rdquo; relationship?).&lt;/p&gt;
+&lt;p&gt;We have an invariance result (analogous to the invariance theorems for the various Kolmogorov complexities):&lt;br&gt;
+For any two universal semimeasures $\xi$ and $\xi&#39;$, there exists a constant $c&amp;gt;0$ s.t.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\lg 1/\xi(x) \leq \lg 1/\xi&#39;(x) + c&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;for all $x\in\B^*$. This follows directly from the fact that universal semimeasures dominate all semimeasures (and so domination is mutual between universal semimeasures).&lt;/p&gt;
+&lt;h2 id=&#34;a-note-about-semimeasures&#34;&gt;A Note About Semimeasures&lt;/h2&gt;
+&lt;p&gt;The semimeasure construction can seem esoteric and getting away from anything that was originally meant by probability.&lt;/p&gt;
+&lt;p&gt;If we think of a (semi)measure $\mu$ as defined by the act of uniformly drawing an input sequence to a monotone decoder $M$, then really all a semimeasure does is account for the possibility that $M$ goes into an infinite loop while not emitting anything further. That is to say, $\mu(x0) + \mu(x1) \leq \mu(x)$ is hiding the third outcome - that $x$ is the end of a finite length output from $M$ (though we can never know that this is the case because $M$ will never halt). We could instead define $\mu$ s.t. $\mu(x0) + \mu(x1) + \mu(x\emptyset) = \mu(x)$ where $\emptyset$ is a special token denoting that there is no more output from $M$ after $x$ (i.e. the write-tape head never moves beyond position $\ell(x)$ )&lt;/p&gt;
+&lt;p&gt;Then we see that if $\mu$ is a semimeasure, we should interpret $\mu(x)$ as the probability of seeing $x$ as the output of $M$ given a uniform random input, where some of the probability mass went to finite sequences shorter than $x$ where $M$ gets stuck.&lt;/p&gt;
+&lt;h1 id=&#34;shannon-compression&#34;&gt;Shannon Compression&lt;/h1&gt;
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+&lt;p&gt;In &lt;a href=&#34;https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf&#34;target=&#34;_blank&#34;&gt;A Mathematical Theory of Communication&lt;/a&gt;, Claude Shannon proved a result about optimal compression, called the noiseless coding theorem (theorem 9 in the paper). I&amp;rsquo;ll restate the result breifly.&lt;/p&gt;
+&lt;p&gt;The setup is that we have a discrete set of symbols, $\X$ (called our alphabet), and we wish to losslessly compress a sequence of data $x_1,x_2,x_3,\dots \in \X$ in order to transmit it over a wire (and the receiver should be able to fully recover the data sequence). Shannon supposes that our data is drawn from a stochastic process, i.e. the data generating process (DGP), defined by a sequence of random variables $X_1,X_2,X_3,\dots$ (where each $n$-th RV is conditioned on the previously drawn outcomes). Another way to define this is to say that we have an infinite sequence of conditional distributions, $x_1\sim p(X_1), x_2\sim p(X_2\mid x_1), x_3\sim p(X_3\mid x_1,x_2),\dots$&lt;br&gt;
+If we multiply these conditional distributions together, we get (in the limit), a distribution $p(X_1,X_2,X_3,\dots)$ over infinite data sequences, $\X^\infty$.&lt;/p&gt;
+&lt;p&gt;Shannon proposes that we model our DGP as a Markov process. That is to say, we restrict the form of our distribution $p$ so that $p(X_n \mid x_{1:n-1}) = p(X\mid x_{n-k-1:n-1})$ for some $k$, where this distribution is the same at every step $n$ (this is the Markov property), and so $X$ without the subscript is a non-step-specific RV. Shannon demonstrates with English text how we can estimate the $k$-step transition probabilities $p(X \mid x_{1:k})$ from some corpus of data.&lt;/p&gt;
+&lt;p&gt;Shannon then supposes that our compression and decompression functions (which he calls transducers) are deterministic finite state machines (FSMs), where each transition is assigned a finite input sequence and a finite output sequence (reading in the target input sequence causes the transition to be taken and for the target output sequence to be emitted). The FSM class of encoders/decoders keeps us within the Markov class of data distributions, since an FSM operating on a Markov process produces a Markov process. (note that i.i.d. data is a special case of the Markov class)&lt;/p&gt;
+&lt;p&gt;Shannon further supposes the DGP is an ergodic process, since then asymptotic quantities are well defined. Importantly, we are interested in finding a $\X$ to binary FSM encoder $E$ (each transition has the type $\X^*\to\B^*$) that minimizes the long-run (asymptotic) average number of bits per symbol (in expectation).&lt;/p&gt;
+&lt;p&gt;Shannon derives a special quantity $H(p)$ for Markov processes $p$, with units &amp;ldquo;bits per symbol&amp;rdquo;. He calls this quantity entropy after a &lt;a href=&#34;http://www.scholarpedia.org/article/Quantum_entropies&#34;target=&#34;_blank&#34;&gt;suggestion by John von Neumann&lt;/a&gt; that its definition looks awfully similar to thermodynamic entropy. Regardless of its name, Shannon then proves that no FSM encoder can do better than $H(p)$ output bits per input symbol in expectation and in the limit.&lt;/p&gt;
+&lt;h2 id=&#34;noiseless-coding-theorem&#34;&gt;Noiseless Coding Theorem&lt;/h2&gt;
+&lt;p&gt;Shannon Theorem 9:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Let a source have entropy $H$ (bits per symbol) and a channel have a capacity $C$ (bits per second). Then it is possible to encode the output of the source in such a way as to transmit at the average rate $C/H-\e$ symbols per second over the channel where $\e$ is arbitrarily small. It is not possible to transmit at an average rate greater than $C/H$.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In our discussion I&amp;rsquo;m assuming the channel is a noiseless binary channel which transmits at 1 bit per time, so that $C=1$.  Then $C/H(p)=1/H(p)$ symbols per time. Because we are assuming 1 bit per time then $1/H(p)$ also has the unit symbols per bit. This theorem then reduces to the following two statements:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$H(p)$ is a lower bound on an &lt;em&gt;average&lt;/em&gt; transmission rate (bits per symbol, which we wish to minimize).&lt;/li&gt;
+&lt;li&gt;This lower bound can be realized arbitrarily closely in practice.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The word &amp;ldquo;average&amp;rdquo; is key here. The two statements above are not given in precise mathematical terms, but we can infer from the proof what &amp;ldquo;average&amp;rdquo; should mean formally. If we draw a finite sequence $x_{1:n}$ from our DGP, then a very good encoder $E$ (which gets close to the lower bound of $H(p)$) may not do a good job at compressing $x_{1:n}$ if we&amp;rsquo;ve gotten unlucky (the data is not typical for the DGP). However, in an analog to the strong law of large numbers for ergodic processes, we can say that&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\lim_{n\to\infty}\frac{1}{n}\ell(E(X_{1:n})) = \hat{R}_E&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;with $p$-probability 1. That is to say, in the long run, our encoder $E$&amp;rsquo;s compression rate will converge some number $\hat{R}_E$ bits per symbol with probability approaching 1 (as $n\to\infty$).&lt;/p&gt;
+&lt;p&gt;$\hat{R}_E$ is of course a property of our choice of encoder $E$. Theorem 9 then tells us that&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$\hat{R}_E \geq H(p)$.&lt;/li&gt;
+&lt;li&gt;For every $\e &amp;gt; 0$, there exists an $E$ s.t. $\hat{R}_E - H(p) &amp;lt; \e$.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;We can have $\hat{R}_E = H(p)$ iff $p$ is &lt;a href=&#34;https://en.wikipedia.org/wiki/Dyadic_distribution&#34;target=&#34;_blank&#34;&gt;dyadic&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Note that while Shannon proposes a way to realize these $E$ in practice that get arbitrarily close to $H(p)$ (&lt;a href=&#34;https://en.wikipedia.org/wiki/Shannon_coding&#34;target=&#34;_blank&#34;&gt;Shannon coding&lt;/a&gt;), his proposal has been subsequently improved. &lt;a href=&#34;https://en.wikipedia.org/wiki/Huffman_coding&#34;target=&#34;_blank&#34;&gt;Huffman coding&lt;/a&gt; has been proven to be the best encoder theoretically possible for i.i.d. DGPs. Shannon&amp;rsquo;s way of minimizing the gap $\hat{R}_E - H(p)$ is to chunk the data into chunk sizes $k$, and then perform Shannon/Huffman coding on those chunks. However, this is quickly intractable for large $k$. A more modern solution would be to perform &lt;a href=&#34;https://en.wikipedia.org/wiki/Arithmetic_coding&#34;target=&#34;_blank&#34;&gt;arithmetic coding&lt;/a&gt; (this is what is actually done today). However, arithmetic encoders/decoders are necessarily not FSMs, and so technically fall outside of the purview of Shannon&amp;rsquo;s result (they are, however, monotonic Turning machines - more on that below).&lt;/p&gt;
+&lt;p&gt;It is worth mentioning that the self-information, $-\lg p(x_{n} \mid x_{1:n-1})$, of a symbol $x_n$ has no inherent meaning here. As it is, Huffman coding may assign fewer bits than $-\lg p(x_{n} \mid x_{1:n-1})$ to $x_n$ in some situations (e.g. consider the Huffman coding for an i.i.d. Bernoulli($\theta$) process with $\theta\neq 1/2$. In that case. Huffman would assign 1 bit to each outcome, which is optimal, rather than $\lg 1/\theta$ and $\lg 1/(1-\theta)$ bits respectively).&lt;/p&gt;
+&lt;h2 id=&#34;what-is-optimal-compression&#34;&gt;What is Optimal Compression?&lt;/h2&gt;
+&lt;p&gt;Something that might be a bit surprising is that Shannon&amp;rsquo;s optimality result is only true in fairly limited circumstances (limited class of DGPs and limited class of encoders/decoders). This begs the question, can one actually perform even better compression in more general circumstances? Given that English text (and almost any real-world time-series data sources) are not Markov, can they be compressed better than Shannon prescribes?&lt;/p&gt;
+&lt;p&gt;Obviously yes, in some trivial sense. We could compress any data into a message of 1 bit, if we know what the data is before hand (the sender and receiver both know what the data is).&lt;/p&gt;
+&lt;p&gt;Clearly, the problem needs to be made well posed before we can solve it. We will see how this can be done in the AIT treatment below. By defining &lt;em&gt;universal&lt;/em&gt; compression (programs as compression), we get around this problem. Then the question is, using universal compression, can be do better than Shannon prescribes? Turns out we can generalize the noiseless coding theorem to the case where the data is drawn from a (semi)computable (semi)measure, and where we consider all monotone Turing machine encoders/decoders.&lt;/p&gt;
+&lt;h2 id=&#34;restatement-under-ait&#34;&gt;Restatement Under AIT&lt;/h2&gt;
+&lt;p&gt;It may be helpful in comparing to AIT to recast Shannon&amp;rsquo;s noiseless coding theorem from the perpsective of AIT - that is to say, make it a statement about an individual data sequence rather than a probabilistic statement (even if its a statement with probability 1). How can this be done? By using Martin-Lof randomness.&lt;/p&gt;
+&lt;p&gt;The pointwise noiseless coding theorem:&lt;/p&gt;
+&lt;p&gt;For an ergodic Markov measure $\mu$ on $\X^\infty$,&lt;br&gt;
+if $\o\in\X^\infty$ is $\mu$-typical (Martin-Lof $\mu$-random), then&lt;br&gt;
+$$\lim_{n\to\infty}\frac{1}{n}\ell(E(\o_{1:n})) = \hat{R}_E$$&lt;/p&gt;
+&lt;p&gt;This directly follows from the fact that $\o$ is $\mu$-typical iff all constructive statements that are true with $\mu$-probability 1 are true of $\o$. I formulated the noiseless coding theorem above as a statement with probability 1, and so it holds for a particular $\mu$-typical sequence $\o$.&lt;/p&gt;
+&lt;h1 id=&#34;optimal-compression&#34;&gt;Optimal compression&lt;/h1&gt;
+&lt;p&gt;The general case is that we are receiving a stream of data, which we can model as infinite.&lt;/p&gt;
+&lt;h2 id=&#34;infinite-vs-finite-data&#34;&gt;Infinite vs Finite Data&lt;/h2&gt;
+&lt;p&gt;Why infinite sequences? We could model the data as an element of $\B^*$, the finite binary sequences. But then we need to also encode the sequence length once it ends. This becomes a different sort of problem than compression of infinite sequences.&lt;/p&gt;
+&lt;p&gt;In practice, we are compressing finite chunks of data, so this fits. But then this is no longer online/monotonic compression. If you compress a finite sequence of length $n$, and then receive a continuation bringing it to length $n&#39;$, the part of the compression which stores the length needs to be retroactively changed to bring in the new data.&lt;/p&gt;
+&lt;p&gt;If that&amp;rsquo;s not a big deal in practice, then I would argue that is because we are actually treating it more like the case of infinite sequences, but where we have a mutual length value off to the side to store the intermediate length at some point in time. In conclusion, the problem of online/monotonic compression implies compression of infinite sequences. Shannon seems to agree, since in his paper, he essentially deals with infinite sequences (by virtue of minimizing average, a.k.a. asymptotic, compression length).&lt;/p&gt;
+&lt;h2 id=&#34;greedy-compression&#34;&gt;Greedy compression&lt;/h2&gt;
+&lt;p&gt;Despite the name, monotone Kolmogorov complexity, denoted by the function $\Km$, is actually performing greedy compression on some finite sequence.&lt;/p&gt;
+&lt;p&gt;A quick review of differences between prefix Kolmogorov complexity $K$, and monotone Kolmogorov complexity $\Km$.   Both use universal Turing machines with 1 work tape, 1 input tape, and 1 output tape. But $K$ uses prefix machines (the machine must halt and the output is not valid and read until it halts) and $\Km$ uses monotone machines (output is a streamed infinite sequence, where all prefixes are valid and can be read in the middle of computation).&lt;/p&gt;
+&lt;p&gt;Let $x\in\B^*$.&lt;/p&gt;
+&lt;p&gt;For $K$, the universal machine $U$ is a prefix machine which takes a finite binary sequence as input. (its inputs form a prefix-free code, defined by whatever causes $U$ to halt)&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+K_U(x) = \min\set{\ell(p) \mid x = U(p),\ p \in \B^*}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;For $\Km$, the universal machine $U$ is a monotone machine takes as input an infinite binary sequence. If $p\in\B^*$ is finite, then let $U(p)$ be the output prefix (whatever is written on the output tape up to the write head at some computation step) of maximum length s.t. the read head has not gone past the input prefix $p$.&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\Km_U(x) = \min\set{\ell(p) \mid x \sqsubseteq U(p),\ p \in \B^*}&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;As we see, with $\Km$ it is sufficient to produce an input prefix $p$ which generates at least $x$ as a prefix at the output. In this way, $p$ need not encode any length information about $x$. An intuition pump for $\Km$ is a monotone machine $M$ performing arithmetic decoding according to some measure $\mu$. (note that the $U$ argument for $K$ or $\Km$ need not be universal). Then $\Km_M(x)$ is the shortest arithmetic encoding that is $M$-decoded to a sequence starting with $x$. Note that as we make $x$ longer, $\Km_M(x)$ need not monotonically change (TODO: show visual example)&lt;/p&gt;
+&lt;h3 id=&#34;optimality&#34;&gt;Optimality&lt;/h3&gt;
+&lt;p&gt;L&amp;amp;V Corollary 4.5.3:&lt;/p&gt;
+&lt;p&gt;An infinite sequence $\o$ is $\mu$-typical (Martin-Lof $\mu$-random) iff&lt;br&gt;
+$$\sup_{n\in\N}\set{\lg 1/\mu(\o_{1:n}) - \Km_U(\o_{1:n})}$$&lt;/p&gt;
+&lt;p&gt;exists.&lt;/p&gt;
+&lt;p&gt;This is saying that there exists some finite constant $c&amp;lt;\infty$ s.t.  $\g(\o_{1:n}) = \lg 1/\mu(\o_{1:n}) - \Km_U(\o_{1:n}) &amp;lt; c$ for all $n\in\N$. That is to say, this difference doesn&amp;rsquo;t get arbitrarily large. (Note that $\g(\o_{1:n})$ is an explicit universal Martin-Lof $\mu$-test for randomness, since there&amp;rsquo;s an &amp;ldquo;iff&amp;rdquo; relationship here. It&amp;rsquo;s very cool that we can explicitly define universal tests for randomness, even if they are not computable.)&lt;/p&gt;
+&lt;p&gt;If we think of the self-information $\lg 1/\mu(\o_{1:n})$ as the compression length of $\o_{1:n}$ under $\mu$, then the theorem is saying that the prefixes of a $\mu$-typical are optimally compressed by a $\mu$-encoder. But let&amp;rsquo;s make this notion more precise.&lt;/p&gt;
+&lt;p&gt;Let $E$ be a monotone Turing machine s.t. $\l = \mu_E$ (call $E$ a $\mu$-encoder), and let $M$ be a monotone Turing machine s.t. $\mu  = \l_M$ (call $M$ a $\mu$-decoder). Then $\z_{1:m} = E(\o_{1:n})$ is the prefix of the encoding $\z$ of $\o$, and $\o_{1:n&#39;} = M(\z_{1:m&#39;})$ is a prefix of the decoding $\o$.  (note that the round-trip $M(E(\o_{1:n})) \sqsubseteq \o_{1:n}$ and can be less than length $n$)&lt;/p&gt;
+&lt;p&gt;In general, the decoder $M$ can map multiple encodings to the same sequence $\o$. As we&amp;rsquo;ve seen in the first section, if $\mu$ is a proper measure then an encoder and decoder always exist. But if $\mu$ is a semimeasure we can only guarantee that the decoder $M$ exists (the universal machine $U$ has no corresponding encoder, as finding programs which emit sequences is not computable).&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;d like to be able to say that any $\mu$-decoder $M$ can realize the optimal code length  $\lg 1/\mu(\o_{1:n})$, i.e. that there exists an encoding prefix $\z_{1:m}$ s.t. $\o_{1:n} \sqsubseteq M(\z_{1:m})$ and that $m \approx \lg 1/\mu(\o_{1:n})$. We can reuse $\Km$ with $M$ to obtain the best length $m$, i.e. $\Km_M(\o_{1:n})$ is the length of the shortest input to $M$ resulting in the prefix $\o_{1:n}$.&lt;/p&gt;
+&lt;p&gt;For any $\o$, $\mu$, and $\mu$-decoder $M$, we must have&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\Km_M(\o_{1:n}) \geq \lg 1/\mu(\o_{1:n})&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;(this is true by the definitions of these objects)&lt;/p&gt;
+&lt;p&gt;I will now (here and below) give aspirational theorems that I don&amp;rsquo;t have proofs for. These seem to me like they should be true. These are possibly straightforward to prove given the theorems in L&amp;amp;V, or these are difficult open problems. Something for me to figure out&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Conjecture 1:&lt;br&gt;
+$\o$ is $\mu$-typical iff&lt;br&gt;
+$$\sup_{n\in\N}\set{\Km_M(\o_{1:n}) - \Km_U(\o_{1:n})}$$&lt;/p&gt;
+&lt;p&gt;exists.&lt;/p&gt;
+&lt;p&gt;This is more directly comparing two compression schemes, the $\mu$-decoder vs the Solomonoff (universal) decoder. If they are within a constant as $n\to\infty$, then we can say the $M$-decoder is as good as the universal decoder. This directly implies that $\Km_M(\o_{1:n}) - \lg 1/\mu(\o_{1:n})$ is upper bounded, and so we can say that $M$ realizes the $\mu$-compression  length $\lg 1/\mu(\o_{1:n})$ (at least if we find the right encoding $\z_{1:m}$ s.t. $m=\Km_M(\o_{1:n})$ and $\o_{1:n}\sqsubseteq M(\z_{1:m})$ ).&lt;/p&gt;
+&lt;p&gt;We do have another related statement that is proved in L&amp;amp;V (also part of Corollary 4.5.3):&lt;br&gt;
+$\o$ is $\mu$-typical iff&lt;br&gt;
+$$&lt;br&gt;
+\sup_{n\in\N}\set{ \lg 1 / \mu(\o_{1:n}) - \lg 1 / \xi(\o_{1:n}) }&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;exists.&lt;/p&gt;
+&lt;h3 id=&#34;arithmetic-coding&#34;&gt;Arithmetic Coding&lt;/h3&gt;
+&lt;p&gt;Whenever $\mu$ is a computable measure, we can construct an arithmetic encoder and decoder pair. Let $M$ be an arithmetic decoder for $\mu$. Then we have a useful result:&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\Km_M(\o_{1:n}) - \lg 1/\mu(\o_{1:n}) &amp;lt; 2&lt;br&gt;
+$$&lt;br&gt;
+for all $n\in\N$. (this theorem is stated in C&amp;amp;T section 13.3 Arithmetic Coding and is easy to prove). Then this immediately gives us conjecture 1 for the special case of an arithmetic decoder.&lt;/p&gt;
+&lt;p&gt;In practice, we will only be dealing with computable measures, and so it is sufficient to think of a distribution over infinite sequences as simultaneously implying a compression scheme over infinite sequences via arithmetic coding. Conjecture 1 says that $\mu$-arithmetic coding will be optimal compression (in the Kolmogorov sense) iff $\o$ is $\mu$-typical.&lt;/p&gt;
+&lt;h2 id=&#34;monotone-compression&#34;&gt;Monotone Compression&lt;/h2&gt;
+&lt;p&gt;The Kolmogorov sense of compression, captured by $\Km$, is performing greedy compression. While we are indeed using monotone decoders to decompress, if we were to stream in data for (de)compression, we might have to keep retroactively changing the previously determined shortest encoding w.r.t. the monotonic decoder. (This is not hard to show for arithmetic decoding. Try constructing an instance of this yourself! See &lt;a href=&#34;#appendix---greedy-vs-monotonic&#34;&gt;#Appendix - Greedy vs Monotonic&lt;/a&gt; for a solution.)&lt;/p&gt;
+&lt;p&gt;This is due to the definition of $\Km$, which does a minimization over prefixes given a particular $\o_{1:n}$ (what we observe while performing the compression), but the continuation $\o$ is not taken into account.&lt;/p&gt;
+&lt;p&gt;To be equivalent to Shannon&amp;rsquo;s setup (and to generalize the noiseless coding theorem to arbitrary measures $\mu$), we need to perform true monotonic compression, where generated compressed prefixes are never retroactively altered. For this, we will need a different notion of optimality.&lt;/p&gt;
+&lt;p&gt;As before, let $M$ be a $\mu$-decoder and $\o\in\B^\infty$ be an infinite sequence.&lt;br&gt;
+Suppose $\o = M(\z)$ for some $\z\in\B^\infty$.&lt;/p&gt;
+&lt;p&gt;Note that&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+m \geq \lg 1/\mu(\o_{1:n})&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;whenever $\o_{1:n}\sqsubseteq M(\z_{1:m})$  (this is a trivial consequence of our definitions)&lt;/p&gt;
+&lt;p&gt;If we wanted to evaluate whether the particular infinite encoding $\z$ is an optimal compression of $\o$ (rather than the jumping around to different prefixes in $\B^*$ that $\Km$ implies), we once again have the problem of a gap between $m$ and $1/\mu(\o_{1:n})$.&lt;/p&gt;
+&lt;p&gt;Conjecture 2:&lt;br&gt;
+If $\z\in\B^\infty$ is algorithmically random and $M$ is a $\mu$-decoder, then there exists a finite constant $c&amp;lt;\infty$ s.t.&lt;br&gt;
+$$&lt;br&gt;
+\rho(\z_{1:m}) = \ell(M(\z_{1:m})) - \lg 1/\mu(M(\z_{1:m})) &amp;lt; c&lt;br&gt;
+$$&lt;br&gt;
+for infinitely many $m\in\N$. But it will also be the case that for every $L&amp;gt;0$ there exists an $m\in\N$ s.t. $\rho(\z_{1:m}) &amp;gt; L$. This all amounts to saying that $\rho(\z_{1:m})$ oscillates infinitely often, with the trough of the oscillations falling below $c$, and the peaks being arbitrarily high (for every $L$ there exists an oscillation which goes above that $L$).&lt;/p&gt;
+&lt;p&gt;When $M$ is an arithmetic decoder, we again have that $c = 2$ (for binary sequences).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Questions:&lt;/strong&gt;&lt;br&gt;
+Is $\z$ algorithmically random iff $\o=M(\z)$ is $\mu$-random?&lt;br&gt;
+When the encoder $E$ exists, is $\o$ $\mu$-random iff $\z=E(\o)$ is algorithmically random?&lt;/p&gt;
+&lt;p&gt;If the answer to both questions is yes, then it is sufficient to define an encoding $\z$ of $\o$ as an optimal compression iff $\z$ is algorithmically random, and then we have that $E(\o)$ is an optimal compression of $\o$ iff $E$ is a $\mu$-encoder.&lt;/p&gt;
+&lt;h3 id=&#34;generalizing-the-noiseless-coding-theorem&#34;&gt;Generalizing the Noiseless Coding Theorem&lt;/h3&gt;
+&lt;p&gt;When the $\mu$-encoder $E$ exists, we have a result that looks like a generalization of the noiseless coding theorem.&lt;/p&gt;
+&lt;p&gt;If $\o$ is $\mu$-random (equivalent to saying it is drawn from $\mu$), then&lt;/p&gt;
+&lt;p&gt;$$\ell(E(\o_{1:n})) \geq \lg 1/\mu(\o_{1:n})$$&lt;/p&gt;
+&lt;p&gt;is something we get by definition, but it looks analogous to Shannon&amp;rsquo;s result that expected compression length is lower bounded by entropy. Except here we replace entropy with self-information of the particular sequence.&lt;/p&gt;
+&lt;p&gt;We then have that this self-information lower bound is optimal using Corollary 4.5.3 (from earlier). We finally show that we can get arbitrarily close to this lower bound in practice on the particular $\o$ in question using conjecture 2 (arbitrarily close here means gets within $c$ infinitely often).&lt;/p&gt;
+&lt;p&gt;Basically, this result tells us that when data $\o$ is $\mu$-typical, we can use a $\mu$-encoder to get an optimal compression on that data. This is also an asymptotic result, because prefixes of $\o$ may be very atypical for $\mu$ while the whole $\o$ is typical. Furthermore, the data prefix needs to be larger enough so that the gap between $\lg 1/\mu(\o_{1:n})$ and $\Km_U(\o_{1:n})$ is negligible.&lt;/p&gt;
+&lt;h1 id=&#34;making-this-practical&#34;&gt;Making This Practical&lt;/h1&gt;
+&lt;p&gt;Above I generalized the noiseless coding theorem. The generalized theorem agrees with Shannon in the case where the data is generated by an ergodic Markov process. Otherwise, instead of entropy of the process being the optimal compression rate, we use self-information as the optimal total compressed length of the particular data we have.  This promotes self-information to a central role as defining a quantity of information (Does self-information/entropy actually define information? What is information? Shannon was only interested in communication. What about semantic information? All good questions for another time.).&lt;/p&gt;
+&lt;p&gt;So how do we use the generalized noiseless coding theorem in practice?&lt;/p&gt;
+&lt;p&gt;Remember that Shannon walks us through how we should perform compression. First decide on a model class (e.g. Markov processes with context size $k$). Then estimate the model parameters using a corpus of data (e.g. a corpus of English text). Shannon suggests manually counting all the $k$ grams. Then share that model with the receiver and use it to compress future data that is streamed in.&lt;/p&gt;
+&lt;p&gt;This model fitting step generalizes to performing maximum likelihood. If our model is $p_\theta(X_n \mid x_{&amp;lt;n})$, parametrized by $\theta$, then we can fit our model to a dataset $x_{1:N}$, by performing the maximization&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;
+\max_\theta \prod_{i=1}^N p_\theta(x_i \mid x_{&amp;lt;i})&lt;br&gt;
+$$&lt;/p&gt;
+&lt;p&gt;This works for Markov models, where the parameters are just the transition probabilities. The maximization will be equivalent to manually counting $k$-gram frequencies in the data.&lt;/p&gt;
+&lt;p&gt;The intuition is that the better the model captures the statistics of the data (whatever that means), the better the compression. With Martin-Lof randomness, we can define exactly what it means to &amp;ldquo;capture the statistics of data&amp;rdquo; (is the data typical for your model?), and this definition of typicality turns out to be equivalent to optimal compression under your model anyway (data is typical for a distribution if it optimally compresses under that distribution).&lt;/p&gt;
+&lt;p&gt;In both Shannon&amp;rsquo;s setting and ours, we may not capture the &amp;ldquo;true&amp;rdquo; distribution of the data from a corpus. The way to deal with this is called &lt;a href=&#34;https://en.wikipedia.org/wiki/Adaptive_coding&#34;target=&#34;_blank&#34;&gt;adaptive coding&lt;/a&gt;, where as more data comes in, the estimated model parameters are improved. Those improvements can be retransmitted to the receiver every so often (this incentivizes us to choose the model class so that the parameter description length is short).&lt;/p&gt;
+&lt;p&gt;To recap, Shannon&amp;rsquo;s framework assumes the statistics of the data are known for all time and then gives an optimality result. This is not useful in practice. Instead, one estimates the statistics of data on hand, and then improves the estimate as more data comes in. A bad estimate early on accounts for only a fixed amount of inefficiency. As the estimate improves, you converge in the long run to the optimal compression rate, as the constant amount of inefficiency becomes insignificant.&lt;/p&gt;
+&lt;p&gt;The same happens in our generalized setup. We are estimating $\mu$ from finite data (this is equivalent to the problem of prediction). If we are wrong about $\mu$ on future data, we can update to $\mu&#39;$ and change our compression going forward. If we eventually succeed in capturing the statistics of the data for all time, then arithmetic coding under our best $\mu$ will be Kolmogorov optimal compression. But having succeeded implies that the statistics of the data will never change again (in a way we have not already captured in $\mu$). This is unlikely to happen in practice.&lt;/p&gt;
+&lt;p&gt;You can see how this problem of finding the $\mu$ for which $\o$ is typical, given only the finite data $\o_{1:n}$, is equivalent the problem of prediction. Since $\mu$ is merely computable, $\mu$ can include fancy time-dependent patterns. The time-dependent patterns that we picked up on in $\o_{1:n}$ (and which continue) will be predicted for the rest of $\o$, but patterns which only begin after $\o_{1:n}$ will not be predicted by $\mu$.&lt;/p&gt;
+&lt;h1 id=&#34;appendix---greedy-vs-monotonic&#34;&gt;Appendix - Greedy vs Monotonic&lt;/h1&gt;
+&lt;p&gt;
+
+  &lt;figure&gt;
+    
+    &lt;img src=&#34;https://danabo.github.io/blog/arithmetic_coding_example.jpg&#34; alt=&#34;&#34;&gt;
+    &lt;figcaption&gt;Horizontally we have the real unit interval (isomorphic to the infinite binary sequences). The regions between the blue lines contain all the encoded binary sequences starting with some prefix (under the uniform measure $\l$). The regions between the green lines contain all the decoded binary sequences starting with some prefix (under some measure $\mu$). If we observe that data sequence $\o$ starts with $\o_{1:4}=0100$, then thats equivalent to saying that $\o$ falls within the grey region. An encoding for $\o_{1:4}$ is a region between blue lines that falls entirely within the grey region (because our encoding should uniquely identify $\o_{1:4}$). We can see that the purple region towards the top, identified by the prefix $1000$, is the largest blue region which falls entirely within the grey region (and so has the smallest prefix length). But when we observe more of $\o$, we might discover that $\o$ lies in the green region towards the top, identified by the prefix $01111$. So we would be forced to retroactively switch our prefix from $1000$ to $01111$ as more of $\o$ streams in. A monotonic encoder would not emit anything until enough of $\o$ was read in to uniquely determine the output prefix.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Variational Inference</title>
@@ -865,7 +1148,7 @@ $$&lt;/p&gt;
 &lt;p&gt;$$\r(\o, t) = \frac{\dd^{N}}{\dd \o_1\dots \dd \o_{N}}\mu_t\big(\G(\o_1,\dots,\o_{N})\big)\,,$$&lt;/p&gt;
 &lt;p&gt;where $\G(\o_1,\dots,\o_{N}) = \prod_{i=1}^{N}(-\infty,\o_i]$ is a hyper-quadrant with origin at $(\o_1,\dots,\o_{N})$.&lt;/p&gt;
 &lt;h1 id=&#34;liouvilles-theorem&#34;&gt;Liouville&amp;rsquo;s Theorem&lt;/h1&gt;
-&lt;p&gt;As outlined above, suppose we have a system described by &lt;a href=&#34;https://en.wikipedia.org/wiki/Canonical_coordinates&#34;target=&#34;_blank&#34;&gt;canonical coordinates&lt;/a&gt; $\vec{\o}=(\vec{q},\vec{p})=(q_1,\dots,q_n,p_1,\dots,p_n)$ and a &lt;a href=&#34;https://en.wikipedia.org/wiki/Hamiltonian_mechanics&#34;target=&#34;_blank&#34;&gt;Hamiltonian&lt;/a&gt; $H$. Also suppose we are given some density function $\r(\vec{q},\vec{p},t)$, a function of coordinates and time, which obeys the time-evolution induced by $\H$ (as explained above in &lt;a href=&#34;#measure&#34;&gt;#Measure&lt;/a&gt;). That is to say, the density must satisfy $\int_R \r(\vec{\o}, t)\ \dd^{2n}{\vec{\o}}=\int_{R&#39;} \r(\vec{\o}, t&#39;)\ \dd^{2n}{\vec{\o}}$ for all regions $R$ and times $t,t&#39;$, where $R&#39;={\t_{t\to t&#39;}(R)}$ and $\t_{t\to t&#39;}$ is the propagator induced by $H$ mapping time $t$ to time $t&#39;$.&lt;/p&gt;
+&lt;p&gt;As outlined above, suppose we have a system described by &lt;a href=&#34;https://en.wikipedia.org/wiki/Canonical_coordinates&#34;target=&#34;_blank&#34;&gt;canonical coordinates&lt;/a&gt; $\vec{\o}=(\vec{q},\vec{p})=(q_1,\dots,q_n,p_1,\dots,p_n)$ and a &lt;a href=&#34;https://en.wikipedia.org/wiki/Hamiltonian_mechanics&#34;target=&#34;_blank&#34;&gt;Hamiltonian&lt;/a&gt; $H$. Also suppose we are given some density function $\r(\vec{q},\vec{p},t)$, a function of coordinates and time, which obeys the time-evolution induced by $H$ (as explained above in &lt;a href=&#34;#measure&#34;&gt;#Measure&lt;/a&gt;). That is to say, the density must satisfy $\int_R \r(\vec{\o}, t)\ \dd^{2n}{\vec{\o}}=\int_{R&#39;} \r(\vec{\o}, t&#39;)\ \dd^{2n}{\vec{\o}}$ for all regions $R$ and times $t,t&#39;$, where $R&#39;={\t_{t\to t&#39;}(R)}$ and $\t_{t\to t&#39;}$ is the propagator induced by $H$ mapping time $t$ to time $t&#39;$.&lt;/p&gt;
 &lt;p&gt;If the system is isolated and has constant total energy (obeys conservation of energy), then &lt;a href=&#34;https://en.wikipedia.org/wiki/Liouville%27s_theorem_%28Hamiltonian%29#Liouville_equations&#34;target=&#34;_blank&#34;&gt;Liouville&amp;rsquo;s Theorem states&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;
 \diff{\r}{t} = 0\,.&lt;br&gt;
@@ -2004,141 +2287,6 @@ We can model thermal diffusion in the wall by connecting the wall-slices to thei
 &lt;p&gt;Finally the nail in the coffin for the uncopy loophole: measurement error is inevitable and results in effectively finite measurement precision.&lt;/p&gt;
 &lt;p&gt;Measurement error is another form of environmental noise - specifically due to our uncertainty about the state of the measurement apparatus (or the state of physical memory).&lt;/p&gt;
 &lt;p&gt;Returning to the model of generalized measurement, the physical memory itself would realistically have thermal noise or other state uncertainty. If we are storing analog data like the image taken by a camera, the thermal noise in the storage medium creates a precision limit.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Is The Szilard Cycle Reversible?</title>
-      <link>https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/</link>
-      <pubDate>Wed, 09 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/</guid>
-      <description>&lt;p&gt;This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level &lt;a href=&#34;#overview&#34;&gt;#Overview&lt;/a&gt; of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to &lt;a href=&#34;#part-i-uncopying&#34;&gt;#Part I Uncopying&lt;/a&gt; if you&amp;rsquo;d rather jump right in. The question is stated at the bottom: &lt;a href=&#34;#question&#34;&gt;#Question&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\newcommand{\D}{\Delta}&lt;br&gt;
-\newcommand{\set}[1]{\left\{#1\right\}}&lt;br&gt;
-\newcommand{\par}[1]{\left(#1\right)}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;h1 id=&#34;overview&#34;&gt;Overview&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Landauer%27s_principle&#34;target=&#34;_blank&#34;&gt;Landauer&amp;rsquo;s principle&lt;/a&gt; is the conjecture that erasing physically stored data costs a minimum amount of energy, proportional to the number of bits being erased. &lt;em&gt;Erasure&lt;/em&gt; here means subjecting the data storage medium (a physical system) to some process that maps all of its possible memory states to one single known state. For example, an array of computer bits might be mapped to the &amp;ldquo;all zero&amp;rdquo; state, 0000000&amp;hellip; This process is performing a many-to-one mapping, i.e. many different physical states of the data storage medium have trajectories under this process that result in the same end state.&lt;/p&gt;
-&lt;p&gt;The known laws of physics obey time-symmetry, meaning that trajectories starting in different states don&amp;rsquo;t collide, i.e. given any current state, you can in principle determine what states the system occupied on any past or future time - at least given complete state information. To have a many-to-one process, the &amp;ldquo;which state&amp;rdquo; information being lost must actually have been moved somewhere else. In practice, when computer memory is reset, the information it had stored is dispersed into the environment. Landauer&amp;rsquo;s principle states that this dispersion necessarily accompanies a minimum amount of energy dispersion, which is the energy required to reset the bits. This dispersion is practically irreversible.&lt;/p&gt;
-&lt;p&gt;In general, thermodynamically irreversable processes, i.e. entropy increasing processes, have this same sort of many-to-one mapping that results in information loss (which is really information leakage).&lt;/p&gt;
-&lt;p&gt;This made me wonder whether it is possible to erase redundantly stored data without a thermodynamic cost. C. H. Bennett in his article, &lt;a href=&#34;https://link.springer.com/article/10.1007/BF02084158&#34;target=&#34;_blank&#34;&gt;&lt;em&gt;The thermodynamics of computation - a review&lt;/em&gt;&lt;/a&gt; (&lt;a href=&#34;https://www.cc.gatech.edu/computing/nano/documents/Bennett%20-%20The%20Thermodynamics%20Of%20Computation.pdf&#34;target=&#34;_blank&#34;&gt;alt link&lt;/a&gt;), discusses situations when data redundancy can and cannot be reduced &amp;ldquo;for free&amp;rdquo;, as in, without an energy cost. He uses a toy system, called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Entropy_in_thermodynamics_and_information_theory#Szilard%27s_engine&#34;target=&#34;_blank&#34;&gt;Szilard engine&lt;/a&gt;, to construct an example where memory can be erased for free (no energy cost in the ideal limit). The Szilard engine runs repetitive cycles, just as the Carnot engine (a canonical thermodynamics example) runs repetitions of the &lt;a href=&#34;https://en.wikipedia.org/wiki/Carnot_cycle&#34;target=&#34;_blank&#34;&gt;Carnot cycle&lt;/a&gt;. So from here on I&amp;rsquo;ll refer to the Szilard cycle as the process being carried out in the Szilard engine.&lt;/p&gt;
-&lt;p&gt;The Szilard cycle extracts heat from a one-particle gas to do work on a piston. To do this, a bit of physical memory is used to store the outcome of a measurement. This thought experiment is useful for drilling down into some of the connections between thermodynamics reversibility and information.&lt;/p&gt;
-&lt;p&gt;In his article, Bennett shows that the process which performs the measurement and stores the outcome in a physical bit is, on its own, reversible. If that process is a copy operation, then its reverse is an &lt;em&gt;uncopy&lt;/em&gt; operation, which puts the bit back in its known default state without energy cost (in the ideal setting). However, we cannot extract work from the one-particle gas if we uncopy the bit. The end of a full Szilard cycle results in the physical bit being cleared in the thermodynamically wasteful way that costs energy (at least as much energy as was extracted from the gas). Thus, we cannot extract free work from this gas, and the 2nd law of thermodynamics holds. It is only the memory erasing step which is irreversible (different from uncopying which is reversible).&lt;/p&gt;
-&lt;p&gt;However, I don&amp;rsquo;t see why the last step of the Szilard cycle cannot perform a different sort of uncopy process - one that is different from the copy process which wrote the bit, so that the work done by the gas is not undone. This appears to be a possibility because the information extracted from the gas into the bit is never lost during the Szilard cycle (see &lt;a href=&#34;#part-ii-information-is-never-lost&#34;&gt;#Part II Information Is Never Lost&lt;/a&gt;), and so in principle, there is still redundant information between the gas and bit. Then for what reason can&amp;rsquo;t an uncopy be performed?&lt;/p&gt;
-&lt;p&gt;This post lays out the technical setup for my question in &lt;a href=&#34;#part-i-uncopying&#34;&gt;#Part I Uncopying&lt;/a&gt; and &lt;a href=&#34;#part-ii-information-is-never-lost&#34;&gt;#Part II Information Is Never Lost&lt;/a&gt;. At the bottom I am able to pose this &lt;a href=&#34;#question&#34;&gt;#Question&lt;/a&gt; rigorously. I don&amp;rsquo;t think I&amp;rsquo;ve discovered a loophole in the 2nd law. I fully expect that reversing the Szilard cycle is impossible, but I don&amp;rsquo;t understand why. I would love for someone to provide me an answer. I would find that very insightful and use it to improve my understanding of thermodynamics.&lt;/p&gt;
-&lt;h1 id=&#34;part-i-uncopying&#34;&gt;Part I: Uncopying&lt;/h1&gt;
-&lt;p&gt;The following images are taken from C. H. Bennett&amp;rsquo;s article, &lt;a href=&#34;https://link.springer.com/article/10.1007/BF02084158&#34;target=&#34;_blank&#34;&gt;&lt;em&gt;The thermodynamics of computation - a review&lt;/em&gt;&lt;/a&gt;, section 5.&lt;/p&gt;
-&lt;h2 id=&#34;szilard-cycle&#34;&gt;Szilard cycle&lt;/h2&gt;
-&lt;p&gt;
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220207112905.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Szilard cycle&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;The Szilard cycle depicted above extracts kinetic energy (KE) from a particle in a box (which you could think of as a gas containing one particle) with unknown position and velocity, all the while without changing the size of the box on net (the start and end of the process have the same sized box).&lt;/p&gt;
-&lt;p&gt;The steps of the Szilard cycle are:&lt;/p&gt;
-&lt;p&gt;(a)&lt;br&gt;
-The particle is initially somewhere in the box. The box has a piston on each end (a movable wall with resistance).&lt;/p&gt;
-&lt;p&gt;(b)&lt;br&gt;
-A barrier is placed that divides the box into two sections. We don&amp;rsquo;t know which section the particle occupies.&lt;/p&gt;
-&lt;p&gt;(c)&lt;br&gt;
-A measurement is taken which determines which section the particle is in. The measurement outcome is stored in a bit of physical memory depicted on the right. That bit is initialized in a known &amp;ldquo;standard&amp;rdquo; state S (what I previously called the default state). The measurement puts the bit into the left (L) or right (R) states, depending on which side of the box the particle occupies (from our perspective we don&amp;rsquo;t know which state the bit is in).&lt;/p&gt;
-&lt;p&gt;(d)&lt;br&gt;
-The which-side information, stored in our bit, is used to determine which piston to push towards the middle. If we push the piston into the particle we will transfer KE to it, thus costing us energy. We want to push the piston through a vacuum (the side without the particle), which is an energy-free operation (in the ideal limit). Then the barrier is removed. Whenever the particle collides with the piston, the piston will be pushed outwards toward the end of the box, but its resistance will cause the particle to lose some KE. The resistance is due to the piston being connected to something we care about transforming, e.g. like moving a mass up against gravity. In general, we say the piston is performing work, which is a useful application of energy.&lt;/p&gt;
-&lt;p&gt;(e)&lt;br&gt;
-The piston is pushed all the way to the end of the box until it cannot move any further, which is its initial state in step (a). The box is now returned to its initial state, and the particle is missing some KE which we converted into useful work. However, the bit of memory we used to store the which-side measurement still has that piece of information stored in it. The final step is to put the bit into the standard state S (erasure), bringing us to (f) and completing the cycle.&lt;/p&gt;
-&lt;p&gt;(f)&lt;br&gt;
-The physical memory is cleared (put back into the standard state S), and the cycle is complete. The only difference between (a) and (f) is the net KE extracted from the particle.&lt;/p&gt;
-&lt;p&gt;The Szilard cycle steps (a) through (e) are all reversible processes. That is to say, those steps can be undone without any energy cost. However, the memory erasure from step (e) to (f) is an irreversible process, since the information contained in the external memory is effectively lost when it is cleared. &lt;a href=&#34;https://en.wikipedia.org/wiki/Landauer%27s_principle&#34;target=&#34;_blank&#34;&gt;Landauer&amp;rsquo;s principle&lt;/a&gt; states that this irreversible erasure costs a minimum amount of energy, compensating for the apparent reduction in overall entropy of the particle-box system, thus preserving the 2nd law of thermodynamics, which states that the entropy of a system cannot be reduced for free. Step (f) makes the whole Szilard cycle irreversible.&lt;/p&gt;
-&lt;h2 id=&#34;gas-thermodynamics&#34;&gt;Gas Thermodynamics&lt;/h2&gt;
-&lt;p&gt;In classical thermodynamics, the change in entropy of a gas (with N particles) in a box, due to some process acting on the gas, is&lt;/p&gt;
-&lt;p&gt;$$&lt;br&gt;
-\D S = c_v\ln\frac{T_f}{T_i} + R\ln\frac{V_f}{V_i}&lt;br&gt;
-$$&lt;/p&gt;
-&lt;p&gt;where $c_v$ and $R$ are constants which depend on the kind of gas, $T_i$ and $T_f$ are respectively the initial and final temperature of the gas, and $V_i$ and $V_f$ are respectively the initial and final volumes of the gas (volumes of the box). Note that temperature and volume are equilibrium macrostates of the gas. They are not well defined when the gas is in a transitionary state, e.g. if it has uneven temperature or is not uniformly distributed across all of the free space in the box. Then the change in entropy of the gas is only well defined if the process starts and ends in equilibrium states where $T_i,T_f,V_i$ and $V_f$ are all well defined.&lt;/p&gt;
-&lt;p&gt;In some sense a one-particle gas is always in equlibrium. Its temperature is just the particle&amp;rsquo;s KE times a constant, (temperature is defined as being proportional to the average KE across all the particles) and its volume is just the volume of space the particle can access.&lt;/p&gt;
-&lt;p&gt;In the Szilard cycle, $V_i=V_f$, and $T_f = T_i - \frac{2}{3k}E$ where $E\geq0$ is the KE that was extracted from the particle and $k$ is the &lt;a href=&#34;https://en.wikipedia.org/wiki/Boltzmann_constant&#34;target=&#34;_blank&#34;&gt;Boltzmann constant&lt;/a&gt;. Then the change in entropy from start to end of the cycle is proportional to $\ln\frac{T_f}{T_i}=\lg\par{1-\frac{2E}{3kT_i}} \leq 0$. The 2nd law of thermodynamics states that total entropy cannot decrease. Since we reduced the entropy of the gas, the entropy of some other system involved in the process must have gone up by at least the same amount. The entropy of the physical bit of memory is what must have increased.&lt;/p&gt;
-&lt;p&gt;Before the memory bit is erased, we can still reverse the process and move the entropy of the bit back into the gas (see &lt;a href=&#34;#uncopying&#34;&gt;#Uncopying&lt;/a&gt;). After the bit is erased, the entropy of the bit is moved into the environment, dispersed as heat energy. This is analogous to compressing an N particle gas to half of its volume, which heats up the gas enough to make the total change in entropy nonnegative, and then allowing the gas to cool down to its initial temperature by leaking heat into the environment. The gas compression and heating is reversible (an &lt;a href=&#34;https://en.wikipedia.org/wiki/Isentropic_process&#34;target=&#34;_blank&#34;&gt;isentropic process&lt;/a&gt;; &lt;a href=&#34;https://www.youtube.com/watch?v=dQeCEqkE9eE&#34;target=&#34;_blank&#34;&gt;animation&lt;/a&gt;). What is irreversible is the loss of heat energy to the environment, just like our loss of our bit of information to the environment, which also implies a necessary loss of energy to the environment by Landauer&amp;rsquo;s principle.&lt;/p&gt;
-&lt;h2 id=&#34;uncopying&#34;&gt;Uncopying&lt;/h2&gt;
-&lt;p&gt;To serve as an intuition pump for how uncopying would work physically, Bennett uses a &lt;a href=&#34;https://en.wikipedia.org/wiki/Single_domain_%28magnetic%29&#34;target=&#34;_blank&#34;&gt;&amp;ldquo;one-domain ferromagnet&amp;rdquo;&lt;/a&gt;, which is a fancy way of saying an object with an intrinsic magnetic field (as opposed to electromagnet that requires an electric current) which is &amp;ldquo;simple&amp;rdquo; in its shape, specifically the magnetic field can be described by a single direction - an arrow oriented in space. I&amp;rsquo;ll refer to this object simply as &amp;ldquo;a magnet&amp;rdquo;.&lt;/p&gt;
-&lt;p&gt;Bennett supposes that absent any external magnetic fields, the magent&amp;rsquo;s field direction is stable, as in it is stuck in the up or down position. This can be represented by a potential field as a function of the magent&amp;rsquo;s angle of rotation:&lt;/p&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220207114500.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220207114500.png&#34; 
-         alt=&#34;Potential energy as a function of rotation angle. By default we assume there are two potential wells, centered around the up and down orientations. Getting over the diving hump requires some minimum amount of energy to be put into the magnet, in the form of angular momentum.&#34; width=&#34;250&#34;/&gt;&lt;/a&gt;&lt;/span&gt;&lt;span class=&#34;caption&#34;&gt;
-            &lt;p&gt;Potential energy as a function of rotation angle. By default we assume there are two potential wells, centered around the up and down orientations. Getting over the diving hump requires some minimum amount of energy to be put into the magnet, in the form of angular momentum.&lt;/p&gt;
-        &lt;/span&gt;
-&lt;/span&gt;
-&lt;p&gt;This magnet is our bit of physical memory. The magnet&amp;rsquo;s orientation stores a bit when it is in the up/down state, and is indeterminate when it has a sideways orientation.&lt;/p&gt;
-&lt;p&gt;There is a simple process for copying the state of one magnetic bit onto another. In the figure below we have three magnets at play: the reference bit, the movable bit, and the data bit. The reference bit&amp;rsquo;s state is known to us, and defines what we consider to be the default (i.e. cleared, reset, erased) state of the bit we want to write to. The data bit contains information we want to copy to the movable bit.&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220207114316.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-The movable bit starts at the top nearby the reference bit. We require that the reference and movable bits start in the same orientation (otherwise we cannot perform this process &amp;ldquo;for free&amp;rdquo;). The diagram to the right depicts the region of state space (i.e. phase space) to which we know the movable bit occupies. Call this the state region of the movable bit (i.e. phase region).&lt;/p&gt;
-&lt;p&gt;We then push the movable bit downward through a sideways oriented magnetic field which has the effect of canceling out the magnetic field of the reference bit, causing the two potential wells to merge into one well. This transition from two to one well is smooth as the movable bit moves through the sideways magnetic field. As it moves further down towards the data bit, the single well morphs smoothly into two wells again.&lt;/p&gt;
-&lt;p&gt;Notice that during the transition the potential field from two to one wells, the field is is lopsided and asymmetric:&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220207120258.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220207120258.png&#34; width=&#34;75&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;br&gt;
-Likewise as the movable bit approaches the data bit, the potential field becomes lopsided again, which is how the movable bit &amp;ldquo;knows&amp;rdquo; which of the two wells to fall into as they emerge. The orientation of the data bit determines to which direction the movable bit will fall. Thus when the movable bit is close to the data bit, they are aligned and the copy is complete.&lt;/p&gt;
-&lt;p&gt;This copy process is entirely reversible. Its reverse process is called an &amp;ldquo;uncopy&amp;rdquo;, where the data bit (whose orientation is unknown to us) becomes the reference bit, and the reference bit (in the known default state) becomes the data bit.&lt;/p&gt;
-&lt;p&gt;Without the reference bit, the transition from two to one potential wells is symmetric, and the state region &amp;ldquo;spills over&amp;rdquo; the hump (timeline C below), causing our uncertainty about the magnet&amp;rsquo;s orientation to increase (corresponding to an entropy increase). This is an irreversible process.&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220209144607.png&#34; alt=&#34;&#34;&gt;
-&lt;br&gt;
-Also, if the reference bit and movable bits start out with opposite orientations, then as the potential field becomes lopsided, it will raise up the potential well the movable bit is occupying (which is opposite the one the reference bit is occupying). Lifting up a potential field under an object implies transfer of energy to that object (as potential energy). That is to say, we spend energy moving the movable bit through the sideways magnetic field. On the other hand, when the movable bit is in the &amp;ldquo;correct&amp;rdquo; well to start with, the bottom of that well remains at the same potential level through out the copy process, just moving sideways to the center and then to which ever well the data bit occupies.&lt;/p&gt;
-&lt;p&gt;To perform the which-side measurement in the Szilard cycle, Bennett supposes the particle is charged so that the which-side information is naturally converted into magnetic orientation information. That is to say, the particle in a partition box is used as the data bit for our copy process. That copy process can be reversed with the uncopy process where the particle-box system becomes the reference bit. Note that the particle-box system is unaltered by the copy and uncopy operations.&lt;/p&gt;
-&lt;p&gt;
-
-  &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220209145122.png&#34; alt=&#34;&#34;&gt;
-&lt;/p&gt;
-&lt;h1 id=&#34;part-ii-information-is-never-lost&#34;&gt;Part II: Information Is Never Lost&lt;/h1&gt;
-&lt;p&gt;(The following images and videos I made with &lt;a href=&#34;https://www.wolfram.com/mathematica/&#34;target=&#34;_blank&#34;&gt;Mathematica&lt;/a&gt; and &lt;a href=&#34;https://slides.google.com&#34;target=&#34;_blank&#34;&gt;Google Slides&lt;/a&gt;.)&lt;/p&gt;
-&lt;p&gt;The Szilard cycle is a deterministic process when modeled with classical mechanics (point particles following internal trajectories and colliding with rigid objects). Non-determinism enters the picture because we do not know the particle&amp;rsquo;s initial state. We can represent our uncertainty with the set of all initial states in which we think the particle might be, called a state region (usually &amp;ldquo;phase&amp;rdquo; region).&lt;/p&gt;
-&lt;p&gt;This is the partitioned box and its particle as depicted by Bennett in &lt;a href=&#34;#szilard-cycle&#34;&gt;#Szilard cycle&lt;/a&gt;:&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209152732.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209152732.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;br&gt;
-This is the same partitioned box with color-coded spatial regions which the particle could potentially be initialized to. Red is the left side and blue is the right side. Note that this depicts 2D space (as opposed to 2D state space below).&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209152749.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209152749.png&#34; width=&#34;400&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;Here the which-side information is depicted with color: Initial states on the left are colored red and initial states on the right are colored blue.&lt;/p&gt;
-&lt;p&gt;However, this visualization leaves out a part of the state space: velocity. To be more precise, we should plot state space (phase space) which includes a velocity dimension for every position dimension. We would need a 4D plot for a particle in two spatial dimensions, and that is hard to visualize. For simplicity, let&amp;rsquo;s work with a particle confined to a single spatial dimension, giving us a 2D state space plot.&lt;/p&gt;
-&lt;p&gt;Here is shown all initial states (position and velocity) the particle could occupy. States are colored red or blue for the left and right sides of the box respectively.&lt;br&gt;
-
-
-  &lt;figure&gt;
-    
-    &lt;img src=&#34;https://danabo.github.io/blog/Pasted%20image%2020220209152858.png&#34; alt=&#34;&#34;&gt;
-    &lt;figcaption&gt;Phase space plot of the initial state regions, separating out positive (rightward) and negative (leftward) velocities onto the positive and negative sides of the velocity axis (vertical). This depicted state region implies we know the particle&amp;#39;s velocity magnitude is within a certain range.&lt;/figcaption&gt;
-  &lt;/figure&gt;
-&lt;/p&gt;
-&lt;p&gt;For simplicity, I will model the piston pushing phase (d) from the Szilard cycle as a single continuous process. That is to say, instead of having the particle bounce off the piston many times, moving it slightly in discrete jumps, I will model the collision of the particle with the piston as fully inelastic, i.e. the particle and piston stick together and move together until the piston has reached the end of the box, at which point the particle bounces off. The particle gradually loses KE and slows down as it moves with the piston.&lt;/p&gt;
-&lt;p&gt;For example, the trajectory of a particle initialized on the right side with a rightward facing velocity:&lt;br&gt;
-&lt;video controls autoplay loop src=&#34;../../Szilard_cycle_particle_right.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;br&gt;
-The trajectory of a particle initialized on the right side with a leftward facing velocity:&lt;br&gt;
-&lt;video controls autoplay loop src=&#34;../../Szilard_cycle_particle_left.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;/p&gt;
-&lt;p&gt;To show how the initial state regions (left and right sides) evolve over time, I uniformly sampled an ensemble of initial particle states and animated their trajectories over time:&lt;br&gt;
-&lt;video controls autoplay loop src=&#34;../../Szilard_cycle_ensemble.mp4&#34; caption=&#34;&#34; width=&#34;100%&#34;&gt;&lt;/video&gt;&lt;br&gt;
-It is clear from this animation that none of the trajectories overlap at any point. That means, in principle, one could determine which side the particle started in at any point in time if they could measure which color region the particle is currently in. The red and blue regions become more mixed over time, but they are always disjoint.&lt;/p&gt;
-&lt;p&gt;Here at a later point in time the red and blue regions are still interlaced in a striped pattern:&lt;br&gt;
-&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220209114223.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220209114223.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/p&gt;
-&lt;h1 id=&#34;question&#34;&gt;Question&lt;/h1&gt;
-&lt;p&gt;Is it possible to use the scrambled which-side information (striped red-blue pattern above) contained in step (e) of the &lt;a href=&#34;#szilard-cycle&#34;&gt;#Szilard cycle&lt;/a&gt; to induce a reference magnetic field for an &lt;a href=&#34;#uncopying&#34;&gt;uncopy process&lt;/a&gt;? That would allow us to uncopy the bit of memory in the Szilard cycle without undoing the work we extracted from the particle.&lt;/p&gt;
-&lt;p&gt;The specific modification to the Szilard cycle I&amp;rsquo;m proposing is this: Step (f) irreversibly resets the memory bit, costing some minimum amount of energy. Instead, consider an alternative step (f&#39;) where the external memory is reset back to the standard (default) state S via an uncopy process - the reversal of the copy process. As we saw above, this can be done without energy cost. The Szilard cycle with step (f&#39;) replacing step (f) would be reversible throughout, seemingly violating the 2nd law because total entropy would have decreased (it is not obvious to me that this uncopying would result in an increase in entropy anywhere else).&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;image-container&#34;&gt;&lt;span class=&#34;link&#34; &gt;&lt;a href=&#34;../../Pasted%20image%2020220210064848.png&#34; 
-        target=&#34;_blank&#34;&gt;&lt;img class=&#34;img&#34; src=&#34;../../Pasted%20image%2020220210064848.png&#34; width=&#34;300&#34;/&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;br&gt;
-It is safe to assume the 2nd law does hold. The question then becomes, what prevents us from using the scrambled which-side information in the &amp;ldquo;gas&amp;rdquo; to uncopy the memory bit? Is this operation fundamentally disallowed by physics for whatever reason? Or is it merely a matter of technologically intractability? For instance, as time progresses the interlacing of red and blue becomes finer and finer, requiring finer and finer device precision.&lt;/p&gt;
-&lt;p&gt;We could tackle this question by asking instead, is it possible to perform an observation on the particle such that only its &amp;ldquo;color&amp;rdquo; (which side it came from) is recorded in one bit of memory? If so, then the reverse of this process is the uncopy operation we are seeking. We already know that we could measure the particle&amp;rsquo;s position and velocity precisely (assuming a classical particle) using, say, a camera. The &amp;ldquo;camera process&amp;rdquo; would write many bits to memory (including a lot more than the particle&amp;rsquo;s state). Note that we would need to take two pictures in quick succession to capture the particles velocity. To reverse THAT process, we would need to feed as input ALL of the bits of information the camera would output in the forward direction. Without that input information, we cannot uncopy just a single bit, even if its a subset of the information.&lt;/p&gt;
-&lt;p&gt;Thus, the question becomes, can we create a process that converts only the particle&amp;rsquo;s &amp;ldquo;color&amp;rdquo; information into magnetic polarity for use in an uncopy process? If no such process exists, how would we prove it?&lt;/p&gt;</description>
     </item>
     
   </channel>

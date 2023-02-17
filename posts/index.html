@@ -4,7 +4,44 @@
 <meta name="supported-color-schemes" content="light dark"><title>Posts&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><link rel="alternate" type="application/rss+xml" href="https://danabo.github.io/blog/posts/index.xml" title="Dan's Notepad" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Posts" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>Posts</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/variational-inference/">
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>Posts</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/shannon-vs-universal-compression/">
+            <p class="note title">Shannon vs Universal Compression</p><p class="note date">February 16, 2023</p><p class="note content">$$
+\newcommand{\mb}{\mathbb}
+\newcommand{\mc}{\mathcal}
+\newcommand{\B}{\mb{B}}
+\newcommand{\Z}{\mb{Z}}
+\newcommand{\N}{\mb{N}}
+\newcommand{\R}{\mb{R}}
+\newcommand{\D}{\Delta}
+\newcommand{\X}{\mc{X}}
+\newcommand{\T}{\Theta}
+\newcommand{\O}{\Omega}
+\newcommand{\o}{\omega}
+\newcommand{\l}{\lambda}
+\newcommand{\z}{\zeta}
+\newcommand{\g}{\gamma}
+\newcommand{\e}{\varepsilon}
+\newcommand{\E}{\mb{E}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\par}[1]{\left(#1\right)}
+\newcommand{\brac}[1]{\left[#1\right]}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\real}[1]{#1^{(\R)}}
+\newcommand{\bin}[1]{#1^{\par{\B^\infty}}}
+\newcommand{\binn}[1]{#1^{\par{\B^n}}}
+\newcommand{\cyl}[1]{{\overbracket[0.5pt]{\underbracket[0.5pt]{#1}}}}
+\newcommand{\int}[2]{\left[#1,\,\,#2\right)}
+\newcommand{\len}[1]{\abs{#1}}
+\newcommand{\Mid}{\,\middle\vert\,}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\newcommand{\up}[1]{^{\par{#1}}}
+\newcommand{\Km}{Km}
+$$
+References
+ An Introduction to Kolmogorov Complexity and Its Applications - Li &amp; Vitanyi 2008 (L&amp;V) Elements of Information Theory - Cover &amp; Thomas 2nd ed. 2006 (C&amp;T) A Mathematical Theory of Communication - Claude Shannon 1948 (Shannon)  AIT = Algorithmic Information Theory<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a><a class="tag" href="https://danabo.github.io/blog/tags/ait/">AIT</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/variational-inference/">
             <p class="note title">Variational Inference</p><p class="note date">July 6, 2022</p><p class="note content">This is a primer on variational inference in machine learning, based on sections of Jordan et al. (An Introduction to Variational Methods for Graphical Models; 1999). I go over the mathematical forms of variational inference, and I include a discussion on what it means for something to be &ldquo;variational.&rdquo; I hope this conveys a bit of the generating ideas that give rise to the various forms of variational inference.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/machine-learning/">machine-learning</a><a class="tag" href="https://danabo.github.io/blog/tags/variational-ml/">variational-ml</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/ideal-gas-entropy-derivation/">
             <p class="note title">Ideal Gas Entropy Derivation</p><p class="note date">June 21, 2022</p><p class="note content">Derivation of the change in entropy formula for an ideal gas (used in the Carnot Cycle post) from state space volumes. Discussion about connections between the observer&rsquo;s information about the gas and how that relates to the reversibility of transformations applied to the gas.
@@ -24,8 +61,6 @@ My long term goals are to,
             <p class="note title">Szilard Cycle Particle-Piston Interaction Model</p><p class="note date">February 17, 2022</p><p class="note content">Admittedly my first-pass interaction model in Reversible Szilard Cycle Problem#part-ii-information-is-never-lost is not physically realistic. By interaction model, I mean how the particle and piston interact over time. Here I explore some alternative interaction models that try to be more realistic. My main question is whether which-side information is still preserved.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a><a class="tag" href="https://danabo.github.io/blog/tags/thermodynamics/">thermodynamics</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/why-doesnt-uncopying-defeat-the-2nd-law/">
             <p class="note title">Why Doesn't Uncopying Defeat The 2nd Law?</p><p class="note date">February 17, 2022</p><p class="note content">In Reversible Szilard Cycle Problem I pondered whether uncopying a bit of information at the end of the Szilard cycle makes the full cycle reversible, apparently getting around the 2nd law. This &ldquo;loophole&rdquo; is more much pervasive to thermodynamics than the Szilard engine. I will go through its generalization in #Maxwell&rsquo;s Superdemon. I assume the 2nd law holds, so in #Slaying The Superdemon I consider some possible reasons why this loophole doesn&rsquo;t work.
-<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a><a class="tag" href="https://danabo.github.io/blog/tags/thermodynamics/">thermodynamics</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/reversible-szilard-cycle-problem/">
-            <p class="note title">Is The Szilard Cycle Reversible?</p><p class="note date">February 9, 2022</p><p class="note content">This is a long-winded attempt at formulating a question about thermodynamics. I will first give a high level #Overview of what this post is about, and then go through the technical details in the subsequent sections. Feel free to otherwise skip directly to #Part I Uncopying if you&rsquo;d rather jump right in. The question is stated at the bottom: #Question.
 <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a><a class="tag" href="https://danabo.github.io/blog/tags/thermodynamics/">thermodynamics</a></p></li></ul><div class="pagination">
     <ul><li><a class="active" href="https://danabo.github.io/blog/posts/">1</a></li><li><a class="" href="https://danabo.github.io/blog/posts/page/2/">2</a></li><li><a class="" href="https://danabo.github.io/blog/posts/page/3/">3</a></li></ul>
 </div></section><section id="footer"><div class="footer-wrap">

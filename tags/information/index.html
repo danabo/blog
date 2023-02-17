@@ -4,7 +4,44 @@
 <meta name="supported-color-schemes" content="light dark"><title>information&nbsp;&ndash;&nbsp;Dan&#39;s Notepad</title><link rel="stylesheet" href="https://danabo.github.io/blog/css/core.min.ca865499b26624a6a7b7e7c6a09b8ef4db427d2fe9ad2ca79f6ba8b23433dbbb302163fdcbf2d6c0dbb66e7472f15ff1.css" integrity="sha384-yoZUmbJmJKant&#43;fGoJuO9NtCfS/prSynn2uosjQz27swIWP9y/LWwNu2bnRy8V/x"><link rel="alternate" type="application/rss+xml" href="https://danabo.github.io/blog/tags/information/index.xml" title="Dan's Notepad" /><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="information" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="https://danabo.github.io/blog/"><span class="site name">Dan's Notepad</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>information</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/the-reversibility-problem/">
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="https://danabo.github.io/blog/tags/">Tags</a><a class="nav item" href=""></a><a class="nav item" href="https://zhat%2eio/"target="_blank">Zhat</a></nav></div></span></div><div class="site slogan"><span class="title">A window into my second brain</span></div></section><section id="content"><section class="article header"><h1>information</h1></section><ul class="note list"><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/shannon-vs-universal-compression/">
+            <p class="note title">Shannon vs Universal Compression</p><p class="note date">February 16, 2023</p><p class="note content">$$
+\newcommand{\mb}{\mathbb}
+\newcommand{\mc}{\mathcal}
+\newcommand{\B}{\mb{B}}
+\newcommand{\Z}{\mb{Z}}
+\newcommand{\N}{\mb{N}}
+\newcommand{\R}{\mb{R}}
+\newcommand{\D}{\Delta}
+\newcommand{\X}{\mc{X}}
+\newcommand{\T}{\Theta}
+\newcommand{\O}{\Omega}
+\newcommand{\o}{\omega}
+\newcommand{\l}{\lambda}
+\newcommand{\z}{\zeta}
+\newcommand{\g}{\gamma}
+\newcommand{\e}{\varepsilon}
+\newcommand{\E}{\mb{E}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\par}[1]{\left(#1\right)}
+\newcommand{\brac}[1]{\left[#1\right]}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\real}[1]{#1^{(\R)}}
+\newcommand{\bin}[1]{#1^{\par{\B^\infty}}}
+\newcommand{\binn}[1]{#1^{\par{\B^n}}}
+\newcommand{\cyl}[1]{{\overbracket[0.5pt]{\underbracket[0.5pt]{#1}}}}
+\newcommand{\int}[2]{\left[#1,\,\,#2\right)}
+\newcommand{\len}[1]{\abs{#1}}
+\newcommand{\Mid}{\,\middle\vert\,}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\newcommand{\up}[1]{^{\par{#1}}}
+\newcommand{\Km}{Km}
+$$
+References
+ An Introduction to Kolmogorov Complexity and Its Applications - Li &amp; Vitanyi 2008 (L&amp;V) Elements of Information Theory - Cover &amp; Thomas 2nd ed. 2006 (C&amp;T) A Mathematical Theory of Communication - Claude Shannon 1948 (Shannon)  AIT = Algorithmic Information Theory<span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a><a class="tag" href="https://danabo.github.io/blog/tags/ait/">AIT</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/the-reversibility-problem/">
             <p class="note title">The Reversibility Problem</p><p class="note date">March 1, 2022</p><p class="note content">This is my exploration into formalizing the reversibility problem, i.e. the question &ldquo;Which processes are reversible?&rdquo;
 My long term goals are to,
  formally define what it means for any process to be reversible, regardless of equilibrium considerations; clarify the connection between information and reversibility (and by extension the connection between information and entropy); clarify (make well defined) the meaning of statements like &ldquo;breaking a glass is irreversible because the entropy of the broken glass is higher than the entropy of the unbroken glass,&rdquo; and &ldquo;the entropy of the universe is monotonically increasing.&rdquo; <span class="mldr">&mldr;</span></p></a><p class="note labels"><a class="tag" href="https://danabo.github.io/blog/tags/thermodynamics/">thermodynamics</a><a class="tag" href="https://danabo.github.io/blog/tags/physics/">physics</a><a class="tag" href="https://danabo.github.io/blog/tags/information/">information</a></p></li><li class="item"><a class="note" href="https://danabo.github.io/blog/posts/szilard-cycle-particle-piston-interaction-model/">
