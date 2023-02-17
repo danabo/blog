@@ -1,6 +1,6 @@
 ---
 date: 2023-02-16
-lastmod: '2023-02-16T16:47:08-08:00'
+lastmod: '2023-02-16T20:09:20-08:00'
 tags:
 - information
 - AIT
@@ -280,7 +280,9 @@ Why infinite sequences? We could model the data as an element of $\\B^\*$, the f
 
 In practice, we are compressing finite chunks of data, so this fits. But then this is no longer online/monotonic compression. If you compress a finite sequence of length $n$, and then receive a continuation bringing it to length $n'$, the part of the compression which stores the length needs to be retroactively changed to bring in the new data.
 
-If that's not a big deal in practice, then I would argue that is because we are actually treating it more like the case of infinite sequences, but where we have a mutual length value off to the side to store the intermediate length at some point in time. In conclusion, the problem of online/monotonic compression implies compression of infinite sequences. Shannon seems to agree, since in his paper, he essentially deals with infinite sequences (by virtue of minimizing average, a.k.a. asymptotic, compression length).
+If that's not a big deal in practice, then I would argue that is because we are actually treating it more like the case of infinite sequences, but where we have a mutable length value off to the side to store the length at intermediate points in time.
+
+In this sense, the problem of online/monotonic compression implies compression of infinite sequences. Shannon implicitly invokes infinite data sequences by virtue of minimizing average, a.k.a. asymptotic, compression length.
 
 ## Greedy compression
 
@@ -302,7 +304,9 @@ $$
 \\Km\_U(x) = \\min\\set{\\ell(p) \\mid x \\sqsubseteq U(p),\\ p \\in \\B^\*}
 $$
 
-As we see, with $\\Km$ it is sufficient to produce an input prefix $p$ which generates at least $x$ as a prefix at the output. In this way, $p$ need not encode any length information about $x$. An intuition pump for $\\Km$ is a monotone machine $M$ performing arithmetic decoding according to some measure $\\mu$. (note that the $U$ argument for $K$ or $\\Km$ need not be universal). Then $\\Km\_M(x)$ is the shortest arithmetic encoding that is $M$-decoded to a sequence starting with $x$. Note that as we make $x$ longer, $\\Km\_M(x)$ need not monotonically change (TODO: show visual example)
+As we see, with $\\Km$ it is sufficient to produce an input prefix $p$ which generates at least $x$ as a prefix at the output. In this way, $p$ need not encode any length information about $x$.
+
+An intuition pump for $\\Km\_M$ is to imagine using a monotone machine $M$ that performs arithmetic decoding according to some measure $\\mu$. (note that the $U$ argument for $K$ or $\\Km$ need not be universal). Then $\\Km\_M(x)$ is the length of the shortest arithmetic encoding that is $M$-decoded to a sequence starting with $x$. Let $p\_x$ be that shortest encoding (program prefix). As we append to $x$, $p\_x$ need not monotonically change. See [#Appendix - Greedy vs Monotonic](#appendix---greedy-vs-monotonic) for a visual example of this.
 
 ### Optimality
 
