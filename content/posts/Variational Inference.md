@@ -1,6 +1,6 @@
 ---
 date: 2022-07-06
-lastmod: '2022-08-12T12:11:17-07:00'
+lastmod: '2023-02-27T19:08:07-08:00'
 tags:
 - machine-learning
 - variational-ml
@@ -177,8 +177,8 @@ Otherwise if $p\_\\t(\\cdot \\mid x) \\notin\\set{q\_\\p(\\cdot)\\mid \\p\\in\\P
 
 A nice property of this particular setup is that the minimization objective, $\\fa x,\\ \\min\_{\\p\_x}\\L(\\t,\\p\_x;\\ x)$, will also achieve $\\fa x,\\ \\min\_{\\p\_x}\\Er(\\t,\\p\_x;\\ x)$ because $\\M(\\t;\\ x)$ remains constant w.r.t. $\\p\_x$ (i.e. the gap $\\Er(\\t,\\p\_x;\\ x)=\\L(\\t,\\p;\\ x) - \\M(\\t;\\ x)$ is minimized). Minimal $\\Er(\\t,\\p\_x;\\ x)$ in turn implies that $q\_\\p(z)$ is the best approximation of $p\_\\t(z\\mid x)$ for all $z,x$. So from our single variational objective, we get two approximations of intractable quantities: $\\L(\\t,\\p\_x;\\ x)$ for $\\M(\\t;\\ x)$ which gives us $p\_\\t(x)$, and $q\_{\\p\_x}(z)$ for $p\_\\t(z\\mid x)$. 
 
-Note that a tractable approximation of $\\M(\\t;\\ x)$ gives us a tractable  approximation of $p\_\\t(z\\mid x)$, and vice versa, since we can easily get one from the other using $\\M(\\t;\\ x)=\\log\\par{p\_\\t(z\\mid x)/p\_\\t(x,z)}$. Indeed, replacing $p\_\\t(z\\mid x)$ with $q\_{\\p\_x}(z)$ does get us $\\L(\\t,\\p\_x;\\ x)$,
-$$\\begin{aligned}\\M(\\t;\\ x)&=\\E\_{z\\sim q\_\\p(z)}\\brak{\\log\\par{p\_\\t(z\\mid x)/p\_\\t(x,z)}} \\\\&\\leq \\E\_{z\\sim q\_\\p(z)}\\brak{\\log\\par{q\_{\\p\_x}(z)/q\_\\t(x,z)}}\\\\&=\\L(\\t,\\p\_x;\\ x)\\,.\\end{aligned}$$
+Note that a tractable approximation $\\L(\\t,\\p\_x;\\ x)$ of $\\M(\\t;\\ x)$ automatically gives us a tractable approximation $q\_{\\p\_x}(z)$ of $p\_\\t(z\\mid x)$, and vice versa, since we can easily get one from the other using $\\M(\\t;\\ x)=\\log\\par{p\_\\t(z\\mid x)/p\_\\t(x,z)}$. Indeed, replacing $p\_\\t(z\\mid x)$ for $q\_{\\p\_x}(z)$ in our formula for $\\M(\\t;\\ x)$ does get us to $\\L(\\t,\\p\_x;\\ x)$,
+$$\\begin{aligned}\\M(\\t;\\ x)&=\\E\_{z\\sim q\_\\p(z)}\\brak{\\log\\par{p\_\\t(z\\mid x)/p\_\\t(x,z)}} \\\\&\\leq \\E\_{z\\sim q\_\\p(z)}\\brak{\\log\\par{q\_{\\p\_x}(z)/p\_\\t(x,z)}}\\\\&=\\L(\\t,\\p\_x;\\ x)\\,.\\end{aligned}$$
 
 ## Tractability
 

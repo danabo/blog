@@ -1,6 +1,6 @@
 ---
 date: 2023-02-16
-lastmod: '2023-02-16T20:09:20-08:00'
+lastmod: '2023-02-16T22:54:58-08:00'
 tags:
 - information
 - AIT
@@ -399,6 +399,7 @@ When $M$ is an arithmetic decoder, we again have that $c = 2$ (for binary sequen
 **Questions:**
 Is $\\z$ algorithmically random iff $\\o=M(\\z)$ is $\\mu$-random?
 When the encoder $E$ exists, is $\\o$ $\\mu$-random iff $\\z=E(\\o)$ is algorithmically random?
+
 
 If the answer to both questions is yes, then it is sufficient to define an encoding $\\z$ of $\\o$ as an optimal compression iff $\\z$ is algorithmically random, and then we have that $E(\\o)$ is an optimal compression of $\\o$ iff $E$ is a $\\mu$-encoder.
 
